@@ -43,19 +43,30 @@ namespace YAM2E
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
-            this.cbb_tileset = new System.Windows.Forms.ComboBox();
-            this.cbb_area_bank = new System.Windows.Forms.ComboBox();
-            this.lbl_tileset = new System.Windows.Forms.Label();
+            this.grp_main_area = new System.Windows.Forms.GroupBox();
             this.lbl_area_bank = new System.Windows.Forms.Label();
+            this.cbb_area_bank = new System.Windows.Forms.ComboBox();
+            this.grp_main_tileset = new System.Windows.Forms.GroupBox();
+            this.num_main_metatile = new System.Windows.Forms.NumericUpDown();
+            this.lbl_main_graphics_pointer = new System.Windows.Forms.Label();
+            this.lbl_main_metatile = new System.Windows.Forms.Label();
+            this.num_main_graphics_offset = new System.Windows.Forms.NumericUpDown();
             this.tool_strip_image_buttons = new System.Windows.Forms.ToolStrip();
             this.btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
             this.btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
+            this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
+            this.grp_main_area.SuspendLayout();
+            this.grp_main_tileset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).BeginInit();
             this.tool_strip_image_buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -68,7 +79,7 @@ namespace YAM2E
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.tool_strip_main_buttons.Size = new System.Drawing.Size(849, 25);
+            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1011, 25);
             this.tool_strip_main_buttons.TabIndex = 0;
             this.tool_strip_main_buttons.Text = "toolStrip2";
             // 
@@ -105,6 +116,7 @@ namespace YAM2E
             this.btn_save_rom_as.Name = "btn_save_rom_as";
             this.btn_save_rom_as.Size = new System.Drawing.Size(151, 22);
             this.btn_save_rom_as.Text = "Save ROM as...";
+            this.btn_save_rom_as.Click += new System.EventHandler(this.btn_save_rom_as_Click);
             // 
             // toolStripSeparator1
             // 
@@ -137,33 +149,34 @@ namespace YAM2E
             // 
             // grp_data_selector
             // 
-            this.grp_data_selector.Controls.Add(this.cbb_tileset);
-            this.grp_data_selector.Controls.Add(this.cbb_area_bank);
-            this.grp_data_selector.Controls.Add(this.lbl_tileset);
-            this.grp_data_selector.Controls.Add(this.lbl_area_bank);
+            this.grp_data_selector.Controls.Add(this.grp_main_area);
+            this.grp_data_selector.Controls.Add(this.grp_main_tileset);
             this.grp_data_selector.Location = new System.Drawing.Point(12, 53);
             this.grp_data_selector.Name = "grp_data_selector";
-            this.grp_data_selector.Size = new System.Drawing.Size(134, 85);
+            this.grp_data_selector.Size = new System.Drawing.Size(196, 174);
             this.grp_data_selector.TabIndex = 1;
             this.grp_data_selector.TabStop = false;
             this.grp_data_selector.Text = "Data Selector";
             // 
-            // cbb_tileset
+            // grp_main_area
             // 
-            this.cbb_tileset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbb_tileset.FormattingEnabled = true;
-            this.cbb_tileset.Items.AddRange(new object[] {
-            "9",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F"});
-            this.cbb_tileset.Location = new System.Drawing.Point(76, 49);
-            this.cbb_tileset.Name = "cbb_tileset";
-            this.cbb_tileset.Size = new System.Drawing.Size(50, 23);
-            this.cbb_tileset.TabIndex = 3;
+            this.grp_main_area.Controls.Add(this.lbl_area_bank);
+            this.grp_main_area.Controls.Add(this.cbb_area_bank);
+            this.grp_main_area.Location = new System.Drawing.Point(7, 23);
+            this.grp_main_area.Name = "grp_main_area";
+            this.grp_main_area.Size = new System.Drawing.Size(183, 50);
+            this.grp_main_area.TabIndex = 4;
+            this.grp_main_area.TabStop = false;
+            this.grp_main_area.Text = "Area Data";
+            // 
+            // lbl_area_bank
+            // 
+            this.lbl_area_bank.AutoSize = true;
+            this.lbl_area_bank.Location = new System.Drawing.Point(6, 19);
+            this.lbl_area_bank.Name = "lbl_area_bank";
+            this.lbl_area_bank.Size = new System.Drawing.Size(63, 15);
+            this.lbl_area_bank.TabIndex = 0;
+            this.lbl_area_bank.Text = "Area Bank:";
             // 
             // cbb_area_bank
             // 
@@ -177,29 +190,85 @@ namespace YAM2E
             "D",
             "E",
             "F"});
-            this.cbb_area_bank.Location = new System.Drawing.Point(76, 20);
+            this.cbb_area_bank.Location = new System.Drawing.Point(103, 16);
             this.cbb_area_bank.Name = "cbb_area_bank";
-            this.cbb_area_bank.Size = new System.Drawing.Size(50, 23);
+            this.cbb_area_bank.Size = new System.Drawing.Size(70, 23);
             this.cbb_area_bank.TabIndex = 2;
             this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
             // 
-            // lbl_tileset
+            // grp_main_tileset
             // 
-            this.lbl_tileset.AutoSize = true;
-            this.lbl_tileset.Location = new System.Drawing.Point(6, 52);
-            this.lbl_tileset.Name = "lbl_tileset";
-            this.lbl_tileset.Size = new System.Drawing.Size(43, 15);
-            this.lbl_tileset.TabIndex = 1;
-            this.lbl_tileset.Text = "Tileset:";
+            this.grp_main_tileset.Controls.Add(this.num_main_metatile);
+            this.grp_main_tileset.Controls.Add(this.lbl_main_graphics_pointer);
+            this.grp_main_tileset.Controls.Add(this.lbl_main_metatile);
+            this.grp_main_tileset.Controls.Add(this.num_main_graphics_offset);
+            this.grp_main_tileset.Location = new System.Drawing.Point(7, 79);
+            this.grp_main_tileset.Name = "grp_main_tileset";
+            this.grp_main_tileset.Size = new System.Drawing.Size(183, 89);
+            this.grp_main_tileset.TabIndex = 3;
+            this.grp_main_tileset.TabStop = false;
+            this.grp_main_tileset.Text = "Tileset Data";
             // 
-            // lbl_area_bank
+            // num_main_metatile
             // 
-            this.lbl_area_bank.AutoSize = true;
-            this.lbl_area_bank.Location = new System.Drawing.Point(7, 23);
-            this.lbl_area_bank.Name = "lbl_area_bank";
-            this.lbl_area_bank.Size = new System.Drawing.Size(63, 15);
-            this.lbl_area_bank.TabIndex = 0;
-            this.lbl_area_bank.Text = "Area Bank:";
+            this.num_main_metatile.Hexadecimal = true;
+            this.num_main_metatile.Location = new System.Drawing.Point(103, 53);
+            this.num_main_metatile.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.num_main_metatile.Name = "num_main_metatile";
+            this.num_main_metatile.Size = new System.Drawing.Size(70, 23);
+            this.num_main_metatile.TabIndex = 9;
+            this.num_main_metatile.Value = new decimal(new int[] {
+            135808,
+            0,
+            0,
+            0});
+            this.num_main_metatile.ValueChanged += new System.EventHandler(this.num_main_metatile_ValueChanged);
+            // 
+            // lbl_main_graphics_pointer
+            // 
+            this.lbl_main_graphics_pointer.AutoSize = true;
+            this.lbl_main_graphics_pointer.Location = new System.Drawing.Point(6, 19);
+            this.lbl_main_graphics_pointer.Name = "lbl_main_graphics_pointer";
+            this.lbl_main_graphics_pointer.Size = new System.Drawing.Size(91, 15);
+            this.lbl_main_graphics_pointer.TabIndex = 0;
+            this.lbl_main_graphics_pointer.Text = "Graphics Offset:";
+            // 
+            // lbl_main_metatile
+            // 
+            this.lbl_main_metatile.AutoSize = true;
+            this.lbl_main_metatile.Location = new System.Drawing.Point(6, 55);
+            this.lbl_main_metatile.Name = "lbl_main_metatile";
+            this.lbl_main_metatile.Size = new System.Drawing.Size(88, 15);
+            this.lbl_main_metatile.TabIndex = 8;
+            this.lbl_main_metatile.Text = "Metatile Offset:";
+            // 
+            // num_main_graphics_offset
+            // 
+            this.num_main_graphics_offset.Hexadecimal = true;
+            this.num_main_graphics_offset.Increment = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.num_main_graphics_offset.Location = new System.Drawing.Point(103, 17);
+            this.num_main_graphics_offset.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+            this.num_main_graphics_offset.Name = "num_main_graphics_offset";
+            this.num_main_graphics_offset.Size = new System.Drawing.Size(70, 23);
+            this.num_main_graphics_offset.TabIndex = 7;
+            this.num_main_graphics_offset.Value = new decimal(new int[] {
+            122880,
+            0,
+            0,
+            0});
+            this.num_main_graphics_offset.ValueChanged += new System.EventHandler(this.num_main_graphics_offset_ValueChanged);
             // 
             // tool_strip_image_buttons
             // 
@@ -212,7 +281,7 @@ namespace YAM2E
             this.btn_open_tweaks_editor_image});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
-            this.tool_strip_image_buttons.Size = new System.Drawing.Size(849, 25);
+            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1011, 25);
             this.tool_strip_image_buttons.TabIndex = 2;
             this.tool_strip_image_buttons.Text = "toolStrip1";
             // 
@@ -236,6 +305,7 @@ namespace YAM2E
             this.btn_save_rom_image.Size = new System.Drawing.Size(23, 22);
             this.btn_save_rom_image.Text = "Save ROM";
             this.btn_save_rom_image.ToolTipText = "Save ROM";
+            this.btn_save_rom_image.Click += new System.EventHandler(this.btn_save_rom_image_Click);
             // 
             // toolStripSeparator2
             // 
@@ -253,24 +323,51 @@ namespace YAM2E
             this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
             this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
             // 
+            // sts_main_status_bar
+            // 
+            this.sts_main_status_bar.Location = new System.Drawing.Point(0, 544);
+            this.sts_main_status_bar.Name = "sts_main_status_bar";
+            this.sts_main_status_bar.Size = new System.Drawing.Size(1011, 22);
+            this.sts_main_status_bar.TabIndex = 3;
+            this.sts_main_status_bar.Text = "statusStrip1";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(230, 63);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(760, 350);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
             // main_window
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(849, 496);
+            this.ClientSize = new System.Drawing.Size(1011, 566);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.sts_main_status_bar);
             this.Controls.Add(this.tool_strip_image_buttons);
             this.Controls.Add(this.grp_data_selector);
             this.Controls.Add(this.tool_strip_main_buttons);
             this.Name = "main_window";
             this.Text = "YAM2E";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.main_window_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);
             this.tool_strip_main_buttons.ResumeLayout(false);
             this.tool_strip_main_buttons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.grp_data_selector.ResumeLayout(false);
-            this.grp_data_selector.PerformLayout();
+            this.grp_main_area.ResumeLayout(false);
+            this.grp_main_area.PerformLayout();
+            this.grp_main_tileset.ResumeLayout(false);
+            this.grp_main_tileset.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).EndInit();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,9 +386,7 @@ namespace YAM2E
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.GroupBox grp_data_selector;
         private System.Windows.Forms.ComboBox cbb_area_bank;
-        private System.Windows.Forms.Label lbl_tileset;
         private System.Windows.Forms.Label lbl_area_bank;
-        private System.Windows.Forms.ComboBox cbb_tileset;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_editors;
         private System.Windows.Forms.ToolStripMenuItem btn_tweaks_editor;
         private System.Windows.Forms.ToolStrip tool_strip_image_buttons;
@@ -299,6 +394,14 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripButton btn_save_rom_image;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btn_open_tweaks_editor_image;
+        private System.Windows.Forms.StatusStrip sts_main_status_bar;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox grp_main_area;
+        private System.Windows.Forms.GroupBox grp_main_tileset;
+        private System.Windows.Forms.NumericUpDown num_main_metatile;
+        private System.Windows.Forms.Label lbl_main_graphics_pointer;
+        private System.Windows.Forms.Label lbl_main_metatile;
+        private System.Windows.Forms.NumericUpDown num_main_graphics_offset;
     }
 }
 
