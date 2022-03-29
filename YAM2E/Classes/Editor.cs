@@ -30,7 +30,7 @@ namespace YAM2E.Classes
         {
             //Changing button appearence
             Globals.rom_loaded = true;
-            main_window.Current.updateButtonStatus();
+            main_window.Current.ROMLoaded();
 
             ROMPath = path;
             ROM = File.ReadAllBytes(path);
@@ -89,6 +89,17 @@ namespace YAM2E.Classes
             SaveROM();
         }
 
+        public static void DrawBlack8(Bitmap bpm, int x, int y)
+        {
+            for(int i = 0; i < 8; i++)
+            {
+                for(int j = 0; j < 8; j++)
+                {
+                    bpm.SetPixel(x + i, y + j, Globals.cBlack);
+                }
+            }
+        }
+
         public static void DrawTile8(int offset, Bitmap bpm, int x, int y)
         {
             //one 8x8 tile = 16 bytes
@@ -123,17 +134,22 @@ namespace YAM2E.Classes
             }
         }
 
-        //draws a metatile out of graphics and metatile data
-        public static void DrawMetaTile(int gfx_offset, int meta_offset,Bitmap bpm, int x, int y)
+        public static void DrawMetaTile(int gfx_offset, int meta_offset, Bitmap bpm, int x, int y)
         {
-            gfx_offset += 16 * ROM[meta_offset];
-            DrawTile8(gfx_offset + 16 * 0, bpm, x, y);
-            DrawTile8(gfx_offset + 16 * 1, bpm, x + 8, y);
-            DrawTile8(gfx_offset + 16 * 2, bpm, x, y + 8);
-            DrawTile8(gfx_offset + 16 * 3, bpm, x + 8, y + 8);
+            if (ROM[meta_offset] >= 0x7F) DrawBlack8(bpm, x, y);
+            else DrawTile8(gfx_offset + 16 * ROM[meta_offset], bpm, x, y);
+            if (ROM[meta_offset + 1] >= 0x7F) DrawBlack8(bpm, x + 8, y);
+            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 1], bpm, x + 8, y);
+            if (ROM[meta_offset + 2] >= 0x7F) DrawBlack8(bpm, x, y + 8);
+            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 2], bpm, x, y + 8);
+            if (ROM[meta_offset + 3] >= 0x7F) DrawBlack8(bpm, x + 8, y + 8);
+            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
+            //if (ROM[meta_offset + 0] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 0], bpm, x, y);
+            //if (ROM[meta_offset + 1] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 1], bpm, x + 8, y);
+            //if (ROM[meta_offset + 2] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 2], bpm, x, y + 8);
+            //if (ROM[meta_offset + 3] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
         }
 
-        //draws a tileset with the graphics and metatile data
         public static void DrawTileSet(int gfx_offset, int meta_offset,Bitmap bpm, Point p, int tiles_wide, int tiles_high)
         {
             int count = 0;
@@ -149,16 +165,27 @@ namespace YAM2E.Classes
 
         public static void DrawScreen(int gfx_offset, int meta_offset, Bitmap bmp, Point p)
         {
-            int screen_offset = 0x3FF00;
+            int screen_offset = 0x25F00;
             int counter = 0;
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    DrawMetaTile(gfx_offset, meta_offset + ROM[screen_offset + counter], bmp, p.X + 16 * j, p.Y + 16 * i);
+                    DrawMetaTile(gfx_offset, meta_offset + ROM[screen_offset + counter] * 4, bmp, p.X + 16 * j, p.Y + 16 * i);
                     counter++;
                 }
             }
+        }
+
+        public static Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
+        {
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.DrawImage(bmp, 0, 0, width, height);
+            }
+
+            return result;
         }
     }
 }

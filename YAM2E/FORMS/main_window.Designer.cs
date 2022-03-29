@@ -57,7 +57,7 @@ namespace YAM2E
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -66,7 +66,6 @@ namespace YAM2E
             ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).BeginInit();
             this.tool_strip_image_buttons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -79,7 +78,7 @@ namespace YAM2E
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1011, 25);
+            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1088, 25);
             this.tool_strip_main_buttons.TabIndex = 0;
             this.tool_strip_main_buttons.Text = "toolStrip2";
             // 
@@ -134,6 +133,7 @@ namespace YAM2E
             this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_tweaks_editor});
+            this.tool_strip_editors.Enabled = false;
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
             this.tool_strip_editors.ShowDropDownArrow = false;
@@ -157,6 +157,7 @@ namespace YAM2E
             this.grp_data_selector.TabIndex = 1;
             this.grp_data_selector.TabStop = false;
             this.grp_data_selector.Text = "Data Selector";
+            this.grp_data_selector.Visible = false;
             // 
             // grp_main_area
             // 
@@ -281,7 +282,7 @@ namespace YAM2E
             this.btn_open_tweaks_editor_image});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
-            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1011, 25);
+            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1088, 25);
             this.tool_strip_image_buttons.TabIndex = 2;
             this.tool_strip_image_buttons.Text = "toolStrip1";
             // 
@@ -299,6 +300,7 @@ namespace YAM2E
             // btn_save_rom_image
             // 
             this.btn_save_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_save_rom_image.Enabled = false;
             this.btn_save_rom_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_save_rom_image.Image")));
             this.btn_save_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_save_rom_image.Name = "btn_save_rom_image";
@@ -315,6 +317,7 @@ namespace YAM2E
             // btn_open_tweaks_editor_image
             // 
             this.btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_open_tweaks_editor_image.Enabled = false;
             this.btn_open_tweaks_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_tweaks_editor_image.Image")));
             this.btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
@@ -325,27 +328,29 @@ namespace YAM2E
             // 
             // sts_main_status_bar
             // 
-            this.sts_main_status_bar.Location = new System.Drawing.Point(0, 544);
+            this.sts_main_status_bar.Location = new System.Drawing.Point(0, 613);
             this.sts_main_status_bar.Name = "sts_main_status_bar";
-            this.sts_main_status_bar.Size = new System.Drawing.Size(1011, 22);
+            this.sts_main_status_bar.Size = new System.Drawing.Size(1088, 22);
             this.sts_main_status_bar.TabIndex = 3;
             this.sts_main_status_bar.Text = "statusStrip1";
             // 
-            // pictureBox1
+            // grp_main_tileset_viewer
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(230, 63);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(760, 350);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
+            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(12, 234);
+            this.grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
+            this.grp_main_tileset_viewer.Size = new System.Drawing.Size(200, 100);
+            this.grp_main_tileset_viewer.TabIndex = 4;
+            this.grp_main_tileset_viewer.TabStop = false;
+            this.grp_main_tileset_viewer.Text = "Tileset";
+            this.grp_main_tileset_viewer.Visible = false;
             // 
             // main_window
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 566);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(1088, 635);
+            this.Controls.Add(this.grp_main_tileset_viewer);
             this.Controls.Add(this.sts_main_status_bar);
             this.Controls.Add(this.tool_strip_image_buttons);
             this.Controls.Add(this.grp_data_selector);
@@ -367,7 +372,6 @@ namespace YAM2E
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).EndInit();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -395,13 +399,13 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btn_open_tweaks_editor_image;
         private System.Windows.Forms.StatusStrip sts_main_status_bar;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox grp_main_area;
         private System.Windows.Forms.GroupBox grp_main_tileset;
         private System.Windows.Forms.NumericUpDown num_main_metatile;
         private System.Windows.Forms.Label lbl_main_graphics_pointer;
         private System.Windows.Forms.Label lbl_main_metatile;
         private System.Windows.Forms.NumericUpDown num_main_graphics_offset;
+        private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
     }
 }
 

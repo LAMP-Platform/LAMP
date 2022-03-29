@@ -101,7 +101,7 @@ namespace YAM2E.FORMS
             this.tabc_tweaks_editor.Location = new System.Drawing.Point(0, 0);
             this.tabc_tweaks_editor.Name = "tabc_tweaks_editor";
             this.tabc_tweaks_editor.SelectedIndex = 0;
-            this.tabc_tweaks_editor.Size = new System.Drawing.Size(659, 423);
+            this.tabc_tweaks_editor.Size = new System.Drawing.Size(296, 423);
             this.tabc_tweaks_editor.TabIndex = 0;
             // 
             // tab_twed_samus
@@ -111,7 +111,7 @@ namespace YAM2E.FORMS
             this.tab_twed_samus.Location = new System.Drawing.Point(4, 24);
             this.tab_twed_samus.Name = "tab_twed_samus";
             this.tab_twed_samus.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_twed_samus.Size = new System.Drawing.Size(651, 395);
+            this.tab_twed_samus.Size = new System.Drawing.Size(288, 395);
             this.tab_twed_samus.TabIndex = 0;
             this.tab_twed_samus.Text = "Samus";
             this.tab_twed_samus.UseVisualStyleBackColor = true;
@@ -545,7 +545,7 @@ namespace YAM2E.FORMS
             // 
             // btn_apply_tweaks
             // 
-            this.btn_apply_tweaks.Location = new System.Drawing.Point(578, 429);
+            this.btn_apply_tweaks.Location = new System.Drawing.Point(220, 425);
             this.btn_apply_tweaks.Name = "btn_apply_tweaks";
             this.btn_apply_tweaks.Size = new System.Drawing.Size(75, 23);
             this.btn_apply_tweaks.TabIndex = 1;
@@ -555,7 +555,7 @@ namespace YAM2E.FORMS
             // 
             // btn_close_tweaks
             // 
-            this.btn_close_tweaks.Location = new System.Drawing.Point(497, 429);
+            this.btn_close_tweaks.Location = new System.Drawing.Point(142, 425);
             this.btn_close_tweaks.Name = "btn_close_tweaks";
             this.btn_close_tweaks.Size = new System.Drawing.Size(75, 23);
             this.btn_close_tweaks.TabIndex = 2;
@@ -567,7 +567,7 @@ namespace YAM2E.FORMS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 464);
+            this.ClientSize = new System.Drawing.Size(296, 450);
             this.Controls.Add(this.btn_close_tweaks);
             this.Controls.Add(this.btn_apply_tweaks);
             this.Controls.Add(this.tabc_tweaks_editor);
