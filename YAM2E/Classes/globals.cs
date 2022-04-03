@@ -12,12 +12,19 @@ namespace YAM2E
         public static bool rom_loaded = false;
 
         //Editable Color definitons
-        public static Color cBlack = Color.FromArgb(255, 0x00, 0x00, 0x00);
-        public static Color cDarkGray = Color.FromArgb(255, 0x6b, 0x6b, 0x6b);
-        public static Color cLightGray = Color.FromArgb(255, 0xa5, 0xa5, 0xa5);
-        public static Color cWhite = Color.FromArgb(255, 0xef, 0xef, 0xef);
+        public static Color cBlack = Color.FromArgb(255, 0, 0, 0);
+        public static Color cDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);
+        public static Color cLightGray = Color.FromArgb(255, 0xA5, 0xA5, 0xA5);
+        public static Color cWhite = Color.FromArgb(255, 0xEF, 0xEF, 0xEF);
+
         public static Color cTileSelector = Color.FromArgb(255, 0xFF, 0, 0);
         public static Color cTileSelection = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
+
+        //Bitmap lists
+        public static Bitmap[] TilesetTiles = new Bitmap[128];
+        public static Bitmap Tileset = new Bitmap(1, 1);
+        public static Bitmap[] Screens = new Bitmap[59];
+        public static Bitmap AreaBank = new Bitmap(4096, 4096);
 
         //public static Color cBlack = Color.FromArgb(255, 0, 0, 0);
         //public static Color cDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);

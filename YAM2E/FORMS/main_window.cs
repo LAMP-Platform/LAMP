@@ -42,6 +42,8 @@ namespace YAM2E
             grp_main_tileset_viewer.Visible = value;
             grp_main_room_viewer.Visible = value;
 
+            if (value != true) return;
+
             //Tile Viewer 
             Controls.Add(Tileset);
             Tileset.BringToFront();
@@ -58,33 +60,31 @@ namespace YAM2E
             cbb_area_bank.SelectedIndex = 0;
             Controls.Add(Room);
             Room.BringToFront();
-            grp_main_room_viewer.Controls.Add(Room);
+            flw_main_room_view.Controls.Add(Room);
             Room.Location = new Point(15, 20);
             Room.BackColor = Globals.cBlack;
             //Room.MouseDown += new MouseEventHandler(Tileset_MouseDown);
             //Room.MouseMove += new MouseEventHandler(Tileset_MouseMove);
             //Room.MouseUp += new MouseEventHandler(Tileset_MouseUp);
             Room.ResetSelection();
-            UpdateRoom();
         }
 
         public void UpdateTileset()
         {
-            Point p = new Point(0, 0);
-            Bitmap bmp = new Bitmap(256, 128);
-            Editor.DrawTileSet((int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p, 16, 8);
-            Tileset.BackgroundImage = bmp;
+            Globals.Tileset.Dispose();
+            Globals.Tileset = Editor.DrawTileSet((int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, 16, 8);
+            Tileset.BackgroundImage = Globals.Tileset;
             grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
         }
 
         public void UpdateRoom()
         {
             Point p = new Point(0, 0);
-            Bitmap bmp = new Bitmap(4096, 4096);
-            Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], (int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p);
-            //Editor.DrawScreen((int)num_main_screen_offset.Value, (int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p);
-            Room.BackgroundImage = bmp;
-            grp_main_room_viewer.Size = new Size(Room.BackgroundImage.Width + 30, Room.BackgroundImage.Height + 35);
+            Globals.AreaBank.Dispose();
+            Globals.AreaBank = new Bitmap(4096, 4096);
+            Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], Globals.AreaBank, p);
+            Room.BackgroundImage = Globals.AreaBank;
+            //pnl_main_room_view.Size = new Size(Room.BackgroundImage.Width + 30, Room.BackgroundImage.Height + 35);
         }
 
         public void UpdateSelectedTiles()
@@ -143,6 +143,7 @@ namespace YAM2E
                 Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, SelectedTile.X), Math.Min(StartSelection.Y, SelectedTile.Y), width, height);
                 Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
                 Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
+                lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
             }
             else
             {
@@ -160,6 +161,14 @@ namespace YAM2E
         #endregion
 
         #region Main Events
+        private void main_window_Resize(object sender, EventArgs e)
+        {
+            grp_main_room_viewer.Width = this.Width - 28 - grp_main_room_viewer.Location.X;
+            grp_main_room_viewer.Height = this.Height - 64 - grp_main_room_viewer.Location.Y;
+            flw_main_room_view.Width = grp_main_room_viewer.Width - 30;
+            flw_main_room_view.Height = grp_main_room_viewer.Height - 30;
+        }
+
         private void btn_open_rom_Click(object sender, EventArgs e)
         {
             Editor.open_rom();
@@ -196,7 +205,7 @@ namespace YAM2E
 
         private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateRoom();
+           UpdateRoom();
         }
 
         private void main_window_Load(object sender, EventArgs e)
@@ -207,19 +216,16 @@ namespace YAM2E
         private void num_main_graphics_offset_ValueChanged(object sender, EventArgs e)
         {
             UpdateTileset();
+            UpdateRoom();
         }
 
         private void num_main_metatile_ValueChanged(object sender, EventArgs e)
         {
             UpdateTileset();
-        }
-        #endregion
-
-        #endregion
-
-        private void num_main_screen_offset_ValueChanged(object sender, EventArgs e)
-        {
             UpdateRoom();
         }
+        #endregion
+
+        #endregion
     }
 }

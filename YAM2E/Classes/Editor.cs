@@ -156,46 +156,75 @@ namespace YAM2E.Classes
             if (ROM[meta_offset + 3] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
         }
 
-        public static void DrawTileSet(int gfx_offset, int meta_offset,Bitmap bpm, Point p, int tiles_wide, int tiles_high)
+        public static Bitmap DrawTileSet(int gfx_offset, int meta_offset, int tiles_wide, int tiles_high)
         {
             int count = 0;
             for (int i = 0; i < tiles_high; i++)
             {
                 for (int j = 0; j < tiles_wide; j++)
                 {
-                    DrawMetaTile(gfx_offset, meta_offset + count * 4, bpm, p.X + 16 * j, p.Y + 16 * i);
+                    if (Globals.TilesetTiles[count] != null) Globals.TilesetTiles[count].Dispose();
+                    Globals.TilesetTiles[count] = new Bitmap(16, 16);
+                    DrawMetaTile(gfx_offset, meta_offset + count * 4, Globals.TilesetTiles[count], 0, 0);
                     count++;
                 }
             }
-        }
 
-        public static void DrawScreen(int screen_offset, int gfx_offset, int meta_offset, Bitmap bmp, Point p)
+            Bitmap Tileset = new Bitmap(16 * tiles_wide, 16 * tiles_high);
+            Graphics g = Graphics.FromImage(Tileset);
+            count = 0;
+            for (int i = 0; i < tiles_high; i++)
+            {
+                for (int j = 0; j < tiles_wide; j++)
+                {
+                    g.DrawImage(Globals.TilesetTiles[count], new Point(16 * j, 16 * i));
+                    count++;
+                }
+            }
+            g.Dispose();
+            return Tileset;
+        }
+        
+        public static Bitmap DrawScreen(int screen_offset)
         {
+            Bitmap Screen = new Bitmap(256, 256);
+            Graphics g = Graphics.FromImage(Screen);
             int counter = 0;
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    DrawMetaTile(gfx_offset, meta_offset + ROM[screen_offset + counter] * 4, bmp, p.X + 16 * j, p.Y + 16 * i);
+                    g.DrawImage(Globals.TilesetTiles[ROM[screen_offset + counter]], new Point(16 * j, 16 * i));
                     counter++;
                 }
             }
+            g.Dispose();
+            return Screen;
         }
 
-        public static void DrawAreaBank(int bank_offset, int gfx_offset, int meta_offset, Bitmap bmp, Point p)
+        public static void DrawAreaBank(int bank_offset, Bitmap bmp, Point p)
         {
+            //reading in all the screens first
+            for (int i = 0; i < 59; i++)
+            {
+                if (Globals.Screens[i] != null) Globals.Screens[i].Dispose();
+                Globals.Screens[i] = DrawScreen(bank_offset + 0x500 + (0x100 * i));
+            }
+
+            Graphics g = Graphics.FromImage(bmp);
             int count = 0;
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
                     int screen_pointer = ROM[bank_offset + (count * 2) + 1];
-                    int screen_offset = bank_offset + ((screen_pointer << 0x8) - 0x4000);
+                    int screen = screen_pointer - 0x45;
                     Point screen_point = new Point(p.X + (j * 256), p.Y + (i * 256));
-                    DrawScreen(screen_offset, gfx_offset, meta_offset, bmp, screen_point);
+                    if (screen >= 0) g.DrawImage(Globals.Screens[screen], screen_point);
                     count++;
                 }
             }
+            g.Dispose();
         }
 
         public static Bitmap ResizeBitmap(Bitmap bmp, int width, int height)
