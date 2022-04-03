@@ -12,8 +12,11 @@ namespace YAM2E.Classes
     public static class Editor
     {
         public static byte[] ROM; //byte array of the ROM
-        public static string ROMPath;
+        public static string ROMPath; //direct path to ROM file,
         public static int[] A_BANKS = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 }; //pointers to level data banks
+        public static int SelectionWidth = 0;
+        public static int SelectionHeight = 0;
+        public static int[] SelectedTiles;
 
         public static void open_rom()
         {
@@ -30,10 +33,10 @@ namespace YAM2E.Classes
         {
             //Changing button appearence
             Globals.rom_loaded = true;
-            main_window.Current.ROMLoaded();
 
             ROMPath = path;
             ROM = File.ReadAllBytes(path);
+            main_window.Current.ROMLoaded();
             update_title_bar();
         }
 
@@ -89,6 +92,17 @@ namespace YAM2E.Classes
             SaveROM();
         }
 
+        public static Rectangle UniteRect(Rectangle rect1, Rectangle rect2)
+        {
+            //This Function returns a rectangle with the most top left
+            //position of the given rectangles and the maximum width and height
+            int x = Math.Min(rect1.X, rect2.X);
+            int y = Math.Min(rect1.Y, rect2.Y);
+            int width = Math.Max(rect1.X + rect1.Width, rect2.X + rect2.Width) - x + 1;
+            int height = Math.Max(rect1.Y + rect1.Height, rect2.Y + rect2.Height) - y + 1;
+            return new Rectangle(x, y, width, height);
+        }
+
         public static void DrawBlack8(Bitmap bpm, int x, int y)
         {
             for(int i = 0; i < 8; i++)
@@ -136,18 +150,10 @@ namespace YAM2E.Classes
 
         public static void DrawMetaTile(int gfx_offset, int meta_offset, Bitmap bpm, int x, int y)
         {
-            if (ROM[meta_offset] >= 0x7F) DrawBlack8(bpm, x, y);
-            else DrawTile8(gfx_offset + 16 * ROM[meta_offset], bpm, x, y);
-            if (ROM[meta_offset + 1] >= 0x7F) DrawBlack8(bpm, x + 8, y);
-            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 1], bpm, x + 8, y);
-            if (ROM[meta_offset + 2] >= 0x7F) DrawBlack8(bpm, x, y + 8);
-            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 2], bpm, x, y + 8);
-            if (ROM[meta_offset + 3] >= 0x7F) DrawBlack8(bpm, x + 8, y + 8);
-            else DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
-            //if (ROM[meta_offset + 0] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 0], bpm, x, y);
-            //if (ROM[meta_offset + 1] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 1], bpm, x + 8, y);
-            //if (ROM[meta_offset + 2] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 2], bpm, x, y + 8);
-            //if (ROM[meta_offset + 3] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
+            if (ROM[meta_offset + 0] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 0], bpm, x, y);
+            if (ROM[meta_offset + 1] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 1], bpm, x + 8, y);
+            if (ROM[meta_offset + 2] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 2], bpm, x, y + 8);
+            if (ROM[meta_offset + 3] <= 0x7F) DrawTile8(gfx_offset + 16 * ROM[meta_offset + 3], bpm, x + 8, y + 8);
         }
 
         public static void DrawTileSet(int gfx_offset, int meta_offset,Bitmap bpm, Point p, int tiles_wide, int tiles_high)
@@ -163,9 +169,8 @@ namespace YAM2E.Classes
             }
         }
 
-        public static void DrawScreen(int gfx_offset, int meta_offset, Bitmap bmp, Point p)
+        public static void DrawScreen(int screen_offset, int gfx_offset, int meta_offset, Bitmap bmp, Point p)
         {
-            int screen_offset = 0x25F00;
             int counter = 0;
             for (int i = 0; i < 16; i++)
             {
@@ -173,6 +178,22 @@ namespace YAM2E.Classes
                 {
                     DrawMetaTile(gfx_offset, meta_offset + ROM[screen_offset + counter] * 4, bmp, p.X + 16 * j, p.Y + 16 * i);
                     counter++;
+                }
+            }
+        }
+
+        public static void DrawAreaBank(int bank_offset, int gfx_offset, int meta_offset, Bitmap bmp, Point p)
+        {
+            int count = 0;
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    int screen_pointer = ROM[bank_offset + (count * 2) + 1];
+                    int screen_offset = bank_offset + ((screen_pointer << 0x8) - 0x4000);
+                    Point screen_point = new Point(p.X + (j * 256), p.Y + (i * 256));
+                    DrawScreen(screen_offset, gfx_offset, meta_offset, bmp, screen_point);
+                    count++;
                 }
             }
         }

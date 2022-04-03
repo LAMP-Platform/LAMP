@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace YAM2E.Classes
 {
-    public class TileViewer : Control
+    public class RoomViewer : Control
     {
         public override Image BackgroundImage
         {
@@ -41,7 +41,7 @@ namespace YAM2E.Classes
             SelRect = new Rectangle(-1, -1, 0, 0);
         }
 
-        public TileViewer()
+        public RoomViewer()
         {
             SuspendLayout();
             ResumeLayout(false);

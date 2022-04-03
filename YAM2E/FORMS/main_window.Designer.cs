@@ -57,7 +57,10 @@ namespace YAM2E
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
+            this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             this.grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
+            this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
+            this.num_main_screen_offset = new System.Windows.Forms.NumericUpDown();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -66,6 +69,8 @@ namespace YAM2E
             ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).BeginInit();
             this.tool_strip_image_buttons.SuspendLayout();
+            this.sts_main_status_bar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_screen_offset)).BeginInit();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -106,12 +111,14 @@ namespace YAM2E
             // 
             // btn_save_rom
             // 
+            this.btn_save_rom.Enabled = false;
             this.btn_save_rom.Name = "btn_save_rom";
             this.btn_save_rom.Size = new System.Drawing.Size(151, 22);
             this.btn_save_rom.Text = "Save ROM";
             // 
             // btn_save_rom_as
             // 
+            this.btn_save_rom_as.Enabled = false;
             this.btn_save_rom_as.Name = "btn_save_rom_as";
             this.btn_save_rom_as.Size = new System.Drawing.Size(151, 22);
             this.btn_save_rom_as.Text = "Save ROM as...";
@@ -124,6 +131,7 @@ namespace YAM2E
             // 
             // btn_create_backup
             // 
+            this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
             this.btn_create_backup.Size = new System.Drawing.Size(151, 22);
             this.btn_create_backup.Text = "Create Backup";
@@ -328,15 +336,23 @@ namespace YAM2E
             // 
             // sts_main_status_bar
             // 
+            this.sts_main_status_bar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lbl_main_selection_size});
             this.sts_main_status_bar.Location = new System.Drawing.Point(0, 613);
             this.sts_main_status_bar.Name = "sts_main_status_bar";
             this.sts_main_status_bar.Size = new System.Drawing.Size(1088, 22);
             this.sts_main_status_bar.TabIndex = 3;
             this.sts_main_status_bar.Text = "statusStrip1";
             // 
+            // lbl_main_selection_size
+            // 
+            this.lbl_main_selection_size.Name = "lbl_main_selection_size";
+            this.lbl_main_selection_size.Size = new System.Drawing.Size(108, 17);
+            this.lbl_main_selection_size.Text = "Selected Area: 0 x 0";
+            // 
             // grp_main_tileset_viewer
             // 
-            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(12, 234);
+            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(214, 53);
             this.grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
             this.grp_main_tileset_viewer.Size = new System.Drawing.Size(200, 100);
             this.grp_main_tileset_viewer.TabIndex = 4;
@@ -344,12 +360,43 @@ namespace YAM2E
             this.grp_main_tileset_viewer.Text = "Tileset";
             this.grp_main_tileset_viewer.Visible = false;
             // 
+            // grp_main_room_viewer
+            // 
+            this.grp_main_room_viewer.Location = new System.Drawing.Point(13, 234);
+            this.grp_main_room_viewer.Name = "grp_main_room_viewer";
+            this.grp_main_room_viewer.Size = new System.Drawing.Size(1063, 376);
+            this.grp_main_room_viewer.TabIndex = 5;
+            this.grp_main_room_viewer.TabStop = false;
+            this.grp_main_room_viewer.Text = "Room";
+            this.grp_main_room_viewer.Visible = false;
+            // 
+            // num_main_screen_offset
+            // 
+            this.num_main_screen_offset.Hexadecimal = true;
+            this.num_main_screen_offset.Increment = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.num_main_screen_offset.Location = new System.Drawing.Point(747, 76);
+            this.num_main_screen_offset.Maximum = new decimal(new int[] {
+            100000000,
+            0,
+            0,
+            0});
+            this.num_main_screen_offset.Name = "num_main_screen_offset";
+            this.num_main_screen_offset.Size = new System.Drawing.Size(120, 23);
+            this.num_main_screen_offset.TabIndex = 6;
+            this.num_main_screen_offset.ValueChanged += new System.EventHandler(this.num_main_screen_offset_ValueChanged);
+            // 
             // main_window
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1088, 635);
+            this.Controls.Add(this.num_main_screen_offset);
+            this.Controls.Add(this.grp_main_room_viewer);
             this.Controls.Add(this.grp_main_tileset_viewer);
             this.Controls.Add(this.sts_main_status_bar);
             this.Controls.Add(this.tool_strip_image_buttons);
@@ -372,6 +419,9 @@ namespace YAM2E
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).EndInit();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
+            this.sts_main_status_bar.ResumeLayout(false);
+            this.sts_main_status_bar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.num_main_screen_offset)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -406,6 +456,9 @@ namespace YAM2E
         private System.Windows.Forms.Label lbl_main_metatile;
         private System.Windows.Forms.NumericUpDown num_main_graphics_offset;
         private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_main_selection_size;
+        private System.Windows.Forms.GroupBox grp_main_room_viewer;
+        private System.Windows.Forms.NumericUpDown num_main_screen_offset;
     }
 }
 

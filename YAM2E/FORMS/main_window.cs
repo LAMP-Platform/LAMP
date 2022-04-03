@@ -15,28 +15,12 @@ namespace YAM2E
     public partial class main_window : Form
     {
         public static main_window Current;
+
+        //Tile Viewer vars
         public static TileViewer Tileset = new TileViewer();
-
-        //COPY PASTE SHIT I WILL PROBABLY DELETE LATER
-        private Point Pivot = new Point(-1, -1);
-        private Point TileCursor = new Point(-1, -1);
-        private Rectangle Selection = new Rectangle(-1, -1, 1, 1);
-        private Bitmap SelectionImage;
-
-        public Rectangle Union(Rectangle rect1, Rectangle rect2)
-        {
-            int x = Math.Min(rect1.X, rect2.X);
-            int y = Math.Min(rect1.Y, rect2.Y);
-            int width = Math.Max(rect1.X + rect1.Width, rect2.X + rect2.Width) - x + 1;
-            int height = Math.Max(rect1.Y + rect1.Height, rect2.Y + rect2.Height) - y + 1;
-            return new Rectangle(x, y, width, height);
-        }
-        private void ResizeSelection(Point pos)
-        {
-            int width = Math.Abs(pos.X - Pivot.X) + 1;
-            int height = Math.Abs(pos.Y - Pivot.Y) + 1;
-            Selection = new Rectangle(pos.X >= Pivot.X ? Pivot.X : pos.X, pos.Y >= Pivot.Y ? Pivot.Y : pos.Y, width, height);
-        }
+        public static RoomViewer Room = new RoomViewer();
+        private Point StartSelection = new Point(-1, -1);
+        private Point SelectedTile = new Point(-1, -1);
 
         public main_window()
         {
@@ -56,18 +40,32 @@ namespace YAM2E
             btn_open_tweaks_editor_image.Enabled = value;
             btn_save_rom_image.Enabled = value;
             grp_main_tileset_viewer.Visible = value;
+            grp_main_room_viewer.Visible = value;
 
             //Tile Viewer 
             Controls.Add(Tileset);
             Tileset.BringToFront();
             grp_main_tileset_viewer.Controls.Add(Tileset);
             Tileset.Location = new Point(15, 20);
-            Tileset.BackgroundImage = new Bitmap(256, 128);
+            Tileset.BackColor = Globals.cBlack;
             Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
             Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
             Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
-            grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
+            Tileset.ResetSelection();
+            UpdateTileset();
 
+            //Room Viewer
+            cbb_area_bank.SelectedIndex = 0;
+            Controls.Add(Room);
+            Room.BringToFront();
+            grp_main_room_viewer.Controls.Add(Room);
+            Room.Location = new Point(15, 20);
+            Room.BackColor = Globals.cBlack;
+            //Room.MouseDown += new MouseEventHandler(Tileset_MouseDown);
+            //Room.MouseMove += new MouseEventHandler(Tileset_MouseMove);
+            //Room.MouseUp += new MouseEventHandler(Tileset_MouseUp);
+            Room.ResetSelection();
+            UpdateRoom();
         }
 
         public void UpdateTileset()
@@ -76,64 +74,92 @@ namespace YAM2E
             Bitmap bmp = new Bitmap(256, 128);
             Editor.DrawTileSet((int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p, 16, 8);
             Tileset.BackgroundImage = bmp;
+            grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
+        }
+
+        public void UpdateRoom()
+        {
+            Point p = new Point(0, 0);
+            Bitmap bmp = new Bitmap(4096, 4096);
+            Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], (int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p);
+            //Editor.DrawScreen((int)num_main_screen_offset.Value, (int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, bmp, p);
+            Room.BackgroundImage = bmp;
+            grp_main_room_viewer.Size = new Size(Room.BackgroundImage.Width + 30, Room.BackgroundImage.Height + 35);
+        }
+
+        public void UpdateSelectedTiles()
+        {
+            int x = Tileset.SelRect.X / 16;
+            int y = Tileset.SelRect.Y / 16;
+            int width = (Tileset.SelRect.Width + 1) / 16;
+            int height = (Tileset.SelRect.Height + 1) / 16;
+            Editor.SelectionWidth = width;
+            Editor.SelectionHeight = height;
+            lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
+
+            //returns the selected Metatile offsets
+            int tile_width = Tileset.BackgroundImage.Width / 16;
+            Editor.SelectedTiles = new int[width * height];
+            int count = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    int val = (y + i) * tile_width + j;
+                    Editor.SelectedTiles[count] = val;
+                    count++;
+                }
+            }
         }
 
         #region Main Window Events
 
         #region Tileset Events
-        //ALSO BUNCH OF COPY AND PASTE
         private void Tileset_MouseDown(object sender, MouseEventArgs e)
         {
-            Rectangle SelRect = Tileset.SelRect;
-            Tileset.ResizeSelection(new Rectangle(1, 1, 1, 1));
-            Tileset.Invalidate(Union(SelRect, Tileset.SelRect));
-            Tileset.Invalidate(Tileset.SelRect);
-            if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right)
-                return;
-            Pivot = TileCursor;
-            Selection = new Rectangle(Pivot.X, Pivot.Y, 1, 1);
-            Rectangle rectangle = new Rectangle(Pivot.X * 16, Pivot.Y * 16, 16, 16);
-            Tileset.ResizeSelection(Selection);
-            Tileset.Invalidate(rectangle);
-            //TSSize.Text = $"1 x 1";
+            int x = (e.X >> 4) * 16; //tile position at moment of click
+            int y = (e.Y >> 4) * 16; //
+            //setting start position for selection
+            StartSelection.X = x;
+            StartSelection.Y = y;
+            Rectangle rect = Tileset.SelRect; //old selection rectangle
+            Tileset.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
+            Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
         }
 
         private void Tileset_MouseMove(object sender, MouseEventArgs e)
         {
-            int x = e.X >> 5;
-            int y = e.Y >> 5;
-            if (x == TileCursor.X && y == TileCursor.Y || (x < 0 || x >= 8) || (y < 0 || y >= Tileset.Height / 16))
+            int x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
+            int y = (e.Y >> 4) * 16; //
+            if ((x == SelectedTile.X && y == SelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width || y > Tileset.BackgroundImage.Height)) //if mouse out of Tileset bounds
                 return;
-            TileCursor.X = x;
-            TileCursor.Y = y;
+            SelectedTile.X = x;
+            SelectedTile.Y = y;
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                if (!Tileset.HasSelection) return;
-                Rectangle selRect = Tileset.SelRect;
-                ResizeSelection(TileCursor);
-                Tileset.ResizeSelection(Selection);
-                Tileset.MoveRed(x, y);
-                Tileset.Invalidate(Union(selRect, Tileset.SelRect));
-                //TSSize.Text = $"{Tileset.SelRect.Width / 32 + 1} x {Tileset.SelRect.Height / 32 + 1}";
+                int width = Math.Abs((SelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
+                int height = Math.Abs((SelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+                Rectangle rect = Tileset.SelRect; //old selection rectangle
+                Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, SelectedTile.X), Math.Min(StartSelection.Y, SelectedTile.Y), width, height);
+                Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
+                Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
             }
             else
             {
-                Rectangle RedRect = Tileset.RedRect;
-                Tileset.MoveRed(x, y);
-                Tileset.Invalidate(Union(RedRect, Tileset.RedRect));
+                Rectangle rect = Tileset.RedRect; //old Position of the rectangle
+                Tileset.RedRect = new Rectangle(SelectedTile.X, SelectedTile.Y, 16 - 1, 16 - 1);
+                Tileset.Invalidate(Editor.UniteRect(Tileset.RedRect, rect));
             }
+            
         }
 
         private void Tileset_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right || !Tileset.HasSelection)
-                return;
-            Pivot = new Point(-1, -1);
-            SelectionImage = new Bitmap(Tileset.SelRect.Width, Tileset.SelRect.Height);
-            //CopyBlocks();
+            UpdateSelectedTiles();
         }
         #endregion
 
+        #region Main Events
         private void btn_open_rom_Click(object sender, EventArgs e)
         {
             Editor.open_rom();
@@ -170,7 +196,7 @@ namespace YAM2E
 
         private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            UpdateRoom();
         }
 
         private void main_window_Load(object sender, EventArgs e)
@@ -188,5 +214,12 @@ namespace YAM2E
             UpdateTileset();
         }
         #endregion
+
+        #endregion
+
+        private void num_main_screen_offset_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateRoom();
+        }
     }
 }
