@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Github\\YAM2E\\YAM2E\\YAM2E.csproj",
+      "projectUniqueName": "C:\\Users\\Conner\\source\\repos\\YAM2E\\YAM2E\\YAM2E.csproj",
       "projectName": "YAM2E",
-      "projectPath": "D:\\Github\\YAM2E\\YAM2E\\YAM2E.csproj",
+      "projectPath": "C:\\Users\\Conner\\source\\repos\\YAM2E\\YAM2E\\YAM2E.csproj",
       "packagesPath": "C:\\Users\\Conner\\.nuget\\packages\\",
-      "outputPath": "D:\\Github\\YAM2E\\YAM2E\\obj\\",
+      "outputPath": "C:\\Users\\Conner\\source\\repos\\YAM2E\\YAM2E\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Conner\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -63,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }

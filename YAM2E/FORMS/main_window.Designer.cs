@@ -58,6 +58,7 @@ namespace YAM2E
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
             this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
             this.grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
             this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
             this.flw_main_room_view = new System.Windows.Forms.FlowLayoutPanel();
@@ -338,7 +339,8 @@ namespace YAM2E
             // sts_main_status_bar
             // 
             this.sts_main_status_bar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lbl_main_selection_size});
+            this.lbl_main_selection_size,
+            this.lbl_main_hovered_screen});
             this.sts_main_status_bar.Location = new System.Drawing.Point(0, 749);
             this.sts_main_status_bar.Name = "sts_main_status_bar";
             this.sts_main_status_bar.Size = new System.Drawing.Size(1233, 22);
@@ -350,6 +352,12 @@ namespace YAM2E
             this.lbl_main_selection_size.Name = "lbl_main_selection_size";
             this.lbl_main_selection_size.Size = new System.Drawing.Size(108, 17);
             this.lbl_main_selection_size.Text = "Selected Area: 0 x 0";
+            // 
+            // lbl_main_hovered_screen
+            // 
+            this.lbl_main_hovered_screen.Name = "lbl_main_hovered_screen";
+            this.lbl_main_hovered_screen.Size = new System.Drawing.Size(92, 17);
+            this.lbl_main_hovered_screen.Text = "Selected Screen:";
             // 
             // grp_main_tileset_viewer
             // 
@@ -398,6 +406,7 @@ namespace YAM2E
             this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_window_KeyDown);
             this.Resize += new System.EventHandler(this.main_window_Resize);
             this.tool_strip_main_buttons.ResumeLayout(false);
             this.tool_strip_main_buttons.PerformLayout();
@@ -452,6 +461,7 @@ namespace YAM2E
         private System.Windows.Forms.GroupBox grp_main_room_viewer;
         private System.Windows.Forms.FlowLayoutPanel flw_main_room_view;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_main_hovered_screen;
     }
 }
 

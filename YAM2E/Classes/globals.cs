@@ -24,7 +24,12 @@ namespace YAM2E
         public static Bitmap[] TilesetTiles = new Bitmap[128];
         public static Bitmap Tileset = new Bitmap(1, 1);
         public static Bitmap[] Screens = new Bitmap[59];
-        public static Bitmap AreaBank = new Bitmap(4096, 4096);
+        public static Bitmap AreaBank = new Bitmap(1, 1);
+
+        //Area data
+        public static int[,] AreaScreens = new int[16, 16];
+        public static int SelectedScreenX = 0;
+        public static int SelectedScreenY = 0;
 
         //public static Color cBlack = Color.FromArgb(255, 0, 0, 0);
         //public static Color cDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);

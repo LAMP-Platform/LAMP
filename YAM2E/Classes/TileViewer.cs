@@ -55,7 +55,6 @@ namespace YAM2E.Classes
                 e.Graphics.DrawRectangle(TilePen, RedRect);
             if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))
                 return;
-            e.Graphics.DrawRectangle(BlackPen, SelRect);
             e.Graphics.DrawRectangle(SelectionPen, SelRect);
             base.OnPaint(e);
         }

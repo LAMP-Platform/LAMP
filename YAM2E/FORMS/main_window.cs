@@ -20,7 +20,9 @@ namespace YAM2E
         public static TileViewer Tileset = new TileViewer();
         public static RoomViewer Room = new RoomViewer();
         private Point StartSelection = new Point(-1, -1);
-        private Point SelectedTile = new Point(-1, -1);
+        private Point TilesetSelectedTile = new Point(-1, -1);
+        private Point RoomSelectedTile = new Point(-1, -1);
+        private Size RoomSelectedSize = new Size(-1, -1);
 
         public main_window()
         {
@@ -44,7 +46,7 @@ namespace YAM2E
 
             if (value != true) return;
 
-            //Tile Viewer 
+            #region Tile Viewer 
             Controls.Add(Tileset);
             Tileset.BringToFront();
             grp_main_tileset_viewer.Controls.Add(Tileset);
@@ -55,18 +57,20 @@ namespace YAM2E
             Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
             Tileset.ResetSelection();
             UpdateTileset();
+            #endregion
 
-            //Room Viewer
+            #region Room Viewer
             cbb_area_bank.SelectedIndex = 0;
             Controls.Add(Room);
             Room.BringToFront();
             flw_main_room_view.Controls.Add(Room);
             Room.Location = new Point(15, 20);
             Room.BackColor = Globals.cBlack;
-            //Room.MouseDown += new MouseEventHandler(Tileset_MouseDown);
-            //Room.MouseMove += new MouseEventHandler(Tileset_MouseMove);
-            //Room.MouseUp += new MouseEventHandler(Tileset_MouseUp);
+            Room.MouseDown += new MouseEventHandler(Room_MouseDown);
+            Room.MouseMove += new MouseEventHandler(Room_MouseMove);
+            Room.MouseUp += new MouseEventHandler(Room_MouseUp);
             Room.ResetSelection();
+            #endregion
         }
 
         public void UpdateTileset()
@@ -81,7 +85,7 @@ namespace YAM2E
         {
             Point p = new Point(0, 0);
             Globals.AreaBank.Dispose();
-            Globals.AreaBank = new Bitmap(4096, 4096);
+            Globals.AreaBank = new Bitmap(4096, 4096, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], Globals.AreaBank, p);
             Room.BackgroundImage = Globals.AreaBank;
             //pnl_main_room_view.Size = new Size(Room.BackgroundImage.Width + 30, Room.BackgroundImage.Height + 35);
@@ -89,6 +93,7 @@ namespace YAM2E
 
         public void UpdateSelectedTiles()
         {
+            RoomSelectedSize = new Size(Tileset.SelRect.Width, Tileset.SelRect.Height);
             int x = Tileset.SelRect.X / 16;
             int y = Tileset.SelRect.Y / 16;
             int width = (Tileset.SelRect.Width + 1) / 16;
@@ -98,16 +103,52 @@ namespace YAM2E
             lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
 
             //returns the selected Metatile offsets
-            int tile_width = Tileset.BackgroundImage.Width / 16;
-            Editor.SelectedTiles = new int[width * height];
+            int tiles_width = Tileset.BackgroundImage.Width / 16;
+            Editor.SelectedTiles = new byte[width * height];
             int count = 0;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    int val = (y + i) * tile_width + j;
-                    Editor.SelectedTiles[count] = val;
+                    int val = (y + i) * tiles_width + j + x;
+                    Editor.SelectedTiles[count] = (byte)val;
                     count++;
+                }
+            }
+        }
+
+        public void PlaceSelectedTiles()
+        {
+            int bank_screen_offset = Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY];
+            int screen_offset = Editor.A_BANKS[cbb_area_bank.SelectedIndex] + 0x500 + (0x100 * (bank_screen_offset - 0x45));
+
+            //coordinates on screen
+            int x = RoomSelectedTile.X / 16 - 16 * Globals.SelectedScreenX;
+            int y = RoomSelectedTile.Y / 16 - 16 * Globals.SelectedScreenY;
+            lbl_main_hovered_screen.Text = $"Selected Tile: {x}, {y}";
+
+            //writing data
+            int start = (16 * y) + x;
+            for (int i = 0; i < Editor.SelectionHeight; i++)
+            { 
+                Editor.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);  
+            }
+
+            //updating screens
+            Editor.UpdateScreen(bank_screen_offset - 0x45, Editor.A_BANKS[cbb_area_bank.SelectedIndex]);
+
+            //invalidating screen
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    if (Globals.AreaScreens[i,j] == bank_screen_offset)
+                    {
+                        Graphics g = Graphics.FromImage(Room.BackgroundImage);
+                        g.DrawImage(Globals.Screens[bank_screen_offset - 0x45], new Point(256 * i, 256 * j));
+                        g.Dispose();
+                        Room.Invalidate(new Rectangle(256 * i, 256 * j, 256, 256));
+                    }
                 }
             }
         }
@@ -131,16 +172,16 @@ namespace YAM2E
         {
             int x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
             int y = (e.Y >> 4) * 16; //
-            if ((x == SelectedTile.X && y == SelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width || y > Tileset.BackgroundImage.Height)) //if mouse out of Tileset bounds
+            if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width || y > Tileset.BackgroundImage.Height)) //if mouse out of Tileset bounds
                 return;
-            SelectedTile.X = x;
-            SelectedTile.Y = y;
+            TilesetSelectedTile.X = x;
+            TilesetSelectedTile.Y = y;
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                int width = Math.Abs((SelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
-                int height = Math.Abs((SelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+                int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
+                int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
                 Rectangle rect = Tileset.SelRect; //old selection rectangle
-                Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, SelectedTile.X), Math.Min(StartSelection.Y, SelectedTile.Y), width, height);
+                Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, TilesetSelectedTile.X), Math.Min(StartSelection.Y, TilesetSelectedTile.Y), width, height);
                 Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
                 Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
                 lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
@@ -148,7 +189,7 @@ namespace YAM2E
             else
             {
                 Rectangle rect = Tileset.RedRect; //old Position of the rectangle
-                Tileset.RedRect = new Rectangle(SelectedTile.X, SelectedTile.Y, 16 - 1, 16 - 1);
+                Tileset.RedRect = new Rectangle(TilesetSelectedTile.X, TilesetSelectedTile.Y, 16 - 1, 16 - 1);
                 Tileset.Invalidate(Editor.UniteRect(Tileset.RedRect, rect));
             }
             
@@ -158,6 +199,43 @@ namespace YAM2E
         {
             UpdateSelectedTiles();
         }
+        #endregion
+
+        #region Room Events
+        private void Room_MouseDown(object sender, MouseEventArgs e)
+        {
+            PlaceSelectedTiles();
+        }
+
+        private void Room_MouseMove(object sender, MouseEventArgs e)
+        {
+            Globals.SelectedScreenX = e.X / 256; //screen the mouse cursor is on
+            Globals.SelectedScreenY = e.Y / 256; //
+            if (Room.SelectedScreen != Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY])
+            {
+                Room.SelectedScreen = Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY];
+                lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
+            }
+
+            int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
+            int mouse_y = (e.Y >> 4) * 16; //
+            if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) && (mouse_x < 0 || mouse_y < 0) || (mouse_x > Room.BackgroundImage.Width || mouse_y > Room.BackgroundImage.Height)) //if mouse out of Room bounds
+                return;
+
+            RoomSelectedTile.X = mouse_x;
+            RoomSelectedTile.Y = mouse_y;
+
+            Rectangle rect = Room.RedRect; //old Position of the rectangle
+            Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
+            Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
+            Room.Invalidate(unirect);
+        }
+
+        private void Room_MouseUp(object sender, MouseEventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Main Events
@@ -227,5 +305,14 @@ namespace YAM2E
         #endregion
 
         #endregion
+
+        private void main_window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F5)
+            {
+                Room.ShowScreenOutlines = !Room.ShowScreenOutlines;
+                Room.Invalidate();
+            }
+        }
     }
 }
