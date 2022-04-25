@@ -36,7 +36,7 @@ namespace YAM2E.Classes
 
             ROMPath = path;
             ROM = File.ReadAllBytes(path);
-            main_window.Current.ROMLoaded();
+            MainWindow.Current.ROMLoaded();
             update_title_bar();
         }
 
@@ -70,7 +70,7 @@ namespace YAM2E.Classes
 
         public static void update_title_bar()
         {
-            main_window.Current.Text = (Path.GetFileNameWithoutExtension(ROMPath) + " - YAM2E");
+            MainWindow.Current.Text = (Path.GetFileNameWithoutExtension(ROMPath) + " - YAM2E");
         }
 
         public static void SaveROM()

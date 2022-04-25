@@ -1,7 +1,7 @@
 ﻿
 namespace YAM2E
 {
-    partial class main_window
+    partial class MainWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -30,7 +30,7 @@ namespace YAM2E
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main_window));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tool_strip_main_buttons = new System.Windows.Forms.ToolStrip();
             this.tool_strip_file = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_open_rom = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +40,7 @@ namespace YAM2E
             this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
@@ -56,6 +57,7 @@ namespace YAM2E
             this.btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
+            this.btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
             this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
@@ -142,7 +144,8 @@ namespace YAM2E
             // 
             this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_tweaks_editor});
+            this.btn_tweaks_editor,
+            this.btn_transition_editor});
             this.tool_strip_editors.Enabled = false;
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
@@ -153,9 +156,16 @@ namespace YAM2E
             // btn_tweaks_editor
             // 
             this.btn_tweaks_editor.Name = "btn_tweaks_editor";
-            this.btn_tweaks_editor.Size = new System.Drawing.Size(145, 22);
+            this.btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_tweaks_editor.Text = "Tweaks Editor";
             this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
+            // 
+            // btn_transition_editor
+            // 
+            this.btn_transition_editor.Name = "btn_transition_editor";
+            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_transition_editor.Text = "Transition Editor";
+            this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
             // 
             // grp_data_selector
             // 
@@ -289,7 +299,8 @@ namespace YAM2E
             this.btn_open_rom_image,
             this.btn_save_rom_image,
             this.toolStripSeparator2,
-            this.btn_open_tweaks_editor_image});
+            this.btn_open_tweaks_editor_image,
+            this.btn_open_transition_editor_image});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
             this.tool_strip_image_buttons.Size = new System.Drawing.Size(1233, 25);
@@ -335,6 +346,18 @@ namespace YAM2E
             this.btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
             this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
             this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
+            // 
+            // btn_open_transition_editor_image
+            // 
+            this.btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_open_transition_editor_image.Enabled = false;
+            this.btn_open_transition_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_transition_editor_image.Image")));
+            this.btn_open_transition_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_open_transition_editor_image.Name = "btn_open_transition_editor_image";
+            this.btn_open_transition_editor_image.Size = new System.Drawing.Size(23, 22);
+            this.btn_open_transition_editor_image.Text = "Open Transition Editor";
+            this.btn_open_transition_editor_image.ToolTipText = "Transition Editor";
+            this.btn_open_transition_editor_image.Click += new System.EventHandler(this.btn_open_transition_editor_image_Click);
             // 
             // sts_main_status_bar
             // 
@@ -462,6 +485,8 @@ namespace YAM2E
         private System.Windows.Forms.FlowLayoutPanel flw_main_room_view;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_hovered_screen;
+        private System.Windows.Forms.ToolStripMenuItem btn_transition_editor;
+        private System.Windows.Forms.ToolStripButton btn_open_transition_editor_image;
     }
 }
 

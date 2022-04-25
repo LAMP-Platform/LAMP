@@ -12,9 +12,9 @@ using YAM2E.FORMS;
 
 namespace YAM2E
 {
-    public partial class main_window : Form
+    public partial class MainWindow : Form
     {
-        public static main_window Current;
+        public static MainWindow Current;
 
         //Tile Viewer vars
         public static TileViewer Tileset = new TileViewer();
@@ -24,7 +24,7 @@ namespace YAM2E
         private Point RoomSelectedTile = new Point(-1, -1);
         private Size RoomSelectedSize = new Size(-1, -1);
 
-        public main_window()
+        public MainWindow()
         {
             Current = this;
             InitializeComponent();
@@ -41,6 +41,7 @@ namespace YAM2E
             grp_data_selector.Visible = value;
             btn_open_tweaks_editor_image.Enabled = value;
             btn_save_rom_image.Enabled = value;
+            btn_open_transition_editor_image.Enabled = value;
             grp_main_tileset_viewer.Visible = value;
             grp_main_room_viewer.Visible = value;
 
@@ -172,7 +173,7 @@ namespace YAM2E
         {
             int x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
             int y = (e.Y >> 4) * 16; //
-            if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width || y > Tileset.BackgroundImage.Height)) //if mouse out of Tileset bounds
+            if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width - 16 || y > Tileset.BackgroundImage.Height - 16)) //if mouse out of Tileset bounds
                 return;
             TilesetSelectedTile.X = x;
             TilesetSelectedTile.Y = y;
@@ -248,18 +249,16 @@ namespace YAM2E
         }
 
         private void btn_open_rom_Click(object sender, EventArgs e)
-        {
-            Editor.open_rom();
-        }
+           => Editor.open_rom();
 
         private void btn_tweaks_editor_Click(object sender, EventArgs e)
-            => new tweaks_editor().Show();
+            => new TweaksEditor().Show();
 
         private void btn_open_rom_image_Click(object sender, EventArgs e)
             => Editor.open_rom();
 
         private void btn_open_tweaks_editor_image_Click(object sender, EventArgs e)
-            => new tweaks_editor().Show();
+            => new TweaksEditor().Show();
 
         private void btn_save_rom_image_Click(object sender, EventArgs e)
             => Editor.SaveROM();
@@ -314,5 +313,11 @@ namespace YAM2E
                 Room.Invalidate();
             }
         }
+
+        private void btn_transition_editor_Click(object sender, EventArgs e)
+            => new TransitionsEditor().Show();
+
+        private void btn_open_transition_editor_image_Click(object sender, EventArgs e)
+            => new TransitionsEditor().Show();
     }
 }

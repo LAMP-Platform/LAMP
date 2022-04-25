@@ -18,7 +18,7 @@ namespace YAM2E
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new main_window());
+            Application.Run(new MainWindow());
 
             
         }

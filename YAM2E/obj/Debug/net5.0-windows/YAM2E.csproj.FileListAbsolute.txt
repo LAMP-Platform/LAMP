@@ -26,8 +26,6 @@ D:\Github\YAM2E\YAM2E\bin\Debug\net5.0-windows\YAM2E.dll
 D:\Github\YAM2E\YAM2E\bin\Debug\net5.0-windows\ref\YAM2E.dll
 D:\Github\YAM2E\YAM2E\bin\Debug\net5.0-windows\YAM2E.pdb
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.csproj.AssemblyReference.cache
-D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.main_window.resources
-D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.tweaks_editor.resources
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.Properties.Resources.resources
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.csproj.GenerateResource.cache
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.GeneratedMSBuildEditorConfig.editorconfig
@@ -38,3 +36,6 @@ D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.dll
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\ref\YAM2E.dll
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.pdb
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.genruntimeconfig.cache
+D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.MainWindow.resources
+D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.TransitionsEditor.resources
+D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.TweaksEditor.resources

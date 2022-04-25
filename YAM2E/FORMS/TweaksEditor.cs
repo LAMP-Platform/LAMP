@@ -4,11 +4,11 @@ using YAM2E.Classes;
 
 namespace YAM2E.FORMS
 {
-    public partial class tweaks_editor : Form
+    public partial class TweaksEditor : Form
     {
-        public static tweaks_editor Current;
+        public static TweaksEditor Current;
 
-        public tweaks_editor()
+        public TweaksEditor()
         {
             InitializeComponent();
             Current = this;

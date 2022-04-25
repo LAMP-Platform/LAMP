@@ -1,7 +1,7 @@
 ﻿
 namespace YAM2E.FORMS
 {
-    partial class tweaks_editor
+    partial class TweaksEditor
     {
         /// <summary>
         /// Required designer variable.

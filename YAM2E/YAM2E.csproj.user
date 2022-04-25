@@ -7,10 +7,13 @@
     <Compile Update="Classes\TileViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="FORMS\main_window.cs">
+    <Compile Update="FORMS\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FORMS\tweaks_editor.cs">
+    <Compile Update="FORMS\TransitionsEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FORMS\TweaksEditor.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
