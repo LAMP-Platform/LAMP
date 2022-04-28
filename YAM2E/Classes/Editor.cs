@@ -270,5 +270,21 @@ namespace YAM2E.Classes
         {
             Globals.Screens[screen] = DrawScreen(bank_offset + 0x500 + (0x100 * screen));
         }
+
+        public static void WritePointerLittleEndian(int index, int twobytevalue)
+        {
+            ROM[index] = (byte)(twobytevalue & 0x00FF);
+            ROM[index + 1] = (byte)(twobytevalue >> 8);
+        }
+
+        public static string GetRawDataString(int offset, int length)
+        {
+            StringBuilder RawData = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                RawData.Append(ROM[offset + i].ToString("X2")).Append(' ');
+            }
+            return RawData.ToString();
+        }
     }
 }
