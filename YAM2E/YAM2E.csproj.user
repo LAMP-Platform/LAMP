@@ -10,6 +10,9 @@
     <Compile Update="FORMS\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FORMS\ScreenSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FORMS\TransitionsEditor.cs">
       <SubType>Form</SubType>
     </Compile>

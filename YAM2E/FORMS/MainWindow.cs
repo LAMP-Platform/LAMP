@@ -28,6 +28,7 @@ namespace YAM2E
         {
             Current = this;
             InitializeComponent();
+            new ScreenSettings().Show();
         }
 
         public void ROMLoaded() //greys out buttons or enables them if ROM is loaded
@@ -44,6 +45,7 @@ namespace YAM2E
             btn_open_transition_editor_image.Enabled = value;
             grp_main_tileset_viewer.Visible = value;
             grp_main_room_viewer.Visible = value;
+            tool_strip_view.Enabled = value;
 
             if (value != true) return;
 
@@ -131,8 +133,8 @@ namespace YAM2E
             //writing data
             int start = (16 * y) + x;
             for (int i = 0; i < Editor.SelectionHeight; i++)
-            { 
-                Editor.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);  
+            {
+                Editor.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);
             }
 
             //updating screens
@@ -143,7 +145,7 @@ namespace YAM2E
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    if (Globals.AreaScreens[i,j] == bank_screen_offset)
+                    if (Globals.AreaScreens[i, j] == bank_screen_offset)
                     {
                         Graphics g = Graphics.FromImage(Room.BackgroundImage);
                         g.DrawImage(Globals.Screens[bank_screen_offset - 0x45], new Point(256 * i, 256 * j));
@@ -152,6 +154,12 @@ namespace YAM2E
                     }
                 }
             }
+        }
+
+        public void ToggleScreenOutlines()
+        {
+            Room.ShowScreenOutlines = !Room.ShowScreenOutlines;
+            Room.Invalidate();
         }
 
         #region Main Window Events
@@ -193,7 +201,7 @@ namespace YAM2E
                 Tileset.RedRect = new Rectangle(TilesetSelectedTile.X, TilesetSelectedTile.Y, 16 - 1, 16 - 1);
                 Tileset.Invalidate(Editor.UniteRect(Tileset.RedRect, rect));
             }
-            
+
         }
 
         private void Tileset_MouseUp(object sender, MouseEventArgs e)
@@ -282,7 +290,7 @@ namespace YAM2E
 
         private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
         {
-           UpdateRoom();
+            UpdateRoom();
         }
 
         private void main_window_Load(object sender, EventArgs e)
@@ -301,23 +309,28 @@ namespace YAM2E
             UpdateTileset();
             UpdateRoom();
         }
-        #endregion
-
-        #endregion
 
         private void main_window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F5)
             {
-                Room.ShowScreenOutlines = !Room.ShowScreenOutlines;
-                Room.Invalidate();
+                ToggleScreenOutlines();
             }
         }
 
         private void btn_transition_editor_Click(object sender, EventArgs e)
             => new TransitionsEditor().Show();
 
-        private void btn_open_transition_editor_image_Click(object sender, EventArgs e)
+        private void btn_open_transition_editor_image_Click(object sender, EventArgs e) 
             => new TransitionsEditor().Show();
+        
+        private void btn_show_screen_outlines_Click(object sender, EventArgs e)
+        {
+            ToggleScreenOutlines();
+            btn_show_screen_outlines.Checked = Room.ShowScreenOutlines;
+        }
+        #endregion
+
+        #endregion
     }
 }

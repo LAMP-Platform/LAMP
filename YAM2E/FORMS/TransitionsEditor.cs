@@ -588,7 +588,33 @@ namespace YAM2E.FORMS
         private void btn_tred_move_opcode_up_Click(object sender, EventArgs e)
         {
             TreeNodeExtension Data = NodeData.GetValueOrDefault(SelectedNode);
+
+            //Dont want to move up if its last or first instruction
             if (Data.Byte == 0) return;
+            if (Transition[Data.Byte] == 0xFF) return;
+
+            //finding instruction above
+            int AboveByte = 0;
+            for (int i = 0; i < Transition.Count;)
+            {
+                int len = GetOpcodeLength(i);
+                if (i + len == Data.Byte) //above instruction has been found
+                {
+                    AboveByte = i;
+                }
+                i += len;
+            }
+
+            //moving data
+            List<byte> MovedData = Transition.GetRange(Data.Byte, Data.OpcodeLength);
+            for (int i = 0; i < Data.OpcodeLength; i++)
+            {
+                Transition.RemoveAt(Data.Byte);
+            }
+            Transition.InsertRange(AboveByte, MovedData);
+            DisableEdit();
+            EnableApply();
+            ReadTransition();
         }
 
         private void btn_tred_move_opcode_down_Click(object sender, EventArgs e)

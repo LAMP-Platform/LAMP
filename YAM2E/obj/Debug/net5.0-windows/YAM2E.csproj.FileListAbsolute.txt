@@ -39,3 +39,4 @@ D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.genruntimeconfig.cache
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.MainWindow.resources
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.TransitionsEditor.resources
 D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.TweaksEditor.resources
+D:\Github\YAM2E\YAM2E\obj\Debug\net5.0-windows\YAM2E.FORMS.ScreenSettings.resources

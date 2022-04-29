@@ -41,6 +41,8 @@ namespace YAM2E
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
@@ -83,7 +85,8 @@ namespace YAM2E
             this.tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tool_strip_file,
-            this.tool_strip_editors});
+            this.tool_strip_editors,
+            this.tool_strip_view});
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -166,6 +169,27 @@ namespace YAM2E
             this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_transition_editor.Text = "Transition Editor";
             this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
+            // 
+            // tool_strip_view
+            // 
+            this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_show_screen_outlines});
+            this.tool_strip_view.Enabled = false;
+            this.tool_strip_view.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_view.Image")));
+            this.tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_strip_view.Name = "tool_strip_view";
+            this.tool_strip_view.ShowDropDownArrow = false;
+            this.tool_strip_view.Size = new System.Drawing.Size(36, 22);
+            this.tool_strip_view.Text = "View";
+            // 
+            // btn_show_screen_outlines
+            // 
+            this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
+            this.btn_show_screen_outlines.Size = new System.Drawing.Size(180, 22);
+            this.btn_show_screen_outlines.Text = "Screen Outlines";
+            this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
             // 
             // grp_data_selector
             // 
@@ -411,7 +435,7 @@ namespace YAM2E
             this.flw_main_room_view.Size = new System.Drawing.Size(899, 665);
             this.flw_main_room_view.TabIndex = 0;
             // 
-            // main_window
+            // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -424,7 +448,7 @@ namespace YAM2E
             this.Controls.Add(this.grp_data_selector);
             this.Controls.Add(this.tool_strip_main_buttons);
             this.MinimumSize = new System.Drawing.Size(553, 810);
-            this.Name = "main_window";
+            this.Name = "MainWindow";
             this.Text = "YAM2E";
             this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
@@ -487,6 +511,8 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_hovered_screen;
         private System.Windows.Forms.ToolStripMenuItem btn_transition_editor;
         private System.Windows.Forms.ToolStripButton btn_open_transition_editor_image;
+        private System.Windows.Forms.ToolStripDropDownButton tool_strip_view;
+        private System.Windows.Forms.ToolStripMenuItem btn_show_screen_outlines;
     }
 }
 
