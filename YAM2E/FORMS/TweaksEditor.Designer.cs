@@ -250,7 +250,7 @@ namespace YAM2E.FORMS
             this.tab_twed_weapons.Location = new System.Drawing.Point(4, 24);
             this.tab_twed_weapons.Name = "tab_twed_weapons";
             this.tab_twed_weapons.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_twed_weapons.Size = new System.Drawing.Size(651, 395);
+            this.tab_twed_weapons.Size = new System.Drawing.Size(288, 395);
             this.tab_twed_weapons.TabIndex = 1;
             this.tab_twed_weapons.Text = "Weapons";
             this.tab_twed_weapons.UseVisualStyleBackColor = true;
@@ -320,7 +320,7 @@ namespace YAM2E.FORMS
             this.tab_twed_drops.Location = new System.Drawing.Point(4, 24);
             this.tab_twed_drops.Name = "tab_twed_drops";
             this.tab_twed_drops.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_twed_drops.Size = new System.Drawing.Size(651, 395);
+            this.tab_twed_drops.Size = new System.Drawing.Size(288, 395);
             this.tab_twed_drops.TabIndex = 2;
             this.tab_twed_drops.Text = "Drops & Items";
             this.tab_twed_drops.UseVisualStyleBackColor = true;
@@ -447,7 +447,7 @@ namespace YAM2E.FORMS
             this.tab_twed_misc.Controls.Add(this.grp_twed_misc_checks);
             this.tab_twed_misc.Location = new System.Drawing.Point(4, 24);
             this.tab_twed_misc.Name = "tab_twed_misc";
-            this.tab_twed_misc.Size = new System.Drawing.Size(651, 395);
+            this.tab_twed_misc.Size = new System.Drawing.Size(288, 395);
             this.tab_twed_misc.TabIndex = 3;
             this.tab_twed_misc.Text = "Miscellaneous";
             this.tab_twed_misc.UseVisualStyleBackColor = true;
@@ -530,7 +530,7 @@ namespace YAM2E.FORMS
             this.chb_tweak_debug_menu.Name = "chb_tweak_debug_menu";
             this.chb_tweak_debug_menu.Size = new System.Drawing.Size(240, 19);
             this.chb_tweak_debug_menu.TabIndex = 1;
-            this.chb_tweak_debug_menu.Text = "Enable debug menu the on pause screen";
+            this.chb_tweak_debug_menu.Text = "Enable debug menu on the pause screen";
             this.chb_tweak_debug_menu.UseVisualStyleBackColor = true;
             // 
             // chb_tweak_infinite_spin
@@ -563,7 +563,7 @@ namespace YAM2E.FORMS
             this.btn_close_tweaks.UseVisualStyleBackColor = true;
             this.btn_close_tweaks.Click += new System.EventHandler(this.btn_close_tweaks_Click);
             // 
-            // tweaks_editor
+            // TweaksEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -572,7 +572,7 @@ namespace YAM2E.FORMS
             this.Controls.Add(this.btn_apply_tweaks);
             this.Controls.Add(this.tabc_tweaks_editor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "tweaks_editor";
+            this.Name = "TweaksEditor";
             this.Text = "Tweaks";
             this.tabc_tweaks_editor.ResumeLayout(false);
             this.tab_twed_samus.ResumeLayout(false);

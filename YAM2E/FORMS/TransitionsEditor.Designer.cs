@@ -41,6 +41,7 @@ namespace YAM2E.FORMS
             this.lbl_tred_error_warning = new System.Windows.Forms.Label();
             this.tre_tred_transition_tree = new System.Windows.Forms.TreeView();
             this.grp_tred_edits = new System.Windows.Forms.GroupBox();
+            this.cbb_tred_opcode_add = new System.Windows.Forms.ComboBox();
             this.btn_tred_move_opcode_up = new System.Windows.Forms.Button();
             this.btn_tred_move_opcode_down = new System.Windows.Forms.Button();
             this.lbl_tred_opcodes = new System.Windows.Forms.Label();
@@ -175,6 +176,7 @@ namespace YAM2E.FORMS
             // 
             // grp_tred_edits
             // 
+            this.grp_tred_edits.Controls.Add(this.cbb_tred_opcode_add);
             this.grp_tred_edits.Controls.Add(this.btn_tred_move_opcode_up);
             this.grp_tred_edits.Controls.Add(this.btn_tred_move_opcode_down);
             this.grp_tred_edits.Controls.Add(this.lbl_tred_opcodes);
@@ -192,10 +194,39 @@ namespace YAM2E.FORMS
             this.grp_tred_edits.TabStop = false;
             this.grp_tred_edits.Text = "Edit";
             // 
+            // cbb_tred_opcode_add
+            // 
+            this.cbb_tred_opcode_add.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbb_tred_opcode_add.DropDownWidth = 240;
+            this.cbb_tred_opcode_add.FormattingEnabled = true;
+            this.cbb_tred_opcode_add.Items.AddRange(new object[] {
+            "Save the bank and offset of a BG tileset",
+            "Save the offset of a sprite tileset",
+            "Copy data",
+            "Select metatile table",
+            "Select collision table",
+            "Select solidity indeces",
+            "Warp",
+            "Retreat from Queen",
+            "Change acid & spike damage",
+            "Exit from Queen",
+            "Enter Queen",
+            "Conditional Transition",
+            "Fadeout",
+            "Load background graphics",
+            "Load sprite graphics",
+            "Change music",
+            "Change special graphics",
+            "END TRANSITION"});
+            this.cbb_tred_opcode_add.Location = new System.Drawing.Point(7, 108);
+            this.cbb_tred_opcode_add.Name = "cbb_tred_opcode_add";
+            this.cbb_tred_opcode_add.Size = new System.Drawing.Size(140, 23);
+            this.cbb_tred_opcode_add.TabIndex = 10;
+            // 
             // btn_tred_move_opcode_up
             // 
             this.btn_tred_move_opcode_up.Image = ((System.Drawing.Image)(resources.GetObject("btn_tred_move_opcode_up.Image")));
-            this.btn_tred_move_opcode_up.Location = new System.Drawing.Point(7, 108);
+            this.btn_tred_move_opcode_up.Location = new System.Drawing.Point(7, 137);
             this.btn_tred_move_opcode_up.Name = "btn_tred_move_opcode_up";
             this.btn_tred_move_opcode_up.Size = new System.Drawing.Size(27, 23);
             this.btn_tred_move_opcode_up.TabIndex = 9;
@@ -205,7 +236,7 @@ namespace YAM2E.FORMS
             // btn_tred_move_opcode_down
             // 
             this.btn_tred_move_opcode_down.Image = ((System.Drawing.Image)(resources.GetObject("btn_tred_move_opcode_down.Image")));
-            this.btn_tred_move_opcode_down.Location = new System.Drawing.Point(40, 108);
+            this.btn_tred_move_opcode_down.Location = new System.Drawing.Point(40, 137);
             this.btn_tred_move_opcode_down.Name = "btn_tred_move_opcode_down";
             this.btn_tred_move_opcode_down.Size = new System.Drawing.Size(27, 23);
             this.btn_tred_move_opcode_down.TabIndex = 8;
@@ -215,7 +246,7 @@ namespace YAM2E.FORMS
             // lbl_tred_opcodes
             // 
             this.lbl_tred_opcodes.AutoSize = true;
-            this.lbl_tred_opcodes.Location = new System.Drawing.Point(7, 83);
+            this.lbl_tred_opcodes.Location = new System.Drawing.Point(6, 83);
             this.lbl_tred_opcodes.Name = "lbl_tred_opcodes";
             this.lbl_tred_opcodes.Size = new System.Drawing.Size(52, 15);
             this.lbl_tred_opcodes.TabIndex = 7;
@@ -229,11 +260,12 @@ namespace YAM2E.FORMS
             this.btn_tred_add_opcode.Size = new System.Drawing.Size(75, 23);
             this.btn_tred_add_opcode.TabIndex = 6;
             this.btn_tred_add_opcode.UseVisualStyleBackColor = true;
+            this.btn_tred_add_opcode.Click += new System.EventHandler(this.btn_tred_add_opcode_Click);
             // 
             // btn_tred_remove_opcode
             // 
             this.btn_tred_remove_opcode.Image = ((System.Drawing.Image)(resources.GetObject("btn_tred_remove_opcode.Image")));
-            this.btn_tred_remove_opcode.Location = new System.Drawing.Point(73, 108);
+            this.btn_tred_remove_opcode.Location = new System.Drawing.Point(73, 137);
             this.btn_tred_remove_opcode.Name = "btn_tred_remove_opcode";
             this.btn_tred_remove_opcode.Size = new System.Drawing.Size(74, 23);
             this.btn_tred_remove_opcode.TabIndex = 5;
@@ -287,7 +319,7 @@ namespace YAM2E.FORMS
             // 
             this.lbl_tred_value.AutoSize = true;
             this.lbl_tred_value.Enabled = false;
-            this.lbl_tred_value.Location = new System.Drawing.Point(7, 23);
+            this.lbl_tred_value.Location = new System.Drawing.Point(6, 23);
             this.lbl_tred_value.Name = "lbl_tred_value";
             this.lbl_tred_value.Size = new System.Drawing.Size(38, 15);
             this.lbl_tred_value.TabIndex = 0;
@@ -394,5 +426,6 @@ namespace YAM2E.FORMS
         private System.Windows.Forms.Label lbl_tred_opcodes;
         private System.Windows.Forms.Button btn_tred_move_opcode_up;
         private System.Windows.Forms.Button btn_tred_move_opcode_down;
+        private System.Windows.Forms.ComboBox cbb_tred_opcode_add;
     }
 }

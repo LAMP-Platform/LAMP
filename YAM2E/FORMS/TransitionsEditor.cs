@@ -34,6 +34,7 @@ public partial class TransitionsEditor : Form
             cbb_tred_transition_selection.Items.Add(i.ToString("X3"));
         }
         cbb_tred_transition_selection.SelectedIndex = 0;
+        cbb_tred_opcode_add.SelectedIndex = 0;
     }
 
     void LoadTransition(int transition)
@@ -61,9 +62,7 @@ public partial class TransitionsEditor : Form
         }
 
         OldTransition = Transition.ToArray();
-        TransitionLength = Transition.Count;
         if (!EndFound) lbl_tred_error_warning.Visible = true;
-        lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} bytes";
         num_tred_transition_pointer.Value = BankTransitionOffset;
         UpdateRawData();
     }
@@ -299,6 +298,8 @@ public partial class TransitionsEditor : Form
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         tre_tred_transition_tree.ExpandAll();
+        TransitionLength = Transition.Count;
+        lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} bytes";
     }
 
     void ReloadTransition()
@@ -336,6 +337,7 @@ public partial class TransitionsEditor : Form
             btn_tred_remove_opcode.Enabled = true;
             btn_tred_move_opcode_down.Enabled = true;
             btn_tred_move_opcode_up.Enabled = true;
+            cbb_tred_opcode_add.Enabled = true;
         }
         num_tred_value.Value = NodeValue;
     }
@@ -355,13 +357,21 @@ public partial class TransitionsEditor : Form
         btn_tred_remove_opcode.Enabled = false;
         btn_tred_move_opcode_down.Enabled = false;
         btn_tred_move_opcode_up.Enabled = false;
-
+        cbb_tred_opcode_add.Enabled = false;
     }
 
     void DisableApply()
     {
         btn_tred_apply_changes.Enabled = false;
         btn_tred_discard_changes.Enabled = false;
+    }
+
+    void ApplyTransition()
+    {
+        Editor.ReplaceBytes(CurrentTransitionOffset, Transition);
+        ReloadTransition();
+        DisableApply();
+        DisableEdit();
     }
 
     void UpdateTransitionValue()
@@ -400,9 +410,8 @@ public partial class TransitionsEditor : Form
         }
     }
 
-    int GetOpcodeLength(int offset)
+    int GetOpcodeLength(byte Value)
     {
-        int Value = Transition[offset];
         Value &= 0xF0;
         switch (Value)
         {
@@ -454,6 +463,13 @@ public partial class TransitionsEditor : Form
             default:
                 return 1;
         }
+
+        
+    }
+
+    int GetOpcodeLength(int Offset)
+    {
+        return (GetOpcodeLength(Transition[Offset]));
     }
 
     #region Events
@@ -479,6 +495,7 @@ public partial class TransitionsEditor : Form
             NodeValue = Transition[SelectedByte - 1] + (NodeValue << 8);
             num_tred_value.Maximum = 0xFFFF;
         }
+
         EnableEdit();
     }
 
@@ -543,14 +560,16 @@ public partial class TransitionsEditor : Form
         UpdateTransitionValue();
         if (Transition.Count > OldTransition.Length)
         {
-            MessageBox.Show("The Transition exceeds its original length.\n" +
+            if (MessageBox.Show("The Transition exceeds its original length.\n" +
                             "Without repointing it would overwrite existing data.\n" +
-                            "Currently that feature is not implemented!", "Info",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            "Automatic repointing is currently not implemented!\n" +
+                            "Are you sure you want to apply the changes?", "Apply Transition?",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
+            ApplyTransition();
         }
         else
         {
-
+            ApplyTransition();
         }
     }
 
@@ -629,6 +648,107 @@ public partial class TransitionsEditor : Form
             Transition.RemoveAt(Data.Byte);
         }
         Transition.InsertRange(Data.Byte + NextCodeLength, MovedData);
+        DisableEdit();
+        EnableApply();
+        ReadTransition();
+    }
+
+    private void btn_tred_add_opcode_Click(object sender, EventArgs e)
+    {
+        byte[] codeData;
+        TreeNodeExtension Data = NodeData.GetValueOrDefault(SelectedNode);
+        switch (cbb_tred_opcode_add.SelectedIndex)
+        {
+            case 0: //save Bank offset BG tileset
+                codeData = new byte[] { 0x01, 0, 0, 0, 0, 0, 0, 0 };
+                break;
+
+            case 1: //save offset of sprite tileset
+                codeData = new byte[] { 0x02, 0, 0, 0, 0, 0, 0, 0 };
+                break;
+
+            case 2: //copies data
+                codeData = new byte[] { 0x00, 0, 0, 0, 0, 0, 0, 0 };
+                break;
+
+            case 3: //metatile table
+                codeData = new byte[] { 0x10 };
+                break;
+
+            case 4: //collision table
+                codeData = new byte[] { 0x20 };
+                break;
+
+            case 5: //solidity table
+                codeData = new byte[] { 0x30 };
+                break;
+
+            case 6: //warp
+                codeData = new byte[] { 0x40, 0 };
+                break;
+
+            case 7: //retreat queen
+                codeData = new byte[] { 0x50 };
+                break;
+
+            case 8: //change acid spike damage
+                codeData = new byte[] { 0x60, 2, 8 };
+                break;
+
+            case 9: //exit queen
+                codeData = new byte[] { 0x70 };
+                break;
+
+            case 10: //transition queen
+                codeData = new byte[] { 0x80, 0, 0, 0, 0, 0, 0, 0, 0 };
+                break;
+
+            case 11: //conditional operator
+                codeData = new byte[] { 0x90, 0, 0, 0 };
+                break;
+
+            case 12: //fadeout
+                codeData = new byte[] { 0xA0 };
+                break;
+
+            case 13: //load bg graphics
+                codeData = new byte[] { 0xB1, 0, 0, 0 };
+                break;
+
+            case 14: //load sprite graphics
+                codeData = new byte[] { 0xB2, 0, 0, 0 };
+                break;
+
+            case 15: //change music
+                codeData = new byte[] { 0xC0 };
+                break;
+
+            case 16: //change special graphics
+                codeData = new byte[] { 0xD0 };
+                break;
+
+            case 17: //End
+                codeData = new byte[] { 0xFF };
+                if (Transition[Transition.Count - 1] == 0xFF) //End already exists
+                {
+                    MessageBox.Show("An end already exists.", "Info",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                break;
+
+            default:
+                codeData = new byte[0];
+                break;
+        }
+
+        //adding Data
+        Transition.InsertRange(Data.Byte, codeData);
+        if (codeData[0] == 0xFF)
+        {
+            //remove data after end
+            Transition.RemoveRange(Data.Byte + 1, Transition.Count - Data.Byte - 1);
+        }
         DisableEdit();
         EnableApply();
         ReadTransition();

@@ -3,6 +3,7 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace YAM2E.Classes;
 
@@ -37,7 +38,10 @@ public static class Editor
         update_title_bar();
     }
 
-    public static string GetFilePath(string filter) //Opens Dialog Window and returns path to file
+    /// <summary>
+    /// Opens Dialog Window and returns path to file.
+    /// </summary>
+    public static string GetFilePath(string filter) 
     {
         using OpenFileDialog openFileDialog = new OpenFileDialog();
         openFileDialog.Filter = filter;
@@ -49,7 +53,10 @@ public static class Editor
         return String.Empty;
     }
 
-    public static string SaveFilePath(string filter) //Opens Dialog Window and returns path to saved file
+    /// <summary>
+    ///Opens Dialog Window and returns path to saved file.
+    /// </summary>
+    public static string SaveFilePath(string filter) 
     {
         using SaveFileDialog saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filter = filter;
@@ -85,13 +92,26 @@ public static class Editor
         SaveROM();
     }
 
-    //TODO: unused.
+    /// <summary>
+    /// Writes the input array at the offset in ROM.
+    /// </summary>
     public static void ReplaceBytes(int offsets, byte[] values)
     {
         for (int i = 0; i < values.Length; i++)
             Editor.ROM[offsets + i] = values[i];
     }
 
+    /// <summary>
+    /// Writes the input list at the offset in ROM.
+    /// </summary>
+    public static void ReplaceBytes(int offsets, List<byte> values)
+    {
+        ReplaceBytes(offsets, values.ToArray());
+    }
+
+    /// <summary>
+    /// Writes a range of the input array at the offset in ROM.
+    /// </summary>
     public static void ReplaceBytes(int offsets, byte[] values, int start, int end)
     {
         byte[] newArray = new byte[end - start];

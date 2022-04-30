@@ -71,7 +71,7 @@ A possible fix is to repoint the transition to empty space in the bank.
   <data name="btn_tred_move_opcode_up.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7BAAAOwQG4kWvtAAAAaklE
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAAaklE
         QVQ4T2OgGZCXl3dQVFS8DqKhQsQDkCYFBYVXQAP+g2iSDAFqsgVqeqmkpOQEMgBI28D4UCW4AbJmKP8/
         iCbKEHTNIAAzAAQIGgKULEX3K7IBIAANm1IolzBAN4BkMGrAYDCADoCBAQAFsCkrlqqeDAAAAABJRU5E
         rkJggg==
@@ -80,7 +80,7 @@ A possible fix is to repoint the transition to empty space in the bank.
   <data name="btn_tred_move_opcode_down.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA7BAAAOwQG4kWvtAAAAaElE
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAAaElE
         QVQ4T2OgKVBUVPwPZZIHRg2gtwEKCgql8vLyDlAuGKAbAJIHqYNyUYGSkpINUPIlkHaCCqEYAGTbostj
         AHRDYAZgMxwnQFYMMoAkzTAA9esrkAEgGj1siAIgTUADrpOlmY6AgQEAJtwpLy4GKvIAAAAASUVORK5C
         YII=
@@ -89,7 +89,7 @@ A possible fix is to repoint the transition to empty space in the bank.
   <data name="btn_tred_add_opcode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA6+AAAOvgHqQrHAAAAALElE
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAALElE
         QVQ4T2OgKZBvkP8PZZIHRg0gwQCQQlIxVCt+QLRCXGDUACoYQAfAwAAADmsrdnmTTREAAAAASUVORK5C
         YII=
 </value>
@@ -97,7 +97,7 @@ A possible fix is to repoint the transition to empty space in the bank.
   <data name="btn_tred_remove_opcode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA6+AAAOvgHqQrHAAAAAIklE
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAAIklE
         QVQ4T2MYBcMKHOUW/08KhmpDAGyK8GGotlEwHAADAwCNPC2RNnbLeAAAAABJRU5ErkJggg==
 </value>
   </data>
