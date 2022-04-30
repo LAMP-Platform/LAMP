@@ -29,7 +29,7 @@ public static class Editor
     public static void open_path(string path)
     {
         //Changing button appearance
-        Globals.rom_loaded = true;
+        Globals.RomLoaded = true;
 
         ROMPath = path;
         ROM = File.ReadAllBytes(path);
@@ -85,6 +85,7 @@ public static class Editor
         SaveROM();
     }
 
+    //TODO: unused.
     public static void ReplaceBytes(int offsets, byte[] values)
     {
         for (int i = 0; i < values.Length; i++)
@@ -125,7 +126,7 @@ public static class Editor
         {
             for(int j = 0; j < 8; j++)
             {
-                bpm.SetPixel(x + i, y + j, Globals.CBlack);
+                bpm.SetPixel(x + i, y + j, Globals.ColorBlack);
             }
         }
     }
@@ -142,10 +143,10 @@ public static class Editor
 
             for (int j = 0; j < 8; j++) //looping through both bytes to generate the colours
             {
-                if (!ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.CBlack);
-                if (ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.CLightGray);
-                if (!ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.CWhite);
-                if (ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.CDarkGray);
+                if (!ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorBlack);
+                if (ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorLightGray);
+                if (!ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorWhite);
+                if (ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorDarkGray);
             }
         }
 

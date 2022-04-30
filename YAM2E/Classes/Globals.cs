@@ -2,18 +2,45 @@
 
 namespace YAM2E;
 
-static class Globals
+internal static class Globals
 {
-    public static bool rom_loaded = false;
+    //TODO: assigned, but never used
+
+    /// <summary>
+    /// Indicates whether a Metroid 2 Rom has been loaded.
+    /// </summary>
+    public static bool RomLoaded = false;
 
     //Editable Color definitions
-    public static Color CBlack = Color.FromArgb(255, 0, 0, 0);
-    public static Color CDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);
-    public static Color CLightGray = Color.FromArgb(255, 0xA5, 0xA5, 0xA5);
-    public static Color CWhite = Color.FromArgb(255, 0xEF, 0xEF, 0xEF);
+    /// <summary>
+    /// A black color.
+    /// </summary>
+    public static Color ColorBlack = Color.FromArgb(255, 0, 0, 0);
 
-    public static Color CTileSelector = Color.FromArgb(255, 0xFF, 0, 0);
-    public static Color CTileSelection = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
+    /// <summary>
+    /// A dark gray color.
+    /// </summary>
+    public static Color ColorDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);
+
+    /// <summary>
+    /// A light gray color.
+    /// </summary>
+    public static Color ColorLightGray = Color.FromArgb(255, 0xA5, 0xA5, 0xA5);
+
+    /// <summary>
+    /// A white color.
+    /// </summary>
+    public static Color ColorWhite = Color.FromArgb(255, 0xEF, 0xEF, 0xEF);
+
+    /// <summary>
+    /// A red color.
+    /// </summary>
+    public static Color ColorRed = Color.FromArgb(255, 0xFF, 0, 0);
+
+    /// <summary>
+    /// A blue color.
+    /// </summary>
+    public static Color ColorBlue = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
 
     //Bitmap lists
     public static Bitmap[] TilesetTiles = new Bitmap[128];
@@ -26,15 +53,11 @@ static class Globals
     public static int SelectedScreenX = 0;
     public static int SelectedScreenY = 0;
 
-    //public static Color cBlack = Color.FromArgb(255, 0, 0, 0);
-    //public static Color cDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);
-    //public static Color cLightGray = Color.FromArgb(255, 0xA5, 0xA5, 0xA5);
-    //public static Color cWhite = Color.FromArgb(255, 0xEF, 0xEF, 0xEF);
-
     #region Tweaks
     public static readonly int[] CenterSamusOnHorizontalMovementOffset = { 0x96C, 0x980, 0x9F3, 0xA07 };
     public static readonly byte[] CenterSamusOnHorizontalMovementValues = { 0x58, 0x57, 0x58, 0x59 };
     public static readonly byte[] CenterSamusOnHorizontalMovementStandard = { 0x40, 0x3F, 0x70, 0x71 };
+
 
     public const int SamusWalkingSpeedRightOffset = 0x1C2A;
     public const int SamusWalkingSpeedLeftOffset = 0x1C6D;
@@ -86,8 +109,7 @@ static class Globals
     #endregion
 }
 
-static class ByteOp
+public static class ByteOp
 {
-    public static bool IsBitSet(byte b, int bit)
-        => (b & (1 << bit)) != 0;
+    public static bool IsBitSet(byte b, int bit) => (b & (1 << bit)) != 0;
 }

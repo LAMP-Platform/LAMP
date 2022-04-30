@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using YAM2E.Classes;
@@ -103,64 +104,64 @@ public partial class TransitionsEditor : Form
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"to offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"Data length: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0x10): //Select metatile table
                         Command = new TreeNode("Select metatiles from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 1 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Table: { parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0x20): //Select collision table
                         Command = new TreeNode("Select collision from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 1 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Table: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0x30): //Select solidity indexes
                         Command = new TreeNode("Select solidity indices from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 1 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Table: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0x40): //Warp
                         Command = new TreeNode("Warp to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 2 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 2 });
 
                         Parameter = new TreeNode($"Area Bank: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
 
                         parameter = Transition[++i];
                         Parameter = new TreeNode($"at Screen Y: {(parameter >> 4):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.HighNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.HighNibble });
 
                         Parameter = new TreeNode($"and Screen X: {(parameter & 0xF):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0x50): //Retreat from Queen
@@ -190,35 +191,35 @@ public partial class TransitionsEditor : Form
 
                     case (0x80): //Enter Queen
                         Command = new TreeNode("Enter Queen fight");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 9 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 9 });
 
                         Parameter = new TreeNode($"Bank for current room: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"Scroll Y position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"Scroll X position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"Samus Y position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
                         parameter = Transition[++i];
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"Samus X position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0x90): //Conditional Transition
@@ -234,7 +235,7 @@ public partial class TransitionsEditor : Form
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"New Transition offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0xA0): //Fadeout
@@ -257,25 +258,25 @@ public partial class TransitionsEditor : Form
                         parameter2 = Transition[++i];
                         Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.Pointer });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0xC0): //Change Music
                         Command = new TreeNode("Change music to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 1 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Number: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0xD0): //Load Message / Special Graphics
                         Command = new TreeNode("Change special graphics to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, ByteRead = ReadByte.HighNybble, OpcodeLength = 1 });
+                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Number: {parameter:X}");
                         Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, ByteRead = ReadByte.LowNybble });
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
                         break;
 
                     case (0xF0): //Exit Transition
@@ -371,19 +372,19 @@ public partial class TransitionsEditor : Form
             int value = (int)num_tred_value.Value;
             TreeNodeExtension Data = NodeData.GetValueOrDefault(SelectedNode);
             SelectedByte = Data.Byte;
-            if (Data.ByteRead == ReadByte.Whole)
+            if (Data.WhichByteToRead == ReadByte.WholeByte)
             {
                 Transition[SelectedByte] = (byte)value;
             }
-            if (Data.ByteRead == ReadByte.HighNybble)
+            if (Data.WhichByteToRead == ReadByte.HighNibble)
             {
                 Transition[SelectedByte] = (byte)((Transition[SelectedByte] & 0xF) + (value << 4));
             }
-            if (Data.ByteRead == ReadByte.LowNybble)
+            if (Data.WhichByteToRead == ReadByte.LowNibble)
             {
                 Transition[SelectedByte] = (byte)((Transition[SelectedByte] & 0xF0) + (value & 0xF));
             }
-            if (Data.ByteRead == ReadByte.Pointer)
+            if (Data.WhichByteToRead == ReadByte.Pointer)
             {
                 Transition[SelectedByte - 1] = (byte)(value & 0xFF);
                 Transition[SelectedByte] = (byte)(value >> 8);
@@ -463,17 +464,17 @@ public partial class TransitionsEditor : Form
         SelectedByte = Data.Byte;
         NodeValue = Transition[SelectedByte];
         num_tred_value.Maximum = 0xFF;
-        if (Data.ByteRead == ReadByte.HighNybble)
+        if (Data.WhichByteToRead == ReadByte.HighNibble)
         {
             NodeValue >>= 4;
             num_tred_value.Maximum = 0xF;
         }
-        if (Data.ByteRead == ReadByte.LowNybble)
+        if (Data.WhichByteToRead == ReadByte.LowNibble)
         {
             NodeValue &= 0xF;
             num_tred_value.Maximum = 0xF;
         }
-        if (Data.ByteRead == ReadByte.Pointer)
+        if (Data.WhichByteToRead == ReadByte.Pointer)
         {
             NodeValue = Transition[SelectedByte - 1] + (NodeValue << 8);
             num_tred_value.Maximum = 0xFFFF;
