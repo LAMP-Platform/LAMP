@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
 
 namespace YAM2E.Classes
 {
     public class RoomViewer : Control
-    { 
+    {
         public override Image BackgroundImage
         {
             get => base.BackgroundImage;
@@ -19,13 +15,9 @@ namespace YAM2E.Classes
                 Size = base.BackgroundImage.Size;
             }
         }
-        public override Color BackColor
-        {
-            get => base.BackColor;
-            set => base.BackColor = value;
-        }
 
-        public bool HasSelection => SelRect.X != -1; //Selection rectangle doesnt have a negative x value
+        //TODO:unused?
+        public bool HasSelection => SelRect.X != -1; //Selection rectangle doesn't have a negative x value
 
         public bool ShowScreenOutlines { get; set; } = false;
 
@@ -36,17 +28,19 @@ namespace YAM2E.Classes
         //Rectangles
         //Red selection rectangle
         public Rectangle RedRect { get; set; }
-        private Pen TilePen { get; set; } = new Pen(Globals.cTileSelector, 1);
+        private Pen TilePen { get; set; } = new Pen(Globals.CTileSelector, 1);
 
         //selection rectangle
         public Rectangle SelRect { get; set; }
-        private Pen SelectionPen { get; set; } = new Pen(Globals.cTileSelection, 1);
+        private Pen SelectionPen { get; set; } = new Pen(Globals.CTileSelection, 1);
 
         //screen outline rectangle
+        //TODO:unused?
         private Rectangle ScreenRect { get; set; } = new Rectangle();
         private Pen ScreenPen { get; set; } = new Pen(Color.White, 2);
-        private Pen UniqueScreenPen { get; set; } = new Pen(Globals.cTileSelector, 2);
+        private Pen UniqueScreenPen { get; set; } = new Pen(Globals.CTileSelector, 2);
 
+        //TODO:unused?
         private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
 
         public void ResetSelection()
@@ -81,10 +75,9 @@ namespace YAM2E.Classes
                 if (UniqueScreen.Count != 0)
                 {
                     Rectangle rect = UniqueScreen[0];
-                    for (int i = 0; i < UniqueScreen.Count; i++)
-                    {
-                        rect = Editor.UniteRect(rect, UniqueScreen[i]);
-                    }
+                    foreach (Rectangle r in UniqueScreen)
+                        rect = Editor.UniteRect(rect, r);
+
                     this.Invalidate(Editor.SetValSize(rect));
                 }
 
@@ -94,11 +87,10 @@ namespace YAM2E.Classes
                     for (int j = 0; j < 16; j++)
                     {
                         Rectangle rect = new Rectangle(256 * i, 256 * j, 255, 255);
-                        if (Globals.AreaScreens[i, j] == SelectedScreen)
-                        {
-                            UniqueScreen.Add(rect);
-                            this.Invalidate(Editor.SetValSize(rect));
-                        }
+                        if (Globals.AreaScreens[i, j] != SelectedScreen)
+                            continue;
+                        UniqueScreen.Add(rect);
+                        this.Invalidate(Editor.SetValSize(rect));
                     }
                 }
 
@@ -121,10 +113,8 @@ namespace YAM2E.Classes
             //Draw Unique Screen outlines
             if (UniqueScreen.Count != 0)
             {
-                for (int i = 0; i < UniqueScreen.Count; i++)
-                {
-                    e.Graphics.DrawRectangle(UniqueScreenPen, UniqueScreen[i]);
-                }
+                foreach (Rectangle r in UniqueScreen)
+                    e.Graphics.DrawRectangle(UniqueScreenPen, r);
             }
 
             if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))

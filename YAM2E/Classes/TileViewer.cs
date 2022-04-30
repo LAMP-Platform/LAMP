@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using System.Drawing;
 
 namespace YAM2E.Classes
@@ -19,20 +14,17 @@ namespace YAM2E.Classes
                 Size = base.BackgroundImage.Size;
             }
         }
-        public override Color BackColor
-        {
-            get => base.BackColor;
-            set => base.BackColor = value;
-        }
 
-        public bool HasSelection => SelRect.X != -1; //Selection rectangle doesnt have a negative x value
+        //TODO:unused?
+        public bool HasSelection => SelRect.X != -1; //Selection rectangle doesn't have a negative x value
 
         public Rectangle RedRect { get; set; }
-        private Pen TilePen { get; set; } = new Pen(Globals.cTileSelector, 1);
+        private Pen TilePen { get; set; } = new Pen(Globals.CTileSelector, 1);
 
         public Rectangle SelRect { get; set; }
-        private Pen SelectionPen { get; set; } = new Pen(Globals.cTileSelection, 1);
+        private Pen SelectionPen { get; set; } = new Pen(Globals.CTileSelection, 1);
 
+        //TODO:unused?
         private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
 
         public void ResetSelection()
