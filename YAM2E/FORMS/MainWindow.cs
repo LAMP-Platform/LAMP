@@ -49,12 +49,12 @@ namespace YAM2E
 
             if (value != true) return;
 
-            #region Tile Viewer 
+            #region Tile Viewer
             Controls.Add(Tileset);
             Tileset.BringToFront();
             grp_main_tileset_viewer.Controls.Add(Tileset);
             Tileset.Location = new Point(15, 20);
-            Tileset.BackColor = Globals.cBlack;
+            Tileset.BackColor = Globals.CBlack;
             Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
             Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
             Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
@@ -68,7 +68,7 @@ namespace YAM2E
             Room.BringToFront();
             flw_main_room_view.Controls.Add(Room);
             Room.Location = new Point(15, 20);
-            Room.BackColor = Globals.cBlack;
+            Room.BackColor = Globals.CBlack;
             Room.MouseDown += new MouseEventHandler(Room_MouseDown);
             Room.MouseMove += new MouseEventHandler(Room_MouseMove);
             Room.MouseUp += new MouseEventHandler(Room_MouseUp);
@@ -321,9 +321,9 @@ namespace YAM2E
         private void btn_transition_editor_Click(object sender, EventArgs e)
             => new TransitionsEditor().Show();
 
-        private void btn_open_transition_editor_image_Click(object sender, EventArgs e) 
+        private void btn_open_transition_editor_image_Click(object sender, EventArgs e)
             => new TransitionsEditor().Show();
-        
+
         private void btn_show_screen_outlines_Click(object sender, EventArgs e)
         {
             ToggleScreenOutlines();
