@@ -48,7 +48,7 @@ public partial class MainWindow : Form
         Tileset.BringToFront();
         grp_main_tileset_viewer.Controls.Add(Tileset);
         Tileset.Location = new Point(15, 20);
-        Tileset.BackColor = Globals.CBlack;
+        Tileset.BackColor = Globals.ColorBlack;
         Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
         Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
         Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
@@ -62,7 +62,7 @@ public partial class MainWindow : Form
         Room.BringToFront();
         flw_main_room_view.Controls.Add(Room);
         Room.Location = new Point(15, 20);
-        Room.BackColor = Globals.CBlack;
+        Room.BackColor = Globals.ColorBlack;
         Room.MouseDown += new MouseEventHandler(Room_MouseDown);
         Room.MouseMove += new MouseEventHandler(Room_MouseMove);
         Room.MouseUp += new MouseEventHandler(Room_MouseUp);
