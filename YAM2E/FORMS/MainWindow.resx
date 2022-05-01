@@ -97,6 +97,23 @@
         AGQfxYtBanAaAFYAtQEXhqkZNQDNANIyEwSD9FAOGBgASxwuA/BNGaoAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="btn_tile_mode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACvSURBVDhPnZHBDcIwEATdRkrgyzMtUAAl8KQEvjRAF/Ro
+        tJYG7V0ujgBphfd2b6I4Tb/n/dql2+Xc36/H5uzy2XpaeliW8Mx8wXOdA0BGZUAU3DNzBQBkiu6zlOt/
+        APy9vXAEkDZ3QDhblkoAw1yuFAAMgGUIZRQAMroDgmopf0rPWnWBiOW9bACcXJVm2QDIVCWFR08fAEoy
+        Dso+6wtQaQbhnGcB4INf1Tj8B1n6B8Lv3a+PSHf+AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btn_object_mode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACESURBVDhPzU7BEcAgCHMNR3IpZ+g4btJx2kOJlyp68mvu
+        cgJJwPAf3Ck9Qm39kPAVY6WOljCPIQzRInSNNGDAhhWhfxahGE0WxwXC6QcsosfMeiVbwUY2MTko1GgD
+        CzuqfQauaLvFka+U0k1cHyPn3ENcH8O9QL7pocYaZCBXPGxLQngBEgYXosYA2YQAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btn_open_tweaks_editor_image.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -120,5 +137,8 @@
   </metadata>
   <metadata name="pageSetupDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>769, 17</value>
+  </metadata>
+  <metadata name="ctx_room_context_menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>921, 17</value>
   </metadata>
 </root>

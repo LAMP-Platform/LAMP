@@ -18,11 +18,13 @@ public partial class MainWindow : Form
     private Point RoomSelectedTile = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
 
+    //Main Editor vars
+    bool EditingTiles = true;
+
     public MainWindow()
     {
         Current = this;
         InitializeComponent();
-        new ScreenSettings().Show();
     }
 
     public void ROMLoaded() //greys out buttons or enables them if ROM is loaded
@@ -40,6 +42,10 @@ public partial class MainWindow : Form
         grp_main_tileset_viewer.Visible = value;
         grp_main_room_viewer.Visible = value;
         tool_strip_view.Enabled = value;
+        grp_main_view.Visible = value;
+        btn_tile_mode.Enabled = value;
+        btn_tile_mode.Checked = value;
+        btn_object_mode.Enabled = value;
 
         if (value != true) return;
 
@@ -67,6 +73,7 @@ public partial class MainWindow : Form
         Room.MouseMove += new MouseEventHandler(Room_MouseMove);
         Room.MouseUp += new MouseEventHandler(Room_MouseUp);
         Room.ResetSelection();
+        Room.ContextMenuStrip = ctx_room_context_menu;
         #endregion
     }
 
@@ -156,6 +163,15 @@ public partial class MainWindow : Form
         Room.Invalidate();
     }
 
+    void ToggleEditingMode()
+    {
+        EditingTiles = !EditingTiles;
+        btn_tile_mode.Checked = EditingTiles;
+        btn_object_mode.Checked = !EditingTiles;
+        if (EditingTiles) Room.ContextMenuStrip = null;
+        else Room.ContextMenuStrip = ctx_room_context_menu;
+    }
+
     #region Main Window Events
 
     #region Tileset Events
@@ -207,7 +223,19 @@ public partial class MainWindow : Form
     #region Room Events
     private void Room_MouseDown(object sender, MouseEventArgs e)
     {
-        PlaceSelectedTiles();
+        if (e.Button == MouseButtons.Left)
+        {
+            if (!EditingTiles) return;
+            PlaceSelectedTiles();
+        }
+        if (e.Button == MouseButtons.Middle)
+        {
+            ToggleEditingMode();
+        }
+        if (e.Button == MouseButtons.Right)
+        {
+
+        }
     }
 
     private void Room_MouseMove(object sender, MouseEventArgs e)
@@ -322,6 +350,21 @@ public partial class MainWindow : Form
     {
         ToggleScreenOutlines();
         btn_show_screen_outlines.Checked = Room.ShowScreenOutlines;
+    }
+
+    private void btn_screen_settings_Click(object sender, EventArgs e)
+    {
+        new ScreenSettings().Show();
+    }
+
+    private void btn_tile_mode_Click(object sender, EventArgs e)
+    {
+        ToggleEditingMode();
+    }
+
+    private void btn_object_mode_Click(object sender, EventArgs e)
+    {
+        ToggleEditingMode();
     }
     #endregion
 

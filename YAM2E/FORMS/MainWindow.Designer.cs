@@ -41,6 +41,7 @@ namespace YAM2E
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -58,6 +59,9 @@ namespace YAM2E
             this.btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
             this.btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_tile_mode = new System.Windows.Forms.ToolStripButton();
+            this.btn_object_mode = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
@@ -67,6 +71,19 @@ namespace YAM2E
             this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
             this.flw_main_room_view = new System.Windows.Forms.FlowLayoutPanel();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            this.grp_main_view = new System.Windows.Forms.GroupBox();
+            this.chb_view_objects = new System.Windows.Forms.CheckBox();
+            this.chb_view_background = new System.Windows.Forms.CheckBox();
+            this.ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctx_btn_add_object = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctx_btn_edit_object = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctx_btn_remove_object = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -77,6 +94,8 @@ namespace YAM2E
             this.tool_strip_image_buttons.SuspendLayout();
             this.sts_main_status_bar.SuspendLayout();
             this.grp_main_room_viewer.SuspendLayout();
+            this.grp_main_view.SuspendLayout();
+            this.ctx_room_context_menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -148,13 +167,14 @@ namespace YAM2E
             this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_tweaks_editor,
-            this.btn_transition_editor});
+            this.btn_transition_editor,
+            this.btn_screen_settings});
             this.tool_strip_editors.Enabled = false;
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
             this.tool_strip_editors.ShowDropDownArrow = false;
-            this.tool_strip_editors.Size = new System.Drawing.Size(47, 22);
-            this.tool_strip_editors.Text = "Editors";
+            this.tool_strip_editors.Size = new System.Drawing.Size(38, 22);
+            this.tool_strip_editors.Text = "Tools";
             // 
             // btn_tweaks_editor
             // 
@@ -169,6 +189,13 @@ namespace YAM2E
             this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_transition_editor.Text = "Transition Editor";
             this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
+            // 
+            // btn_screen_settings
+            // 
+            this.btn_screen_settings.Name = "btn_screen_settings";
+            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
+            this.btn_screen_settings.Text = "Screen Settings";
+            this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
             // 
             // tool_strip_view
             // 
@@ -187,7 +214,7 @@ namespace YAM2E
             // 
             this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
-            this.btn_show_screen_outlines.Size = new System.Drawing.Size(180, 22);
+            this.btn_show_screen_outlines.Size = new System.Drawing.Size(156, 22);
             this.btn_show_screen_outlines.Text = "Screen Outlines";
             this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
             // 
@@ -197,7 +224,7 @@ namespace YAM2E
             this.grp_data_selector.Controls.Add(this.grp_main_tileset);
             this.grp_data_selector.Location = new System.Drawing.Point(12, 53);
             this.grp_data_selector.Name = "grp_data_selector";
-            this.grp_data_selector.Size = new System.Drawing.Size(286, 174);
+            this.grp_data_selector.Size = new System.Drawing.Size(180, 174);
             this.grp_data_selector.TabIndex = 1;
             this.grp_data_selector.TabStop = false;
             this.grp_data_selector.Text = "Data Selector";
@@ -209,7 +236,7 @@ namespace YAM2E
             this.grp_main_area.Controls.Add(this.cbb_area_bank);
             this.grp_main_area.Location = new System.Drawing.Point(7, 23);
             this.grp_main_area.Name = "grp_main_area";
-            this.grp_main_area.Size = new System.Drawing.Size(273, 50);
+            this.grp_main_area.Size = new System.Drawing.Size(166, 50);
             this.grp_main_area.TabIndex = 4;
             this.grp_main_area.TabStop = false;
             this.grp_main_area.Text = "Area Data";
@@ -237,7 +264,7 @@ namespace YAM2E
             "F"});
             this.cbb_area_bank.Location = new System.Drawing.Point(103, 16);
             this.cbb_area_bank.Name = "cbb_area_bank";
-            this.cbb_area_bank.Size = new System.Drawing.Size(164, 23);
+            this.cbb_area_bank.Size = new System.Drawing.Size(55, 23);
             this.cbb_area_bank.TabIndex = 2;
             this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
             // 
@@ -249,7 +276,7 @@ namespace YAM2E
             this.grp_main_tileset.Controls.Add(this.num_main_graphics_offset);
             this.grp_main_tileset.Location = new System.Drawing.Point(7, 79);
             this.grp_main_tileset.Name = "grp_main_tileset";
-            this.grp_main_tileset.Size = new System.Drawing.Size(273, 89);
+            this.grp_main_tileset.Size = new System.Drawing.Size(166, 89);
             this.grp_main_tileset.TabIndex = 3;
             this.grp_main_tileset.TabStop = false;
             this.grp_main_tileset.Text = "Tileset Data";
@@ -264,7 +291,7 @@ namespace YAM2E
             0,
             0});
             this.num_main_metatile.Name = "num_main_metatile";
-            this.num_main_metatile.Size = new System.Drawing.Size(164, 23);
+            this.num_main_metatile.Size = new System.Drawing.Size(55, 23);
             this.num_main_metatile.TabIndex = 9;
             this.num_main_metatile.Value = new decimal(new int[] {
             137148,
@@ -306,7 +333,7 @@ namespace YAM2E
             0,
             0});
             this.num_main_graphics_offset.Name = "num_main_graphics_offset";
-            this.num_main_graphics_offset.Size = new System.Drawing.Size(164, 23);
+            this.num_main_graphics_offset.Size = new System.Drawing.Size(55, 23);
             this.num_main_graphics_offset.TabIndex = 7;
             this.num_main_graphics_offset.Value = new decimal(new int[] {
             141756,
@@ -323,6 +350,9 @@ namespace YAM2E
             this.btn_open_rom_image,
             this.btn_save_rom_image,
             this.toolStripSeparator2,
+            this.btn_tile_mode,
+            this.btn_object_mode,
+            this.toolStripSeparator3,
             this.btn_open_tweaks_editor_image,
             this.btn_open_transition_editor_image});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
@@ -358,6 +388,34 @@ namespace YAM2E
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btn_tile_mode
+            // 
+            this.btn_tile_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_tile_mode.Enabled = false;
+            this.btn_tile_mode.Image = ((System.Drawing.Image)(resources.GetObject("btn_tile_mode.Image")));
+            this.btn_tile_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_tile_mode.Name = "btn_tile_mode";
+            this.btn_tile_mode.Size = new System.Drawing.Size(23, 22);
+            this.btn_tile_mode.Text = "Tile editing mode";
+            this.btn_tile_mode.Click += new System.EventHandler(this.btn_tile_mode_Click);
+            // 
+            // btn_object_mode
+            // 
+            this.btn_object_mode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btn_object_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_object_mode.Enabled = false;
+            this.btn_object_mode.Image = ((System.Drawing.Image)(resources.GetObject("btn_object_mode.Image")));
+            this.btn_object_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_object_mode.Name = "btn_object_mode";
+            this.btn_object_mode.Size = new System.Drawing.Size(23, 22);
+            this.btn_object_mode.Text = "Object editing mode";
+            this.btn_object_mode.Click += new System.EventHandler(this.btn_object_mode_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_open_tweaks_editor_image
             // 
@@ -435,12 +493,113 @@ namespace YAM2E
             this.flw_main_room_view.Size = new System.Drawing.Size(899, 665);
             this.flw_main_room_view.TabIndex = 0;
             // 
+            // grp_main_view
+            // 
+            this.grp_main_view.Controls.Add(this.chb_view_objects);
+            this.grp_main_view.Controls.Add(this.chb_view_background);
+            this.grp_main_view.Location = new System.Drawing.Point(198, 53);
+            this.grp_main_view.Name = "grp_main_view";
+            this.grp_main_view.Size = new System.Drawing.Size(100, 174);
+            this.grp_main_view.TabIndex = 6;
+            this.grp_main_view.TabStop = false;
+            this.grp_main_view.Text = "View";
+            this.grp_main_view.Visible = false;
+            // 
+            // chb_view_objects
+            // 
+            this.chb_view_objects.AutoSize = true;
+            this.chb_view_objects.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chb_view_objects.Location = new System.Drawing.Point(28, 48);
+            this.chb_view_objects.Name = "chb_view_objects";
+            this.chb_view_objects.Size = new System.Drawing.Size(66, 19);
+            this.chb_view_objects.TabIndex = 1;
+            this.chb_view_objects.Text = "Objects";
+            this.chb_view_objects.UseVisualStyleBackColor = true;
+            // 
+            // chb_view_background
+            // 
+            this.chb_view_background.AutoSize = true;
+            this.chb_view_background.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chb_view_background.Location = new System.Drawing.Point(4, 23);
+            this.chb_view_background.Name = "chb_view_background";
+            this.chb_view_background.Size = new System.Drawing.Size(90, 19);
+            this.chb_view_background.TabIndex = 0;
+            this.chb_view_background.Text = "Background";
+            this.chb_view_background.UseVisualStyleBackColor = true;
+            // 
+            // ctx_room_context_menu
+            // 
+            this.ctx_room_context_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ctx_btn_screen_settings,
+            this.toolStripSeparator4,
+            this.ctx_btn_add_object,
+            this.ctx_btn_edit_object,
+            this.ctx_btn_remove_object,
+            this.toolStripSeparator5,
+            this.ctx_btn_set_start_location,
+            this.toolStripSeparator6,
+            this.ctx_btn_test_here});
+            this.ctx_room_context_menu.Name = "ctx_room_context_menu";
+            this.ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
+            // 
+            // ctx_btn_screen_settings
+            // 
+            this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
+            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_screen_settings.Text = "Screen Settings";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+            // 
+            // ctx_btn_add_object
+            // 
+            this.ctx_btn_add_object.Name = "ctx_btn_add_object";
+            this.ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_add_object.Text = "Add Object";
+            // 
+            // ctx_btn_edit_object
+            // 
+            this.ctx_btn_edit_object.Name = "ctx_btn_edit_object";
+            this.ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_edit_object.Text = "Edit Object";
+            // 
+            // ctx_btn_remove_object
+            // 
+            this.ctx_btn_remove_object.Name = "ctx_btn_remove_object";
+            this.ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_remove_object.Text = "Remove Object";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
+            // 
+            // ctx_btn_set_start_location
+            // 
+            this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
+            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_set_start_location.Text = "Set Start Location";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
+            // 
+            // ctx_btn_test_here
+            // 
+            this.ctx_btn_test_here.Name = "ctx_btn_test_here";
+            this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_test_here.Text = "Test Game Here";
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 771);
+            this.Controls.Add(this.grp_main_view);
             this.Controls.Add(this.grp_main_room_viewer);
             this.Controls.Add(this.grp_main_tileset_viewer);
             this.Controls.Add(this.sts_main_status_bar);
@@ -470,6 +629,9 @@ namespace YAM2E
             this.sts_main_status_bar.ResumeLayout(false);
             this.sts_main_status_bar.PerformLayout();
             this.grp_main_room_viewer.ResumeLayout(false);
+            this.grp_main_view.ResumeLayout(false);
+            this.grp_main_view.PerformLayout();
+            this.ctx_room_context_menu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,6 +675,23 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripButton btn_open_transition_editor_image;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_view;
         private System.Windows.Forms.ToolStripMenuItem btn_show_screen_outlines;
+        private System.Windows.Forms.ToolStripMenuItem btn_screen_settings;
+        private System.Windows.Forms.GroupBox grp_main_view;
+        private System.Windows.Forms.CheckBox chb_view_background;
+        private System.Windows.Forms.ToolStripButton btn_tile_mode;
+        private System.Windows.Forms.ToolStripButton btn_object_mode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.CheckBox chb_view_objects;
+        private System.Windows.Forms.ContextMenuStrip ctx_room_context_menu;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_screen_settings;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_add_object;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_edit_object;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_remove_object;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_set_start_location;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem ctx_btn_test_here;
     }
 }
 
