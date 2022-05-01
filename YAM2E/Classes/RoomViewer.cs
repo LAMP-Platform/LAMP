@@ -28,17 +28,17 @@ public class RoomViewer : Control
     //Rectangles
     //Red selection rectangle
     public Rectangle RedRect { get; set; }
-    private Pen TilePen { get; set; } = new Pen(Globals.ColorRed, 1);
+    private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
 
     //selection rectangle
     public Rectangle SelRect { get; set; }
-    private Pen SelectionPen { get; set; } = new Pen(Globals.ColorBlue, 1);
+    private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
 
     //screen outline rectangle
     //TODO:unused?
     private Rectangle ScreenRect { get; set; } = new Rectangle();
     private Pen ScreenPen { get; set; } = new Pen(Color.White, 2);
-    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.ColorRed, 2);
+    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.SelectedColor, 2);
 
     //TODO:unused?
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);

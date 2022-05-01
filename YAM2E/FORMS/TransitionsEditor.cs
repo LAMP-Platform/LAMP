@@ -10,6 +10,8 @@ namespace YAM2E.FORMS;
 public partial class TransitionsEditor : Form
 {
     //Editor Vars
+    public TransitionsEditor Current;
+
     //Transition Data
     int TableOffset = 0x142E5;
     int BankOffset = 0x14000;
@@ -25,15 +27,16 @@ public partial class TransitionsEditor : Form
     int SelectedByte;
     int NodeValue;
 
-    public TransitionsEditor()
+    public TransitionsEditor(int TransitionIndex = 0)
     {
+        Current = this;
         InitializeComponent();
 
         for (int i = 0; i < 512; i++)
         {
             cbb_tred_transition_selection.Items.Add(i.ToString("X3"));
         }
-        cbb_tred_transition_selection.SelectedIndex = 0;
+        cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
         cbb_tred_opcode_add.SelectedIndex = 0;
     }
 

@@ -547,6 +547,7 @@ namespace YAM2E
             this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
             this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_screen_settings.Text = "Screen Settings";
+            this.ctx_btn_screen_settings.Click += new System.EventHandler(this.ctx_btn_screen_settings_Click);
             // 
             // toolStripSeparator4
             // 

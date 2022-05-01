@@ -245,8 +245,8 @@ public partial class MainWindow : Form
         if (Room.SelectedScreen != Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY])
         {
             Room.SelectedScreen = Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY];
-            lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
         }
+        lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
 
         int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
         int mouse_y = (e.Y >> 4) * 16; //
@@ -365,6 +365,11 @@ public partial class MainWindow : Form
     private void btn_object_mode_Click(object sender, EventArgs e)
     {
         ToggleEditingMode();
+    }
+
+    private void ctx_btn_screen_settings_Click(object sender, EventArgs e)
+    {
+        new ScreenSettings(cbb_area_bank.SelectedIndex, (Globals.SelectedScreenY * 16) + Globals.SelectedScreenX).Show();
     }
     #endregion
 

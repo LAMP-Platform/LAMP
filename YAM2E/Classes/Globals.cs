@@ -13,34 +13,34 @@ internal static class Globals
 
     //Editable Color definitions
     /// <summary>
-    /// A black color.
+    /// The color representing the black of the gameboy.
     /// </summary>
     public static Color ColorBlack = Color.FromArgb(255, 0, 0, 0);
 
     /// <summary>
-    /// A dark gray color.
+    /// The color representing the dark gray of the gameboy.
     /// </summary>
     public static Color ColorDarkGray = Color.FromArgb(255, 0x6B, 0x6B, 0x6B);
 
     /// <summary>
-    /// A light gray color.
+    /// The color representing the light gray of the gameboy.
     /// </summary>
     public static Color ColorLightGray = Color.FromArgb(255, 0xA5, 0xA5, 0xA5);
 
     /// <summary>
-    /// A white color.
+    /// The color representing the white of the gameboy..
     /// </summary>
     public static Color ColorWhite = Color.FromArgb(255, 0xEF, 0xEF, 0xEF);
 
     /// <summary>
-    /// A red color.
+    /// The color used by the tile brush.
     /// </summary>
-    public static Color ColorRed = Color.FromArgb(255, 0xFF, 0, 0);
+    public static Color SelectedColor = Color.FromArgb(255, 0xFF, 0, 0);
 
     /// <summary>
-    /// A blue color.
+    /// The color used by the tile selection.
     /// </summary>
-    public static Color ColorBlue = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
+    public static Color SelectionColor = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
 
     //Bitmap lists
     public static Bitmap[] TilesetTiles = new Bitmap[128];

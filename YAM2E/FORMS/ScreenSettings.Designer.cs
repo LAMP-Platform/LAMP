@@ -100,6 +100,7 @@ namespace YAM2E.FORMS
             this.btn_scse_edit_transition.TabIndex = 7;
             this.btn_scse_edit_transition.Text = "Edit Transition";
             this.btn_scse_edit_transition.UseVisualStyleBackColor = true;
+            this.btn_scse_edit_transition.Click += new System.EventHandler(this.btn_scse_edit_transition_Click);
             // 
             // chb_samus_priority
             // 
@@ -111,6 +112,7 @@ namespace YAM2E.FORMS
             this.chb_samus_priority.TabIndex = 6;
             this.chb_samus_priority.Text = "Samus under Tiles";
             this.chb_samus_priority.UseVisualStyleBackColor = true;
+            this.chb_samus_priority.CheckedChanged += new System.EventHandler(this.chb_samus_priority_CheckedChanged);
             // 
             // cbb_scse_transition_index
             // 
@@ -119,6 +121,7 @@ namespace YAM2E.FORMS
             this.cbb_scse_transition_index.Name = "cbb_scse_transition_index";
             this.cbb_scse_transition_index.Size = new System.Drawing.Size(56, 23);
             this.cbb_scse_transition_index.TabIndex = 5;
+            this.cbb_scse_transition_index.SelectedIndexChanged += new System.EventHandler(this.cbb_scse_transition_index_SelectedIndexChanged);
             // 
             // lbl_scse_transition_index
             // 
@@ -141,6 +144,7 @@ namespace YAM2E.FORMS
             this.num_scse_scroll_data.Name = "num_scse_scroll_data";
             this.num_scse_scroll_data.Size = new System.Drawing.Size(56, 23);
             this.num_scse_scroll_data.TabIndex = 3;
+            this.num_scse_scroll_data.ValueChanged += new System.EventHandler(this.num_scse_scroll_data_ValueChanged);
             // 
             // lbl_scse_scroll_data
             // 
@@ -158,6 +162,7 @@ namespace YAM2E.FORMS
             this.cbb_scse_screen_used.Name = "cbb_scse_screen_used";
             this.cbb_scse_screen_used.Size = new System.Drawing.Size(56, 23);
             this.cbb_scse_screen_used.TabIndex = 1;
+            this.cbb_scse_screen_used.SelectedIndexChanged += new System.EventHandler(this.cbb_scse_screen_used_SelectedIndexChanged);
             // 
             // lbl_scse_screen_used
             // 
@@ -202,6 +207,7 @@ namespace YAM2E.FORMS
             this.btn_scse_apply.TabIndex = 6;
             this.btn_scse_apply.Text = "Apply";
             this.btn_scse_apply.UseVisualStyleBackColor = true;
+            this.btn_scse_apply.Click += new System.EventHandler(this.btn_scse_apply_Click);
             // 
             // btn_scse_close
             // 
@@ -211,6 +217,7 @@ namespace YAM2E.FORMS
             this.btn_scse_close.TabIndex = 7;
             this.btn_scse_close.Text = "Close";
             this.btn_scse_close.UseVisualStyleBackColor = true;
+            this.btn_scse_close.Click += new System.EventHandler(this.btn_scse_close_Click);
             // 
             // ScreenSettings
             // 
