@@ -124,14 +124,16 @@ public static class Editor
             Editor.ROM[offsets + i] = newArray[i];
     }
 
+    /// <summary>
+    /// This Function returns a rectangle with the most top left 
+    /// position of the given rectangles and the maximum width and height
+    /// </summary>
     public static Rectangle UniteRect(Rectangle rect1, Rectangle rect2)
     {
-        //This Function returns a rectangle with the most top left
-        //position of the given rectangles and the maximum width and height
-        int x = Math.Min(rect1.X, rect2.X) - 1;
-        int y = Math.Min(rect1.Y, rect2.Y) - 1;
-        int width = Math.Max(rect1.X + rect1.Width, rect2.X + rect2.Width) - x + 2;
-        int height = Math.Max(rect1.Y + rect1.Height, rect2.Y + rect2.Height) - y + 2;
+        int x = Math.Min(rect1.X, rect2.X);
+        int y = Math.Min(rect1.Y, rect2.Y);
+        int width = Math.Max(rect1.X + rect1.Width, rect2.X + rect2.Width) - x + 1;
+        int height = Math.Max(rect1.Y + rect1.Height, rect2.Y + rect2.Height) - y + 1;
         return new Rectangle(x, y, width, height);
     }
 

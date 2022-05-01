@@ -62,8 +62,8 @@ namespace YAM2E
             this.btn_tile_mode = new System.Windows.Forms.ToolStripButton();
             this.btn_object_mode = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
+            this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
             this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
@@ -84,6 +84,7 @@ namespace YAM2E
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -201,7 +202,8 @@ namespace YAM2E
             // 
             this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_show_screen_outlines});
+            this.btn_show_screen_outlines,
+            this.btn_show_duplicate_outlines});
             this.tool_strip_view.Enabled = false;
             this.tool_strip_view.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_view.Image")));
             this.tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -214,7 +216,7 @@ namespace YAM2E
             // 
             this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
-            this.btn_show_screen_outlines.Size = new System.Drawing.Size(156, 22);
+            this.btn_show_screen_outlines.Size = new System.Drawing.Size(209, 22);
             this.btn_show_screen_outlines.Text = "Screen Outlines";
             this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
             // 
@@ -353,8 +355,8 @@ namespace YAM2E
             this.btn_tile_mode,
             this.btn_object_mode,
             this.toolStripSeparator3,
-            this.btn_open_tweaks_editor_image,
-            this.btn_open_transition_editor_image});
+            this.btn_open_transition_editor_image,
+            this.btn_open_tweaks_editor_image});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
             this.tool_strip_image_buttons.Size = new System.Drawing.Size(1233, 25);
@@ -417,18 +419,6 @@ namespace YAM2E
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // btn_open_tweaks_editor_image
-            // 
-            this.btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_open_tweaks_editor_image.Enabled = false;
-            this.btn_open_tweaks_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_tweaks_editor_image.Image")));
-            this.btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
-            this.btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
-            this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
-            this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
-            // 
             // btn_open_transition_editor_image
             // 
             this.btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -440,6 +430,18 @@ namespace YAM2E
             this.btn_open_transition_editor_image.Text = "Open Transition Editor";
             this.btn_open_transition_editor_image.ToolTipText = "Transition Editor";
             this.btn_open_transition_editor_image.Click += new System.EventHandler(this.btn_open_transition_editor_image_Click);
+            // 
+            // btn_open_tweaks_editor_image
+            // 
+            this.btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_open_tweaks_editor_image.Enabled = false;
+            this.btn_open_tweaks_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_tweaks_editor_image.Image")));
+            this.btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
+            this.btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
+            this.btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
+            this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
+            this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
             // 
             // sts_main_status_bar
             // 
@@ -594,6 +596,15 @@ namespace YAM2E
             this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
             // 
+            // btn_show_duplicate_outlines
+            // 
+            this.btn_show_duplicate_outlines.Checked = true;
+            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
+            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(209, 22);
+            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
+            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -693,6 +704,7 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripMenuItem ctx_btn_set_start_location;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem ctx_btn_test_here;
+        private System.Windows.Forms.ToolStripMenuItem btn_show_duplicate_outlines;
     }
 }
 

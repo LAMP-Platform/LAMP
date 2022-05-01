@@ -21,6 +21,8 @@ public class RoomViewer : Control
 
     public bool ShowScreenOutlines { get; set; } = false;
 
+    public bool ShowDuplicateOutlines { get; set; } = true;
+
     public int SelectedScreen { get; set; } = 0;
     private int SelectedScreenOld = 0;
     private List<Rectangle> UniqueScreen { get; } = new List<Rectangle>();
@@ -68,8 +70,8 @@ public class RoomViewer : Control
         if (RedRect.X != -1)
             e.Graphics.DrawRectangle(TilePen, RedRect);
 
-        //Screen Outlines
-        if (SelectedScreen != SelectedScreenOld)
+        //duplicate Screen Outlines
+        if ((SelectedScreen != SelectedScreenOld) && ShowDuplicateOutlines)
         {
             //invalidating old outlines
             if (UniqueScreen.Count != 0)
@@ -86,7 +88,7 @@ public class RoomViewer : Control
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    Rectangle rect = new Rectangle(256 * i, 256 * j, 255, 255);
+                    Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 251, 251);
                     if (Globals.AreaScreens[i, j] != SelectedScreen)
                         continue;
                     UniqueScreen.Add(rect);
@@ -111,14 +113,15 @@ public class RoomViewer : Control
         }
 
         //Draw Unique Screen outlines
-        if (UniqueScreen.Count != 0)
+        if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
         {
             foreach (Rectangle r in UniqueScreen)
                 e.Graphics.DrawRectangle(UniqueScreenPen, r);
         }
 
-        if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))
-            return;
+        SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
+        BlackPen.DashOffset = 2;
+        e.Graphics.DrawRectangle(BlackPen, SelRect);
         e.Graphics.DrawRectangle(SelectionPen, SelRect);
         base.OnPaint(e);
     }

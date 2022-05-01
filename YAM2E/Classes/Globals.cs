@@ -40,7 +40,7 @@ internal static class Globals
     /// <summary>
     /// The color used by the tile selection.
     /// </summary>
-    public static Color SelectionColor = Color.FromArgb(255, 0x46, 0xAA, 0xFF);
+    public static Color SelectionColor = Color.FromArgb(255, 0xFF, 0xFF, 0xFF);
 
     //Bitmap lists
     public static Bitmap[] TilesetTiles = new Bitmap[128];

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using YAM2E.Classes;
 using System;
+using System.Drawing;
 
 namespace YAM2E.FORMS;
 
@@ -161,6 +162,19 @@ public partial class ScreenSettings : Form
         transitionData += cbb_scse_transition_index.SelectedIndex;
         Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)] = (byte)(transitionData & 0xFF);
         Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] = (byte)(transitionData >> 8);
+
+        //updating screen
+        if (cbb_scse_screen_used.SelectedIndex != UsedScreen)
+        {
+            int ScreenX = SelectedScreen % 16;
+            int ScreenY = SelectedScreen / 16;
+            Globals.AreaScreens[ScreenX, ScreenY] = usedScreen;
+
+            Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
+            g.DrawImage(Globals.Screens[usedScreen - 0x45], new Point(256 * ScreenX, 256 * ScreenY));
+            g.Dispose();
+            MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
+        }
 
         //Done writing
         DisableApply();

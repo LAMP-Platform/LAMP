@@ -20,6 +20,7 @@ public partial class MainWindow : Form
 
     //Main Editor vars
     bool EditingTiles = true;
+    bool TilesetSelected = true;
 
     public MainWindow()
     {
@@ -27,10 +28,9 @@ public partial class MainWindow : Form
         InitializeComponent();
     }
 
-    public void ROMLoaded() //greys out buttons or enables them if ROM is loaded
+    public void ROMLoaded(bool value = true) //greys out buttons or enables them if ROM is loaded
     {
         //Enabling UI
-        bool value = true;
         btn_save_rom.Enabled = value;
         btn_save_rom_as.Enabled = value;
         btn_create_backup.Enabled = value;
@@ -73,7 +73,6 @@ public partial class MainWindow : Form
         Room.MouseMove += new MouseEventHandler(Room_MouseMove);
         Room.MouseUp += new MouseEventHandler(Room_MouseUp);
         Room.ResetSelection();
-        Room.ContextMenuStrip = ctx_room_context_menu;
         #endregion
     }
 
@@ -92,7 +91,6 @@ public partial class MainWindow : Form
         Globals.AreaBank = new Bitmap(4096, 4096, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
         Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], Globals.AreaBank, p);
         Room.BackgroundImage = Globals.AreaBank;
-        //pnl_main_room_view.Size = new Size(Room.BackgroundImage.Width + 30, Room.BackgroundImage.Height + 35);
     }
 
     public void UpdateSelectedTiles()
@@ -163,6 +161,27 @@ public partial class MainWindow : Form
         Room.Invalidate();
     }
 
+    public void ToggleDuplicateOutlines()
+    {
+        Room.ShowDuplicateOutlines = !Room.ShowDuplicateOutlines;
+        Room.Invalidate();
+    }
+
+    public void ToggleSelectionFocus(bool TilesetFocused)
+    {
+        if (TilesetFocused == true)
+        {
+            Room.ResetSelection();
+            Room.Invalidate();
+        } 
+        else
+        {
+            Tileset.ResetSelection();
+            Tileset.Invalidate();
+        }
+        TilesetSelected = TilesetFocused;
+    }
+
     void ToggleEditingMode()
     {
         EditingTiles = !EditingTiles;
@@ -177,6 +196,7 @@ public partial class MainWindow : Form
     #region Tileset Events
     private void Tileset_MouseDown(object sender, MouseEventArgs e)
     {
+        ToggleSelectionFocus(true);
         int x = (e.X >> 4) * 16; //tile position at moment of click
         int y = (e.Y >> 4) * 16; //
         //setting start position for selection
@@ -199,10 +219,12 @@ public partial class MainWindow : Form
         {
             int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
             int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+
+            Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
             Rectangle rect = Tileset.SelRect; //old selection rectangle
             Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, TilesetSelectedTile.X), Math.Min(StartSelection.Y, TilesetSelectedTile.Y), width, height);
-            Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
             Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
+
             lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
         }
         else
@@ -234,7 +256,14 @@ public partial class MainWindow : Form
         }
         if (e.Button == MouseButtons.Right)
         {
-
+            ToggleSelectionFocus(false);
+            int x = (e.X >> 4) * 16; //tile position at moment of click
+            int y = (e.Y >> 4) * 16; //
+            StartSelection.X = x;
+            StartSelection.Y = y;
+            Rectangle rect = Room.SelRect; //old selection rectangle
+            Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
+            Room.Invalidate(Editor.UniteRect(Room.SelRect, rect));
         }
     }
 
@@ -259,7 +288,16 @@ public partial class MainWindow : Form
         Rectangle rect = Room.RedRect; //old Position of the rectangle
         Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
         Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
+        unirect.X -= 1;
+        unirect.Y -= 1;
+        unirect.Width += 2;
+        unirect.Height += 2;
         Room.Invalidate(unirect);
+
+        if (e.Button == MouseButtons.Left)
+        {
+            PlaceSelectedTiles();
+        }
     }
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
@@ -370,6 +408,12 @@ public partial class MainWindow : Form
     private void ctx_btn_screen_settings_Click(object sender, EventArgs e)
     {
         new ScreenSettings(cbb_area_bank.SelectedIndex, (Globals.SelectedScreenY * 16) + Globals.SelectedScreenX).Show();
+    }
+
+    private void btn_show_duplicate_outlines_Click(object sender, EventArgs e)
+    {
+        ToggleDuplicateOutlines();
+        btn_show_duplicate_outlines.Checked = Room.ShowDuplicateOutlines;
     }
     #endregion
 

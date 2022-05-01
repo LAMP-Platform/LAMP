@@ -48,6 +48,10 @@ public class TileViewer : Control
             e.Graphics.DrawRectangle(TilePen, RedRect);
         if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))
             return;
+
+        SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
+        BlackPen.DashOffset = 2;
+        e.Graphics.DrawRectangle(BlackPen, SelRect);
         e.Graphics.DrawRectangle(SelectionPen, SelRect);
         base.OnPaint(e);
     }
