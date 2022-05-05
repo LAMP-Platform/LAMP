@@ -6,42 +6,76 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 namespace YAM2E.Classes;
-
+//TODO: some of this should be put into their respective forms.
 public static class Editor
 {
-    public static byte[] ROM; //byte array of the ROM
-    public static string ROMPath; //direct path to ROM file,
+    /// <summary>
+    /// The ROM as a byte array.
+    /// </summary>
+    public static byte[] ROM;
+
+    /// <summary>
+    /// The full file path to the ROM.
+    /// </summary>
+    public static string ROMPath;
+
+    /// <summary>
+    /// Pointers to leve data banks.
+    /// </summary>
     public static int[] A_BANKS = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 }; //pointers to level data banks
+
+    /// <summary>
+    /// The width of the tile selection in tiles.
+    /// </summary>
     public static int SelectionWidth = 0;
+
+    /// <summary>
+    /// The height of the tile selection in tiles.
+    /// </summary>
     public static int SelectionHeight = 0;
+
+    /// <summary>
+    /// The contents of the tile selection.
+    /// </summary>
     public static byte[] SelectedTiles;
 
-    public static void open_rom()
+    /// <summary>
+    /// Prompts to open a ROM and loads it.
+    /// </summary>
+    public static void OpenRomAndLoad()
     {
+        //TODO: do safety checks to ensure it is a valid metroid 2 rom.
         //Get the path to ROM
-        string path = GetFilePath("Gameboy ROM (*.gb)|*.gb");
+        string path = ShowOpenDialog("GameBoy ROM (*.gb)|*.gb");
 
         if (path != String.Empty)
-        {
-            open_path(path);
-        }
+            LoadRomFromPath(path);
     }
 
-    public static void open_path(string path)
+    /// <summary>
+    /// Loads a Metroid 2 ROM from a given path.
+    /// </summary>
+    /// <param name="path">The path to the Metroid 2 ROM.</param>
+    public static void LoadRomFromPath(string path)
     {
         //Changing button appearance
         Globals.RomLoaded = true;
 
+        //TODO: do safety checks to ensure it is a valid metroid 2 rom.
         ROMPath = path;
         ROM = File.ReadAllBytes(path);
         MainWindow.Current.ROMLoaded();
-        update_title_bar();
+        UpdateTitlebar();
     }
 
     /// <summary>
-    /// Opens Dialog Window and returns path to file.
+    /// Opens an "open" Dialog Window and returns the path to the file.
     /// </summary>
-    public static string GetFilePath(string filter) 
+    /// <param name="filter">The file name filter string, which determines the choices
+    /// that appear in the "Files of type" box in the dialog box.</param>
+    /// <returns>A string containing the file name selected in the file dialog box.
+    /// <see cref="String.Empty"/> if the dialog was cancelled.</returns>
+    public static string ShowOpenDialog(string filter)
     {
         using OpenFileDialog openFileDialog = new OpenFileDialog();
         openFileDialog.Filter = filter;
@@ -54,9 +88,13 @@ public static class Editor
     }
 
     /// <summary>
-    ///Opens Dialog Window and returns path to saved file.
+    /// Open a "save" Dialog Window and returns the path to the file
     /// </summary>
-    public static string SaveFilePath(string filter) 
+    /// <param name="filter">The file name filter string, which determines the choices
+    /// that appear in the "Save as file type" box in the dialog box</param>
+    /// <returns>A string containing the file name selected in the file dialog box.
+    /// <see cref="String.Empty"/> if the dialog was cancelled.</returns>
+    public static string ShowSaveDialog(string filter)
     {
         using SaveFileDialog saveFileDialog = new SaveFileDialog();
         saveFileDialog.Filter = filter;
@@ -68,24 +106,30 @@ public static class Editor
         return String.Empty;
     }
 
-    public static void update_title_bar()
+    /// <summary>
+    /// Updates the title bar of the application to show the ROM name.
+    /// </summary>
+    public static void UpdateTitlebar()
     {
         MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(ROMPath)} - YAM2E";
     }
 
+    /// <summary>
+    /// Saves the ROM to <see cref="ROMPath"/>.
+    /// </summary>
     public static void SaveROM()
     {
-        // Open rom, go to origin, dump byte array, close file stream
-        FileStream file = File.OpenWrite(ROMPath);
-        file.Position = 0;
-        file.Write(ROM, 0, ROM.Length);
-        file.Close();
-        update_title_bar();
+        File.WriteAllBytes(ROMPath, ROM);
+
+        UpdateTitlebar();
     }
 
+    /// <summary>
+    /// Prompts the user to specify a <see cref="ROMPath"/> location and saves the ROM there.
+    /// </summary>
     public static void SaveROMAs()
     {
-        string path = SaveFilePath("Gameboy ROM (*.gb)|*.gb");
+        string path = ShowSaveDialog("GameBoy ROM (*.gb)|*.gb");
         if (path == String.Empty)
             return;
         ROMPath = path;
@@ -98,7 +142,7 @@ public static class Editor
     public static void ReplaceBytes(int offsets, byte[] values)
     {
         for (int i = 0; i < values.Length; i++)
-            Editor.ROM[offsets + i] = values[i];
+            ROM[offsets + i] = values[i];
     }
 
     /// <summary>
@@ -121,12 +165,12 @@ public static class Editor
         }
 
         for (int i = 0; i < newArray.Length; i++)
-            Editor.ROM[offsets + i] = newArray[i];
+            ROM[offsets + i] = newArray[i];
     }
 
     /// <summary>
-    /// This Function returns a rectangle with the most top left 
-    /// position of the given rectangles and the maximum width and height
+    /// This Function returns a rectangle with the most top left
+    /// position of the given rectangles and the maximum width and height.
     /// </summary>
     public static Rectangle UniteRect(Rectangle rect1, Rectangle rect2)
     {

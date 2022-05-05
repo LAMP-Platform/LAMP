@@ -173,7 +173,7 @@ public partial class MainWindow : Form
         {
             Room.ResetSelection();
             Room.Invalidate();
-        } 
+        }
         else
         {
             Tileset.ResetSelection();
@@ -317,16 +317,16 @@ public partial class MainWindow : Form
     }
 
     private void btn_open_rom_Click(object sender, EventArgs e)
-        => Editor.open_rom();
+        => Editor.OpenRomAndLoad();
 
     private void btn_tweaks_editor_Click(object sender, EventArgs e)
         => new TweaksEditor().Show();
 
     private void btn_open_rom_image_Click(object sender, EventArgs e)
-        => Editor.open_rom();
+        => btn_open_rom_Click(sender, e);
 
     private void btn_open_tweaks_editor_image_Click(object sender, EventArgs e)
-        => new TweaksEditor().Show();
+        => btn_tweaks_editor_Click(sender, e);
 
     private void btn_save_rom_image_Click(object sender, EventArgs e)
         => Editor.SaveROM();
@@ -345,7 +345,7 @@ public partial class MainWindow : Form
     private void window_file_drop(object sender, DragEventArgs e)
     {
         string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-        Editor.open_path(s[0]);
+        Editor.LoadRomFromPath(s[0]);
     }
 
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
