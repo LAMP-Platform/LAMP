@@ -35,6 +35,7 @@ public partial class MainWindow : Form
         btn_save_rom_as.Enabled = value;
         btn_create_backup.Enabled = value;
         tool_strip_editors.Enabled = value;
+        tool_strip_tools.Enabled = value;
         grp_data_selector.Visible = value;
         btn_open_tweaks_editor_image.Enabled = value;
         btn_save_rom_image.Enabled = value;
@@ -133,7 +134,7 @@ public partial class MainWindow : Form
         int start = (16 * y) + x;
         for (int i = 0; i < Editor.SelectionHeight; i++)
         {
-            Editor.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);
+            Editor.ROM.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);
         }
 
         //updating screens
@@ -334,6 +335,15 @@ public partial class MainWindow : Form
     private void btn_save_rom_as_Click(object sender, EventArgs e)
         => Editor.SaveROMAs();
 
+    private void btn_create_backup_Click(object sender, EventArgs e)
+        => Editor.CreateBackup();
+
+    private void btn_data_viewer_Click(object sender, EventArgs e)
+        => new DataViewer().Show();
+
+    private void freeSpaceToolStripMenuItem_Click(object sender, EventArgs e)
+        => new FreeSpace().Show();
+
     private void window_drag_over(object sender, DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -414,6 +424,30 @@ public partial class MainWindow : Form
     {
         ToggleDuplicateOutlines();
         btn_show_duplicate_outlines.Checked = Room.ShowDuplicateOutlines;
+    }
+
+    private void chb_view_objects_CheckedChanged(object sender, EventArgs e)
+    {
+        if (chb_view_objects.Checked == true)
+        {
+            Room.ShowObjects = true;
+        }
+        else
+        {
+            Room.ShowObjects = false;
+        }
+
+        foreach (Enemy o in Room.ObjectList)
+        {
+            Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
+            Room.Invalidate(inv);
+        }
+        Room.ObjectList = Editor.ReadObjects(cbb_area_bank.SelectedIndex);
+        foreach(Enemy o in Room.ObjectList)
+        {
+            Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
+            Room.Invalidate(inv);
+        }
     }
     #endregion
 

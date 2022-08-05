@@ -43,8 +43,8 @@ public partial class TransitionsEditor : Form
     void LoadTransition(int transition)
     {
         //offset for the transition
-        int offset = Editor.ROM[TableOffset + (2 * transition)];
-        offset += (Editor.ROM[TableOffset + (2 * transition) + 1]) << 8;
+        int offset = Editor.ROM.Data[TableOffset + (2 * transition)];
+        offset += (Editor.ROM.Data[TableOffset + (2 * transition) + 1]) << 8;
         BankTransitionOffset = offset;
         offset += BankOffset - 0x4000;
         CurrentTransitionOffset = offset;
@@ -55,7 +55,7 @@ public partial class TransitionsEditor : Form
         Transition.Clear();
         for (int i = 0; i < 64; i++)
         {
-            byte val = Editor.ROM[offset + i];
+            byte val = Editor.ROM.Data[offset + i];
             Transition.Add(val);
             if (val == 0xFF)
             {
@@ -322,7 +322,7 @@ public partial class TransitionsEditor : Form
     void UpdateRawData()
     {
         //updates the Text box to show the raw data
-        txt_tred_transition_data.Text = Editor.GetRawDataString(CurrentTransitionOffset, TransitionLength);
+        txt_tred_transition_data.Text = Editor.ROM.GetRawDataString(CurrentTransitionOffset, TransitionLength);
     }
 
     void EnableEdit()
@@ -371,7 +371,7 @@ public partial class TransitionsEditor : Form
 
     void ApplyTransition()
     {
-        Editor.ReplaceBytes(CurrentTransitionOffset, Transition);
+        Editor.ROM.ReplaceBytes(CurrentTransitionOffset, Transition);
         ReloadTransition();
         DisableApply();
         DisableEdit();
@@ -527,7 +527,7 @@ public partial class TransitionsEditor : Form
                             $"however, if this Transition is faulty and can not be read correctly, a new pointer might help.",
                 "Change Pointer?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
         {
-            Editor.WritePointerLittleEndian(TableOffset + (2 * cbb_tred_transition_selection.SelectedIndex), (int)num_tred_transition_pointer.Value);
+            Editor.ROM.Write16(TableOffset + (2 * cbb_tred_transition_selection.SelectedIndex), (ushort)num_tred_transition_pointer.Value);
             ReloadTransition();
         }
         else

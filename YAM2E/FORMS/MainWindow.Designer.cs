@@ -38,12 +38,16 @@ namespace YAM2E
             this.btn_save_rom_as = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
+            this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
+            this.freeSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
@@ -84,7 +88,6 @@ namespace YAM2E
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -105,6 +108,7 @@ namespace YAM2E
             this.tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tool_strip_file,
+            this.tool_strip_tools,
             this.tool_strip_editors,
             this.tool_strip_view});
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
@@ -162,6 +166,35 @@ namespace YAM2E
             this.btn_create_backup.Name = "btn_create_backup";
             this.btn_create_backup.Size = new System.Drawing.Size(151, 22);
             this.btn_create_backup.Text = "Create Backup";
+            this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
+            // 
+            // tool_strip_tools
+            // 
+            this.tool_strip_tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tool_strip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_data_viewer,
+            this.freeSpaceToolStripMenuItem});
+            this.tool_strip_tools.Enabled = false;
+            this.tool_strip_tools.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_tools.Image")));
+            this.tool_strip_tools.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_strip_tools.Name = "tool_strip_tools";
+            this.tool_strip_tools.ShowDropDownArrow = false;
+            this.tool_strip_tools.Size = new System.Drawing.Size(38, 22);
+            this.tool_strip_tools.Text = "Tools";
+            // 
+            // btn_data_viewer
+            // 
+            this.btn_data_viewer.Name = "btn_data_viewer";
+            this.btn_data_viewer.Size = new System.Drawing.Size(136, 22);
+            this.btn_data_viewer.Text = "Data Viewer";
+            this.btn_data_viewer.Click += new System.EventHandler(this.btn_data_viewer_Click);
+            // 
+            // freeSpaceToolStripMenuItem
+            // 
+            this.freeSpaceToolStripMenuItem.Name = "freeSpaceToolStripMenuItem";
+            this.freeSpaceToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.freeSpaceToolStripMenuItem.Text = "Free Space";
+            this.freeSpaceToolStripMenuItem.Click += new System.EventHandler(this.freeSpaceToolStripMenuItem_Click);
             // 
             // tool_strip_editors
             // 
@@ -174,8 +207,8 @@ namespace YAM2E
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
             this.tool_strip_editors.ShowDropDownArrow = false;
-            this.tool_strip_editors.Size = new System.Drawing.Size(38, 22);
-            this.tool_strip_editors.Text = "Tools";
+            this.tool_strip_editors.Size = new System.Drawing.Size(47, 22);
+            this.tool_strip_editors.Text = "Editors";
             // 
             // btn_tweaks_editor
             // 
@@ -219,6 +252,15 @@ namespace YAM2E
             this.btn_show_screen_outlines.Size = new System.Drawing.Size(209, 22);
             this.btn_show_screen_outlines.Text = "Screen Outlines";
             this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
+            // 
+            // btn_show_duplicate_outlines
+            // 
+            this.btn_show_duplicate_outlines.Checked = true;
+            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
+            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(209, 22);
+            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
+            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
             // 
             // grp_data_selector
             // 
@@ -517,11 +559,14 @@ namespace YAM2E
             this.chb_view_objects.TabIndex = 1;
             this.chb_view_objects.Text = "Objects";
             this.chb_view_objects.UseVisualStyleBackColor = true;
+            this.chb_view_objects.CheckedChanged += new System.EventHandler(this.chb_view_objects_CheckedChanged);
             // 
             // chb_view_background
             // 
             this.chb_view_background.AutoSize = true;
             this.chb_view_background.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chb_view_background.Checked = true;
+            this.chb_view_background.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chb_view_background.Location = new System.Drawing.Point(4, 23);
             this.chb_view_background.Name = "chb_view_background";
             this.chb_view_background.Size = new System.Drawing.Size(90, 19);
@@ -595,15 +640,6 @@ namespace YAM2E
             this.ctx_btn_test_here.Name = "ctx_btn_test_here";
             this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
-            // 
-            // btn_show_duplicate_outlines
-            // 
-            this.btn_show_duplicate_outlines.Checked = true;
-            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
-            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(209, 22);
-            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
-            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
             // 
             // MainWindow
             // 
@@ -705,6 +741,9 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem ctx_btn_test_here;
         private System.Windows.Forms.ToolStripMenuItem btn_show_duplicate_outlines;
+        private System.Windows.Forms.ToolStripDropDownButton tool_strip_tools;
+        private System.Windows.Forms.ToolStripMenuItem btn_data_viewer;
+        private System.Windows.Forms.ToolStripMenuItem freeSpaceToolStripMenuItem;
     }
 }
 

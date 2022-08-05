@@ -45,7 +45,7 @@ public partial class ScreenSettings : Form
         SelectedScreen = Math.Max(SelectedScreen, 0);
 
         //Used screen data
-        int usedScreen = Editor.ROM[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1];
+        int usedScreen = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1];
         if (usedScreen == 0)
         {
             cbb_scse_screen_used.Text = "Undefined";
@@ -58,13 +58,13 @@ public partial class ScreenSettings : Form
         }
 
         //Scroll data
-        int scrollData = Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen];
+        int scrollData = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen];
         ScrollData = scrollData;
         num_scse_scroll_data.Value = ScrollData;
 
         //Transition data
-        int transitionData = Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)];
-        transitionData += Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] << 8;
+        int transitionData = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)];
+        transitionData += Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] << 8;
         Transition = transitionData & 0xF7FF; //0xF7FF masks out the priority bit
         cbb_scse_transition_index.SelectedIndex = Transition;
 
@@ -150,18 +150,18 @@ public partial class ScreenSettings : Form
         //Writing data
         //Used screen data
         int usedScreen = cbb_scse_screen_used.SelectedIndex + 0x45;
-        Editor.ROM[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1] = (byte)usedScreen;
+        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1] = (byte)usedScreen;
 
         //Scroll data
-        Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen] = (byte)num_scse_scroll_data.Value;
+        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen] = (byte)num_scse_scroll_data.Value;
 
         //Transition Data and Priority bit
         int transitionData;
         if (chb_samus_priority.Checked) transitionData = 0x800;
         else transitionData = 0x0;
         transitionData += cbb_scse_transition_index.SelectedIndex;
-        Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)] = (byte)(transitionData & 0xFF);
-        Editor.ROM[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] = (byte)(transitionData >> 8);
+        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)] = (byte)(transitionData & 0xFF);
+        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] = (byte)(transitionData >> 8);
 
         //updating screen
         if (cbb_scse_screen_used.SelectedIndex != UsedScreen)

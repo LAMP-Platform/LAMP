@@ -12,15 +12,10 @@ public static class Editor
     /// <summary>
     /// The ROM as a byte array.
     /// </summary>
-    public static byte[] ROM;
+    public static Rom ROM;
 
     /// <summary>
-    /// The full file path to the ROM.
-    /// </summary>
-    public static string ROMPath;
-
-    /// <summary>
-    /// Pointers to leve data banks.
+    /// Pointers to level data banks.
     /// </summary>
     public static int[] A_BANKS = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 }; //pointers to level data banks
 
@@ -44,7 +39,6 @@ public static class Editor
     /// </summary>
     public static void OpenRomAndLoad()
     {
-        //TODO: do safety checks to ensure it is a valid metroid 2 rom.
         //Get the path to ROM
         string path = ShowOpenDialog("GameBoy ROM (*.gb)|*.gb");
 
@@ -58,14 +52,21 @@ public static class Editor
     /// <param name="path">The path to the Metroid 2 ROM.</param>
     public static void LoadRomFromPath(string path)
     {
-        //Changing button appearance
-        Globals.RomLoaded = true;
+        try 
+        {
+            ROM = new Rom(path);
+            MainWindow.Current.ROMLoaded();
+            UpdateTitlebar();
 
-        //TODO: do safety checks to ensure it is a valid metroid 2 rom.
-        ROMPath = path;
-        ROM = File.ReadAllBytes(path);
-        MainWindow.Current.ROMLoaded();
-        UpdateTitlebar();
+            //Changing button appearance
+            Globals.RomLoaded = true;
+        }
+        catch
+        {
+            MessageBox.Show("File is not a Metroid II: Return of Samus ROM!\n", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        
     }
 
     /// <summary>
@@ -111,7 +112,7 @@ public static class Editor
     /// </summary>
     public static void UpdateTitlebar()
     {
-        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(ROMPath)} - YAM2E";
+        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(ROM.Filepath)} - YAM2E";
     }
 
     /// <summary>
@@ -119,7 +120,7 @@ public static class Editor
     /// </summary>
     public static void SaveROM()
     {
-        File.WriteAllBytes(ROMPath, ROM);
+        ROM.Save(ROM.Filepath);
 
         UpdateTitlebar();
     }
@@ -132,40 +133,17 @@ public static class Editor
         string path = ShowSaveDialog("GameBoy ROM (*.gb)|*.gb");
         if (path == String.Empty)
             return;
-        ROMPath = path;
+        ROM.Filepath = path;
         SaveROM();
     }
 
     /// <summary>
-    /// Writes the input array at the offset in ROM.
+    /// Creates a Backup of the current ROM data in the same folder
     /// </summary>
-    public static void ReplaceBytes(int offsets, byte[] values)
+    public static void CreateBackup()
     {
-        for (int i = 0; i < values.Length; i++)
-            ROM[offsets + i] = values[i];
-    }
-
-    /// <summary>
-    /// Writes the input list at the offset in ROM.
-    /// </summary>
-    public static void ReplaceBytes(int offsets, List<byte> values)
-    {
-        ReplaceBytes(offsets, values.ToArray());
-    }
-
-    /// <summary>
-    /// Writes a range of the input array at the offset in ROM.
-    /// </summary>
-    public static void ReplaceBytes(int offsets, byte[] values, int start, int end)
-    {
-        byte[] newArray = new byte[end - start];
-        for (int i = 0; i < newArray.Length; i++)
-        {
-            newArray[i] = values[i + start];
-        }
-
-        for (int i = 0; i < newArray.Length; i++)
-            ROM[offsets + i] = newArray[i];
+        string romName = DateTime.Now.ToString("\\/yy-MM-dd_hh-mm-ss") + ".gb";
+        ROM.Save(Path.GetDirectoryName(ROM.Filepath) + romName);
     }
 
     /// <summary>
@@ -186,6 +164,42 @@ public static class Editor
         return new Rectangle(rect.X - 1, rect.Y - 1, rect.Width + 1, rect.Height + 1);
     }
 
+    #region Objects
+
+    /// <summary>
+    /// Returns a list of all the objects in the current selected area bank.
+    /// </summary>
+    public static List<Enemy> ReadObjects(int aBankIndex)
+    {
+        List<Enemy> oList = new List<Enemy>();
+
+        for (int i = 0; i < 256; i++)
+        {
+            Pointer currentPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + 2 * i + 256 * aBankIndex));
+            if (ROM.Read8(currentPtr.Offset) == 0xFF)
+            {
+                continue;
+            }
+
+            //Object found on screen
+            int count = 0;
+
+            while (ROM.Read8(currentPtr.Offset + count * 4) != 0xFF)
+            {
+                byte num = ROM.Read8(currentPtr.Offset + count * 4);
+                byte typ = ROM.Read8(currentPtr.Offset + 1 + count * 4);
+                byte x = ROM.Read8(currentPtr.Offset + 2 + count * 4);
+                byte y = ROM.Read8(currentPtr.Offset + 3 + count * 4);
+                oList.Add(new Enemy(num, typ, x, y, i));
+                count++;
+            }
+        }
+
+        return oList;
+    }
+    #endregion
+
+    #region Level Drawing
     public static void DrawBlack8(Bitmap bpm, int x, int y)
     {
         for(int i = 0; i < 8; i++)
@@ -204,8 +218,8 @@ public static class Editor
         {
             //load one 8 pixel row
             //one row = 2 bytes
-            byte topByte = ROM[offset + (2 * i)];
-            byte lowByte = ROM[offset + (2 * i) + 1];
+            byte topByte = ROM.Data[offset + (2 * i)];
+            byte lowByte = ROM.Data[offset + (2 * i) + 1];
 
             for (int j = 0; j < 8; j++) //looping through both bytes to generate the colours
             {
@@ -233,13 +247,13 @@ public static class Editor
 
     public static void DrawMetaTile(int gfxOffset, int metaOffset, Bitmap bpm, int x, int y)
     {
-        if (ROM[metaOffset + 0] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM[metaOffset + 0], bpm, x, y);
+        if (ROM.Data[metaOffset + 0] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 0], bpm, x, y);
         else DrawBlack8(bpm, x, y);
-        if (ROM[metaOffset + 1] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM[metaOffset + 1], bpm, x + 8, y);
+        if (ROM.Data[metaOffset + 1] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 1], bpm, x + 8, y);
         else DrawBlack8(bpm, x + 8, y);
-        if (ROM[metaOffset + 2] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM[metaOffset + 2], bpm, x, y + 8);
+        if (ROM.Data[metaOffset + 2] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 2], bpm, x, y + 8);
         else DrawBlack8(bpm, x, y + 8);
-        if (ROM[metaOffset + 3] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM[metaOffset + 3], bpm, x + 8, y + 8);
+        if (ROM.Data[metaOffset + 3] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 3], bpm, x + 8, y + 8);
         else DrawBlack8(bpm, x + 8, y + 8);
     }
 
@@ -281,7 +295,7 @@ public static class Editor
         {
             for (int j = 0; j < 16; j++)
             {
-                g.DrawImage(Globals.TilesetTiles[ROM[screenOffset + counter]], new Point(16 * j, 16 * i));
+                g.DrawImage(Globals.TilesetTiles[ROM.Data[screenOffset + counter]], new Point(16 * j, 16 * i));
                 counter++;
             }
         }
@@ -304,7 +318,7 @@ public static class Editor
         {
             for (int j = 0; j < 16; j++)
             {
-                int screenPointer = ROM[bankOffset + (count * 2) + 1];
+                int screenPointer = ROM.Data[bankOffset + (count * 2) + 1];
                 Globals.AreaScreens[j, i] = screenPointer;
                 count++;
             }
@@ -330,20 +344,5 @@ public static class Editor
     {
         Globals.Screens[screen] = DrawScreen(bankOffset + 0x500 + (0x100 * screen));
     }
-
-    public static void WritePointerLittleEndian(int index, int twoByteValue)
-    {
-        ROM[index] = (byte)(twoByteValue & 0x00FF);
-        ROM[index + 1] = (byte)(twoByteValue >> 8);
-    }
-
-    public static string GetRawDataString(int offset, int length)
-    {
-        StringBuilder rawData = new StringBuilder();
-        for (int i = 0; i < length; i++)
-        {
-            rawData.Append(ROM[offset + i].ToString("X2")).Append(' ');
-        }
-        return rawData.ToString();
-    }
+    #endregion
 }

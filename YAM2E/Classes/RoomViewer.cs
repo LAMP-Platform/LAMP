@@ -23,9 +23,13 @@ public class RoomViewer : Control
 
     public bool ShowDuplicateOutlines { get; set; } = true;
 
+    public bool ShowObjects { get; set; } = true;
+
     public int SelectedScreen { get; set; } = 0;
     private int SelectedScreenOld = 0;
     private List<Rectangle> UniqueScreen { get; } = new List<Rectangle>();
+
+    public List<Enemy> ObjectList { get; set; } = new List<Enemy>();
 
     //Rectangles
     //Red selection rectangle
@@ -42,8 +46,10 @@ public class RoomViewer : Control
     private Pen ScreenPen { get; set; } = new Pen(Color.White, 2);
     private Pen UniqueScreenPen { get; set; } = new Pen(Globals.SelectedColor, 2);
 
-    //TODO:unused?
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
+
+    //Objects
+    private Pen ObjectPen { get; set; } = new Pen(Color.LimeGreen, 2);
 
     public void ResetSelection()
     {
@@ -117,6 +123,16 @@ public class RoomViewer : Control
         {
             foreach (Rectangle r in UniqueScreen)
                 e.Graphics.DrawRectangle(UniqueScreenPen, r);
+        }
+
+        //Draw objects
+        if (ShowObjects)
+        {
+            foreach (Enemy o in ObjectList)
+            {
+                Rectangle rec = new Rectangle(o.X, o.Y, 16 - 2, 16 - 2);
+                e.Graphics.DrawRectangle(ObjectPen, rec);
+            }
         }
 
         SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
