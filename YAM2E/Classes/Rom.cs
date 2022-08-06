@@ -107,6 +107,15 @@ namespace YAM2E.Classes
             Buffer.BlockCopy(values, start, Data, offset, end - start);
         }
 
+        /// <summary>
+        /// Writes a byte from the list for each offset in the list.
+        /// </summary>
+        public void ReplaceBytes(int[] offsets, byte[] values)
+        {
+            for (int i = 0; i < values.Length; i++)
+                Data[offsets[i]] = values[i];
+        }
+
         #endregion  
 
         ///CONSTANTS
@@ -117,5 +126,6 @@ namespace YAM2E.Classes
         //object data
         public Pointer ObjectPointerTable = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists
         public Pointer ObjectDataLists = new Pointer(0x3, 0x50E0); //Lists of objects on screen, first entry should always be empty
+        public Pointer ObjectDataEnd = new Pointer(0x3, 0x6300); //This is the first byte of new data that should not be overwritten!
     }
 }

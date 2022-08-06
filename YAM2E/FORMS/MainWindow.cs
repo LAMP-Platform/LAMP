@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using YAM2E.Classes;
@@ -257,6 +259,7 @@ public partial class MainWindow : Form
         }
         if (e.Button == MouseButtons.Right)
         {
+            if (!EditingTiles) return;
             ToggleSelectionFocus(false);
             int x = (e.X >> 4) * 16; //tile position at moment of click
             int y = (e.Y >> 4) * 16; //
@@ -297,6 +300,7 @@ public partial class MainWindow : Form
 
         if (e.Button == MouseButtons.Left)
         {
+            if (!EditingTiles) return;
             PlaceSelectedTiles();
         }
     }
@@ -448,6 +452,40 @@ public partial class MainWindow : Form
             Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
             Room.Invalidate(inv);
         }
+    }
+
+    private void ctx_btn_test_here_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
+            Editor.ROM.Save(tempPath);
+
+            //inefficient way of making changes only to TestROM
+            Rom tROM = new Rom(tempPath);
+
+            //applying tweaks
+            tROM.ReplaceBytes(Globals.EnableDebugMenuOffset, Globals.EnableDebugMenuValues);
+            tROM.Write8(0x140EC, 0x0B); //Start new game on boot
+            tROM.ReplaceBytes(new int[]{0x0D12, 0x0D17, 0x0D1C}, new byte[]{0x00, 0x00, 0x00}); //Skip Samus appearance fanfare
+
+            //saving test ROM
+            tROM.Save(tempPath);
+
+            ProcessStartInfo testROM = new ProcessStartInfo();
+            testROM.FileName = tempPath;
+            testROM.UseShellExecute = true;
+            Process.Start(testROM);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Test ROM could not be launched.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    private void ctx_btn_add_object_Click(object sender, EventArgs e)
+    {
+        Editor.AddObject(RoomSelectedTile.X, RoomSelectedTile.Y, cbb_area_bank.SelectedIndex);
     }
     #endregion
 

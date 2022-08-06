@@ -587,59 +587,61 @@ namespace YAM2E
             this.toolStripSeparator6,
             this.ctx_btn_test_here});
             this.ctx_room_context_menu.Name = "ctx_room_context_menu";
-            this.ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
+            this.ctx_room_context_menu.Size = new System.Drawing.Size(181, 176);
             // 
             // ctx_btn_screen_settings
             // 
             this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
-            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_screen_settings.Text = "Screen Settings";
             this.ctx_btn_screen_settings.Click += new System.EventHandler(this.ctx_btn_screen_settings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_add_object
             // 
             this.ctx_btn_add_object.Name = "ctx_btn_add_object";
-            this.ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_add_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_add_object.Text = "Add Object";
+            this.ctx_btn_add_object.Click += new System.EventHandler(this.ctx_btn_add_object_Click);
             // 
             // ctx_btn_edit_object
             // 
             this.ctx_btn_edit_object.Name = "ctx_btn_edit_object";
-            this.ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_edit_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_edit_object.Text = "Edit Object";
             // 
             // ctx_btn_remove_object
             // 
             this.ctx_btn_remove_object.Name = "ctx_btn_remove_object";
-            this.ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_remove_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_remove_object.Text = "Remove Object";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_set_start_location
             // 
             this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
-            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_set_start_location.Text = "Set Start Location";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_test_here
             // 
             this.ctx_btn_test_here.Name = "ctx_btn_test_here";
-            this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_test_here.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
+            this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
             // MainWindow
             // 

@@ -175,7 +175,7 @@ public static class Editor
 
         for (int i = 0; i < 256; i++)
         {
-            Pointer currentPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + 2 * i + 256 * aBankIndex));
+            Pointer currentPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + 2 * i + 512 * aBankIndex));
             if (ROM.Read8(currentPtr.Offset) == 0xFF)
             {
                 continue;
@@ -196,6 +196,30 @@ public static class Editor
         }
 
         return oList;
+    }
+
+    /// <summary>
+    /// Shifts Object Data together to remove bubbles of freespace
+    /// </summary>
+    public static void ShiftObjectData()
+    {
+        for (int i = 0; i < 7 * 256; i++)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// Adds an object at the current mouse location
+    /// </summary>
+    public static void AddObject(int x, int y, int bank)
+    {
+        int screen = (y / 16) * 16 + (x / 16);
+        int X = (x * 16) % 256;
+        int Y = (y * 16) % 256;
+
+        Pointer scrPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + bank * 512 + 2 * screen));
+        if (scrPtr.bOffset != 0x50E0) ; //F THIS SHIT AHH I NEED SLEEP
     }
     #endregion
 
