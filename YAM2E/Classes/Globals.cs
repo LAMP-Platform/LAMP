@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using YAM2E.Classes;
 
 namespace YAM2E;
 
@@ -47,6 +49,9 @@ internal static class Globals
     public static Bitmap Tileset = new Bitmap(1, 1);
     public static Bitmap[] Screens = new Bitmap[59];
     public static Bitmap AreaBank = new Bitmap(1, 1);
+
+    //Tileset data
+    public static List<Tileset> Tilesets = new List<Tileset>();
 
     //Area data
     public static int[,] AreaScreens = new int[16, 16];

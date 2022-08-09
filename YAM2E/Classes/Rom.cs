@@ -127,5 +127,8 @@ namespace YAM2E.Classes
         public Pointer ObjectPointerTable = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists
         public Pointer ObjectDataLists = new Pointer(0x3, 0x50E0); //Lists of objects on screen, first entry should always be empty
         public Pointer ObjectDataEnd = new Pointer(0x3, 0x6300); //This is the first byte of new data that should not be overwritten!
+
+        //Graphics
+        public Pointer MetatilePointers = new Pointer(0x8, 0x7F1A);
     }
 }

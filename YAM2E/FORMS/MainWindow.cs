@@ -49,6 +49,7 @@ public partial class MainWindow : Form
         btn_tile_mode.Enabled = value;
         btn_tile_mode.Checked = value;
         btn_object_mode.Enabled = value;
+        tool_strip_options.Enabled = value;
 
         if (value != true) return;
 
@@ -486,6 +487,11 @@ public partial class MainWindow : Form
     private void ctx_btn_add_object_Click(object sender, EventArgs e)
     {
         Editor.AddObject(RoomSelectedTile.X, RoomSelectedTile.Y, cbb_area_bank.SelectedIndex);
+    }
+
+    private void btn_tileset_definitions_Click(object sender, EventArgs e)
+    {
+        new TilesetDefinitions(0).Show();
     }
     #endregion
 

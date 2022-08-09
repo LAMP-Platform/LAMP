@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace YAM2E.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -144,6 +145,66 @@ public static class Editor
     {
         string romName = DateTime.Now.ToString("\\/yy-MM-dd_hh-mm-ss") + ".gb";
         ROM.Save(Path.GetDirectoryName(ROM.Filepath) + romName);
+    }
+
+    public static void SaveEditorConfig(string filepath)
+    {
+        /*Directory.CreateDirectory(filepath);
+
+        XmlWriter xW = XmlWriter.Create(filepath);
+        xW.WriteStartDocument();
+        xW.WriteStartElement("TILESETS");
+
+        xW.WriteStartElement("TileInfo");
+        xW.WriteAttributeString("amount", Globals.Tilesets.Count.ToString());
+        xW.WriteEndElement();
+
+        foreach (Tileset t in Globals.Tilesets)
+        {
+            xW.WriteStartElement("Tileset");
+            xW.WriteAttributeString("ID", t.ID.ToString());
+            xW.WriteAttributeString("Name", t.Name);
+            xW.WriteAttributeString("MetaTable", t.MetatileTable.ToString());
+            xW.WriteAttributeString("CollTable", t.CollisionTable.ToString());
+            xW.WriteAttributeString("SolIndice", t.SolidityTable.ToString());
+            xW.WriteEndElement();
+        }
+
+        xW.WriteEndDocument();
+        xW.Close();*/
+
+        XmlDocument xD = new XmlDocument();
+        XmlElement rootNode = xD.CreateElement("TILESETS");
+        xD.AppendChild(rootNode);
+
+        XmlElement tileInfo = xD.CreateElement("TileInfo");
+        XmlAttribute amount = xD.CreateAttribute("amount");
+        amount.Value = Globals.Tilesets.Count.ToString();
+        tileInfo.Attributes.Append(amount);
+        xD.AppendChild(tileInfo);
+
+        foreach (Tileset t in Globals.Tilesets)
+        {
+            XmlElement tileNode = xD.CreateElement("Tileset");
+            XmlAttribute ID = xD.CreateAttribute("ID");
+            XmlAttribute Name = xD.CreateAttribute("Name");
+            XmlAttribute MetaTable = xD.CreateAttribute("MetaTable");
+            XmlAttribute CollTable = xD.CreateAttribute("CollTable");
+            XmlAttribute SolIndice = xD.CreateAttribute("SolIndice");
+            ID.Value = t.ID.ToString();
+            Name.Value = t.Name.ToString();
+            MetaTable.Value = t.MetatileTable.ToString();
+            CollTable.Value = t.CollisionTable.ToString();
+            SolIndice.Value = t.SolidityTable.ToString();
+            tileNode.Attributes.Append(ID);
+            tileNode.Attributes.Append(Name);
+            tileNode.Attributes.Append(MetaTable);
+            tileNode.Attributes.Append(CollTable);
+            tileNode.Attributes.Append(SolIndice);
+            xD.AppendChild(tileNode);
+        }
+
+        xD.Save(filepath);
     }
 
     /// <summary>
