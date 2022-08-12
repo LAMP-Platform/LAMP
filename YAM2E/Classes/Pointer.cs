@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace YAM2E.Classes
 {
     public class Pointer
     {
-        public int Offset;
-        public int Bank;
-        public int bOffset;
-
-        public Pointer (int pointer)
+        [JsonConstructor]
+        public Pointer (int offset)
         {
-            Offset = pointer;
+            Offset = offset;
 
             //calculating bank and pointer
             int bankNr = Offset / 0x4000;
             Bank = bankNr;
 
-            int offset = bankNr * 0x4000;
-            offset = Offset - offset + 0x4000;
-            bOffset = offset;
+            int bOff = bankNr * 0x4000;
+            bOff = Offset - bOff + 0x4000;
+            bOffset = bOff;
         }
 
         public Pointer (int bank, int pointer)
@@ -34,5 +31,9 @@ namespace YAM2E.Classes
             int offset = (int)((pointer - 0x4000) + bank * 0x4000);
             Offset = offset;
         }
+
+        public int Offset { get; set; }
+        public int Bank { get; set; }
+        public int bOffset { get; set; }
     }
 }

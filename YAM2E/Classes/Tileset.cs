@@ -7,7 +7,7 @@ using YAM2E.Classes;
 
 namespace YAM2E.Classes
 {
-    internal class Tileset
+    public class Tileset
     {
         public Tileset(int id)
         {

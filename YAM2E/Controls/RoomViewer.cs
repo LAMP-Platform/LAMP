@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using YAM2E.Classes;
 
-namespace YAM2E.Classes;
+namespace YAM2E.Controls;
 
 public class RoomViewer : Control
 {
@@ -77,7 +78,7 @@ public class RoomViewer : Control
             e.Graphics.DrawRectangle(TilePen, RedRect);
 
         //duplicate Screen Outlines
-        if ((SelectedScreen != SelectedScreenOld) && ShowDuplicateOutlines)
+        if (SelectedScreen != SelectedScreenOld && ShowDuplicateOutlines)
         {
             //invalidating old outlines
             if (UniqueScreen.Count != 0)
@@ -86,7 +87,7 @@ public class RoomViewer : Control
                 foreach (Rectangle r in UniqueScreen)
                     rect = Editor.UniteRect(rect, r);
 
-                this.Invalidate(Editor.SetValSize(rect));
+                Invalidate(Editor.SetValSize(rect));
             }
 
             UniqueScreen.Clear();
@@ -98,7 +99,7 @@ public class RoomViewer : Control
                     if (Globals.AreaScreens[i, j] != SelectedScreen)
                         continue;
                     UniqueScreen.Add(rect);
-                    this.Invalidate(Editor.SetValSize(rect));
+                    Invalidate(Editor.SetValSize(rect));
                 }
             }
 

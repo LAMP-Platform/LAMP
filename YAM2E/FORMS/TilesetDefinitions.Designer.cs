@@ -208,6 +208,7 @@
             this.cbb_tileset_id.Name = "cbb_tileset_id";
             this.cbb_tileset_id.Size = new System.Drawing.Size(55, 23);
             this.cbb_tileset_id.TabIndex = 10;
+            this.cbb_tileset_id.SelectedIndexChanged += new System.EventHandler(this.cbb_tileset_id_SelectedIndexChanged);
             // 
             // lbl_tileset_id
             // 

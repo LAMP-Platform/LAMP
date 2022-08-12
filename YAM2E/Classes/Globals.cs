@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using YAM2E.Classes;
+using System;
 
 namespace YAM2E;
 
@@ -52,6 +53,8 @@ internal static class Globals
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
+    public static string TileDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/YAM2E/TileDefinitions.tld";
+    public static bool SaveROMSep = false;
 
     //Area data
     public static int[,] AreaScreens = new int[16, 16];

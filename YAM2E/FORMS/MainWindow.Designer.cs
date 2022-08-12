@@ -47,6 +47,7 @@ namespace YAM2E
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_save_options_per_rom = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
@@ -238,7 +239,8 @@ namespace YAM2E
             // 
             this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_tileset_definitions});
+            this.btn_tileset_definitions,
+            this.btn_save_options_per_rom});
             this.tool_strip_options.Enabled = false;
             this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
             this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -246,13 +248,22 @@ namespace YAM2E
             this.tool_strip_options.ShowDropDownArrow = false;
             this.tool_strip_options.Size = new System.Drawing.Size(53, 22);
             this.tool_strip_options.Text = "Options";
+            this.tool_strip_options.Click += new System.EventHandler(this.tool_strip_options_Click);
             // 
             // btn_tileset_definitions
             // 
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(193, 22);
             this.btn_tileset_definitions.Text = "Tileset Definitions";
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
+            // 
+            // btn_save_options_per_rom
+            // 
+            this.btn_save_options_per_rom.CheckOnClick = true;
+            this.btn_save_options_per_rom.Name = "btn_save_options_per_rom";
+            this.btn_save_options_per_rom.Size = new System.Drawing.Size(193, 22);
+            this.btn_save_options_per_rom.Text = "Save Options per ROM";
+            this.btn_save_options_per_rom.Click += new System.EventHandler(this.saveOptionsPerROMToolStripMenuItem_Click);
             // 
             // tool_strip_view
             // 
@@ -576,6 +587,8 @@ namespace YAM2E
             // 
             this.chb_view_objects.AutoSize = true;
             this.chb_view_objects.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chb_view_objects.Checked = true;
+            this.chb_view_objects.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chb_view_objects.Location = new System.Drawing.Point(28, 48);
             this.chb_view_objects.Name = "chb_view_objects";
             this.chb_view_objects.Size = new System.Drawing.Size(66, 19);
@@ -771,6 +784,7 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripMenuItem freeSpaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_options;
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
+        private System.Windows.Forms.ToolStripMenuItem btn_save_options_per_rom;
     }
 }
 

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using YAM2E.Classes;
 using YAM2E.FORMS;
+using YAM2E.Controls;
 
 namespace YAM2E;
 
@@ -366,6 +367,8 @@ public partial class MainWindow : Form
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateRoom();
+
+        Room.ObjectList = Editor.ReadObjects(cbb_area_bank.SelectedIndex);
     }
 
     private void main_window_Load(object sender, EventArgs e)
@@ -447,12 +450,6 @@ public partial class MainWindow : Form
             Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
             Room.Invalidate(inv);
         }
-        Room.ObjectList = Editor.ReadObjects(cbb_area_bank.SelectedIndex);
-        foreach(Enemy o in Room.ObjectList)
-        {
-            Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
-            Room.Invalidate(inv);
-        }
     }
 
     private void ctx_btn_test_here_Click(object sender, EventArgs e)
@@ -492,6 +489,18 @@ public partial class MainWindow : Form
     private void btn_tileset_definitions_Click(object sender, EventArgs e)
     {
         new TilesetDefinitions(0).Show();
+    }
+
+    private void saveOptionsPerROMToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (Globals.SaveROMSep == true) btn_save_options_per_rom.Checked = false;
+        else btn_save_options_per_rom.Checked = true;
+        Globals.SaveROMSep = btn_save_options_per_rom.Checked;
+    }
+
+    private void tool_strip_options_Click(object sender, EventArgs e)
+    {
+        btn_save_options_per_rom.Checked = Globals.SaveROMSep;
     }
     #endregion
 

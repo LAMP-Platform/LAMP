@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Text;
+using System.Text.Json;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Xml;
 
 namespace YAM2E.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -61,13 +60,30 @@ public static class Editor
 
             //Changing button appearance
             Globals.RomLoaded = true;
+            
+            try
+            {
+                //Loading Tileset
+                path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/" + Path.GetFileNameWithoutExtension(Editor.ROM.Filepath) + ".tld";
+                if (File.Exists(path))
+                {
+                    Globals.Tilesets = ReadEditorConfig(path);
+                    Globals.SaveROMSep = true;
+                }
+                else if (File.Exists(Globals.TileDataPath)) Globals.Tilesets = ReadEditorConfig(Globals.TileDataPath);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Tileset Definitions could not be loaded.\nMaybe the file is corrupt?\n\n" + ex.Message, "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         catch
         {
             MessageBox.Show("File is not a Metroid II: Return of Samus ROM!\n", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        
+
     }
 
     /// <summary>
@@ -147,66 +163,25 @@ public static class Editor
         ROM.Save(Path.GetDirectoryName(ROM.Filepath) + romName);
     }
 
+    /// <summary>
+    /// (For now) Saves the Tileset definitions at the given file path
+    /// </summary>
     public static void SaveEditorConfig(string filepath)
     {
-        /*Directory.CreateDirectory(filepath);
+        Directory.CreateDirectory(Path.GetDirectoryName(filepath));
 
-        XmlWriter xW = XmlWriter.Create(filepath);
-        xW.WriteStartDocument();
-        xW.WriteStartElement("TILESETS");
-
-        xW.WriteStartElement("TileInfo");
-        xW.WriteAttributeString("amount", Globals.Tilesets.Count.ToString());
-        xW.WriteEndElement();
-
-        foreach (Tileset t in Globals.Tilesets)
-        {
-            xW.WriteStartElement("Tileset");
-            xW.WriteAttributeString("ID", t.ID.ToString());
-            xW.WriteAttributeString("Name", t.Name);
-            xW.WriteAttributeString("MetaTable", t.MetatileTable.ToString());
-            xW.WriteAttributeString("CollTable", t.CollisionTable.ToString());
-            xW.WriteAttributeString("SolIndice", t.SolidityTable.ToString());
-            xW.WriteEndElement();
-        }
-
-        xW.WriteEndDocument();
-        xW.Close();*/
-
-        XmlDocument xD = new XmlDocument();
-        XmlElement rootNode = xD.CreateElement("TILESETS");
-        xD.AppendChild(rootNode);
-
-        XmlElement tileInfo = xD.CreateElement("TileInfo");
-        XmlAttribute amount = xD.CreateAttribute("amount");
-        amount.Value = Globals.Tilesets.Count.ToString();
-        tileInfo.Attributes.Append(amount);
-        xD.AppendChild(tileInfo);
-
-        foreach (Tileset t in Globals.Tilesets)
-        {
-            XmlElement tileNode = xD.CreateElement("Tileset");
-            XmlAttribute ID = xD.CreateAttribute("ID");
-            XmlAttribute Name = xD.CreateAttribute("Name");
-            XmlAttribute MetaTable = xD.CreateAttribute("MetaTable");
-            XmlAttribute CollTable = xD.CreateAttribute("CollTable");
-            XmlAttribute SolIndice = xD.CreateAttribute("SolIndice");
-            ID.Value = t.ID.ToString();
-            Name.Value = t.Name.ToString();
-            MetaTable.Value = t.MetatileTable.ToString();
-            CollTable.Value = t.CollisionTable.ToString();
-            SolIndice.Value = t.SolidityTable.ToString();
-            tileNode.Attributes.Append(ID);
-            tileNode.Attributes.Append(Name);
-            tileNode.Attributes.Append(MetaTable);
-            tileNode.Attributes.Append(CollTable);
-            tileNode.Attributes.Append(SolIndice);
-            xD.AppendChild(tileNode);
-        }
-
-        xD.Save(filepath);
+        //writing JSON file
+        JsonSerializerOptions options = new JsonSerializerOptions();
+        options.WriteIndented = true;
+        string json = JsonSerializer.Serialize(Globals.Tilesets, options);
+        File.WriteAllText(filepath, json);
     }
 
+    public static List<Tileset> ReadEditorConfig(string filepath)
+    {
+        string json = File.ReadAllText(filepath);
+        return JsonSerializer.Deserialize<List<Tileset>>(json);
+    }
     /// <summary>
     /// This Function returns a rectangle with the most top left
     /// position of the given rectangles and the maximum width and height.

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace YAM2E.Classes;
+namespace YAM2E.Controls;
 
 public class TileViewer : Control
 {

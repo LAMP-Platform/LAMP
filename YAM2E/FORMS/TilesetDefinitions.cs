@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YAM2E.Classes;
+using YAM2E.Controls;
 
 namespace YAM2E.FORMS
 {
@@ -45,8 +46,6 @@ namespace YAM2E.FORMS
 
         private void UpdateTileset()
         {
-            btn_save_tileset.Enabled = true;
-
             if (tilemap != null) tilemap.Dispose();
             tilemap = Editor.DrawTileSet((int)num_main_graphics_offset.Value, MetatilePointer.Offset, 16, 8);
             Tileset.BackgroundImage = tilemap;
@@ -114,21 +113,24 @@ namespace YAM2E.FORMS
         private void UpdateIdList()
         {
             cbb_tileset_id.Items.Clear();
+            int width = cbb_tileset_id.Width;
             foreach (Tileset t in Globals.Tilesets)
             {
                 string itemName = t.ID.ToString();
                 if (t.Name != "") itemName += " - " + t.Name;
                 cbb_tileset_id.Items.Add(itemName);
+
+                //adjust the box width
+                width = Math.Max(t.Name.Length * 7 ,width);
             }
+            cbb_tileset_id.DropDownWidth = width;
             cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
+            if (Globals.Tilesets.Count > 0) btn_save_tileset.Enabled = true;
         }
 
         private void btn_save_tileset_Click(object sender, EventArgs e)
         {
-            btn_save_tileset.Enabled = false;
-
             //saving tileset object and tileset list
-
             //object
             Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
             t.ID = cbb_tileset_id.SelectedIndex;
@@ -139,9 +141,19 @@ namespace YAM2E.FORMS
             t.SolidityTable = cbb_solidity_table.SelectedIndex;
 
             //file
-            //string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/yam2e/YAM2E.tld";
-            string path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/YAM2E.tld";
+            string path = Globals.TileDataPath;
+            if (Globals.SaveROMSep) path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/" + Path.GetFileNameWithoutExtension(Editor.ROM.Filepath) + ".tld";
             Editor.SaveEditorConfig(path);
+        }
+
+        private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
+            num_main_graphics_offset.Value = t.GfxOffset.Offset;
+            txb_tileset_name.Text = t.Name;
+            cbb_metatile_table.SelectedIndex = t.MetatileTable;
+            cbb_collision_table.SelectedIndex = t.CollisionTable;
+            cbb_solidity_table.SelectedIndex = t.SolidityTable;
         }
     }
 }
