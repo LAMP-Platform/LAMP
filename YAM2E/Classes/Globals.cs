@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using YAM2E.Classes;
+using YAM2E.Classes.M2_Data;
 using System;
 
 namespace YAM2E;
@@ -13,6 +14,8 @@ internal static class Globals
     /// Indicates whether a Metroid 2 Rom has been loaded.
     /// </summary>
     public static bool RomLoaded = false;
+
+    public static string RomPath = "";
 
     //Editable Color definitions
     /// <summary>
@@ -45,10 +48,21 @@ internal static class Globals
     /// </summary>
     public static Color SelectionColor = Color.FromArgb(255, 0xFF, 0xFF, 0xFF);
 
+    //Data dirs
+    /// <summary>
+    /// Root directory of the loaded Project
+    /// </summary>
+    public static string ProjDirectory;
+
+    //Data lists
+    public static List<List<GameScreen>> Screens;
+    public static List<Area> Areas;
+    public static List<List<Enemy>> Objects;
+
     //Bitmap lists
-    public static Bitmap[] TilesetTiles = new Bitmap[128];
+    public static Bitmap[] Subtiles = new Bitmap[256];
+    public static Bitmap[] Metatiles = new Bitmap[128];
     public static Bitmap Tileset = new Bitmap(1, 1);
-    public static Bitmap[] Screens = new Bitmap[59];
     public static Bitmap AreaBank = new Bitmap(1, 1);
 
     //Tileset data

@@ -166,6 +166,7 @@ public partial class ScreenSettings : Form
         //updating screen
         if (cbb_scse_screen_used.SelectedIndex != UsedScreen)
         {
+            /*
             int ScreenX = SelectedScreen % 16;
             int ScreenY = SelectedScreen / 16;
             Globals.AreaScreens[ScreenX, ScreenY] = usedScreen;
@@ -174,6 +175,7 @@ public partial class ScreenSettings : Form
             g.DrawImage(Globals.Screens[usedScreen - 0x45], new Point(256 * ScreenX, 256 * ScreenY));
             g.Dispose();
             MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
+            */
         }
 
         //Done writing

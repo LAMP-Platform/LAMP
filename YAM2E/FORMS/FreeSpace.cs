@@ -25,7 +25,7 @@ namespace YAM2E.FORMS
                 //Looping through pointer list
                 try
                 {
-                    for (int i = 0; i < Editor.ROM.AreaCount * 256; i++)
+                    for (int i = 0; i < 7 * 256; i++)
                     {
                         Pointer currentPtr = new Pointer(0x3, Editor.ROM.Read16(Editor.ROM.ObjectPointerTable.Offset + 2 * i));
                         if (Editor.ROM.Read8(currentPtr.Offset) == 0xFF)

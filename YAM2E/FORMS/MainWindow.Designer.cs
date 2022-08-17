@@ -33,11 +33,14 @@ namespace YAM2E
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.tool_strip_main_buttons = new System.Windows.Forms.ToolStrip();
             this.tool_strip_file = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_new_project = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_open_rom = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_save_rom = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_save_rom_as = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
+            this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_rol_file = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
             this.freeSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,9 +48,6 @@ namespace YAM2E
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_save_options_per_rom = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
@@ -111,9 +111,9 @@ namespace YAM2E
             this.tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tool_strip_file,
+            this.tool_strip_options,
             this.tool_strip_tools,
             this.tool_strip_editors,
-            this.tool_strip_options,
             this.tool_strip_view});
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
@@ -126,9 +126,9 @@ namespace YAM2E
             // 
             this.tool_strip_file.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_new_project,
             this.btn_open_rom,
             this.btn_save_rom,
-            this.btn_save_rom_as,
             this.toolStripSeparator1,
             this.btn_create_backup});
             this.tool_strip_file.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -137,40 +137,67 @@ namespace YAM2E
             this.tool_strip_file.Size = new System.Drawing.Size(29, 22);
             this.tool_strip_file.Text = "File";
             // 
+            // btn_new_project
+            // 
+            this.btn_new_project.Name = "btn_new_project";
+            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_new_project.Text = "New Project";
+            this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
+            // 
             // btn_open_rom
             // 
             this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(151, 22);
-            this.btn_open_rom.Text = "Open ROM";
+            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
+            this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
             // btn_save_rom
             // 
             this.btn_save_rom.Enabled = false;
             this.btn_save_rom.Name = "btn_save_rom";
-            this.btn_save_rom.Size = new System.Drawing.Size(151, 22);
-            this.btn_save_rom.Text = "Save ROM";
-            // 
-            // btn_save_rom_as
-            // 
-            this.btn_save_rom_as.Enabled = false;
-            this.btn_save_rom_as.Name = "btn_save_rom_as";
-            this.btn_save_rom_as.Size = new System.Drawing.Size(151, 22);
-            this.btn_save_rom_as.Text = "Save ROM as...";
-            this.btn_save_rom_as.Click += new System.EventHandler(this.btn_save_rom_as_Click);
+            this.btn_save_rom.Size = new System.Drawing.Size(150, 22);
+            this.btn_save_rom.Text = "Save Project";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_create_backup
             // 
             this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(151, 22);
+            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
             this.btn_create_backup.Text = "Create Backup";
             this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
+            // 
+            // tool_strip_options
+            // 
+            this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_rol_file,
+            this.btn_tileset_definitions});
+            this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
+            this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_strip_options.Name = "tool_strip_options";
+            this.tool_strip_options.ShowDropDownArrow = false;
+            this.tool_strip_options.Size = new System.Drawing.Size(53, 22);
+            this.tool_strip_options.Text = "Options";
+            // 
+            // btn_rol_file
+            // 
+            this.btn_rol_file.Name = "btn_rol_file";
+            this.btn_rol_file.Size = new System.Drawing.Size(167, 22);
+            this.btn_rol_file.Text = "ROM File";
+            this.btn_rol_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
+            // 
+            // btn_tileset_definitions
+            // 
+            this.btn_tileset_definitions.Enabled = false;
+            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(167, 22);
+            this.btn_tileset_definitions.Text = "Tileset Definitions";
+            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
             // tool_strip_tools
             // 
@@ -234,36 +261,6 @@ namespace YAM2E
             this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
             this.btn_screen_settings.Text = "Screen Settings";
             this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
-            // 
-            // tool_strip_options
-            // 
-            this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_tileset_definitions,
-            this.btn_save_options_per_rom});
-            this.tool_strip_options.Enabled = false;
-            this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
-            this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_options.Name = "tool_strip_options";
-            this.tool_strip_options.ShowDropDownArrow = false;
-            this.tool_strip_options.Size = new System.Drawing.Size(53, 22);
-            this.tool_strip_options.Text = "Options";
-            this.tool_strip_options.Click += new System.EventHandler(this.tool_strip_options_Click);
-            // 
-            // btn_tileset_definitions
-            // 
-            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(193, 22);
-            this.btn_tileset_definitions.Text = "Tileset Definitions";
-            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
-            // 
-            // btn_save_options_per_rom
-            // 
-            this.btn_save_options_per_rom.CheckOnClick = true;
-            this.btn_save_options_per_rom.Name = "btn_save_options_per_rom";
-            this.btn_save_options_per_rom.Size = new System.Drawing.Size(193, 22);
-            this.btn_save_options_per_rom.Text = "Save Options per ROM";
-            this.btn_save_options_per_rom.Click += new System.EventHandler(this.saveOptionsPerROMToolStripMenuItem_Click);
             // 
             // tool_strip_view
             // 
@@ -694,6 +691,7 @@ namespace YAM2E
             this.Controls.Add(this.tool_strip_main_buttons);
             this.MinimumSize = new System.Drawing.Size(553, 810);
             this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YAM2E";
             this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
@@ -729,7 +727,6 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_file;
         private System.Windows.Forms.ToolStripMenuItem btn_open_rom;
         private System.Windows.Forms.ToolStripMenuItem btn_save_rom;
-        private System.Windows.Forms.ToolStripMenuItem btn_save_rom_as;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btn_create_backup;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
@@ -784,7 +781,8 @@ namespace YAM2E
         private System.Windows.Forms.ToolStripMenuItem freeSpaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_options;
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
-        private System.Windows.Forms.ToolStripMenuItem btn_save_options_per_rom;
+        private System.Windows.Forms.ToolStripMenuItem btn_new_project;
+        private System.Windows.Forms.ToolStripMenuItem btn_rol_file;
     }
 }
 

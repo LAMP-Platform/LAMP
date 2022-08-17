@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using YAM2E.FORMS;
+using YAM2E.Classes.M2_Data;
 
 namespace YAM2E.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -34,56 +36,170 @@ public static class Editor
     /// </summary>
     public static byte[] SelectedTiles;
 
-    /// <summary>
-    /// Prompts to open a ROM and loads it.
-    /// </summary>
-    public static void OpenRomAndLoad()
+    public static void CreateNewProject()
     {
-        //Get the path to ROM
-        string path = ShowOpenDialog("GameBoy ROM (*.gb)|*.gb");
+        //checking if a vanilla ROM exists
+        if (!File.Exists(Globals.RomPath))
+        {
+            MessageBox.Show("No Metroid 2: Return to Samus ROM has been selected yet!", "ROM missing",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new Start().Show();
+            return;
+        }
 
-        if (path != String.Empty)
-            LoadRomFromPath(path);
+        //ROM
+        if (LoadRomFromPath(Globals.RomPath) == false) return;
+
+        //Creating folder structure
+        string projname = ShowSaveDialog("Project File (*.m2)|*.m2");
+        if (projname == String.Empty) return;
+        SaveJsonObject(new Project() ,projname);
+
+        string dir = Path.GetDirectoryName(projname);
+        Globals.ProjDirectory = dir;
+        string dirData = dir + "/Data";
+        string dirCustom = dir + "/Custom";
+        Directory.CreateDirectory(dirData + "/Screens");
+        Directory.CreateDirectory(dirCustom);
+
+        //populating Data
+        //Screens
+        string path = dirData + "/Screens";
+        Globals.Screens = new();
+        for (int area = 0; area < 7; area ++)
+        {
+            Globals.Screens.Add(new List<GameScreen>());
+            for (int i = 0; i < 59; i++)
+            {
+                Pointer pointer = new Pointer(ROM.A_BANKS[area].Offset + 0x500 + 0x100 * i);
+                Globals.Screens[area].Add(new GameScreen(pointer));
+            }
+            SaveJsonObject(Globals.Screens[area], path + $"/Area_{area}.json");
+        }
+
+        //Areas
+        path = dirData + "/Areas.json";
+        Globals.Areas = new();
+        for (int area = 0; area < 7; area ++)
+        {
+            Area a = new();
+            for (int i = 0; i < 256; i++)
+            {
+                Pointer offset = ROM.A_BANKS[area];
+
+                //Screens used
+                int data = ROM.Read16(offset.Offset + 2*i);
+                data -= 0x4500;
+                data /= 0x100;
+                a.Screens[i] = data;
+
+                //Scroll data
+                data = ROM.Read8(offset.Offset + 0x200 + i);
+                a.Scrolls[i] = (byte)data;
+
+                //Transition data
+                data = ROM.Read16(offset.Offset + 0x300 + 2 * i);
+                data = data & 0xF7FF; //0xF7FF masks out the priority bit
+                a.Tansitions[i] = data;
+
+                //Priority bit
+                data = ROM.Read16(offset.Offset + 0x300 + 2 * i);
+                data &= 0x800;
+                if (data == 0x800) a.Priorities[i] = true;
+                else a.Priorities[i] = false;
+            }
+            Globals.Areas.Add(a);
+        }
+        SaveJsonObject(Globals.Areas, path);
+
+        //New Project created
+        MainWindow.Current.ProjectLoaded();
     }
 
     /// <summary>
-    /// Loads a Metroid 2 ROM from a given path.
+    /// Prompts to open a ROM and loads it.
     /// </summary>
-    /// <param name="path">The path to the Metroid 2 ROM.</param>
-    public static void LoadRomFromPath(string path)
+    public static void OpenProjectAndLoad()
+    {
+        //checking if a vanilla ROM exists
+        if (!File.Exists(Globals.RomPath))
+        {
+            MessageBox.Show("No Metroid 2: Return to Samus ROM has been selected yet!", "ROM missing",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new Start().Show();
+            return;
+        }
+
+        //ROM
+        if (LoadRomFromPath(Globals.RomPath) == false) return;
+
+        //Get the path to ROM
+        string path = ShowOpenDialog("Project file (*.m2)|*.m2");
+
+        if (path != String.Empty)
+            LoadProjectFromPath(path);
+    }
+
+    /// <summary>
+    /// Loads a Project from the given path.
+    /// </summary>
+    /// <param name="path">The path to the Project file.</param>
+    public static void LoadProjectFromPath(string path)
     {
         try 
         {
+            path = Path.GetDirectoryName(path);
+            string dirData = path + "/Data";
+            string dirCustom = path + "/Custom";
+
+            //Loading Data
+            //Screens
+            Globals.Screens = new();
+            string json;
+            for (int area = 0; area < 7; area ++)
+            {
+                Globals.Screens.Add(new List<GameScreen>());
+                json = File.ReadAllText(dirData + $"/Screens/Area_{area}.json");
+                Globals.Screens[area] = JsonSerializer.Deserialize<List<GameScreen>>(json);
+            }
+
+            //Areas
+            json = File.ReadAllText(dirData + $"/Areas.json");
+            Globals.Areas = JsonSerializer.Deserialize<List<Area>>(json);
+
+            //Project loaded
+            MainWindow.Current.ProjectLoaded();
+            UpdateTitlebar(path);
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+    }
+
+    /// <summary>
+    /// Loads a Metroid 2 ROM from the given path
+    /// </summary>
+    /// <param name="path">The path to the Metroid 2 ROM</param>
+    /// <returns></returns>
+    public static bool LoadRomFromPath(string path)
+    {
+        try
+        {
             ROM = new Rom(path);
-            MainWindow.Current.ROMLoaded();
-            UpdateTitlebar();
 
             //Changing button appearance
             Globals.RomLoaded = true;
-            
-            try
-            {
-                //Loading Tileset
-                path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/" + Path.GetFileNameWithoutExtension(Editor.ROM.Filepath) + ".tld";
-                if (File.Exists(path))
-                {
-                    Globals.Tilesets = ReadEditorConfig(path);
-                    Globals.SaveROMSep = true;
-                }
-                else if (File.Exists(Globals.TileDataPath)) Globals.Tilesets = ReadEditorConfig(Globals.TileDataPath);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Tileset Definitions could not be loaded.\nMaybe the file is corrupt?\n\n" + ex.Message, "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            return true;
         }
         catch
         {
             MessageBox.Show("File is not a Metroid II: Return of Samus ROM!\n", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
-
     }
 
     /// <summary>
@@ -127,31 +243,17 @@ public static class Editor
     /// <summary>
     /// Updates the title bar of the application to show the ROM name.
     /// </summary>
-    public static void UpdateTitlebar()
+    public static void UpdateTitlebar(string path)
     {
-        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(ROM.Filepath)} - YAM2E";
+        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - YAM2E";
     }
 
     /// <summary>
     /// Saves the ROM to <see cref="ROMPath"/>.
     /// </summary>
-    public static void SaveROM()
+    public static void SaveProject()
     {
-        ROM.Save(ROM.Filepath);
 
-        UpdateTitlebar();
-    }
-
-    /// <summary>
-    /// Prompts the user to specify a <see cref="ROMPath"/> location and saves the ROM there.
-    /// </summary>
-    public static void SaveROMAs()
-    {
-        string path = ShowSaveDialog("GameBoy ROM (*.gb)|*.gb");
-        if (path == String.Empty)
-            return;
-        ROM.Filepath = path;
-        SaveROM();
     }
 
     /// <summary>
@@ -160,7 +262,7 @@ public static class Editor
     public static void CreateBackup()
     {
         string romName = DateTime.Now.ToString("\\/yy-MM-dd_hh-mm-ss") + ".gb";
-        ROM.Save(Path.GetDirectoryName(ROM.Filepath) + romName);
+        ROM.Compile(Path.GetDirectoryName(ROM.Filepath) + romName);
     }
 
     /// <summary>
@@ -177,11 +279,27 @@ public static class Editor
         File.WriteAllText(filepath, json);
     }
 
+    /// <summary>
+    /// Returns a list of Tileset definitions from the given Json file
+    /// </summary>
     public static List<Tileset> ReadEditorConfig(string filepath)
     {
         string json = File.ReadAllText(filepath);
         return JsonSerializer.Deserialize<List<Tileset>>(json);
     }
+
+    /// <summary>
+    /// Saves an object serialized as JSON
+    /// </summary>
+    public static void SaveJsonObject(object obj, string filepath)
+    {
+        //writing JSON file
+        JsonSerializerOptions options = new JsonSerializerOptions();
+        options.WriteIndented = true;
+        string json = JsonSerializer.Serialize(obj, options);
+        File.WriteAllText(filepath, json);
+    }
+
     /// <summary>
     /// This Function returns a rectangle with the most top left
     /// position of the given rectangles and the maximum width and height.
@@ -278,8 +396,8 @@ public static class Editor
         {
             //load one 8 pixel row
             //one row = 2 bytes
-            byte topByte = ROM.Data[offset + (2 * i)];
-            byte lowByte = ROM.Data[offset + (2 * i) + 1];
+            byte topByte = ROM.Read8(offset + (2 * i));
+            byte lowByte = ROM.Read8(offset + (2 * i) + 1);
 
             for (int j = 0; j < 8; j++) //looping through both bytes to generate the colours
             {
@@ -324,9 +442,9 @@ public static class Editor
         {
             for (int j = 0; j < tilesWide; j++)
             {
-                if (Globals.TilesetTiles[count] != null) Globals.TilesetTiles[count].Dispose();
-                Globals.TilesetTiles[count] = new Bitmap(16, 16);
-                DrawMetaTile(gfxOffset, metaOffset + count * 4, Globals.TilesetTiles[count], 0, 0);
+                if (Globals.Metatiles[count] != null) Globals.Metatiles[count].Dispose();
+                Globals.Metatiles[count] = new Bitmap(16, 16);
+                DrawMetaTile(gfxOffset, metaOffset + count * 4, Globals.Metatiles[count], 0, 0);
                 count++;
             }
         }
@@ -338,7 +456,7 @@ public static class Editor
         {
             for (int j = 0; j < tilesWide; j++)
             {
-                g.DrawImage(Globals.TilesetTiles[count], new Point(16 * j, 16 * i));
+                g.DrawImage(Globals.Metatiles[count], new Point(16 * j, 16 * i));
                 count++;
             }
         }
@@ -346,54 +464,46 @@ public static class Editor
         return tileset;
     }
 
-    public static Bitmap DrawScreen(int screenOffset)
+    /// <summary>
+    /// Saves a Bitmap of a Screen from the screen list
+    /// </summary>
+    public static void DrawScreen(int area, int screenNr)
     {
         Bitmap screen = new Bitmap(256, 256);
         Graphics g = Graphics.FromImage(screen);
+        GameScreen s = Globals.Screens[area][screenNr];
         int counter = 0;
         for (int i = 0; i < 16; i++)
         {
             for (int j = 0; j < 16; j++)
             {
-                g.DrawImage(Globals.TilesetTiles[ROM.Data[screenOffset + counter]], new Point(16 * j, 16 * i));
+                g.DrawImage(Globals.Metatiles[s.Data[counter]], new Point(16 * j, 16 * i));
                 counter++;
             }
         }
         g.Dispose();
-        return screen;
+        if (s.image != null) s.image.Dispose();
+        s.image = screen;
     }
 
-    public static void DrawAreaBank(int bankOffset, Bitmap bmp, Point p)
+    public static void DrawAreaBank(int bankNr, Bitmap bmp, Point p)
     {
-        //reading in all the screens first
         for (int i = 0; i < 59; i++)
         {
-            if (Globals.Screens[i] != null) Globals.Screens[i].Dispose();
-            Globals.Screens[i] = DrawScreen(bankOffset + 0x500 + (0x100 * i));
+            DrawScreen(bankNr, i);
         }
 
-        //populating area array
+        //drawing the areas
+        Graphics g = Graphics.FromImage(bmp);
+        Area a = Globals.Areas[bankNr];
         int count = 0;
         for (int i = 0; i < 16; i++)
         {
             for (int j = 0; j < 16; j++)
             {
-                int screenPointer = ROM.Data[bankOffset + (count * 2) + 1];
-                Globals.AreaScreens[j, i] = screenPointer;
-                count++;
-            }
-        }
-
-        //drawing the areas
-        Graphics g = Graphics.FromImage(bmp);
-        count = 0;
-        for (int i = 0; i < 16; i++)
-        {
-            for (int j = 0; j < 16; j++)
-            {
-                int screen = Globals.AreaScreens[j, i] - 0x45;
+                int screen = a.Screens[count];
                 Point screenPoint = new Point(p.X + (j * 256), p.Y + (i * 256));
-                if (screen >= 0) g.DrawImage(Globals.Screens[screen], screenPoint);
+                if (screen >= 0) g.DrawImage(Globals.Screens[bankNr][screen].image, screenPoint);
                 count++;
             }
         }
@@ -402,7 +512,7 @@ public static class Editor
 
     public static void UpdateScreen(int screen, int bankOffset)
     {
-        Globals.Screens[screen] = DrawScreen(bankOffset + 0x500 + (0x100 * screen));
+        //Globals.Screens[screen] = DrawScreen(bankOffset + 0x500 + (0x100 * screen));
     }
     #endregion
 }

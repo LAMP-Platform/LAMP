@@ -18,7 +18,6 @@ namespace YAM2E.Classes
         {
             Data = File.ReadAllBytes(filename);
             Filepath = filename;
-            AreaCount = A_BANKS.Length;
 
             // check title and code
             string title = ReadAscii(0x134, 0x8);
@@ -29,7 +28,7 @@ namespace YAM2E.Classes
             }
         }
 
-        public void Save(string filename)
+        public void Compile(string filename)
         {
             File.WriteAllBytes(filename, Data);
         }
@@ -116,12 +115,19 @@ namespace YAM2E.Classes
                 Data[offsets[i]] = values[i];
         }
 
+        /// <summary>
+        /// Reads amount bytes from the offset in the ROM and writes them to dstArray
+        /// </summary>
+        public void ReadBytes(int offset, byte[] dstArray, int amount)
+        {
+            Buffer.BlockCopy(Data, offset, dstArray, 0, amount);
+        }
+
         #endregion  
 
         ///CONSTANTS
         //Areas
-        public int[] A_BANKS = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 }; //Level data pointers
-        public int AreaCount; //Maybe someday we will have more than 7 area banks
+        public Pointer[] A_BANKS = { new Pointer(0x24000), new Pointer(0x28000), new Pointer(0x2C000), new Pointer(0x30000), new Pointer(0x34000), new Pointer(0x38000), new Pointer(0x3C000) };
 
         //object data
         public Pointer ObjectPointerTable = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists

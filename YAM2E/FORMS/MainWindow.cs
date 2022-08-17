@@ -29,13 +29,19 @@ public partial class MainWindow : Form
     {
         Current = this;
         InitializeComponent();
+
+        //Reading vanilla ROM path
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/YAM2E/rompath.txt";
+        if (File.Exists(path))
+        {
+            Globals.RomPath = File.ReadAllText(path);
+        }
     }
 
-    public void ROMLoaded(bool value = true) //greys out buttons or enables them if ROM is loaded
+    public void ProjectLoaded(bool value = true) //greys out buttons or enables them if ROM is loaded
     {
         //Enabling UI
         btn_save_rom.Enabled = value;
-        btn_save_rom_as.Enabled = value;
         btn_create_backup.Enabled = value;
         tool_strip_editors.Enabled = value;
         tool_strip_tools.Enabled = value;
@@ -50,7 +56,7 @@ public partial class MainWindow : Form
         btn_tile_mode.Enabled = value;
         btn_tile_mode.Checked = value;
         btn_object_mode.Enabled = value;
-        tool_strip_options.Enabled = value;
+        btn_tileset_definitions.Enabled = value;
 
         if (value != true) return;
 
@@ -94,7 +100,7 @@ public partial class MainWindow : Form
         Point p = new Point(0, 0);
         Globals.AreaBank.Dispose();
         Globals.AreaBank = new Bitmap(4096, 4096, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-        Editor.DrawAreaBank(Editor.A_BANKS[cbb_area_bank.SelectedIndex], Globals.AreaBank, p);
+        Editor.DrawAreaBank(cbb_area_bank.SelectedIndex, Globals.AreaBank, p);
         Room.BackgroundImage = Globals.AreaBank;
     }
 
@@ -152,7 +158,7 @@ public partial class MainWindow : Form
                 if (Globals.AreaScreens[i, j] == bank_screen_offset)
                 {
                     Graphics g = Graphics.FromImage(Room.BackgroundImage);
-                    g.DrawImage(Globals.Screens[bank_screen_offset - 0x45], new Point(256 * i, 256 * j));
+                    //g.DrawImage(Globals.Screens[bank_screen_offset - 0x45], new Point(256 * i, 256 * j));
                     g.Dispose();
                     Room.Invalidate(new Rectangle(256 * i, 256 * j, 256, 256));
                 }
@@ -324,7 +330,11 @@ public partial class MainWindow : Form
     }
 
     private void btn_open_rom_Click(object sender, EventArgs e)
-        => Editor.OpenRomAndLoad();
+        => Editor.OpenProjectAndLoad();
+
+    private void btn_new_project_Click(object sender, EventArgs e)
+        => Editor.CreateNewProject();
+
 
     private void btn_tweaks_editor_Click(object sender, EventArgs e)
         => new TweaksEditor().Show();
@@ -336,10 +346,7 @@ public partial class MainWindow : Form
         => btn_tweaks_editor_Click(sender, e);
 
     private void btn_save_rom_image_Click(object sender, EventArgs e)
-        => Editor.SaveROM();
-
-    private void btn_save_rom_as_Click(object sender, EventArgs e)
-        => Editor.SaveROMAs();
+        => Editor.SaveProject();
 
     private void btn_create_backup_Click(object sender, EventArgs e)
         => Editor.CreateBackup();
@@ -361,7 +368,7 @@ public partial class MainWindow : Form
     private void window_file_drop(object sender, DragEventArgs e)
     {
         string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-        Editor.LoadRomFromPath(s[0]);
+        Editor.LoadProjectFromPath(s[0]);
     }
 
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
@@ -457,7 +464,7 @@ public partial class MainWindow : Form
         try
         {
             string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
-            Editor.ROM.Save(tempPath);
+            Editor.ROM.Compile(tempPath);
 
             //inefficient way of making changes only to TestROM
             Rom tROM = new Rom(tempPath);
@@ -468,7 +475,7 @@ public partial class MainWindow : Form
             tROM.ReplaceBytes(new int[]{0x0D12, 0x0D17, 0x0D1C}, new byte[]{0x00, 0x00, 0x00}); //Skip Samus appearance fanfare
 
             //saving test ROM
-            tROM.Save(tempPath);
+            tROM.Compile(tempPath);
 
             ProcessStartInfo testROM = new ProcessStartInfo();
             testROM.FileName = tempPath;
@@ -491,17 +498,8 @@ public partial class MainWindow : Form
         new TilesetDefinitions(0).Show();
     }
 
-    private void saveOptionsPerROMToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-        if (Globals.SaveROMSep == true) btn_save_options_per_rom.Checked = false;
-        else btn_save_options_per_rom.Checked = true;
-        Globals.SaveROMSep = btn_save_options_per_rom.Checked;
-    }
-
-    private void tool_strip_options_Click(object sender, EventArgs e)
-    {
-        btn_save_options_per_rom.Checked = Globals.SaveROMSep;
-    }
+    private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)
+        => new Start().Show();
     #endregion
 
     #endregion
