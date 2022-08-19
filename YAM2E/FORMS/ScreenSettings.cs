@@ -1,9 +1,9 @@
 ﻿using System.Windows.Forms;
-using YAM2E.Classes;
+using LAMP.Classes;
 using System;
 using System.Drawing;
 
-namespace YAM2E.FORMS;
+namespace LAMP.FORMS;
 
 public partial class ScreenSettings : Form
 {

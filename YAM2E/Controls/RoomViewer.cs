@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
-using YAM2E.Classes;
+using LAMP.Classes;
 
-namespace YAM2E.Controls;
+namespace LAMP.Controls;
 
 public class RoomViewer : Control
 {

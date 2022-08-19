@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using YAM2E.Classes;
+using LAMP.Classes;
 
-namespace YAM2E.FORMS;
+namespace LAMP.FORMS;
 
 public partial class TweaksEditor : Form
 {

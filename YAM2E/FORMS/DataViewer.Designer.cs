@@ -1,4 +1,4 @@
-﻿namespace YAM2E.FORMS
+﻿namespace LAMP.FORMS
 {
     partial class DataViewer
     {

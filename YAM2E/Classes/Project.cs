@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YAM2E.Classes
+namespace LAMP.Classes
 {
     public class Project
     {

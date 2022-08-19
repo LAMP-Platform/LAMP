@@ -2,9 +2,9 @@
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
-using YAM2E.Classes;
+using LAMP.Classes;
 
-namespace YAM2E.Classes
+namespace LAMP.Classes
 {
     public class Rom
     {

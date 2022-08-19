@@ -4,10 +4,10 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using YAM2E.FORMS;
-using YAM2E.Classes.M2_Data;
+using LAMP.FORMS;
+using LAMP.Classes.M2_Data;
 
-namespace YAM2E.Classes;
+namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
 public static class Editor
 {
@@ -245,7 +245,7 @@ public static class Editor
     /// </summary>
     public static void UpdateTitlebar(string path)
     {
-        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - YAM2E";
+        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - LAMP";
     }
 
     /// <summary>

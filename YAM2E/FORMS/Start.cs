@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YAM2E.Classes;
+using LAMP.Classes;
 using System.IO;
 
-namespace YAM2E.FORMS
+namespace LAMP.FORMS
 {
     public partial class Start : Form
     {
@@ -30,7 +30,7 @@ namespace YAM2E.FORMS
         {
             Globals.RomPath = txb_rom_path.Text;
 
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/YAM2E/rompath.txt";
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
             File.WriteAllText(path, Globals.RomPath);
         }
     }

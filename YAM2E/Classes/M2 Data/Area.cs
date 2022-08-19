@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace YAM2E.Classes.M2_Data
+namespace LAMP.Classes.M2_Data
 {
     public class Area
     {

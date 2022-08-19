@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using YAM2E.Classes;
-using YAM2E.FORMS;
+using LAMP.Classes;
+using LAMP.FORMS;
 
-namespace YAM2E.FORMS
+namespace LAMP.FORMS
 {
     public partial class DataViewer : Form
     {

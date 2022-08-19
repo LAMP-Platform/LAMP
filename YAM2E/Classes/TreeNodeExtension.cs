@@ -1,7 +1,7 @@
-﻿namespace YAM2E;
+﻿namespace LAMP;
 
 /// <summary>
-/// An YAM2E specific extension of <see cref="System.Windows.Forms.TreeNode"/> for use with transition bytecodes.
+/// An LAMP specific extension of <see cref="System.Windows.Forms.TreeNode"/> for use with transition bytecodes.
 /// </summary>
 internal class TreeNodeExtension
 {

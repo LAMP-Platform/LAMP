@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAM2E", "YAM2E\YAM2E.csproj", "{13CAA2FF-6AA4-40A2-864D-B0C9AE67CEE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LAMP", "YAM2E\LAMP.csproj", "{13CAA2FF-6AA4-40A2-864D-B0C9AE67CEE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

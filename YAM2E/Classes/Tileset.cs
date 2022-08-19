@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using YAM2E.Classes;
+using LAMP.Classes;
 
-namespace YAM2E.Classes
+namespace LAMP.Classes
 {
     public class Tileset
     {

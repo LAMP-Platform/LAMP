@@ -8,10 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YAM2E.Classes;
-using YAM2E.Controls;
+using LAMP.Classes;
+using LAMP.Controls;
 
-namespace YAM2E.FORMS
+namespace LAMP.FORMS
 {
     public partial class TilesetDefinitions : Form
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace YAM2E;
+namespace LAMP;
 
 internal static class Program
 {

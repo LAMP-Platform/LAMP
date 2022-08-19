@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using YAM2E.Classes;
+using LAMP.Classes;
 
-namespace YAM2E.FORMS;
+namespace LAMP.FORMS;
 
 public partial class TransitionsEditor : Form
 {
@@ -523,7 +523,7 @@ public partial class TransitionsEditor : Form
         if (MessageBox.Show($"Are you sure you want to change this Pointer?\n\n" +
                             $"This changes the location that Transition {cbb_tred_transition_selection.SelectedIndex:X4} gets read from.\n" +
                             $"It will not move the data of the Transition, therefore, it might be lost forever.\n" +
-                            $"YAM2E will try to automatically repoint the Transition if needed, " +
+                            $"LAMP will try to automatically repoint the Transition if needed, " +
                             $"however, if this Transition is faulty and can not be read correctly, a new pointer might help.",
                 "Change Pointer?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
         {

@@ -1,5 +1,5 @@
 ﻿
-namespace YAM2E
+namespace LAMP
 {
     partial class MainWindow
     {
@@ -692,7 +692,7 @@ namespace YAM2E
             this.MinimumSize = new System.Drawing.Size(553, 810);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "YAM2E";
+            this.Text = "LAMP";
             this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);

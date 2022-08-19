@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace YAM2E.FORMS
+namespace LAMP.FORMS
 {
     public partial class Test_form : Form
     {

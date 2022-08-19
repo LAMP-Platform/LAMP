@@ -3,11 +3,11 @@ using System.IO;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using YAM2E.Classes;
-using YAM2E.FORMS;
-using YAM2E.Controls;
+using LAMP.Classes;
+using LAMP.FORMS;
+using LAMP.Controls;
 
-namespace YAM2E;
+namespace LAMP;
 
 public partial class MainWindow : Form
 {
@@ -31,10 +31,14 @@ public partial class MainWindow : Form
         InitializeComponent();
 
         //Reading vanilla ROM path
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/YAM2E/rompath.txt";
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
+        Directory.CreateDirectory(Path.GetDirectoryName(path));
         if (File.Exists(path))
         {
             Globals.RomPath = File.ReadAllText(path);
+        } else
+        {
+            File.WriteAllText(path, "");
         }
     }
 

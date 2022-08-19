@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using YAM2E.Classes;
-using YAM2E.Classes.M2_Data;
+using LAMP.Classes;
+using LAMP.Classes.M2_Data;
 using System;
 
-namespace YAM2E;
+namespace LAMP;
 
 internal static class Globals
 {
@@ -67,7 +67,7 @@ internal static class Globals
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
-    public static string TileDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/YAM2E/TileDefinitions.tld";
+    public static string TileDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/TileDefinitions.tld";
     public static bool SaveROMSep = false;
 
     //Area data

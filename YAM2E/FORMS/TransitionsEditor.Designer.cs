@@ -1,5 +1,5 @@
 ﻿
-namespace YAM2E.FORMS
+namespace LAMP.FORMS
 {
     partial class TransitionsEditor
     {
