@@ -371,6 +371,17 @@ public static class Editor
         return new Rectangle(rect.X - 1, rect.Y - 1, rect.Width + 1, rect.Height + 1);
     }
 
+    /// <summary>
+    /// Returns the Screen used at the current X and Y coordinates
+    /// </summary>
+    public static int GetScreenNrFromXY(int x, int y, int area)
+    {
+        x /= 256;
+        y /= 256;
+        int screenNr = y * 16 + x;
+        return Globals.Areas[area].Screens[screenNr];
+    }
+
     #region Objects
 
     /// <summary>

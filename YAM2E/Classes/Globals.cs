@@ -47,6 +47,11 @@ internal static class Globals
     public static Color SelectedColor = Color.FromArgb(255, 0xFF, 0, 0);
 
     /// <summary>
+    /// The color used to mark unique screens
+    /// </summary>
+    public static Color UniqueScreenColor = Color.FromArgb(100, 0xFF, 0, 0);
+
+    /// <summary>
     /// The color used by the tile selection.
     /// </summary>
     public static Color SelectionColor = Color.FromArgb(255, 0xFF, 0xFF, 0xFF);
@@ -80,7 +85,6 @@ internal static class Globals
 
     //Area data
     public static int SelectedArea = 0;
-    public static int[,] AreaScreens = new int[16, 16];
     public static int SelectedScreenX = 0;
     public static int SelectedScreenY = 0;
     public static int SelectedScreenNr = 0;

@@ -47,7 +47,7 @@ public class RoomViewer : Control
     {
         Alignment = PenAlignment.Inset
     };
-    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.SelectedColor, 2)
+    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.UniqueScreenColor, 3)
     { 
         Alignment = PenAlignment.Inset
     };
@@ -103,7 +103,7 @@ public class RoomViewer : Control
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 251, 251);
+                    Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 252, 252);
                     int nr = j * 16 + i;
                     if (Globals.Areas[Globals.SelectedArea].Screens[nr] != SelectedScreen)
                         continue;
@@ -122,7 +122,7 @@ public class RoomViewer : Control
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    Rectangle rect = new Rectangle(256 * i, 256 * j, 255, 255);
+                    Rectangle rect = new Rectangle(256 * i, 256 * j, 256, 256);
                     e.Graphics.DrawRectangle(ScreenPen, rect);
                 }
             }

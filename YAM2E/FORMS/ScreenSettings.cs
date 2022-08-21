@@ -39,47 +39,36 @@ public partial class ScreenSettings : Form
         cbb_scse_area_bank.SelectedIndex = AreaIndex;
     }
 
+    /// <summary>
+    /// If the selected area or screen changes the values have to be updated
+    /// </summary>
     void SelectedScreenChanged()
     {
         SelectedBank = Math.Max(SelectedBank, 0);
         SelectedScreen = Math.Max(SelectedScreen, 0);
 
         //Used screen data
-        int usedScreen = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1];
-        if (usedScreen == 0)
-        {
-            cbb_scse_screen_used.Text = "Undefined";
-        }
+        int usedScreen = Globals.Areas[SelectedBank].Screens[SelectedScreen];
+        if (usedScreen <= 0) cbb_scse_screen_used.Text = "Undefined";
         else
         {
-            usedScreen -= 0x45;
             UsedScreen = usedScreen;
             cbb_scse_screen_used.SelectedIndex = UsedScreen;
         }
 
         //Scroll data
-        int scrollData = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen];
+        int scrollData = Globals.Areas[SelectedBank].Scrolls[SelectedScreen];
         ScrollData = scrollData;
         num_scse_scroll_data.Value = ScrollData;
 
         //Transition data
-        int transitionData = Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)];
-        transitionData += Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] << 8;
-        Transition = transitionData & 0xF7FF; //0xF7FF masks out the priority bit
+        int transitionData = Globals.Areas[SelectedBank].Tansitions[SelectedScreen];
+        Transition = transitionData;
         cbb_scse_transition_index.SelectedIndex = Transition;
 
         //Priority bit
-        transitionData &= 0x800;
-        if (transitionData == 0x800)
-        {
-            PriorityData = true;
-            chb_samus_priority.Checked = true;
-        }
-        else
-        {
-            PriorityData = false;
-            chb_samus_priority.Checked = false;
-        }
+        PriorityData = Globals.Areas[SelectedBank].Priorities[SelectedScreen];
+        chb_samus_priority.Checked = PriorityData;
 
         SetOlds();
         DisableApply();
@@ -95,6 +84,9 @@ public partial class ScreenSettings : Form
         btn_scse_apply.Enabled = false;
     }
 
+    /// <summary>
+    /// Copies current values to old-variables for comparison
+    /// </summary>
     void SetOlds()
     {
         UsedScreen = cbb_scse_screen_used.SelectedIndex;
@@ -149,33 +141,26 @@ public partial class ScreenSettings : Form
     {
         //Writing data
         //Used screen data
-        int usedScreen = cbb_scse_screen_used.SelectedIndex + 0x45;
-        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + (2 * SelectedScreen) + 1] = (byte)usedScreen;
+        int usedScreen = cbb_scse_screen_used.SelectedIndex;
+        Globals.Areas[SelectedBank].Screens[SelectedScreen] = usedScreen;
 
         //Scroll data
-        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x200 + SelectedScreen] = (byte)num_scse_scroll_data.Value;
+        Globals.Areas[SelectedBank].Scrolls[SelectedScreen] = (byte)num_scse_scroll_data.Value;
 
         //Transition Data and Priority bit
-        int transitionData;
-        if (chb_samus_priority.Checked) transitionData = 0x800;
-        else transitionData = 0x0;
-        transitionData += cbb_scse_transition_index.SelectedIndex;
-        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen)] = (byte)(transitionData & 0xFF);
-        Editor.ROM.Data[Editor.A_BANKS[SelectedBank] + 0x300 + (2 * SelectedScreen) + 1] = (byte)(transitionData >> 8);
+        Globals.Areas[SelectedBank].Tansitions[SelectedScreen] = cbb_scse_transition_index.SelectedIndex;
+        Globals.Areas[SelectedBank].Priorities[SelectedScreen] = chb_samus_priority.Checked;
 
         //updating screen
-        if (cbb_scse_screen_used.SelectedIndex != UsedScreen)
+        if ((cbb_scse_screen_used.SelectedIndex != UsedScreen) && (Globals.SelectedArea == SelectedBank))
         {
-            /*
             int ScreenX = SelectedScreen % 16;
             int ScreenY = SelectedScreen / 16;
-            Globals.AreaScreens[ScreenX, ScreenY] = usedScreen;
 
             Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
-            g.DrawImage(Globals.Screens[usedScreen - 0x45], new Point(256 * ScreenX, 256 * ScreenY));
+            g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].image, new Point(256 * ScreenX, 256 * ScreenY));
             g.Dispose();
             MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
-            */
         }
 
         //Done writing

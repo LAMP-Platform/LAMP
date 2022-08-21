@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.FORMS;
 using LAMP.Controls;
+using LAMP.Classes.M2_Data;
+using System.Collections.Generic;
 
 namespace LAMP;
 
@@ -104,7 +106,7 @@ public partial class MainWindow : Form
         Point p = new Point(0, 0);
         Globals.AreaBank.Dispose();
         Globals.AreaBank = new Bitmap(4096, 4096, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-        Editor.DrawAreaBank(cbb_area_bank.SelectedIndex, Globals.AreaBank, p);
+        Editor.DrawAreaBank(Globals.SelectedArea, Globals.AreaBank, p);
         Room.BackgroundImage = Globals.AreaBank;
     }
 
@@ -136,38 +138,61 @@ public partial class MainWindow : Form
 
     public void PlaceSelectedTiles()
     {
-        int bank_screen_offset = Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY];
-        int screen_offset = Editor.A_BANKS[cbb_area_bank.SelectedIndex] + 0x500 + (0x100 * (bank_screen_offset - 0x45));
+        int x = RoomSelectedTile.X;
+        int y = RoomSelectedTile.Y;
 
-        //coordinates on screen
-        int x = RoomSelectedTile.X / 16 - 16 * Globals.SelectedScreenX;
-        int y = RoomSelectedTile.Y / 16 - 16 * Globals.SelectedScreenY;
-        lbl_main_hovered_screen.Text = $"Selected Tile: {x}, {y}";
-
-        //writing data
-        int start = (16 * y) + x;
+        //generate array with tiles that have to be replaced
+        Tile[] replaceTiles = new Tile[Editor.SelectionWidth * Editor.SelectionHeight];
+        int count = 0;
         for (int i = 0; i < Editor.SelectionHeight; i++)
         {
-            Editor.ROM.ReplaceBytes(screen_offset + start + (16 * i), Editor.SelectedTiles, i * Editor.SelectionWidth, i * Editor.SelectionWidth + Editor.SelectionWidth);
-        }
-
-        //updating screens
-        Editor.UpdateScreen(bank_screen_offset - 0x45, Editor.A_BANKS[cbb_area_bank.SelectedIndex]);
-
-        //invalidating screen
-        for (int i = 0; i < 16; i++)
-        {
-            for (int j = 0; j < 16; j++)
+            for (int j = 0; j < Editor.SelectionWidth; j++)
             {
-                if (Globals.AreaScreens[i, j] == bank_screen_offset)
-                {
-                    Graphics g = Graphics.FromImage(Room.BackgroundImage);
-                    //g.DrawImage(Globals.Screens[bank_screen_offset - 0x45], new Point(256 * i, 256 * j));
-                    g.Dispose();
-                    Room.Invalidate(new Rectangle(256 * i, 256 * j, 256, 256));
-                }
+                int tx = x + 16 * j;
+                int ty = y + 16 * i;
+                Tile t = new Tile();
+                t.ScreenNr = Editor.GetScreenNrFromXY(tx, ty, Globals.SelectedArea);
+                t.Screen = Globals.Screens[Globals.SelectedArea][t.ScreenNr];
+                t.Area = Globals.SelectedArea;
+                t.Position = new Point(tx % 256, ty % 256);
+                replaceTiles[count] = t;
+                count++;
             }
         }
+
+        //Writing data
+        count = 0;
+        List<int> updatedScreens = new List<int>();
+        foreach (Tile t in replaceTiles)
+        {
+            t.ReplaceTile(Editor.SelectedTiles[count]);
+            if (!updatedScreens.Contains(t.ScreenNr)) updatedScreens.Add(t.ScreenNr);
+            Editor.DrawScreen(Globals.SelectedArea, t.ScreenNr);
+            count++;
+        }
+
+        //redrawing updated screens
+        count = 0;
+        Graphics g = Graphics.FromImage(Globals.AreaBank);
+        foreach (int nr in Globals.Areas[Globals.SelectedArea].Screens)
+        {
+            //screen pos
+            int sy = count / 16;
+            int sx = count % 16;
+            sx *= 256;
+            sy *= 256;
+
+            if (!updatedScreens.Contains(nr))
+            {
+                count++;
+                continue;
+            }
+            GameScreen screen = Globals.Screens[Globals.SelectedArea][nr];
+            g.DrawImage(screen.image, new Point(sx, sy));
+            Room.Invalidate(new Rectangle(sx, sy, 256, 256));
+            count++;
+        }
+        g.Dispose();
     }
 
     public void ToggleScreenOutlines()
@@ -285,8 +310,8 @@ public partial class MainWindow : Form
 
     private void Room_MouseMove(object sender, MouseEventArgs e)
     {
-        Globals.SelectedScreenX = e.X / 256; //screen the mouse cursor is on
-        Globals.SelectedScreenY = e.Y / 256; //
+        Globals.SelectedScreenX = Math.Min(e.X / 256, 15); //screen the mouse cursor is on
+        Globals.SelectedScreenY = Math.Min(e.Y / 256, 15); //
         Globals.SelectedScreenNr = Globals.SelectedScreenY * 16 + Globals.SelectedScreenX;
         if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr])
         {
@@ -380,8 +405,8 @@ public partial class MainWindow : Form
 
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
     {
-        UpdateRoom();
         Globals.SelectedArea = cbb_area_bank.SelectedIndex;
+        UpdateRoom();
     }
 
     private void main_window_Load(object sender, EventArgs e)
@@ -438,7 +463,7 @@ public partial class MainWindow : Form
 
     private void ctx_btn_screen_settings_Click(object sender, EventArgs e)
     {
-        new ScreenSettings(cbb_area_bank.SelectedIndex, (Globals.SelectedScreenY * 16) + Globals.SelectedScreenX).Show();
+        new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr).Show();
     }
 
     private void btn_show_duplicate_outlines_Click(object sender, EventArgs e)

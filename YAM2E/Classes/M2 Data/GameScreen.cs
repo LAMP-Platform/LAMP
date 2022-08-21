@@ -21,13 +21,5 @@ namespace LAMP.Classes.M2_Data
 
         public byte[] Data { get; set; }
         public Bitmap image;
-        /*{
-            get => image;
-            set
-            {
-                if (image != null) image.Dispose();
-                image = value;
-            }
-        }*/
     }
 }
