@@ -36,6 +36,9 @@ public static class Editor
     /// </summary>
     public static byte[] SelectedTiles;
 
+    /// <summary>
+    /// Creates a new project file and the needed data folders with data read from the ROM in it
+    /// </summary>
     public static void CreateNewProject()
     {
         //checking if a vanilla ROM exists
@@ -53,7 +56,7 @@ public static class Editor
         //Creating folder structure
         string projname = ShowSaveDialog("Project File (*.m2)|*.m2");
         if (projname == String.Empty) return;
-        SaveJsonObject(new Project() ,projname);
+        SaveJsonObject(new Project(), projname);
 
         string dir = Path.GetDirectoryName(projname);
         Globals.ProjDirectory = dir;
@@ -99,7 +102,7 @@ public static class Editor
 
                 //Transition data
                 data = ROM.Read16(offset.Offset + 0x300 + 2 * i);
-                data = data & 0xF7FF; //0xF7FF masks out the priority bit
+                data &= 0xF7FF; //0xF7FF masks out the priority bit
                 a.Tansitions[i] = data;
 
                 //Priority bit
@@ -112,6 +115,33 @@ public static class Editor
         }
         SaveJsonObject(Globals.Areas, path);
 
+        //Objects
+        path = dirData + "/Objects.json";
+        Globals.Objects = new List<List<Enemy>>();
+        for (int i = 0; i < 256 * 7; i++)
+        {
+            Globals.Objects.Add(new List<Enemy>());
+            Pointer currentPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + 2 * i));
+            if (ROM.Read8(currentPtr.Offset) == 0xFF)
+            {
+                continue;
+            }
+
+            //Object found on screen
+            int count = 0;
+
+            while (ROM.Read8(currentPtr.Offset + count * 4) != 0xFF)
+            {
+                byte num = ROM.Read8(currentPtr.Offset + count * 4);
+                byte typ = ROM.Read8(currentPtr.Offset + 1 + count * 4);
+                byte x = ROM.Read8(currentPtr.Offset + 2 + count * 4);
+                byte y = ROM.Read8(currentPtr.Offset + 3 + count * 4);
+                Globals.Objects[i].Add(new Enemy(num, typ, x, y));
+                count++;
+            }
+        }
+        SaveJsonObject(Globals.Objects, path);
+
         //New Project created
         MainWindow.Current.ProjectLoaded();
     }
@@ -119,7 +149,7 @@ public static class Editor
     /// <summary>
     /// Prompts to open a ROM and loads it.
     /// </summary>
-    public static void OpenProjectAndLoad()
+    public static void OpenProjectAndLoad(string path = "")
     {
         //checking if a vanilla ROM exists
         if (!File.Exists(Globals.RomPath))
@@ -130,11 +160,12 @@ public static class Editor
             return;
         }
 
+
         //ROM
         if (LoadRomFromPath(Globals.RomPath) == false) return;
 
         //Get the path to ROM
-        string path = ShowOpenDialog("Project file (*.m2)|*.m2");
+        if (path == "") path = ShowOpenDialog("Project file (*.m2)|*.m2");
 
         if (path != String.Empty)
             LoadProjectFromPath(path);
@@ -149,6 +180,7 @@ public static class Editor
         try 
         {
             path = Path.GetDirectoryName(path);
+            Globals.ProjDirectory = path;
             string dirData = path + "/Data";
             string dirCustom = path + "/Custom";
 
@@ -166,6 +198,10 @@ public static class Editor
             //Areas
             json = File.ReadAllText(dirData + $"/Areas.json");
             Globals.Areas = JsonSerializer.Deserialize<List<Area>>(json);
+
+            //Objects
+            json = File.ReadAllText(dirData + $"/Objects.json");
+            Globals.Objects = JsonSerializer.Deserialize<List<List<Enemy>>>(json);
 
             //Project loaded
             MainWindow.Current.ProjectLoaded();
@@ -249,11 +285,29 @@ public static class Editor
     }
 
     /// <summary>
-    /// Saves the ROM to <see cref="ROMPath"/>.
+    /// Saves the ROM to <see cref="Globals.ProjDirectory"/>.
     /// </summary>
     public static void SaveProject()
     {
+        string dir = Globals.ProjDirectory;
+        string dirData = dir + "/Data";
+        string dirCustom = dir + "/Custom";
 
+        //saving Data
+        //screens
+        string path = dirData + "/Screens";
+        for (int area = 0; area < 7; area++)
+        {
+            SaveJsonObject(Globals.Screens[area], path + $"/Area_{area}.json");
+        }
+
+        //Areas
+        path = dirData + "/Areas.json";
+        SaveJsonObject(Globals.Areas, path);
+
+        //Objects
+        path = dirData + "/Objects.json";
+        SaveJsonObject(Globals.Objects, path);
     }
 
     /// <summary>
@@ -262,7 +316,6 @@ public static class Editor
     public static void CreateBackup()
     {
         string romName = DateTime.Now.ToString("\\/yy-MM-dd_hh-mm-ss") + ".gb";
-        ROM.Compile(Path.GetDirectoryName(ROM.Filepath) + romName);
     }
 
     /// <summary>
@@ -321,59 +374,11 @@ public static class Editor
     #region Objects
 
     /// <summary>
-    /// Returns a list of all the objects in the current selected area bank.
-    /// </summary>
-    public static List<Enemy> ReadObjects(int aBankIndex)
-    {
-        List<Enemy> oList = new List<Enemy>();
-
-        for (int i = 0; i < 256; i++)
-        {
-            Pointer currentPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + 2 * i + 512 * aBankIndex));
-            if (ROM.Read8(currentPtr.Offset) == 0xFF)
-            {
-                continue;
-            }
-
-            //Object found on screen
-            int count = 0;
-
-            while (ROM.Read8(currentPtr.Offset + count * 4) != 0xFF)
-            {
-                byte num = ROM.Read8(currentPtr.Offset + count * 4);
-                byte typ = ROM.Read8(currentPtr.Offset + 1 + count * 4);
-                byte x = ROM.Read8(currentPtr.Offset + 2 + count * 4);
-                byte y = ROM.Read8(currentPtr.Offset + 3 + count * 4);
-                oList.Add(new Enemy(num, typ, x, y, i));
-                count++;
-            }
-        }
-
-        return oList;
-    }
-
-    /// <summary>
-    /// Shifts Object Data together to remove bubbles of freespace
-    /// </summary>
-    public static void ShiftObjectData()
-    {
-        for (int i = 0; i < 7 * 256; i++)
-        {
-
-        }
-    }
-
-    /// <summary>
     /// Adds an object at the current mouse location
     /// </summary>
     public static void AddObject(int x, int y, int bank)
     {
-        int screen = (y / 16) * 16 + (x / 16);
-        int X = (x * 16) % 256;
-        int Y = (y * 16) % 256;
 
-        Pointer scrPtr = new Pointer(0x3, ROM.Read16(ROM.ObjectPointerTable.Offset + bank * 512 + 2 * screen));
-        if (scrPtr.bOffset != 0x50E0) ; //F THIS SHIT AHH I NEED SLEEP
     }
     #endregion
 

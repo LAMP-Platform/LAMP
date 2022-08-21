@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using LAMP.Classes;
 
 namespace LAMP.Controls;
@@ -30,8 +31,6 @@ public class RoomViewer : Control
     private int SelectedScreenOld = 0;
     private List<Rectangle> UniqueScreen { get; } = new List<Rectangle>();
 
-    public List<Enemy> ObjectList { get; set; } = new List<Enemy>();
-
     //Rectangles
     //Red selection rectangle
     public Rectangle RedRect { get; set; }
@@ -44,13 +43,22 @@ public class RoomViewer : Control
     //screen outline rectangle
     //TODO:unused?
     private Rectangle ScreenRect { get; set; } = new Rectangle();
-    private Pen ScreenPen { get; set; } = new Pen(Color.White, 2);
-    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.SelectedColor, 2);
+    private Pen ScreenPen { get; set; } = new Pen(Color.White, 2)
+    {
+        Alignment = PenAlignment.Inset
+    };
+    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.SelectedColor, 2)
+    { 
+        Alignment = PenAlignment.Inset
+    };
 
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
 
     //Objects
-    private Pen ObjectPen { get; set; } = new Pen(Color.LimeGreen, 2);
+    private Pen ObjectPen { get; set; } = new Pen(Globals.ObjectColor, 2)
+    {
+        Alignment = PenAlignment.Inset
+    };
 
     public void ResetSelection()
     {
@@ -96,7 +104,8 @@ public class RoomViewer : Control
                 for (int j = 0; j < 16; j++)
                 {
                     Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 251, 251);
-                    if (Globals.AreaScreens[i, j] != SelectedScreen)
+                    int nr = j * 16 + i;
+                    if (Globals.Areas[Globals.SelectedArea].Screens[nr] != SelectedScreen)
                         continue;
                     UniqueScreen.Add(rect);
                     Invalidate(Editor.SetValSize(rect));
@@ -129,10 +138,19 @@ public class RoomViewer : Control
         //Draw objects
         if (ShowObjects)
         {
-            foreach (Enemy o in ObjectList)
+            for(int i = 0; i < 256; i++)
             {
-                Rectangle rec = new Rectangle(o.X, o.Y, 16 - 2, 16 - 2);
-                e.Graphics.DrawRectangle(ObjectPen, rec);
+                int screen = i + 256 * Globals.SelectedArea;
+                if (Globals.Objects[screen].Count == 0) continue;
+
+                foreach (Enemy o in Globals.Objects[screen]) 
+                {
+                    Point p = o.GetPosition(i);
+                    Rectangle rec = new Rectangle(p.X, p.Y, 16, 16);
+                    e.Graphics.DrawEllipse(ObjectPen, rec);
+                    //e.Graphics.DrawRectangle(ObjectPen, rec);
+                    //TODO: Add option to switch been circle and rect
+                }
             }
         }
 

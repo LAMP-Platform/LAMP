@@ -35,7 +35,7 @@ namespace LAMP
             this.tool_strip_file = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_new_project = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_open_rom = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_save_rom = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_save_project = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
@@ -43,7 +43,6 @@ namespace LAMP
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
-            this.freeSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +79,6 @@ namespace LAMP
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.grp_main_view = new System.Windows.Forms.GroupBox();
             this.chb_view_objects = new System.Windows.Forms.CheckBox();
-            this.chb_view_background = new System.Windows.Forms.CheckBox();
             this.ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -128,7 +126,7 @@ namespace LAMP
             this.tool_strip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_new_project,
             this.btn_open_rom,
-            this.btn_save_rom,
+            this.btn_save_project,
             this.toolStripSeparator1,
             this.btn_create_backup});
             this.tool_strip_file.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -151,12 +149,13 @@ namespace LAMP
             this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
-            // btn_save_rom
+            // btn_save_project
             // 
-            this.btn_save_rom.Enabled = false;
-            this.btn_save_rom.Name = "btn_save_rom";
-            this.btn_save_rom.Size = new System.Drawing.Size(150, 22);
-            this.btn_save_rom.Text = "Save Project";
+            this.btn_save_project.Enabled = false;
+            this.btn_save_project.Name = "btn_save_project";
+            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_save_project.Text = "Save Project";
+            this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
             // 
             // toolStripSeparator1
             // 
@@ -203,8 +202,7 @@ namespace LAMP
             // 
             this.tool_strip_tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_data_viewer,
-            this.freeSpaceToolStripMenuItem});
+            this.btn_data_viewer});
             this.tool_strip_tools.Enabled = false;
             this.tool_strip_tools.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_tools.Image")));
             this.tool_strip_tools.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -219,13 +217,6 @@ namespace LAMP
             this.btn_data_viewer.Size = new System.Drawing.Size(136, 22);
             this.btn_data_viewer.Text = "Data Viewer";
             this.btn_data_viewer.Click += new System.EventHandler(this.btn_data_viewer_Click);
-            // 
-            // freeSpaceToolStripMenuItem
-            // 
-            this.freeSpaceToolStripMenuItem.Name = "freeSpaceToolStripMenuItem";
-            this.freeSpaceToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.freeSpaceToolStripMenuItem.Text = "Free Space";
-            this.freeSpaceToolStripMenuItem.Click += new System.EventHandler(this.freeSpaceToolStripMenuItem_Click);
             // 
             // tool_strip_editors
             // 
@@ -443,7 +434,7 @@ namespace LAMP
             this.btn_open_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_open_rom_image.Name = "btn_open_rom_image";
             this.btn_open_rom_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_rom_image.Text = "Open ROM";
+            this.btn_open_rom_image.Text = "Open Project";
             this.btn_open_rom_image.ToolTipText = "Open ROM";
             this.btn_open_rom_image.Click += new System.EventHandler(this.btn_open_rom_image_Click);
             // 
@@ -571,7 +562,6 @@ namespace LAMP
             // grp_main_view
             // 
             this.grp_main_view.Controls.Add(this.chb_view_objects);
-            this.grp_main_view.Controls.Add(this.chb_view_background);
             this.grp_main_view.Location = new System.Drawing.Point(198, 53);
             this.grp_main_view.Name = "grp_main_view";
             this.grp_main_view.Size = new System.Drawing.Size(100, 174);
@@ -586,26 +576,13 @@ namespace LAMP
             this.chb_view_objects.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chb_view_objects.Checked = true;
             this.chb_view_objects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chb_view_objects.Location = new System.Drawing.Point(28, 48);
+            this.chb_view_objects.Location = new System.Drawing.Point(28, 22);
             this.chb_view_objects.Name = "chb_view_objects";
             this.chb_view_objects.Size = new System.Drawing.Size(66, 19);
             this.chb_view_objects.TabIndex = 1;
             this.chb_view_objects.Text = "Objects";
             this.chb_view_objects.UseVisualStyleBackColor = true;
             this.chb_view_objects.CheckedChanged += new System.EventHandler(this.chb_view_objects_CheckedChanged);
-            // 
-            // chb_view_background
-            // 
-            this.chb_view_background.AutoSize = true;
-            this.chb_view_background.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chb_view_background.Checked = true;
-            this.chb_view_background.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chb_view_background.Location = new System.Drawing.Point(4, 23);
-            this.chb_view_background.Name = "chb_view_background";
-            this.chb_view_background.Size = new System.Drawing.Size(90, 19);
-            this.chb_view_background.TabIndex = 0;
-            this.chb_view_background.Text = "Background";
-            this.chb_view_background.UseVisualStyleBackColor = true;
             // 
             // ctx_room_context_menu
             // 
@@ -726,7 +703,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStrip tool_strip_main_buttons;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_file;
         private System.Windows.Forms.ToolStripMenuItem btn_open_rom;
-        private System.Windows.Forms.ToolStripMenuItem btn_save_rom;
+        private System.Windows.Forms.ToolStripMenuItem btn_save_project;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btn_create_backup;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
@@ -760,7 +737,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_show_screen_outlines;
         private System.Windows.Forms.ToolStripMenuItem btn_screen_settings;
         private System.Windows.Forms.GroupBox grp_main_view;
-        private System.Windows.Forms.CheckBox chb_view_background;
         private System.Windows.Forms.ToolStripButton btn_tile_mode;
         private System.Windows.Forms.ToolStripButton btn_object_mode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -778,7 +754,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_show_duplicate_outlines;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_tools;
         private System.Windows.Forms.ToolStripMenuItem btn_data_viewer;
-        private System.Windows.Forms.ToolStripMenuItem freeSpaceToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_options;
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
         private System.Windows.Forms.ToolStripMenuItem btn_new_project;

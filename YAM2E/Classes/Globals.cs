@@ -11,10 +11,13 @@ internal static class Globals
     //TODO: assigned, but never used
 
     /// <summary>
-    /// Indicates whether a Metroid 2 Rom has been loaded.
+    /// Indicates whether a Metroid 2 ROM has been loaded.
     /// </summary>
     public static bool RomLoaded = false;
 
+    /// <summary>
+    /// Path to a vanilla ROM
+    /// </summary>
     public static string RomPath = "";
 
     //Editable Color definitions
@@ -48,11 +51,16 @@ internal static class Globals
     /// </summary>
     public static Color SelectionColor = Color.FromArgb(255, 0xFF, 0xFF, 0xFF);
 
+    /// <summary>
+    /// The color used to mark objects
+    /// </summary>
+    public static Color ObjectColor = Color.FromArgb(255, 0x32, 0xCD, 0x32);
+
     //Data dirs
     /// <summary>
     /// Root directory of the loaded Project
     /// </summary>
-    public static string ProjDirectory;
+    public static string ProjDirectory { get; set; }
 
     //Data lists
     public static List<List<GameScreen>> Screens;
@@ -71,9 +79,11 @@ internal static class Globals
     public static bool SaveROMSep = false;
 
     //Area data
+    public static int SelectedArea = 0;
     public static int[,] AreaScreens = new int[16, 16];
     public static int SelectedScreenX = 0;
     public static int SelectedScreenY = 0;
+    public static int SelectedScreenNr = 0;
 
     #region Tweaks
     public static readonly int[] CenterSamusOnHorizontalMovementOffset = { 0x96C, 0x980, 0x9F3, 0xA07 };

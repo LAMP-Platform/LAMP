@@ -45,7 +45,7 @@ public partial class MainWindow : Form
     public void ProjectLoaded(bool value = true) //greys out buttons or enables them if ROM is loaded
     {
         //Enabling UI
-        btn_save_rom.Enabled = value;
+        btn_save_project.Enabled = value;
         btn_create_backup.Enabled = value;
         tool_strip_editors.Enabled = value;
         tool_strip_tools.Enabled = value;
@@ -287,9 +287,10 @@ public partial class MainWindow : Form
     {
         Globals.SelectedScreenX = e.X / 256; //screen the mouse cursor is on
         Globals.SelectedScreenY = e.Y / 256; //
-        if (Room.SelectedScreen != Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY])
+        Globals.SelectedScreenNr = Globals.SelectedScreenY * 16 + Globals.SelectedScreenX;
+        if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr])
         {
-            Room.SelectedScreen = Globals.AreaScreens[Globals.SelectedScreenX, Globals.SelectedScreenY];
+            Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
         }
         lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
 
@@ -339,6 +340,8 @@ public partial class MainWindow : Form
     private void btn_new_project_Click(object sender, EventArgs e)
         => Editor.CreateNewProject();
 
+    private void btn_save_project_Click(object sender, EventArgs e)
+        => Editor.SaveProject();
 
     private void btn_tweaks_editor_Click(object sender, EventArgs e)
         => new TweaksEditor().Show();
@@ -372,14 +375,13 @@ public partial class MainWindow : Form
     private void window_file_drop(object sender, DragEventArgs e)
     {
         string[] s = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-        Editor.LoadProjectFromPath(s[0]);
+        Editor.OpenProjectAndLoad(s[0]);
     }
 
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
     {
         UpdateRoom();
-
-        Room.ObjectList = Editor.ReadObjects(cbb_area_bank.SelectedIndex);
+        Globals.SelectedArea = cbb_area_bank.SelectedIndex;
     }
 
     private void main_window_Load(object sender, EventArgs e)
@@ -456,10 +458,17 @@ public partial class MainWindow : Form
             Room.ShowObjects = false;
         }
 
-        foreach (Enemy o in Room.ObjectList)
+        for (int i = 0; i < 256; i++)
         {
-            Rectangle inv = new Rectangle(o.X-1, o.Y-1, 17, 17);
-            Room.Invalidate(inv);
+            int screen = i + 256 * Globals.SelectedArea;
+            if (Globals.Objects[screen].Count == 0) continue;
+
+            foreach (Enemy o in Globals.Objects[screen])
+            {
+                Point p = o.GetPosition(screen);
+                Rectangle inv = new Rectangle(p.X, p.Y, 16, 16);
+                Room.Invalidate(inv);
+            }
         }
     }
 
