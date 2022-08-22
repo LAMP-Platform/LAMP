@@ -89,6 +89,8 @@ namespace LAMP
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -128,7 +130,9 @@ namespace LAMP
             this.btn_open_rom,
             this.btn_save_project,
             this.toolStripSeparator1,
-            this.btn_create_backup});
+            this.btn_create_backup,
+            this.toolStripSeparator7,
+            this.btn_compile_ROM});
             this.tool_strip_file.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_file.Name = "tool_strip_file";
             this.tool_strip_file.ShowDropDownArrow = false;
@@ -138,14 +142,14 @@ namespace LAMP
             // btn_new_project
             // 
             this.btn_new_project.Name = "btn_new_project";
-            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_new_project.Size = new System.Drawing.Size(180, 22);
             this.btn_new_project.Text = "New Project";
             this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
             // 
             // btn_open_rom
             // 
             this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
+            this.btn_open_rom.Size = new System.Drawing.Size(180, 22);
             this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
@@ -153,20 +157,20 @@ namespace LAMP
             // 
             this.btn_save_project.Enabled = false;
             this.btn_save_project.Name = "btn_save_project";
-            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_save_project.Size = new System.Drawing.Size(180, 22);
             this.btn_save_project.Text = "Save Project";
             this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // btn_create_backup
             // 
             this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
+            this.btn_create_backup.Size = new System.Drawing.Size(180, 22);
             this.btn_create_backup.Text = "Create Backup";
             this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
             // 
@@ -653,6 +657,17 @@ namespace LAMP
             this.ctx_btn_test_here.Text = "Test Game Here";
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            // 
+            // btn_compile_ROM
+            // 
+            this.btn_compile_ROM.Name = "btn_compile_ROM";
+            this.btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
+            this.btn_compile_ROM.Text = "Compile ROM";
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -758,6 +773,8 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
         private System.Windows.Forms.ToolStripMenuItem btn_new_project;
         private System.Windows.Forms.ToolStripMenuItem btn_rol_file;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem btn_compile_ROM;
     }
 }
 

@@ -44,7 +44,7 @@ public partial class MainWindow : Form
         }
     }
 
-    public void ProjectLoaded(bool value = true) //greys out buttons or enables them if ROM is loaded
+    public void ProjectLoaded(bool value = true) //greys out buttons or enables them if a Project is loaded
     {
         //Enabling UI
         btn_save_project.Enabled = value;
@@ -112,26 +112,53 @@ public partial class MainWindow : Form
 
     public void UpdateSelectedTiles()
     {
-        RoomSelectedSize = new Size(Tileset.SelRect.Width, Tileset.SelRect.Height);
-        int x = Tileset.SelRect.X / 16;
-        int y = Tileset.SelRect.Y / 16;
-        int width = (Tileset.SelRect.Width + 1) / 16;
-        int height = (Tileset.SelRect.Height + 1) / 16;
-        Editor.SelectionWidth = width;
-        Editor.SelectionHeight = height;
-        lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
-
-        //returns the selected Metatile offsets
-        int tiles_width = Tileset.BackgroundImage.Width / 16;
-        Editor.SelectedTiles = new byte[width * height];
-        int count = 0;
-        for (int i = 0; i < height; i++)
+        if (TilesetSelected)
         {
-            for (int j = 0; j < width; j++)
+            RoomSelectedSize = new Size(Tileset.SelRect.Width, Tileset.SelRect.Height);
+            int x = Tileset.SelRect.X / 16;
+            int y = Tileset.SelRect.Y / 16;
+            int width = (Tileset.SelRect.Width + 1) / 16;
+            int height = (Tileset.SelRect.Height + 1) / 16;
+            Editor.SelectionWidth = width;
+            Editor.SelectionHeight = height;
+            lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
+
+            //returns the selected Metatile offsets
+            int tiles_width = Tileset.BackgroundImage.Width / 16;
+            Editor.SelectedTiles = new byte[width * height];
+            int count = 0;
+            for (int i = 0; i < height; i++)
             {
-                int val = (y + i) * tiles_width + j + x;
-                Editor.SelectedTiles[count] = (byte)val;
-                count++;
+                for (int j = 0; j < width; j++)
+                {
+                    int val = (y + i) * tiles_width + j + x;
+                    Editor.SelectedTiles[count] = (byte)val;
+                    count++;
+                }
+            }
+        }
+        else
+        {
+            RoomSelectedSize = new Size(Room.SelRect.Width, Room.SelRect.Height);
+            int x = Room.SelRect.X;
+            int y = Room.SelRect.Y;
+            int width = (Room.SelRect.Width + 1) / 16;
+            int height = (Room.SelRect.Height + 1) / 16;
+            Editor.SelectionWidth = width;
+            Editor.SelectionHeight = height;
+            lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
+
+            //returns the selected Metatile offsets
+            Editor.SelectedTiles = new byte[width * height];
+            int count = 0;
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    byte value = Editor.GetTileFromXY(x + j * 16, y + i * 16, Globals.SelectedArea);
+                    Editor.SelectedTiles[count] = value;
+                    count++;
+                }
             }
         }
     }
@@ -302,6 +329,12 @@ public partial class MainWindow : Form
             int y = (e.Y >> 4) * 16; //
             StartSelection.X = x;
             StartSelection.Y = y;
+
+            Rectangle oldRed = Room.RedRect;
+            oldRed.Width++;
+            oldRed.Height++;
+            Room.Invalidate(oldRed);
+            Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
             Rectangle rect = Room.SelRect; //old selection rectangle
             Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
             Room.Invalidate(Editor.UniteRect(Room.SelRect, rect));
@@ -321,7 +354,7 @@ public partial class MainWindow : Form
 
         int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
         int mouse_y = (e.Y >> 4) * 16; //
-        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) && (mouse_x < 0 || mouse_y < 0) || (mouse_x > Room.BackgroundImage.Width || mouse_y > Room.BackgroundImage.Height)) //if mouse out of Room bounds
+        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) || (mouse_x < 0 || mouse_y < 0) || (mouse_x > Room.BackgroundImage.Width || mouse_y > Room.BackgroundImage.Height)) //if mouse out of Room bounds
             return;
 
         RoomSelectedTile.X = mouse_x;
@@ -341,11 +374,28 @@ public partial class MainWindow : Form
             if (!EditingTiles) return;
             PlaceSelectedTiles();
         }
+
+        if (e.Button == MouseButtons.Right)
+        {
+            int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
+            int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+
+            Rectangle oldRed = Room.RedRect;
+            oldRed.Width++;
+            oldRed.Height++;
+            Room.Invalidate(oldRed);
+            Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
+            Rectangle sRect = Room.SelRect; //old selection rectangle
+            Room.SelRect = new Rectangle(Math.Min(StartSelection.X, RoomSelectedTile.X), Math.Min(StartSelection.Y, RoomSelectedTile.Y), width, height);
+            Room.Invalidate(Editor.UniteRect(Room.SelRect, sRect));
+
+            lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
+        }
     }
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
-
+        UpdateSelectedTiles();
     }
 
     #endregion

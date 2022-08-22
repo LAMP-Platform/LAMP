@@ -372,7 +372,7 @@ public static class Editor
     }
 
     /// <summary>
-    /// Returns the Screen used at the current X and Y coordinates
+    /// Returns the Screen used at the given X and Y coordinates
     /// </summary>
     public static int GetScreenNrFromXY(int x, int y, int area)
     {
@@ -380,6 +380,20 @@ public static class Editor
         y /= 256;
         int screenNr = y * 16 + x;
         return Globals.Areas[area].Screens[screenNr];
+    }
+
+    /// <summary>
+    /// Returns the tile id at the given X and Y coordinates
+    /// </summary>
+    public static byte GetTileFromXY(int x, int y, int area)
+    {
+        int screenNr = GetScreenNrFromXY(x, y, area);
+        x %= 256;
+        y %= 256;
+        x /= 16;
+        y /= 16;
+        int tileNr = y * 16 + x;
+        return Globals.Screens[area][screenNr].Data[tileNr];
     }
 
     #region Objects
@@ -524,11 +538,6 @@ public static class Editor
             }
         }
         g.Dispose();
-    }
-
-    public static void UpdateScreen(int screen, int bankOffset)
-    {
-        //Globals.Screens[screen] = DrawScreen(bankOffset + 0x500 + (0x100 * screen));
     }
     #endregion
 }

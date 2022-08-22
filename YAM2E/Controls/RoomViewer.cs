@@ -80,7 +80,6 @@ public class RoomViewer : Control
     {
         //change render settings
         e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-        e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
         if (RedRect.X != -1)
             e.Graphics.DrawRectangle(TilePen, RedRect);
