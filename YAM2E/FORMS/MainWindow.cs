@@ -402,8 +402,14 @@ public partial class MainWindow : Form
             RoomSelectedCoordinate.X = e.X;
             RoomSelectedCoordinate.Y = e.Y;
 
+            if ((ModifierKeys & Keys.Shift) != 0)
+            {
+                RoomSelectedCoordinate.X = (e.X >> 4) * 16 + 8;
+                RoomSelectedCoordinate.Y = (e.Y >> 4) * 16 + 8;
+            }
+
             Rectangle oldObject = Room.HeldObject;
-            Room.HeldObject = new Rectangle(e.X - 8, e.Y - 8, 15, 15);
+            Room.HeldObject = new Rectangle(RoomSelectedCoordinate.X - 8, RoomSelectedCoordinate.Y - 8, 15, 15);
             Room.Invalidate(Editor.UniteRect(oldObject, Room.HeldObject));
         }
 
@@ -459,8 +465,9 @@ public partial class MainWindow : Form
     {
         if (heldObject != null)
         {
-            heldObject.sX = (byte)(e.X % 256);
-            heldObject.sY = (byte)(e.Y % 256);
+            heldObject.sX = (byte)(RoomSelectedCoordinate.X % 256);
+            heldObject.sY = (byte)(RoomSelectedCoordinate.Y % 256);
+
             Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
             heldObject = null;
         }
