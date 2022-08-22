@@ -24,7 +24,7 @@ public partial class MainWindow : Form
     private Size RoomSelectedSize = new Size(-1, -1);
 
     //Main Editor vars
-    bool EditingTiles = true;
+    public static bool EditingTiles = true;
     bool TilesetSelected = true;
 
     public MainWindow()
@@ -178,12 +178,17 @@ public partial class MainWindow : Form
                 int tx = x + 16 * j;
                 int ty = y + 16 * i;
                 Tile t = new Tile();
-                t.ScreenNr = Editor.GetScreenNrFromXY(tx, ty, Globals.SelectedArea);
+                int scrnNr = Editor.GetScreenNrFromXY(tx, ty, Globals.SelectedArea);
+                if (scrnNr == -1)
+                {
+                    replaceTiles[count++] = new Tile() { Unused = true };
+                    continue;
+                }
+                t.ScreenNr = scrnNr;
                 t.Screen = Globals.Screens[Globals.SelectedArea][t.ScreenNr];
                 t.Area = Globals.SelectedArea;
                 t.Position = new Point(tx % 256, ty % 256);
-                replaceTiles[count] = t;
-                count++;
+                replaceTiles[count++] = t;
             }
         }
 
@@ -192,6 +197,7 @@ public partial class MainWindow : Form
         List<int> updatedScreens = new List<int>();
         foreach (Tile t in replaceTiles)
         {
+            if (t.Unused) continue;
             t.ReplaceTile(Editor.SelectedTiles[count]);
             if (!updatedScreens.Contains(t.ScreenNr)) updatedScreens.Add(t.ScreenNr);
             Editor.DrawScreen(Globals.SelectedArea, t.ScreenNr);
@@ -312,6 +318,8 @@ public partial class MainWindow : Form
     #region Room Events
     private void Room_MouseDown(object sender, MouseEventArgs e)
     {
+        int x = (e.X >> 4) * 16; //tile position at moment of click
+        int y = (e.Y >> 4) * 16; //
         if (e.Button == MouseButtons.Left)
         {
             if (!EditingTiles) return;
@@ -320,13 +328,13 @@ public partial class MainWindow : Form
         if (e.Button == MouseButtons.Middle)
         {
             ToggleEditingMode();
+            Room.CursorRect = new Rectangle(x, y, 15, 15);
+            Room.Invalidate(Editor.UniteRect(Room.RedRect, Room.CursorRect));
         }
         if (e.Button == MouseButtons.Right)
         {
             if (!EditingTiles) return;
             ToggleSelectionFocus(false);
-            int x = (e.X >> 4) * 16; //tile position at moment of click
-            int y = (e.Y >> 4) * 16; //
             StartSelection.X = x;
             StartSelection.Y = y;
 
@@ -354,11 +362,18 @@ public partial class MainWindow : Form
 
         int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
         int mouse_y = (e.Y >> 4) * 16; //
-        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) || (mouse_x < 0 || mouse_y < 0) || (mouse_x > Room.BackgroundImage.Width || mouse_y > Room.BackgroundImage.Height)) //if mouse out of Room bounds
+        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) || (mouse_x < 0 || mouse_y < 0) || (mouse_x >= Room.BackgroundImage.Width || mouse_y >= Room.BackgroundImage.Height)) //if mouse out of Room bounds
             return;
 
         RoomSelectedTile.X = mouse_x;
         RoomSelectedTile.Y = mouse_y;
+
+        if (!EditingTiles)
+        {
+            Rectangle oldCursor = Room.CursorRect;
+            Room.CursorRect = new Rectangle(mouse_x, mouse_y, 15, 15);
+            Room.Invalidate(Editor.UniteRect(oldCursor,Room.CursorRect));
+        }
 
         Rectangle rect = Room.RedRect; //old Position of the rectangle
         Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
@@ -375,7 +390,7 @@ public partial class MainWindow : Form
             PlaceSelectedTiles();
         }
 
-        if (e.Button == MouseButtons.Right)
+        if (e.Button == MouseButtons.Right && EditingTiles)
         {
             int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
             int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + 16 - 1;//

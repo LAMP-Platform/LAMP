@@ -16,6 +16,7 @@ namespace LAMP.Classes
         public int ScreenNr { get; set; }
         public int Area { get; set; }
         public Point Position { get; set; }
+        public bool Unused { get; set; } = false;
 
         public void ReplaceTile(byte tileID)
         {

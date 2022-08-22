@@ -18,13 +18,18 @@ public class RoomViewer : Control
         }
     }
 
-    //TODO:unused?
-    public bool HasSelection => SelRect.X != -1; //Selection rectangle doesn't have a negative x value
+    public RoomViewer()
+    {
+        //SetStyle(ControlStyles.Opaque, true);
+        SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        SuspendLayout();
+        ResumeLayout(false);
+        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
+        BackColor = Color.FromArgb(40, 50, 50);
+    }
 
     public bool ShowScreenOutlines { get; set; } = false;
-
     public bool ShowDuplicateOutlines { get; set; } = true;
-
     public bool ShowObjects { get; set; } = true;
 
     public int SelectedScreen { get; set; } = 0;
@@ -34,6 +39,7 @@ public class RoomViewer : Control
     //Rectangles
     //Red selection rectangle
     public Rectangle RedRect { get; set; }
+    public Rectangle CursorRect { get; set; }
     private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
 
     //selection rectangle
@@ -41,13 +47,11 @@ public class RoomViewer : Control
     private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
 
     //screen outline rectangle
-    //TODO:unused?
-    private Rectangle ScreenRect { get; set; } = new Rectangle();
     private Pen ScreenPen { get; set; } = new Pen(Color.White, 2)
     {
         Alignment = PenAlignment.Inset
     };
-    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.UniqueScreenColor, 3)
+    private Pen UniqueScreenPen { get; set; } = new Pen(Globals.UniqueScreenColor, 2)
     { 
         Alignment = PenAlignment.Inset
     };
@@ -66,23 +70,13 @@ public class RoomViewer : Control
         SelRect = new Rectangle(-1, -1, 0, 0);
     }
 
-    public RoomViewer()
-    {
-        //SetStyle(ControlStyles.Opaque, true);
-        SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-        SuspendLayout();
-        ResumeLayout(false);
-        SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-        BackColor = Color.FromArgb(40, 50, 50);
-    }
-
     protected override void OnPaint(PaintEventArgs e)
     {
         //change render settings
         e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-        if (RedRect.X != -1)
-            e.Graphics.DrawRectangle(TilePen, RedRect);
+        if (RedRect.X != -1 && MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, RedRect);
+        if (!MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, CursorRect);
 
         //duplicate Screen Outlines
         if (SelectedScreen != SelectedScreenOld && ShowDuplicateOutlines)

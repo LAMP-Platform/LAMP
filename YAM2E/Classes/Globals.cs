@@ -49,7 +49,7 @@ internal static class Globals
     /// <summary>
     /// The color used to mark unique screens
     /// </summary>
-    public static Color UniqueScreenColor = Color.FromArgb(100, 0xFF, 0, 0);
+    public static Color UniqueScreenColor = Color.FromArgb(200, 0xFF, 0, 0);
 
     /// <summary>
     /// The color used by the tile selection.

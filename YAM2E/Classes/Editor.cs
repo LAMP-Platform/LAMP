@@ -376,6 +376,7 @@ public static class Editor
     /// </summary>
     public static int GetScreenNrFromXY(int x, int y, int area)
     {
+        if (x >= MainWindow.Room.Width || y >= MainWindow.Room.Height) return -1;
         x /= 256;
         y /= 256;
         int screenNr = y * 16 + x;

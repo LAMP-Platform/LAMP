@@ -1,0 +1,26 @@
+﻿#Stuff that worked once but now doesnt work:
+ - Tweaks Editor
+ - Transitions Editor
+ - Data Viewer (Will probably remove)
+ - Tileset Definitions
+ - Create Backup
+ - Compiling the ROM
+
+#Stuff that should work before beta release
+ - Object manipulation
+ - Transitions Editor
+ - Compiling the ROM
+
+#Nice to have features for future
+ - Graphics Editor
+ - Tileset Editor
+ - Tileset per Screen usage
+ - Screen placing tool
+ - Unique screen view
+ - Clear screen / area data
+ - TestROM & Start position editing
+
+#Outside Editor things
+ - write proper readme.txt
+ - write documentation
+ - document code (please someone do this for me D: )
