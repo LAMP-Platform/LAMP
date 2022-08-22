@@ -148,4 +148,6 @@ internal static class Globals
 public static class ByteOp
 {
     public static bool IsBitSet(byte b, int bit) => (b & (1 << bit)) != 0;
+    public static byte SetBit(byte b, int bit) => (byte)(b | (1 << bit));
+    public static byte FlipBit(byte b, int bit) => (byte)(b ^ (1 << bit));
 }

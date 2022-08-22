@@ -33,6 +33,10 @@ namespace LAMP.FORMS
             this.lbl_scse_area_bank = new System.Windows.Forms.Label();
             this.lbl_scse_screen = new System.Windows.Forms.Label();
             this.grp_scse_screen_data = new System.Windows.Forms.GroupBox();
+            this.btn_scroll_right = new System.Windows.Forms.Button();
+            this.btn_scroll_left = new System.Windows.Forms.Button();
+            this.btn_scroll_down = new System.Windows.Forms.Button();
+            this.btn_scroll_up = new System.Windows.Forms.Button();
             this.btn_scse_edit_transition = new System.Windows.Forms.Button();
             this.chb_samus_priority = new System.Windows.Forms.CheckBox();
             this.cbb_scse_transition_index = new System.Windows.Forms.ComboBox();
@@ -77,6 +81,10 @@ namespace LAMP.FORMS
             // 
             // grp_scse_screen_data
             // 
+            this.grp_scse_screen_data.Controls.Add(this.btn_scroll_right);
+            this.grp_scse_screen_data.Controls.Add(this.btn_scroll_left);
+            this.grp_scse_screen_data.Controls.Add(this.btn_scroll_down);
+            this.grp_scse_screen_data.Controls.Add(this.btn_scroll_up);
             this.grp_scse_screen_data.Controls.Add(this.btn_scse_edit_transition);
             this.grp_scse_screen_data.Controls.Add(this.chb_samus_priority);
             this.grp_scse_screen_data.Controls.Add(this.cbb_scse_transition_index);
@@ -91,6 +99,50 @@ namespace LAMP.FORMS
             this.grp_scse_screen_data.TabIndex = 3;
             this.grp_scse_screen_data.TabStop = false;
             this.grp_scse_screen_data.Text = "Screen Data";
+            // 
+            // btn_scroll_right
+            // 
+            this.btn_scroll_right.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_right.Location = new System.Drawing.Point(175, 51);
+            this.btn_scroll_right.Name = "btn_scroll_right";
+            this.btn_scroll_right.Size = new System.Drawing.Size(23, 23);
+            this.btn_scroll_right.TabIndex = 11;
+            this.btn_scroll_right.Text = "R";
+            this.btn_scroll_right.UseVisualStyleBackColor = false;
+            this.btn_scroll_right.Click += new System.EventHandler(this.btn_scroll_right_Click);
+            // 
+            // btn_scroll_left
+            // 
+            this.btn_scroll_left.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_left.Location = new System.Drawing.Point(146, 51);
+            this.btn_scroll_left.Name = "btn_scroll_left";
+            this.btn_scroll_left.Size = new System.Drawing.Size(23, 23);
+            this.btn_scroll_left.TabIndex = 10;
+            this.btn_scroll_left.Text = "L";
+            this.btn_scroll_left.UseVisualStyleBackColor = false;
+            this.btn_scroll_left.Click += new System.EventHandler(this.btn_scroll_left_Click);
+            // 
+            // btn_scroll_down
+            // 
+            this.btn_scroll_down.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_down.Location = new System.Drawing.Point(117, 51);
+            this.btn_scroll_down.Name = "btn_scroll_down";
+            this.btn_scroll_down.Size = new System.Drawing.Size(23, 23);
+            this.btn_scroll_down.TabIndex = 9;
+            this.btn_scroll_down.Text = "D";
+            this.btn_scroll_down.UseVisualStyleBackColor = false;
+            this.btn_scroll_down.Click += new System.EventHandler(this.btn_scroll_down_Click);
+            // 
+            // btn_scroll_up
+            // 
+            this.btn_scroll_up.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_up.Location = new System.Drawing.Point(88, 51);
+            this.btn_scroll_up.Name = "btn_scroll_up";
+            this.btn_scroll_up.Size = new System.Drawing.Size(23, 23);
+            this.btn_scroll_up.TabIndex = 8;
+            this.btn_scroll_up.Text = "U";
+            this.btn_scroll_up.UseVisualStyleBackColor = false;
+            this.btn_scroll_up.Click += new System.EventHandler(this.btn_scroll_up_Click);
             // 
             // btn_scse_edit_transition
             // 
@@ -135,14 +187,14 @@ namespace LAMP.FORMS
             // num_scse_scroll_data
             // 
             this.num_scse_scroll_data.Hexadecimal = true;
-            this.num_scse_scroll_data.Location = new System.Drawing.Point(88, 51);
+            this.num_scse_scroll_data.Location = new System.Drawing.Point(204, 51);
             this.num_scse_scroll_data.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
             this.num_scse_scroll_data.Name = "num_scse_scroll_data";
-            this.num_scse_scroll_data.Size = new System.Drawing.Size(56, 23);
+            this.num_scse_scroll_data.Size = new System.Drawing.Size(79, 23);
             this.num_scse_scroll_data.TabIndex = 3;
             this.num_scse_scroll_data.ValueChanged += new System.EventHandler(this.num_scse_scroll_data_ValueChanged);
             // 
@@ -263,5 +315,9 @@ namespace LAMP.FORMS
         private System.Windows.Forms.Button btn_scse_edit_transition;
         private System.Windows.Forms.Button btn_scse_apply;
         private System.Windows.Forms.Button btn_scse_close;
+        private System.Windows.Forms.Button btn_scroll_right;
+        private System.Windows.Forms.Button btn_scroll_left;
+        private System.Windows.Forms.Button btn_scroll_down;
+        private System.Windows.Forms.Button btn_scroll_up;
     }
 }

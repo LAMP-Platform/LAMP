@@ -21,7 +21,9 @@ public partial class MainWindow : Form
     private Point StartSelection = new Point(-1, -1);
     private Point TilesetSelectedTile = new Point(-1, -1);
     private Point RoomSelectedTile = new Point(-1, -1);
+    private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
+    public static Enemy heldObject = null;
 
     //Main Editor vars
     public static bool EditingTiles = true;
@@ -322,7 +324,18 @@ public partial class MainWindow : Form
         int y = (e.Y >> 4) * 16; //
         if (e.Button == MouseButtons.Left)
         {
-            if (!EditingTiles) return;
+            //Object editing mode
+            if (!EditingTiles)
+            {
+                heldObject = Editor.FindObject(e.X, e.Y, Globals.SelectedArea);
+                Editor.RemoveObject(e.X, e.Y, Globals.SelectedArea);
+                Rectangle oldObject = Room.HeldObject;
+                Room.HeldObject = new Rectangle(e.X - 8, e.Y - 8, 15, 15);
+                Room.Invalidate(Editor.UniteRect(oldObject, Room.HeldObject));
+                return;
+            }
+
+            //Tile editing mode
             PlaceSelectedTiles();
         }
         if (e.Button == MouseButtons.Middle)
@@ -333,7 +346,30 @@ public partial class MainWindow : Form
         }
         if (e.Button == MouseButtons.Right)
         {
-            if (!EditingTiles) return;
+            //object mode
+            if (!EditingTiles)
+            {
+                RoomSelectedTile.X = x;
+                RoomSelectedTile.Y = y;
+                RoomSelectedCoordinate.X = e.X;
+                RoomSelectedCoordinate.Y = e.Y;
+
+                //Checking if object selected
+                if (Editor.FindObject(e.X, e.Y, Globals.SelectedArea) == null) {
+                    ctx_btn_remove_object.Enabled = false;
+                    ctx_btn_edit_object.Enabled = false;
+                }
+                else
+                {
+                    ctx_btn_remove_object.Enabled = true;
+                    ctx_btn_edit_object.Enabled = true;
+                }
+
+                //returning because we dont want to select tiles
+                return;
+            }
+
+            //If not in object mode
             ToggleSelectionFocus(false);
             StartSelection.X = x;
             StartSelection.Y = y;
@@ -359,6 +395,17 @@ public partial class MainWindow : Form
             Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
         }
         lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
+
+        //Moving selected object
+        if ((RoomSelectedCoordinate.X != e.X || RoomSelectedCoordinate.Y != e.Y) && !(e.X < 0 || e.Y < 0) && !(e.X > Room.BackgroundImage.Width || e.Y > Room.BackgroundImage.Height) && heldObject != null)
+        {
+            RoomSelectedCoordinate.X = e.X;
+            RoomSelectedCoordinate.Y = e.Y;
+
+            Rectangle oldObject = Room.HeldObject;
+            Room.HeldObject = new Rectangle(e.X - 8, e.Y - 8, 15, 15);
+            Room.Invalidate(Editor.UniteRect(oldObject, Room.HeldObject));
+        }
 
         int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
         int mouse_y = (e.Y >> 4) * 16; //
@@ -410,6 +457,13 @@ public partial class MainWindow : Form
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
+        if (heldObject != null)
+        {
+            heldObject.sX = (byte)(e.X % 256);
+            heldObject.sY = (byte)(e.Y % 256);
+            Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
+            heldObject = null;
+        }
         UpdateSelectedTiles();
     }
 
@@ -527,9 +581,7 @@ public partial class MainWindow : Form
     }
 
     private void ctx_btn_screen_settings_Click(object sender, EventArgs e)
-    {
-        new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr).Show();
-    }
+        => new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr).Show();
 
     private void btn_show_duplicate_outlines_Click(object sender, EventArgs e)
     {
@@ -593,7 +645,7 @@ public partial class MainWindow : Form
 
     private void ctx_btn_add_object_Click(object sender, EventArgs e)
     {
-        Editor.AddObject(RoomSelectedTile.X, RoomSelectedTile.Y, cbb_area_bank.SelectedIndex);
+        Editor.AddObject(RoomSelectedTile.X, RoomSelectedTile.Y, Globals.SelectedArea);
     }
 
     private void btn_tileset_definitions_Click(object sender, EventArgs e)
@@ -603,7 +655,15 @@ public partial class MainWindow : Form
 
     private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)
         => new Start().Show();
+
+    private void ctx_btn_remove_object_Click(object sender, EventArgs e)
+        => Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+
+    private void ctx_btn_edit_object_Click(object sender, EventArgs e)
+        => new ObjectSettings(Editor.FindObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea)).Show();
     #endregion
 
     #endregion
+
+
 }

@@ -13,9 +13,14 @@ public partial class ScreenSettings : Form
     int SelectedBank;
     int SelectedScreen;
     int UsedScreen;
-    int ScrollData;
     int Transition;
     bool PriorityData;
+
+    int ScrollData;
+    bool ScrollUp;
+    bool ScrollDown;
+    bool ScrollLeft;
+    bool ScrollRight;
 
     public ScreenSettings(int AreaIndex = 0, int ScreenIndex = 0)
     {
@@ -60,6 +65,7 @@ public partial class ScreenSettings : Form
         int scrollData = Globals.Areas[SelectedBank].Scrolls[SelectedScreen];
         ScrollData = scrollData;
         num_scse_scroll_data.Value = ScrollData;
+        UpdateScrollButtons();
 
         //Transition data
         int transitionData = Globals.Areas[SelectedBank].Tansitions[SelectedScreen];
@@ -82,6 +88,24 @@ public partial class ScreenSettings : Form
     void DisableApply()
     {
         btn_scse_apply.Enabled = false;
+    }
+
+    void UpdateScrollButtons()
+    {
+        byte data = (byte)num_scse_scroll_data.Value;
+        ScrollRight = !ByteOp.IsBitSet(data, 0);
+        ScrollLeft = !ByteOp.IsBitSet(data, 1);
+        ScrollUp = !ByteOp.IsBitSet(data, 2);
+        ScrollDown = !ByteOp.IsBitSet(data, 3);
+
+        if (ScrollUp) btn_scroll_up.BackColor = Color.YellowGreen;
+        else btn_scroll_up.BackColor = Color.Salmon;
+        if (ScrollDown) btn_scroll_down.BackColor = Color.YellowGreen;
+        else btn_scroll_down.BackColor = Color.Salmon;
+        if (ScrollLeft) btn_scroll_left.BackColor = Color.YellowGreen;
+        else btn_scroll_left.BackColor = Color.Salmon;
+        if (ScrollRight) btn_scroll_right.BackColor = Color.YellowGreen;
+        else btn_scroll_right.BackColor = Color.Salmon;
     }
 
     /// <summary>
@@ -120,6 +144,7 @@ public partial class ScreenSettings : Form
     private void num_scse_scroll_data_ValueChanged(object sender, EventArgs e)
     {
         if ((int)num_scse_scroll_data.Value != ScrollData) EnableApply();
+        UpdateScrollButtons();
     }
 
     private void cbb_scse_transition_index_SelectedIndexChanged(object sender, EventArgs e)
@@ -166,5 +191,25 @@ public partial class ScreenSettings : Form
         //Done writing
         DisableApply();
         SetOlds();
+    }
+
+    private void btn_scroll_up_Click(object sender, EventArgs e)
+    {
+        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 2);
+    }
+
+    private void btn_scroll_down_Click(object sender, EventArgs e)
+    {
+        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 3);
+    }
+
+    private void btn_scroll_left_Click(object sender, EventArgs e)
+    {
+        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 1);
+    }
+
+    private void btn_scroll_right_Click(object sender, EventArgs e)
+    {
+        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 0);
     }
 }

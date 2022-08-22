@@ -38,6 +38,8 @@ namespace LAMP
             this.btn_save_project = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_rol_file = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,8 +91,6 @@ namespace LAMP
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -142,14 +142,14 @@ namespace LAMP
             // btn_new_project
             // 
             this.btn_new_project.Name = "btn_new_project";
-            this.btn_new_project.Size = new System.Drawing.Size(180, 22);
+            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
             this.btn_new_project.Text = "New Project";
             this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
             // 
             // btn_open_rom
             // 
             this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(180, 22);
+            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
             this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
@@ -157,22 +157,33 @@ namespace LAMP
             // 
             this.btn_save_project.Enabled = false;
             this.btn_save_project.Name = "btn_save_project";
-            this.btn_save_project.Size = new System.Drawing.Size(180, 22);
+            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
             this.btn_save_project.Text = "Save Project";
             this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_create_backup
             // 
             this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(180, 22);
+            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
             this.btn_create_backup.Text = "Create Backup";
             this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
+            // 
+            // btn_compile_ROM
+            // 
+            this.btn_compile_ROM.Name = "btn_compile_ROM";
+            this.btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
+            this.btn_compile_ROM.Text = "Compile ROM";
             // 
             // tool_strip_options
             // 
@@ -601,72 +612,63 @@ namespace LAMP
             this.toolStripSeparator6,
             this.ctx_btn_test_here});
             this.ctx_room_context_menu.Name = "ctx_room_context_menu";
-            this.ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
+            this.ctx_room_context_menu.Size = new System.Drawing.Size(181, 176);
             // 
             // ctx_btn_screen_settings
             // 
             this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
-            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_screen_settings.Text = "Screen Settings";
             this.ctx_btn_screen_settings.Click += new System.EventHandler(this.ctx_btn_screen_settings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_add_object
             // 
             this.ctx_btn_add_object.Name = "ctx_btn_add_object";
-            this.ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_add_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_add_object.Text = "Add Object";
             this.ctx_btn_add_object.Click += new System.EventHandler(this.ctx_btn_add_object_Click);
             // 
             // ctx_btn_edit_object
             // 
             this.ctx_btn_edit_object.Name = "ctx_btn_edit_object";
-            this.ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_edit_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_edit_object.Text = "Edit Object";
+            this.ctx_btn_edit_object.Click += new System.EventHandler(this.ctx_btn_edit_object_Click);
             // 
             // ctx_btn_remove_object
             // 
             this.ctx_btn_remove_object.Name = "ctx_btn_remove_object";
-            this.ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_remove_object.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_remove_object.Text = "Remove Object";
+            this.ctx_btn_remove_object.Click += new System.EventHandler(this.ctx_btn_remove_object_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_set_start_location
             // 
             this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
-            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_set_start_location.Text = "Set Start Location";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // ctx_btn_test_here
             // 
             this.ctx_btn_test_here.Name = "ctx_btn_test_here";
-            this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
+            this.ctx_btn_test_here.Size = new System.Drawing.Size(180, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
-            // 
-            // btn_compile_ROM
-            // 
-            this.btn_compile_ROM.Name = "btn_compile_ROM";
-            this.btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
-            this.btn_compile_ROM.Text = "Compile ROM";
             // 
             // MainWindow
             // 

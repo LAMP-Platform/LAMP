@@ -404,7 +404,53 @@ public static class Editor
     /// </summary>
     public static void AddObject(int x, int y, int bank)
     {
+        x %= 256;
+        y %= 256;
+        x += 8;
+        y += 8;
+        int screen = Globals.SelectedScreenNr + 256 * bank;
+        Enemy o = new Enemy(0, 0, (byte)x, (byte)y);
+        Globals.Objects[screen].Add(o);
+    }
 
+    public static Enemy FindObject(int x, int y, int bank)
+    {
+        x %= 256;
+        y %= 256;
+        int screen = Globals.SelectedScreenNr + 256 * bank;
+        foreach (Enemy o in Globals.Objects[screen])
+        {
+            //Checking if x and y are inside a 16px rectangle of the object
+            Rectangle check = new Rectangle(o.sX - 8, o.sY - 8, 16, 16);
+            if (check.Contains(x, y)) return o;
+        }
+        return null;
+    }
+
+    public static bool RemoveObject(int x, int y, int bank)
+    {
+        x %= 256;
+        y %= 256;
+        int screen = Globals.SelectedScreenNr + 256 * bank;
+        int count = 0;
+        foreach (Enemy o in Globals.Objects[screen])
+        {
+            //Checking if x and y are inside a 16px rectangle of the object
+            Rectangle check = new Rectangle(o.sX - 8, o.sY - 8, 16, 16);
+            if (check.Contains(x, y))
+            {
+                Globals.Objects[screen].RemoveAt(count);
+
+                //Invalidating part where object is removed
+                int X = (Globals.SelectedScreenNr % 16) * 256;
+                int Y = (Globals.SelectedScreenNr / 16) * 256;
+                MainWindow.Room.Invalidate(new Rectangle(X + o.sX - 8, Y + o.sY - 8, 16, 16));
+
+                return true;
+            }
+            count++;
+        }
+        return false;
     }
     #endregion
 

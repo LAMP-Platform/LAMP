@@ -63,6 +63,7 @@ public class RoomViewer : Control
     {
         Alignment = PenAlignment.Inset
     };
+    public Rectangle HeldObject { get; set; } = new Rectangle(-1, -1, -1, -1);
 
     public void ResetSelection()
     {
@@ -128,6 +129,12 @@ public class RoomViewer : Control
                 e.Graphics.DrawRectangle(UniqueScreenPen, r);
         }
 
+        //Draw held object
+        if (MainWindow.heldObject != null)
+        {
+            e.Graphics.DrawEllipse(ObjectPen, HeldObject);
+        }
+
         //Draw objects
         if (ShowObjects)
         {
@@ -139,7 +146,7 @@ public class RoomViewer : Control
                 foreach (Enemy o in Globals.Objects[screen]) 
                 {
                     Point p = o.GetPosition(i);
-                    Rectangle rec = new Rectangle(p.X, p.Y, 16, 16);
+                    Rectangle rec = new Rectangle(p.X, p.Y, 15, 15);
                     e.Graphics.DrawEllipse(ObjectPen, rec);
                     //e.Graphics.DrawRectangle(ObjectPen, rec);
                     //TODO: Add option to switch been circle and rect
