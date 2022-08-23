@@ -59,7 +59,7 @@ namespace LAMP
             this.lbl_area_bank = new System.Windows.Forms.Label();
             this.cbb_area_bank = new System.Windows.Forms.ComboBox();
             this.grp_main_tileset = new System.Windows.Forms.GroupBox();
-            this.num_main_metatile = new System.Windows.Forms.NumericUpDown();
+            this.cbb_metatile_table = new System.Windows.Forms.ComboBox();
             this.lbl_main_graphics_pointer = new System.Windows.Forms.Label();
             this.lbl_main_metatile = new System.Windows.Forms.Label();
             this.num_main_graphics_offset = new System.Windows.Forms.NumericUpDown();
@@ -96,7 +96,6 @@ namespace LAMP
             this.grp_data_selector.SuspendLayout();
             this.grp_main_area.SuspendLayout();
             this.grp_main_tileset.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).BeginInit();
             this.tool_strip_image_buttons.SuspendLayout();
             this.sts_main_status_bar.SuspendLayout();
@@ -351,7 +350,7 @@ namespace LAMP
             // 
             // grp_main_tileset
             // 
-            this.grp_main_tileset.Controls.Add(this.num_main_metatile);
+            this.grp_main_tileset.Controls.Add(this.cbb_metatile_table);
             this.grp_main_tileset.Controls.Add(this.lbl_main_graphics_pointer);
             this.grp_main_tileset.Controls.Add(this.lbl_main_metatile);
             this.grp_main_tileset.Controls.Add(this.num_main_graphics_offset);
@@ -362,24 +361,25 @@ namespace LAMP
             this.grp_main_tileset.TabStop = false;
             this.grp_main_tileset.Text = "Tileset Data";
             // 
-            // num_main_metatile
+            // cbb_metatile_table
             // 
-            this.num_main_metatile.Hexadecimal = true;
-            this.num_main_metatile.Location = new System.Drawing.Point(103, 53);
-            this.num_main_metatile.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-            this.num_main_metatile.Name = "num_main_metatile";
-            this.num_main_metatile.Size = new System.Drawing.Size(55, 23);
-            this.num_main_metatile.TabIndex = 9;
-            this.num_main_metatile.Value = new decimal(new int[] {
-            137148,
-            0,
-            0,
-            0});
-            this.num_main_metatile.ValueChanged += new System.EventHandler(this.num_main_metatile_ValueChanged);
+            this.cbb_metatile_table.FormattingEnabled = true;
+            this.cbb_metatile_table.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"});
+            this.cbb_metatile_table.Location = new System.Drawing.Point(103, 52);
+            this.cbb_metatile_table.Name = "cbb_metatile_table";
+            this.cbb_metatile_table.Size = new System.Drawing.Size(55, 23);
+            this.cbb_metatile_table.TabIndex = 9;
+            this.cbb_metatile_table.SelectedIndexChanged += new System.EventHandler(this.cbb_metatile_table_SelectedIndexChanged);
             // 
             // lbl_main_graphics_pointer
             // 
@@ -612,61 +612,61 @@ namespace LAMP
             this.toolStripSeparator6,
             this.ctx_btn_test_here});
             this.ctx_room_context_menu.Name = "ctx_room_context_menu";
-            this.ctx_room_context_menu.Size = new System.Drawing.Size(181, 176);
+            this.ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
             // 
             // ctx_btn_screen_settings
             // 
             this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
-            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_screen_settings.Text = "Screen Settings";
             this.ctx_btn_screen_settings.Click += new System.EventHandler(this.ctx_btn_screen_settings_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
             // 
             // ctx_btn_add_object
             // 
             this.ctx_btn_add_object.Name = "ctx_btn_add_object";
-            this.ctx_btn_add_object.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_add_object.Text = "Add Object";
             this.ctx_btn_add_object.Click += new System.EventHandler(this.ctx_btn_add_object_Click);
             // 
             // ctx_btn_edit_object
             // 
             this.ctx_btn_edit_object.Name = "ctx_btn_edit_object";
-            this.ctx_btn_edit_object.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_edit_object.Text = "Edit Object";
             this.ctx_btn_edit_object.Click += new System.EventHandler(this.ctx_btn_edit_object_Click);
             // 
             // ctx_btn_remove_object
             // 
             this.ctx_btn_remove_object.Name = "ctx_btn_remove_object";
-            this.ctx_btn_remove_object.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_remove_object.Text = "Remove Object";
             this.ctx_btn_remove_object.Click += new System.EventHandler(this.ctx_btn_remove_object_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
             // 
             // ctx_btn_set_start_location
             // 
             this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
-            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_set_start_location.Text = "Set Start Location";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
             // 
             // ctx_btn_test_here
             // 
             this.ctx_btn_test_here.Name = "ctx_btn_test_here";
-            this.ctx_btn_test_here.Size = new System.Drawing.Size(180, 22);
+            this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
@@ -700,7 +700,6 @@ namespace LAMP
             this.grp_main_area.PerformLayout();
             this.grp_main_tileset.ResumeLayout(false);
             this.grp_main_tileset.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_main_metatile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).EndInit();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
@@ -738,7 +737,6 @@ namespace LAMP
         private System.Windows.Forms.StatusStrip sts_main_status_bar;
         private System.Windows.Forms.GroupBox grp_main_area;
         private System.Windows.Forms.GroupBox grp_main_tileset;
-        private System.Windows.Forms.NumericUpDown num_main_metatile;
         private System.Windows.Forms.Label lbl_main_graphics_pointer;
         private System.Windows.Forms.Label lbl_main_metatile;
         private System.Windows.Forms.NumericUpDown num_main_graphics_offset;
@@ -777,6 +775,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_rol_file;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem btn_compile_ROM;
+        private System.Windows.Forms.ComboBox cbb_metatile_table;
     }
 }
 

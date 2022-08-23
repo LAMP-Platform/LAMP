@@ -23,6 +23,7 @@ public partial class MainWindow : Form
     private Point RoomSelectedTile = new Point(-1, -1);
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
+    private Pointer MetatilePointer;
     public static Enemy heldObject = null;
 
     //Main Editor vars
@@ -73,7 +74,7 @@ public partial class MainWindow : Form
         btn_save_project.Enabled = value;
         btn_create_backup.Enabled = value;
         tool_strip_editors.Enabled = value;
-        tool_strip_tools.Enabled = value;
+        tool_strip_tools.Visible = false;
         grp_data_selector.Visible = value;
         btn_open_tweaks_editor_image.Enabled = value;
         btn_save_rom_image.Enabled = value;
@@ -88,7 +89,12 @@ public partial class MainWindow : Form
         btn_object_mode.Enabled = value;
         btn_tileset_definitions.Enabled = value;
 
+        btn_tweaks_editor.Visible = false;
+        btn_open_tweaks_editor_image.Visible = false;
+
         if (value != true) return;
+
+        cbb_metatile_table.SelectedIndex = 9;
 
         #region Tile Viewer
         Tileset.BringToFront();
@@ -106,7 +112,7 @@ public partial class MainWindow : Form
     public void UpdateTileset()
     {
         Globals.Tileset.Dispose();
-        Globals.Tileset = Editor.DrawTileSet((int)num_main_graphics_offset.Value, (int)num_main_metatile.Value, 16, 8);
+        Globals.Tileset = Editor.DrawTileSet((int)num_main_graphics_offset.Value, MetatilePointer.Offset, 16, 8);
         Tileset.BackgroundImage = Globals.Tileset;
         grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
@@ -520,9 +526,6 @@ public partial class MainWindow : Form
     private void btn_data_viewer_Click(object sender, EventArgs e)
         => new DataViewer().Show();
 
-    private void freeSpaceToolStripMenuItem_Click(object sender, EventArgs e)
-        => new FreeSpace().Show();
-
     private void window_drag_over(object sender, DragEventArgs e)
     {
         if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -554,8 +557,9 @@ public partial class MainWindow : Form
         UpdateRoom();
     }
 
-    private void num_main_metatile_ValueChanged(object sender, EventArgs e)
+    private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
     {
+        MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
         UpdateTileset();
         UpdateRoom();
     }

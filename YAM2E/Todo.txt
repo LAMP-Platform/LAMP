@@ -1,16 +1,16 @@
 ﻿#Stuff that worked once but now doesnt work:
  - Tweaks Editor
- - Transitions Editor
  - Data Viewer (Will probably remove)
  - Tileset Definitions
  - Create Backup
  - Compiling the ROM
 
 #Stuff that should work before beta release
- - Transitions Editor
  - Compiling the ROM
 
 #Nice to have features for future
+ - Undo / Redo
+ - Go through Transition
  - Graphics Editor
  - Tileset Editor
  - Tileset per Screen usage
