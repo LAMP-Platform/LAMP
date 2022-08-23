@@ -71,6 +71,7 @@ internal static class Globals
     public static List<List<GameScreen>> Screens;
     public static List<Area> Areas;
     public static List<List<Enemy>> Objects;
+    public static List<Transition> Transitions;
 
     //Bitmap lists
     public static Bitmap[] Subtiles = new Bitmap[256];

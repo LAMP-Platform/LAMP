@@ -44,6 +44,27 @@ public partial class MainWindow : Form
         {
             File.WriteAllText(path, "");
         }
+
+        //Adding custom controls
+        #region Tileset
+        Controls.Add(Tileset);
+        grp_main_tileset_viewer.Controls.Add(Tileset);
+        Tileset.Location = new Point(15, 20);
+        Tileset.BackColor = Globals.ColorBlack;
+        Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
+        Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
+        Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
+        #endregion
+
+        #region Room
+        Controls.Add(Room);
+        flw_main_room_view.Controls.Add(Room);
+        Room.Location = new Point(15, 20);
+        Room.BackColor = Globals.ColorBlack;
+        Room.MouseDown += new MouseEventHandler(Room_MouseDown);
+        Room.MouseMove += new MouseEventHandler(Room_MouseMove);
+        Room.MouseUp += new MouseEventHandler(Room_MouseUp);
+        #endregion
     }
 
     public void ProjectLoaded(bool value = true) //greys out buttons or enables them if a Project is loaded
@@ -62,35 +83,22 @@ public partial class MainWindow : Form
         tool_strip_view.Enabled = value;
         grp_main_view.Visible = value;
         btn_tile_mode.Enabled = value;
-        btn_tile_mode.Checked = value;
+        btn_tile_mode.Checked = true;
+        btn_object_mode.Checked = false;
         btn_object_mode.Enabled = value;
         btn_tileset_definitions.Enabled = value;
 
         if (value != true) return;
 
         #region Tile Viewer
-        Controls.Add(Tileset);
         Tileset.BringToFront();
-        grp_main_tileset_viewer.Controls.Add(Tileset);
-        Tileset.Location = new Point(15, 20);
-        Tileset.BackColor = Globals.ColorBlack;
-        Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
-        Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
-        Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
         Tileset.ResetSelection();
         UpdateTileset();
         #endregion
 
         #region Room Viewer
         cbb_area_bank.SelectedIndex = 0;
-        Controls.Add(Room);
         Room.BringToFront();
-        flw_main_room_view.Controls.Add(Room);
-        Room.Location = new Point(15, 20);
-        Room.BackColor = Globals.ColorBlack;
-        Room.MouseDown += new MouseEventHandler(Room_MouseDown);
-        Room.MouseMove += new MouseEventHandler(Room_MouseMove);
-        Room.MouseUp += new MouseEventHandler(Room_MouseUp);
         Room.ResetSelection();
         #endregion
     }

@@ -132,9 +132,7 @@ public partial class ScreenSettings : Form
     }
 
     private void btn_scse_edit_transition_Click(object sender, EventArgs e)
-    {
-        new TransitionsEditor(Transition).Show();
-    }
+        => new TransitionsEditor(cbb_scse_transition_index.SelectedIndex).Show();
 
     private void cbb_scse_screen_used_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -153,14 +151,12 @@ public partial class ScreenSettings : Form
     }
 
     private void chb_samus_priority_CheckedChanged(object sender, EventArgs e)
-    {
+    { 
         if (chb_samus_priority.Checked != PriorityData) EnableApply();
     }
 
     private void btn_scse_close_Click(object sender, EventArgs e)
-    {
-        this.Close();
-    }
+        => this.Close();
 
     private void btn_scse_apply_Click(object sender, EventArgs e)
     {
@@ -194,22 +190,14 @@ public partial class ScreenSettings : Form
     }
 
     private void btn_scroll_up_Click(object sender, EventArgs e)
-    {
-        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 2);
-    }
+        => num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 2);
 
     private void btn_scroll_down_Click(object sender, EventArgs e)
-    {
-        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 3);
-    }
+        => num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 3);
 
     private void btn_scroll_left_Click(object sender, EventArgs e)
-    {
-        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 1);
-    }
+        => num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 1);
 
     private void btn_scroll_right_Click(object sender, EventArgs e)
-    {
-        num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 0);
-    }
+        => num_scse_scroll_data.Value = ByteOp.FlipBit((byte)num_scse_scroll_data.Value, 0);
 }

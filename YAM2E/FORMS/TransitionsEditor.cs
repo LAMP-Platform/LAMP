@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using LAMP.Classes;
+using LAMP.Classes.M2_Data;
 
 namespace LAMP.FORMS;
 
@@ -13,11 +13,7 @@ public partial class TransitionsEditor : Form
     public TransitionsEditor Current;
 
     //Transition Data
-    int TableOffset = 0x142E5;
-    int BankOffset = 0x14000;
-    int CurrentTransitionOffset;
-    int BankTransitionOffset;
-    List<byte> Transition = new List<byte>();
+    Transition LoadedTransition;
     int TransitionLength;
     byte[] OldTransition;
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
@@ -42,32 +38,24 @@ public partial class TransitionsEditor : Form
 
     void LoadTransition(int transition)
     {
-        //offset for the transition
-        int offset = Editor.ROM.Data[TableOffset + (2 * transition)];
-        offset += (Editor.ROM.Data[TableOffset + (2 * transition) + 1]) << 8;
-        BankTransitionOffset = offset;
-        offset += BankOffset - 0x4000;
-        CurrentTransitionOffset = offset;
-
-        //loading Transition
-        lbl_tred_error_warning.Visible = false;
-        bool EndFound = false;
-        Transition.Clear();
-        for (int i = 0; i < 64; i++)
+        LoadedTransition = Globals.Transitions[transition];
+        if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
-            byte val = Editor.ROM.Data[offset + i];
-            Transition.Add(val);
-            if (val == 0xFF)
-            {
-                EndFound = true;
-                break;
-            }
-        }
+            btn_seperate_transition.Visible = true;
 
-        OldTransition = Transition.ToArray();
-        if (!EndFound) lbl_tred_error_warning.Visible = true;
-        num_tred_transition_pointer.Value = BankTransitionOffset;
-        UpdateRawData();
+            string newLine = Environment.NewLine;
+            txb_transition_info.Text = $"This Transition shares it's data with" + newLine + newLine +
+                $"Transition {LoadedTransition.CopyOf.ToString("X3")}." + newLine + newLine +
+                $"Every change applied to this Transition will also be applied to the base Transition" +
+                $"and every other duplicate!";
+            LoadedTransition = Globals.Transitions[LoadedTransition.CopyOf];
+        }
+        else
+        {
+            btn_seperate_transition.Visible = false;
+            txb_transition_info.Text = "";
+        }
+        OldTransition = LoadedTransition.Data.ToArray();
     }
 
     void ReadTransition()
@@ -78,9 +66,9 @@ public partial class TransitionsEditor : Form
         NodeData.Clear();
         try
         {
-            for (int i = 0; i < Transition.Count; i++)
+            for (int i = 0; i < LoadedTransition.Data.Count; i++)
             {
-                byte opcode = Transition[i];
+                byte opcode = LoadedTransition.Data[i];
                 byte parameter = (byte)(opcode & 0xF);
                 byte parameter2;
                 opcode &= 0xF0;
@@ -97,32 +85,32 @@ public partial class TransitionsEditor : Form
                         else Command = new TreeNode("Copies the data");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 8 });
 
-                        parameter = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"From bank: {parameter:X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"to offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Data length: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0x10): //Select metatile table
-                        Command = new TreeNode("Select metatiles from");
+                        Command = new TreeNode("Select metatile table from");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Table: { parameter:X}");
@@ -131,7 +119,7 @@ public partial class TransitionsEditor : Form
                         break;
 
                     case (0x20): //Select collision table
-                        Command = new TreeNode("Select collision from");
+                        Command = new TreeNode("Select collision table from");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
 
                         Parameter = new TreeNode($"Table: {parameter:X}");
@@ -156,14 +144,14 @@ public partial class TransitionsEditor : Form
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
 
-                        parameter = Transition[++i];
-                        Parameter = new TreeNode($"at Screen Y: {(parameter >> 4):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.HighNibble });
-
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"and Screen X: {(parameter & 0xF):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+
+                        Parameter = new TreeNode($"at Screen Y: {(parameter >> 4):X}");
+                        Command.Nodes.Add(Parameter);
+                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.HighNibble });
                         break;
 
                     case (0x50): //Retreat from Queen
@@ -175,12 +163,12 @@ public partial class TransitionsEditor : Form
                         Command = new TreeNode("Change acid & spike damage");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 3 });
 
-                        parameter = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Acid damage: {parameter:X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
 
-                        parameter = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Spike damage: {parameter:X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
@@ -199,43 +187,43 @@ public partial class TransitionsEditor : Form
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Scroll Y position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Scroll X position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Samus Y position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Samus X position: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
 
                     case (0x90): //Conditional Transition
-                        Command = new TreeNode("Go to a different Transition if");
+                        Command = new TreeNode("If");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
 
-                        parameter = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Metroids alive <= {parameter:X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
-                        Parameter = new TreeNode($"New Transition offset: {parameter + (parameter2 << 8):X}");
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
+                        Parameter = new TreeNode($"Go to Transition index: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
                         break;
@@ -251,13 +239,13 @@ public partial class TransitionsEditor : Form
                         else Command = new TreeNode("! Load graphics page operator incorrect !");
                         NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
 
-                        parameter = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"Bank: {parameter:X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
 
-                        parameter = Transition[++i];
-                        parameter2 = Transition[++i];
+                        parameter = LoadedTransition.Data[++i];
+                        parameter2 = LoadedTransition.Data[++i];
                         Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
                         Command.Nodes.Add(Parameter);
                         NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
@@ -301,7 +289,7 @@ public partial class TransitionsEditor : Form
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         tre_tred_transition_tree.ExpandAll();
-        TransitionLength = Transition.Count;
+        TransitionLength = LoadedTransition.Data.Count;
         lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} bytes";
     }
 
@@ -317,12 +305,6 @@ public partial class TransitionsEditor : Form
             MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-    }
-
-    void UpdateRawData()
-    {
-        //updates the Text box to show the raw data
-        txt_tred_transition_data.Text = Editor.ROM.GetRawDataString(CurrentTransitionOffset, TransitionLength);
     }
 
     void EnableEdit()
@@ -345,12 +327,6 @@ public partial class TransitionsEditor : Form
         num_tred_value.Value = NodeValue;
     }
 
-    void EnableApply()
-    {
-        btn_tred_apply_changes.Enabled = true;
-        btn_tred_discard_changes.Enabled = true;
-    }
-
     void DisableEdit()
     {
         num_tred_value.Enabled = false;
@@ -363,20 +339,6 @@ public partial class TransitionsEditor : Form
         cbb_tred_opcode_add.Enabled = false;
     }
 
-    void DisableApply()
-    {
-        btn_tred_apply_changes.Enabled = false;
-        btn_tred_discard_changes.Enabled = false;
-    }
-
-    void ApplyTransition()
-    {
-        Editor.ROM.ReplaceBytes(CurrentTransitionOffset, Transition);
-        ReloadTransition();
-        DisableApply();
-        DisableEdit();
-    }
-
     void UpdateTransitionValue()
     {
         try
@@ -387,20 +349,20 @@ public partial class TransitionsEditor : Form
             SelectedByte = Data.Byte;
             if (Data.WhichByteToRead == ReadByte.WholeByte)
             {
-                Transition[SelectedByte] = (byte)value;
+                LoadedTransition.Data[SelectedByte] = (byte)value;
             }
             if (Data.WhichByteToRead == ReadByte.HighNibble)
             {
-                Transition[SelectedByte] = (byte)((Transition[SelectedByte] & 0xF) + (value << 4));
+                LoadedTransition.Data[SelectedByte] = (byte)((LoadedTransition.Data[SelectedByte] & 0xF) + (value << 4));
             }
             if (Data.WhichByteToRead == ReadByte.LowNibble)
             {
-                Transition[SelectedByte] = (byte)((Transition[SelectedByte] & 0xF0) + (value & 0xF));
+                LoadedTransition.Data[SelectedByte] = (byte)((LoadedTransition.Data[SelectedByte] & 0xF0) + (value & 0xF));
             }
             if (Data.WhichByteToRead == ReadByte.Pointer)
             {
-                Transition[SelectedByte - 1] = (byte)(value & 0xFF);
-                Transition[SelectedByte] = (byte)(value >> 8);
+                LoadedTransition.Data[SelectedByte - 1] = (byte)(value & 0xFF);
+                LoadedTransition.Data[SelectedByte] = (byte)(value >> 8);
             }
             ReadTransition();
 
@@ -472,7 +434,7 @@ public partial class TransitionsEditor : Form
 
     int GetOpcodeLength(int Offset)
     {
-        return (GetOpcodeLength(Transition[Offset]));
+        return (GetOpcodeLength(LoadedTransition.Data[Offset]));
     }
 
     #region Events
@@ -481,7 +443,7 @@ public partial class TransitionsEditor : Form
         SelectedNode = tre_tred_transition_tree.SelectedNode;
         TreeNodeExtension Data = NodeData.GetValueOrDefault(SelectedNode);
         SelectedByte = Data.Byte;
-        NodeValue = Transition[SelectedByte];
+        NodeValue = LoadedTransition.Data[SelectedByte];
         num_tred_value.Maximum = 0xFF;
         if (Data.WhichByteToRead == ReadByte.HighNibble)
         {
@@ -495,7 +457,7 @@ public partial class TransitionsEditor : Form
         }
         if (Data.WhichByteToRead == ReadByte.Pointer)
         {
-            NodeValue = Transition[SelectedByte - 1] + (NodeValue << 8);
+            NodeValue = LoadedTransition.Data[SelectedByte - 1] + (NodeValue << 8);
             num_tred_value.Maximum = 0xFFFF;
         }
 
@@ -506,34 +468,6 @@ public partial class TransitionsEditor : Form
     {
         ReloadTransition();
         DisableEdit();
-        DisableApply();
-    }
-
-    private void num_tred_transition_pointer_ValueChanged(object sender, EventArgs e)
-    {
-        if (BankTransitionOffset != num_tred_transition_pointer.Value)
-        {
-            btn_tred_repoint_transition.Enabled = true;
-        }
-        else btn_tred_repoint_transition.Enabled = false;
-    }
-
-    private void btn_tred_repoint_transition_Click(object sender, EventArgs e)
-    {
-        if (MessageBox.Show($"Are you sure you want to change this Pointer?\n\n" +
-                            $"This changes the location that Transition {cbb_tred_transition_selection.SelectedIndex:X4} gets read from.\n" +
-                            $"It will not move the data of the Transition, therefore, it might be lost forever.\n" +
-                            $"LAMP will try to automatically repoint the Transition if needed, " +
-                            $"however, if this Transition is faulty and can not be read correctly, a new pointer might help.",
-                "Change Pointer?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-        {
-            Editor.ROM.Write16(TableOffset + (2 * cbb_tred_transition_selection.SelectedIndex), (ushort)num_tred_transition_pointer.Value);
-            ReloadTransition();
-        }
-        else
-        {
-            num_tred_transition_pointer.Value = BankTransitionOffset;
-        }
     }
 
     private void btn_tred_transition_update_Click(object sender, EventArgs e)
@@ -541,46 +475,10 @@ public partial class TransitionsEditor : Form
         UpdateTransitionValue();
     }
 
-    private void num_tred_value_ValueChanged(object sender, EventArgs e)
-    {
-        if (num_tred_value.Value != NodeValue)
-        {
-            btn_tred_transition_update.Enabled = true;
-            EnableApply();
-        }
-        else
-        {
-            btn_tred_transition_update.Enabled = false;
-            if (Enumerable.SequenceEqual(OldTransition, Transition))
-            {
-                DisableApply();
-            }
-        }
-    }
-
-    private void btn_tred_apply_changes_Click(object sender, EventArgs e)
-    {
-        UpdateTransitionValue();
-        if (Transition.Count > OldTransition.Length)
-        {
-            if (MessageBox.Show("The Transition exceeds its original length.\n" +
-                            "Without repointing it would overwrite existing data.\n" +
-                            "Automatic repointing is currently not implemented!\n" +
-                            "Are you sure you want to apply the changes?", "Apply Transition?",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-            ApplyTransition();
-        }
-        else
-        {
-            ApplyTransition();
-        }
-    }
-
     private void btn_tred_discard_changes_Click(object sender, EventArgs e)
     {
-        Transition = OldTransition.ToList();
+        LoadedTransition.Data = OldTransition.ToList();
         DisableEdit();
-        DisableApply();
         ReloadTransition();
     }
 
@@ -595,10 +493,9 @@ public partial class TransitionsEditor : Form
         }
         for (int i = 0; i < Data.OpcodeLength; i++)
         {
-            Transition.RemoveAt(Data.Byte);
+            LoadedTransition.Data.RemoveAt(Data.Byte);
         }
         DisableEdit();
-        EnableApply();
         ReadTransition();
     }
 
@@ -608,11 +505,11 @@ public partial class TransitionsEditor : Form
 
         //Dont want to move up if its last or first instruction
         if (Data.Byte == 0) return;
-        if (Transition[Data.Byte] == 0xFF) return;
+        if (LoadedTransition.Data[Data.Byte] == 0xFF) return;
 
         //finding instruction above
         int AboveByte = 0;
-        for (int i = 0; i < Transition.Count;)
+        for (int i = 0; i < LoadedTransition.Data.Count;)
         {
             int len = GetOpcodeLength(i);
             if (i + len == Data.Byte) //above instruction has been found
@@ -623,14 +520,13 @@ public partial class TransitionsEditor : Form
         }
 
         //moving data
-        List<byte> MovedData = Transition.GetRange(Data.Byte, Data.OpcodeLength);
+        List<byte> MovedData = LoadedTransition.Data.GetRange(Data.Byte, Data.OpcodeLength);
         for (int i = 0; i < Data.OpcodeLength; i++)
         {
-            Transition.RemoveAt(Data.Byte);
+            LoadedTransition.Data.RemoveAt(Data.Byte);
         }
-        Transition.InsertRange(AboveByte, MovedData);
+        LoadedTransition.Data.InsertRange(AboveByte, MovedData);
         DisableEdit();
-        EnableApply();
         ReadTransition();
     }
 
@@ -641,18 +537,17 @@ public partial class TransitionsEditor : Form
         //Dont want to move down if last instruction or only last instruction left below
         if (Data.OpcodeLength == 0xFF) return;
         int NextCodeLength = GetOpcodeLength(Data.Byte + Data.OpcodeLength);
-        if (Data.Byte + Data.OpcodeLength == Transition.Count) return;
+        if (Data.Byte + Data.OpcodeLength == LoadedTransition.Data.Count) return;
         if (NextCodeLength == 0xFF) return;
 
         //moving data
-        List<byte> MovedData = Transition.GetRange(Data.Byte, Data.OpcodeLength);
+        List<byte> MovedData = LoadedTransition.Data.GetRange(Data.Byte, Data.OpcodeLength);
         for (int i = 0; i < Data.OpcodeLength; i++)
         {
-            Transition.RemoveAt(Data.Byte);
+            LoadedTransition.Data.RemoveAt(Data.Byte);
         }
-        Transition.InsertRange(Data.Byte + NextCodeLength, MovedData);
+        LoadedTransition.Data.InsertRange(Data.Byte + NextCodeLength, MovedData);
         DisableEdit();
-        EnableApply();
         ReadTransition();
     }
 
@@ -732,7 +627,7 @@ public partial class TransitionsEditor : Form
 
             case 17: //End
                 codeData = new byte[] { 0xFF };
-                if (Transition[Transition.Count - 1] == 0xFF) //End already exists
+                if (LoadedTransition.Data[LoadedTransition.Data.Count - 1] == 0xFF) //End already exists
                 {
                     MessageBox.Show("An end already exists.", "Info",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -745,16 +640,34 @@ public partial class TransitionsEditor : Form
                 break;
         }
 
+        //Checking that the data doesnt get longer than 66 bytes
+        int len = GetOpcodeLength(codeData[0]);
+        if (LoadedTransition.Data.Count + len > 64)
+        {
+            MessageBox.Show($"A new Opcode cannot be added.\n" +
+                            $"The transition cannot exceed a length of 64 bytes!\n\n" +
+                            $"Remove existing Opcodes to reduce the length of the Transition.\n",
+                            "Length limit reached!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         //adding Data
-        Transition.InsertRange(Data.Byte, codeData);
+        LoadedTransition.Data.InsertRange(Data.Byte, codeData);
         if (codeData[0] == 0xFF)
         {
             //remove data after end
-            Transition.RemoveRange(Data.Byte + 1, Transition.Count - Data.Byte - 1);
+            LoadedTransition.Data.RemoveRange(Data.Byte + 1, LoadedTransition.Data.Count - Data.Byte - 1);
         }
         DisableEdit();
-        EnableApply();
         ReadTransition();
+    }
+
+    private void btn_seperate_transition_Click(object sender, EventArgs e)
+    {
+        Transition t = Globals.Transitions[cbb_tred_transition_selection.SelectedIndex];
+        t.Data = new List<byte>(LoadedTransition.Data);
+        t.CopyOf = -1;
+        ReloadTransition();
     }
     #endregion
 }

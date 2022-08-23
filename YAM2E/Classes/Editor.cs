@@ -142,6 +142,38 @@ public static class Editor
         }
         SaveJsonObject(Globals.Objects, path);
 
+        //Transitions
+        path = dirData + "/Transitions.json";
+        Globals.Transitions = new List<Transition>();
+        List<int> offsets = new List<int>(); //List saving used pointers to check for duplicate transitions
+        for (int i = 0; i < 0x200; i++)
+        {
+            Pointer offset = new Pointer(0x5, Editor.ROM.Read16(ROM.TransitionPointerTable.Offset + (2 * i)));
+            Transition t = new Transition();
+            List<byte> data = new();
+            //Loading transition from ROM
+            for (int b = 0; b < 64; b++)
+            {
+                byte val = Editor.ROM.Read8(offset.Offset + b);
+                data.Add(val);
+                if (val == 0xFF) //End was found
+                {
+                    t.Data = data;
+                    break;
+                }
+            }
+            if (t.Data == null) t.Data = new List<byte>() { 0xFF }; //No end has been found, Transition is unusable so it gets replaced by an empty one
+            if (offsets.Contains(offset.bOffset)) //Transition isnt unique but a copy of an existing one
+            {
+                int originalID = offsets.IndexOf(offset.bOffset);
+                t.CopyOf = originalID;
+            }
+            t.Number = i;
+            Globals.Transitions.Add(t);
+            offsets.Add(offset.bOffset);
+        }
+        SaveJsonObject(Globals.Transitions, path);
+
         //New Project created
         MainWindow.Current.ProjectLoaded();
     }
@@ -166,9 +198,7 @@ public static class Editor
 
         //Get the path to ROM
         if (path == "") path = ShowOpenDialog("Project file (*.m2)|*.m2");
-
-        if (path != String.Empty)
-            LoadProjectFromPath(path);
+        if (path != String.Empty) LoadProjectFromPath(path);
     }
 
     /// <summary>
@@ -196,12 +226,16 @@ public static class Editor
             }
 
             //Areas
-            json = File.ReadAllText(dirData + $"/Areas.json");
+            json = File.ReadAllText(dirData + "/Areas.json");
             Globals.Areas = JsonSerializer.Deserialize<List<Area>>(json);
 
             //Objects
-            json = File.ReadAllText(dirData + $"/Objects.json");
+            json = File.ReadAllText(dirData + "/Objects.json");
             Globals.Objects = JsonSerializer.Deserialize<List<List<Enemy>>>(json);
+
+            //Transitions
+            json = File.ReadAllText(dirData + "/Transitions.json");
+            Globals.Transitions = JsonSerializer.Deserialize<List<Transition>>(json);
 
             //Project loaded
             MainWindow.Current.ProjectLoaded();
@@ -308,6 +342,10 @@ public static class Editor
         //Objects
         path = dirData + "/Objects.json";
         SaveJsonObject(Globals.Objects, path);
+
+        //Transitions
+        path = dirData + "/Transitions.json";
+        SaveJsonObject(Globals.Transitions, path);
     }
 
     /// <summary>

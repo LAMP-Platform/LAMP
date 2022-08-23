@@ -134,6 +134,9 @@ namespace LAMP.Classes
         public Pointer ObjectDataLists = new Pointer(0x3, 0x50E0); //Lists of objects on screen, first entry should always be empty
         public Pointer ObjectDataEnd = new Pointer(0x3, 0x6300); //This is the first byte of new data that should not be overwritten!
 
+        //transition data
+        public Pointer TransitionPointerTable = new Pointer(0x5, 0x42E5); //Table of 512 or 0x200 pointers to transition codes
+
         //Graphics
         public Pointer MetatilePointers = new Pointer(0x8, 0x7F1A);
     }

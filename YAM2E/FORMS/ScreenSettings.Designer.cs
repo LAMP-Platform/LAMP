@@ -29,6 +29,7 @@ namespace LAMP.FORMS
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenSettings));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lbl_scse_area_bank = new System.Windows.Forms.Label();
             this.lbl_scse_screen = new System.Windows.Forms.Label();
@@ -103,44 +104,44 @@ namespace LAMP.FORMS
             // btn_scroll_right
             // 
             this.btn_scroll_right.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_right.Image = ((System.Drawing.Image)(resources.GetObject("btn_scroll_right.Image")));
             this.btn_scroll_right.Location = new System.Drawing.Point(175, 51);
             this.btn_scroll_right.Name = "btn_scroll_right";
             this.btn_scroll_right.Size = new System.Drawing.Size(23, 23);
             this.btn_scroll_right.TabIndex = 11;
-            this.btn_scroll_right.Text = "R";
             this.btn_scroll_right.UseVisualStyleBackColor = false;
             this.btn_scroll_right.Click += new System.EventHandler(this.btn_scroll_right_Click);
             // 
             // btn_scroll_left
             // 
             this.btn_scroll_left.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_left.Image = ((System.Drawing.Image)(resources.GetObject("btn_scroll_left.Image")));
             this.btn_scroll_left.Location = new System.Drawing.Point(146, 51);
             this.btn_scroll_left.Name = "btn_scroll_left";
             this.btn_scroll_left.Size = new System.Drawing.Size(23, 23);
             this.btn_scroll_left.TabIndex = 10;
-            this.btn_scroll_left.Text = "L";
             this.btn_scroll_left.UseVisualStyleBackColor = false;
             this.btn_scroll_left.Click += new System.EventHandler(this.btn_scroll_left_Click);
             // 
             // btn_scroll_down
             // 
             this.btn_scroll_down.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_down.Image = ((System.Drawing.Image)(resources.GetObject("btn_scroll_down.Image")));
             this.btn_scroll_down.Location = new System.Drawing.Point(117, 51);
             this.btn_scroll_down.Name = "btn_scroll_down";
             this.btn_scroll_down.Size = new System.Drawing.Size(23, 23);
             this.btn_scroll_down.TabIndex = 9;
-            this.btn_scroll_down.Text = "D";
             this.btn_scroll_down.UseVisualStyleBackColor = false;
             this.btn_scroll_down.Click += new System.EventHandler(this.btn_scroll_down_Click);
             // 
             // btn_scroll_up
             // 
             this.btn_scroll_up.BackColor = System.Drawing.Color.YellowGreen;
+            this.btn_scroll_up.Image = ((System.Drawing.Image)(resources.GetObject("btn_scroll_up.Image")));
             this.btn_scroll_up.Location = new System.Drawing.Point(88, 51);
             this.btn_scroll_up.Name = "btn_scroll_up";
             this.btn_scroll_up.Size = new System.Drawing.Size(23, 23);
             this.btn_scroll_up.TabIndex = 8;
-            this.btn_scroll_up.Text = "U";
             this.btn_scroll_up.UseVisualStyleBackColor = false;
             this.btn_scroll_up.Click += new System.EventHandler(this.btn_scroll_up_Click);
             // 
