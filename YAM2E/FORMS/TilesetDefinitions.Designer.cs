@@ -272,6 +272,7 @@
             this.Controls.Add(this.grp_tileset_preview);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.grp_tileset_data);
+            this.MinimumSize = new System.Drawing.Size(665, 246);
             this.Name = "TilesetDefinitions";
             this.Text = "TilesetDefinitions";
             this.grp_tileset_data.ResumeLayout(false);

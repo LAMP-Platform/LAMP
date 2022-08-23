@@ -130,6 +130,7 @@
             this.Controls.Add(this.num_obj_type);
             this.Controls.Add(this.lbl_obj_number);
             this.Controls.Add(this.num_obj_number);
+            this.MinimumSize = new System.Drawing.Size(227, 200);
             this.Name = "ObjectSettings";
             this.Text = "Object Settings";
             ((System.ComponentModel.ISupportInitialize)(this.num_obj_number)).EndInit();

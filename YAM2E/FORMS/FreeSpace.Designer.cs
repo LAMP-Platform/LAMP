@@ -83,7 +83,6 @@
             this.ClientSize = new System.Drawing.Size(445, 139);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.grp_object_freespace);
-            this.MaximumSize = new System.Drawing.Size(461, 178);
             this.MinimumSize = new System.Drawing.Size(461, 178);
             this.Name = "FreeSpace";
             this.Text = "Free Space";

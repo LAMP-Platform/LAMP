@@ -7,7 +7,6 @@
  - Compiling the ROM
 
 #Stuff that should work before beta release
- - Object manipulation
  - Transitions Editor
  - Compiling the ROM
 

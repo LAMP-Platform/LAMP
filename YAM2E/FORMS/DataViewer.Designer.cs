@@ -208,6 +208,7 @@
             this.Controls.Add(this.grp_raw_data);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.grp_data_selection);
+            this.MinimumSize = new System.Drawing.Size(884, 693);
             this.Name = "DataViewer";
             this.Text = "Data Viewer";
             this.grp_data_selection.ResumeLayout(false);

@@ -42,6 +42,7 @@ namespace LAMP.FORMS
         {
             o.Number = (byte)num_obj_number.Value;
             o.Type = (byte)num_obj_type.Value;
+            btn_apply.Enabled = false;
         }
     }
 }

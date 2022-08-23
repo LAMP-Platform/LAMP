@@ -285,7 +285,6 @@ namespace LAMP.FORMS
             this.Controls.Add(this.lbl_scse_area_bank);
             this.Controls.Add(this.statusStrip1);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(330, 260);
             this.MinimumSize = new System.Drawing.Size(330, 260);
             this.Name = "ScreenSettings";
             this.Text = "Screen Settings";
