@@ -35,5 +35,21 @@ namespace LAMP.Classes
         public int Offset { get; set; }
         public int Bank { get; set; }
         public int bOffset { get; set; }
+
+        public bool Add(int amount) //returns true if added amount is still inside the bank
+        {
+            Offset += amount;
+
+            int bankNr = Offset / 0x4000;
+            int bOff = bankNr * 0x4000;
+            bOff = Offset - bOff + 0x4000;
+            bOffset = bOff;
+            if (bankNr != Bank)
+            {
+                Bank = bankNr;
+                return false;
+            }
+            return true;
+        }
     }
 }

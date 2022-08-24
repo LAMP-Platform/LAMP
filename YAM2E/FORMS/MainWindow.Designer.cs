@@ -141,14 +141,14 @@ namespace LAMP
             // btn_new_project
             // 
             this.btn_new_project.Name = "btn_new_project";
-            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_new_project.Size = new System.Drawing.Size(180, 22);
             this.btn_new_project.Text = "New Project";
             this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
             // 
             // btn_open_rom
             // 
             this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
+            this.btn_open_rom.Size = new System.Drawing.Size(180, 22);
             this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
@@ -156,33 +156,37 @@ namespace LAMP
             // 
             this.btn_save_project.Enabled = false;
             this.btn_save_project.Name = "btn_save_project";
-            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
+            this.btn_save_project.Size = new System.Drawing.Size(180, 22);
             this.btn_save_project.Text = "Save Project";
             this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
+            this.btn_create_backup.Size = new System.Drawing.Size(180, 22);
             this.btn_create_backup.Text = "Create Backup";
+            this.btn_create_backup.Visible = false;
             this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // btn_compile_ROM
             // 
+            this.btn_compile_ROM.Enabled = false;
             this.btn_compile_ROM.Name = "btn_compile_ROM";
-            this.btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
+            this.btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
             this.btn_compile_ROM.Text = "Compile ROM";
+            this.btn_compile_ROM.Click += new System.EventHandler(this.btn_compile_ROM_Click);
             // 
             // tool_strip_options
             // 
@@ -210,6 +214,7 @@ namespace LAMP
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
             this.btn_tileset_definitions.Size = new System.Drawing.Size(167, 22);
             this.btn_tileset_definitions.Text = "Tileset Definitions";
+            this.btn_tileset_definitions.Visible = false;
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
             // tool_strip_tools
@@ -224,6 +229,7 @@ namespace LAMP
             this.tool_strip_tools.ShowDropDownArrow = false;
             this.tool_strip_tools.Size = new System.Drawing.Size(38, 22);
             this.tool_strip_tools.Text = "Tools";
+            this.tool_strip_tools.Visible = false;
             // 
             // btn_data_viewer
             // 
@@ -450,7 +456,7 @@ namespace LAMP
             this.btn_open_rom_image.Name = "btn_open_rom_image";
             this.btn_open_rom_image.Size = new System.Drawing.Size(23, 22);
             this.btn_open_rom_image.Text = "Open Project";
-            this.btn_open_rom_image.ToolTipText = "Open ROM";
+            this.btn_open_rom_image.ToolTipText = "Open Project";
             this.btn_open_rom_image.Click += new System.EventHandler(this.btn_open_rom_image_Click);
             // 
             // btn_save_rom_image
@@ -461,8 +467,8 @@ namespace LAMP
             this.btn_save_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_save_rom_image.Name = "btn_save_rom_image";
             this.btn_save_rom_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_save_rom_image.Text = "Save ROM";
-            this.btn_save_rom_image.ToolTipText = "Save ROM";
+            this.btn_save_rom_image.Text = "Save Project";
+            this.btn_save_rom_image.ToolTipText = "Save Project";
             this.btn_save_rom_image.Click += new System.EventHandler(this.btn_save_rom_image_Click);
             // 
             // toolStripSeparator2
@@ -591,7 +597,7 @@ namespace LAMP
             this.chb_view_objects.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chb_view_objects.Checked = true;
             this.chb_view_objects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chb_view_objects.Location = new System.Drawing.Point(28, 22);
+            this.chb_view_objects.Location = new System.Drawing.Point(17, 22);
             this.chb_view_objects.Name = "chb_view_objects";
             this.chb_view_objects.Size = new System.Drawing.Size(66, 19);
             this.chb_view_objects.TabIndex = 1;
@@ -651,23 +657,27 @@ namespace LAMP
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator5.Visible = false;
             // 
             // ctx_btn_set_start_location
             // 
             this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
             this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_set_start_location.Text = "Set Start Location";
+            this.ctx_btn_set_start_location.Visible = false;
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
+            this.toolStripSeparator6.Visible = false;
             // 
             // ctx_btn_test_here
             // 
             this.ctx_btn_test_here.Name = "ctx_btn_test_here";
             this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
             this.ctx_btn_test_here.Text = "Test Game Here";
+            this.ctx_btn_test_here.Visible = false;
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
             // MainWindow
@@ -683,6 +693,7 @@ namespace LAMP
             this.Controls.Add(this.tool_strip_image_buttons);
             this.Controls.Add(this.grp_data_selector);
             this.Controls.Add(this.tool_strip_main_buttons);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(553, 810);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

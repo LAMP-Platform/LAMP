@@ -51,11 +51,13 @@ namespace LAMP.FORMS
             this.tlt_tred_warning = new System.Windows.Forms.ToolTip(this.components);
             this.txb_transition_info = new System.Windows.Forms.TextBox();
             this.btn_seperate_transition = new System.Windows.Forms.Button();
+            this.grp_transition_warning = new System.Windows.Forms.GroupBox();
             this.grp_tred_selection.SuspendLayout();
             this.grp_tred_transition.SuspendLayout();
             this.grp_tred_edits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_tred_value)).BeginInit();
             this.sts_tred_status_strip.SuspendLayout();
+            this.grp_transition_warning.SuspendLayout();
             this.SuspendLayout();
             // 
             // grp_tred_selection
@@ -259,36 +261,46 @@ namespace LAMP.FORMS
             // txb_transition_info
             // 
             this.txb_transition_info.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txb_transition_info.Location = new System.Drawing.Point(13, 250);
+            this.txb_transition_info.Location = new System.Drawing.Point(6, 20);
             this.txb_transition_info.Multiline = true;
             this.txb_transition_info.Name = "txb_transition_info";
             this.txb_transition_info.ReadOnly = true;
-            this.txb_transition_info.Size = new System.Drawing.Size(153, 152);
+            this.txb_transition_info.Size = new System.Drawing.Size(141, 161);
             this.txb_transition_info.TabIndex = 4;
             this.txb_transition_info.TabStop = false;
             // 
             // btn_seperate_transition
             // 
-            this.btn_seperate_transition.Location = new System.Drawing.Point(20, 408);
+            this.btn_seperate_transition.Location = new System.Drawing.Point(6, 187);
             this.btn_seperate_transition.Name = "btn_seperate_transition";
             this.btn_seperate_transition.Size = new System.Drawing.Size(140, 23);
             this.btn_seperate_transition.TabIndex = 5;
             this.btn_seperate_transition.Text = "Seperate Transitions";
             this.btn_seperate_transition.UseVisualStyleBackColor = true;
-            this.btn_seperate_transition.Visible = false;
             this.btn_seperate_transition.Click += new System.EventHandler(this.btn_seperate_transition_Click);
+            // 
+            // grp_transition_warning
+            // 
+            this.grp_transition_warning.Controls.Add(this.txb_transition_info);
+            this.grp_transition_warning.Controls.Add(this.btn_seperate_transition);
+            this.grp_transition_warning.Location = new System.Drawing.Point(13, 250);
+            this.grp_transition_warning.Name = "grp_transition_warning";
+            this.grp_transition_warning.Size = new System.Drawing.Size(153, 217);
+            this.grp_transition_warning.TabIndex = 6;
+            this.grp_transition_warning.TabStop = false;
+            this.grp_transition_warning.Text = "Warning";
             // 
             // TransitionsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 581);
-            this.Controls.Add(this.btn_seperate_transition);
-            this.Controls.Add(this.txb_transition_info);
+            this.Controls.Add(this.grp_transition_warning);
             this.Controls.Add(this.sts_tred_status_strip);
             this.Controls.Add(this.grp_tred_edits);
             this.Controls.Add(this.grp_tred_transition);
             this.Controls.Add(this.grp_tred_selection);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(520, 620);
             this.Name = "TransitionsEditor";
             this.Text = "Transitions Editor";
@@ -300,6 +312,8 @@ namespace LAMP.FORMS
             ((System.ComponentModel.ISupportInitialize)(this.num_tred_value)).EndInit();
             this.sts_tred_status_strip.ResumeLayout(false);
             this.sts_tred_status_strip.PerformLayout();
+            this.grp_transition_warning.ResumeLayout(false);
+            this.grp_transition_warning.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,5 +341,6 @@ namespace LAMP.FORMS
         private System.Windows.Forms.ComboBox cbb_tred_opcode_add;
         private System.Windows.Forms.TextBox txb_transition_info;
         private System.Windows.Forms.Button btn_seperate_transition;
+        private System.Windows.Forms.GroupBox grp_transition_warning;
     }
 }

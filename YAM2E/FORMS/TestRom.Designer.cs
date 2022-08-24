@@ -34,11 +34,11 @@
             this.grp_tsrm_items = new System.Windows.Forms.GroupBox();
             this.btn_item_varia = new System.Windows.Forms.Button();
             this.btn_item_spider_ball = new System.Windows.Forms.Button();
-            this.btn_item_spring_ball = new System.Windows.Forms.Button();
-            this.btn_item_space_jump = new System.Windows.Forms.Button();
             this.btn_item_screw_attack = new System.Windows.Forms.Button();
-            this.btn_item_hi_jump = new System.Windows.Forms.Button();
+            this.btn_item_space_jump = new System.Windows.Forms.Button();
             this.btn_items_bombs = new System.Windows.Forms.Button();
+            this.btn_item_spring_ball = new System.Windows.Forms.Button();
+            this.btn_item_hi_jump = new System.Windows.Forms.Button();
             this.grp_tsrm_samus_position = new System.Windows.Forms.GroupBox();
             this.num_tsrm_samus_position_y = new System.Windows.Forms.NumericUpDown();
             this.lbl_tsrm_samus_position_y = new System.Windows.Forms.Label();
@@ -124,18 +124,18 @@
             this.btn_item_spider_ball.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_item_spider_ball.UseVisualStyleBackColor = true;
             // 
-            // btn_item_spring_ball
+            // btn_item_screw_attack
             // 
-            this.btn_item_spring_ball.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_item_spring_ball.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_spring_ball.Image")));
-            this.btn_item_spring_ball.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_item_spring_ball.Location = new System.Drawing.Point(6, 90);
-            this.btn_item_spring_ball.Name = "btn_item_spring_ball";
-            this.btn_item_spring_ball.Size = new System.Drawing.Size(105, 28);
-            this.btn_item_spring_ball.TabIndex = 4;
-            this.btn_item_spring_ball.Text = "Spring Ball";
-            this.btn_item_spring_ball.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_item_spring_ball.UseVisualStyleBackColor = true;
+            this.btn_item_screw_attack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_item_screw_attack.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_screw_attack.Image")));
+            this.btn_item_screw_attack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_item_screw_attack.Location = new System.Drawing.Point(6, 226);
+            this.btn_item_screw_attack.Name = "btn_item_screw_attack";
+            this.btn_item_screw_attack.Size = new System.Drawing.Size(105, 28);
+            this.btn_item_screw_attack.TabIndex = 2;
+            this.btn_item_screw_attack.Text = "Screw Attack";
+            this.btn_item_screw_attack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_item_screw_attack.UseVisualStyleBackColor = true;
             // 
             // btn_item_space_jump
             // 
@@ -150,32 +150,6 @@
             this.btn_item_space_jump.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_item_space_jump.UseVisualStyleBackColor = true;
             // 
-            // btn_item_screw_attack
-            // 
-            this.btn_item_screw_attack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_item_screw_attack.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_screw_attack.Image")));
-            this.btn_item_screw_attack.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_item_screw_attack.Location = new System.Drawing.Point(6, 226);
-            this.btn_item_screw_attack.Name = "btn_item_screw_attack";
-            this.btn_item_screw_attack.Size = new System.Drawing.Size(105, 28);
-            this.btn_item_screw_attack.TabIndex = 2;
-            this.btn_item_screw_attack.Text = "Screw Attack";
-            this.btn_item_screw_attack.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_item_screw_attack.UseVisualStyleBackColor = true;
-            // 
-            // btn_item_hi_jump
-            // 
-            this.btn_item_hi_jump.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_item_hi_jump.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_hi_jump.Image")));
-            this.btn_item_hi_jump.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_item_hi_jump.Location = new System.Drawing.Point(6, 124);
-            this.btn_item_hi_jump.Name = "btn_item_hi_jump";
-            this.btn_item_hi_jump.Size = new System.Drawing.Size(105, 28);
-            this.btn_item_hi_jump.TabIndex = 1;
-            this.btn_item_hi_jump.Text = "Hi Jump";
-            this.btn_item_hi_jump.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btn_item_hi_jump.UseVisualStyleBackColor = true;
-            // 
             // btn_items_bombs
             // 
             this.btn_items_bombs.BackColor = System.Drawing.SystemColors.Control;
@@ -189,6 +163,32 @@
             this.btn_items_bombs.Text = "Bombs";
             this.btn_items_bombs.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_items_bombs.UseVisualStyleBackColor = false;
+            // 
+            // btn_item_spring_ball
+            // 
+            this.btn_item_spring_ball.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_item_spring_ball.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_spring_ball.Image")));
+            this.btn_item_spring_ball.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_item_spring_ball.Location = new System.Drawing.Point(6, 90);
+            this.btn_item_spring_ball.Name = "btn_item_spring_ball";
+            this.btn_item_spring_ball.Size = new System.Drawing.Size(105, 28);
+            this.btn_item_spring_ball.TabIndex = 4;
+            this.btn_item_spring_ball.Text = "Spring Ball";
+            this.btn_item_spring_ball.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_item_spring_ball.UseVisualStyleBackColor = true;
+            // 
+            // btn_item_hi_jump
+            // 
+            this.btn_item_hi_jump.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_item_hi_jump.Image = ((System.Drawing.Image)(resources.GetObject("btn_item_hi_jump.Image")));
+            this.btn_item_hi_jump.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_item_hi_jump.Location = new System.Drawing.Point(6, 124);
+            this.btn_item_hi_jump.Name = "btn_item_hi_jump";
+            this.btn_item_hi_jump.Size = new System.Drawing.Size(105, 28);
+            this.btn_item_hi_jump.TabIndex = 1;
+            this.btn_item_hi_jump.Text = "Hi Jump";
+            this.btn_item_hi_jump.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_item_hi_jump.UseVisualStyleBackColor = true;
             // 
             // grp_tsrm_samus_position
             // 
@@ -322,6 +322,7 @@
             this.ClientSize = new System.Drawing.Size(662, 672);
             this.Controls.Add(this.grp_tsrm_samus_data);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestRom";
             this.Text = "Test Settings";
             this.grp_tsrm_samus_data.ResumeLayout(false);

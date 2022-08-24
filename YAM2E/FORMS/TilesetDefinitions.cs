@@ -143,7 +143,6 @@ namespace LAMP.FORMS
             //file
             string path = Globals.TileDataPath;
             if (Globals.SaveROMSep) path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/" + Path.GetFileNameWithoutExtension(Editor.ROM.Filepath) + ".tld";
-            Editor.SaveEditorConfig(path);
         }
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)

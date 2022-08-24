@@ -88,6 +88,7 @@ public partial class MainWindow : Form
         btn_object_mode.Checked = false;
         btn_object_mode.Enabled = value;
         btn_tileset_definitions.Enabled = value;
+        btn_compile_ROM.Enabled = value;
 
         btn_tweaks_editor.Visible = false;
         btn_open_tweaks_editor_image.Visible = false;
@@ -339,7 +340,7 @@ public partial class MainWindow : Form
         if (e.Button == MouseButtons.Left)
         {
             //Object editing mode
-            if (!EditingTiles)
+            if (!EditingTiles && Room.ShowObjects)
             {
                 heldObject = Editor.FindObject(e.X, e.Y, Globals.SelectedArea);
                 Editor.RemoveObject(e.X, e.Y, Globals.SelectedArea);
@@ -626,7 +627,7 @@ public partial class MainWindow : Form
 
             foreach (Enemy o in Globals.Objects[screen])
             {
-                Point p = o.GetPosition(screen);
+                Point p = o.GetPosition(screen % 256);
                 Rectangle inv = new Rectangle(p.X, p.Y, 16, 16);
                 Room.Invalidate(inv);
             }
@@ -680,9 +681,10 @@ public partial class MainWindow : Form
 
     private void ctx_btn_edit_object_Click(object sender, EventArgs e)
         => new ObjectSettings(Editor.FindObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea)).Show();
+
+    private void btn_compile_ROM_Click(object sender, EventArgs e)
+        => Editor.CompileROM();
     #endregion
 
     #endregion
-
-
 }

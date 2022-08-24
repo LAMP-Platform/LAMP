@@ -136,6 +136,7 @@ namespace LAMP.Classes
 
         //transition data
         public Pointer TransitionPointerTable = new Pointer(0x5, 0x42E5); //Table of 512 or 0x200 pointers to transition codes
+        public Pointer TransitionDataLists = new Pointer(0x5, 0x46E5); //Table of <512 Transitions, first one should stay 0xFF
 
         //Graphics
         public Pointer MetatilePointers = new Pointer(0x8, 0x7F1A);

@@ -41,7 +41,7 @@ public partial class TransitionsEditor : Form
         LoadedTransition = Globals.Transitions[transition];
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
-            btn_seperate_transition.Visible = true;
+            grp_transition_warning.Visible = true;
 
             string newLine = Environment.NewLine;
             txb_transition_info.Text = $"This Transition shares it's data with" + newLine + newLine +
@@ -52,8 +52,7 @@ public partial class TransitionsEditor : Form
         }
         else
         {
-            btn_seperate_transition.Visible = false;
-            txb_transition_info.Text = "";
+            grp_transition_warning.Visible = false;
         }
         OldTransition = LoadedTransition.Data.ToArray();
     }
@@ -315,6 +314,7 @@ public partial class TransitionsEditor : Form
         {
             num_tred_value.Enabled = true;
             lbl_tred_value.Enabled = true;
+            btn_tred_transition_update.Enabled = true;
         }
         else
         {

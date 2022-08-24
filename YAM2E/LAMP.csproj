@@ -6,7 +6,13 @@
     <RollForward>LatestMajor</RollForward>
     <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>10</LangVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>LAMP.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="LAMP.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

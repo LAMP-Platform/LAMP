@@ -311,6 +311,111 @@ public static class Editor
     }
 
     /// <summary>
+    /// Compiles all the data files into a modified M2 ROM
+    /// </summary>
+    public static void CompileROM()
+    {
+        string filepath = ShowSaveDialog("Metroid 2: Return of Samus ROM (*.gb)|*.gb");
+        if (filepath == String.Empty) return;
+        SaveProject();
+
+        //Compiling ROM by writing loaded data
+        //Screens
+        for (int area = 0; area < 7; area++)
+        {
+            for (int i = 0; i < 59; i++)
+            {
+                Pointer pointer = new Pointer(ROM.A_BANKS[area].Offset + 0x500 + 0x100 * i);
+                ROM.ReplaceBytes(pointer.Offset, Globals.Screens[area][i].Data);
+            }
+        }
+
+        //Areas
+        for (int area = 0; area < 7; area++)
+        {
+            Area a = Globals.Areas[area];
+            for (int i = 0; i < 256; i++)
+            {
+                Pointer offset = ROM.A_BANKS[area];
+
+                //Screens used
+                int data = a.Screens[i];
+                data *= 0x100;
+                data += 0x4500;
+                ROM.Write16(offset.Offset + 2 * i, (ushort)data);
+
+                //Scroll data
+                data = a.Scrolls[i];
+                ROM.Write8(offset.Offset + 0x200 + i, (byte)data);
+
+                //Transition and Priorities data
+                data = a.Tansitions[i];
+                if (a.Priorities[i]) data |= 0x800;
+                ROM.Write16(offset.Offset + 0x300 + 2 * i, (ushort)data);
+            }
+        }
+
+        //Objects
+        Pointer lastAdd = new Pointer(ROM.ObjectDataLists.Offset);
+        for (int i = 0; i < 256 * 7; i++)
+        {
+            //Empty object list
+            if (Globals.Objects[i].Count == 0)
+            {
+                ROM.Write16(ROM.ObjectPointerTable.Offset + 2 * i, (ushort)ROM.ObjectDataLists.bOffset); //Writing pointer to list
+            }
+            else //Objects on screen
+            {
+                lastAdd.Add(1);
+                ROM.Write16(ROM.ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
+                foreach (Enemy o in Globals.Objects[i])
+                {
+                    //Writing Object list consecutively
+                    ROM.Write8(lastAdd.Offset, o.Number);
+                    lastAdd.Add(1);
+                    ROM.Write8(lastAdd.Offset, o.Type);
+                    lastAdd.Add(1);
+                    ROM.Write8(lastAdd.Offset, o.sX);
+                    lastAdd.Add(1);
+                    ROM.Write8(lastAdd.Offset, o.sY);
+                    lastAdd.Add(1);
+                }
+                ROM.Write8(lastAdd.Offset, 0xFF);
+            }
+        }
+
+        //Transitions
+        lastAdd = new Pointer(ROM.TransitionDataLists.Offset);
+        lastAdd.Add(1);
+        List<int> offsets = new List<int>(); //List saving written pointers for duplicate tansitions
+        for (int i = 0; i < 0x200; i++)
+        {
+            Transition t = Globals.Transitions[i]; //Transition is empty / ends instantly
+            if (t.Data.Count == 1)
+            {
+                ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)ROM.TransitionDataLists.bOffset); //Writing pointer to list
+                offsets.Add(ROM.TransitionDataLists.bOffset);
+            }
+            else if (t.CopyOf != -1) //Transition is a duplicate and the data is already written
+            {
+                ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
+                offsets.Add(offsets[t.CopyOf]);
+            }
+            else //Transition is used and unique
+            {
+                ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
+                offsets.Add(lastAdd.bOffset);
+                //Writing transition
+                ROM.ReplaceBytes(lastAdd.Offset, t.Data);
+                lastAdd.Add(t.Data.Count);
+            }
+        }
+
+        //Saving the ROM
+        ROM.Compile(filepath);
+    }
+
+    /// <summary>
     /// Updates the title bar of the application to show the ROM name.
     /// </summary>
     public static void UpdateTitlebar(string path)
@@ -354,29 +459,6 @@ public static class Editor
     public static void CreateBackup()
     {
         string romName = DateTime.Now.ToString("\\/yy-MM-dd_hh-mm-ss") + ".gb";
-    }
-
-    /// <summary>
-    /// (For now) Saves the Tileset definitions at the given file path
-    /// </summary>
-    public static void SaveEditorConfig(string filepath)
-    {
-        Directory.CreateDirectory(Path.GetDirectoryName(filepath));
-
-        //writing JSON file
-        JsonSerializerOptions options = new JsonSerializerOptions();
-        options.WriteIndented = true;
-        string json = JsonSerializer.Serialize(Globals.Tilesets, options);
-        File.WriteAllText(filepath, json);
-    }
-
-    /// <summary>
-    /// Returns a list of Tileset definitions from the given Json file
-    /// </summary>
-    public static List<Tileset> ReadEditorConfig(string filepath)
-    {
-        string json = File.ReadAllText(filepath);
-        return JsonSerializer.Deserialize<List<Tileset>>(json);
     }
 
     /// <summary>

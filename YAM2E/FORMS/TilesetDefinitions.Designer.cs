@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TilesetDefinitions));
             this.grp_tileset_data = new System.Windows.Forms.GroupBox();
             this.btn_remove_tileset = new System.Windows.Forms.Button();
             this.btn_add_tileset = new System.Windows.Forms.Button();
@@ -272,6 +273,7 @@
             this.Controls.Add(this.grp_tileset_preview);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.grp_tileset_data);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(665, 246);
             this.Name = "TilesetDefinitions";
             this.Text = "TilesetDefinitions";
