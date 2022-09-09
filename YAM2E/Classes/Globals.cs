@@ -20,6 +20,7 @@ internal static class Globals
     /// </summary>
     public static string RomPath = "";
 
+    #region colors
     //Editable Color definitions
     /// <summary>
     /// The color representing the black of the gameboy.
@@ -60,12 +61,17 @@ internal static class Globals
     /// The color used to mark objects
     /// </summary>
     public static Color ObjectColor = Color.FromArgb(255, 0x32, 0xCD, 0x32);
+    #endregion
 
     //Data dirs
     /// <summary>
     /// Root directory of the loaded Project
     /// </summary>
     public static string ProjDirectory { get; set; }
+    public static string ProjName { get; set; }
+
+    //Project
+    public static Project LoadedProject;
 
     //Data lists
     public static List<List<GameScreen>> Screens;

@@ -12,5 +12,7 @@ namespace LAMP.Classes
         public Project()
         {
         }
+
+        public bool OptimizeObjectData { get; set; } = false;
     }
 }

@@ -41,7 +41,8 @@ namespace LAMP
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_rol_file = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_rom_file = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,14 +142,14 @@ namespace LAMP
             // btn_new_project
             // 
             this.btn_new_project.Name = "btn_new_project";
-            this.btn_new_project.Size = new System.Drawing.Size(180, 22);
+            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
             this.btn_new_project.Text = "New Project";
             this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
             // 
             // btn_open_rom
             // 
             this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(180, 22);
+            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
             this.btn_open_rom.Text = "Open Project";
             this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
             // 
@@ -156,21 +157,21 @@ namespace LAMP
             // 
             this.btn_save_project.Enabled = false;
             this.btn_save_project.Name = "btn_save_project";
-            this.btn_save_project.Size = new System.Drawing.Size(180, 22);
+            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
             this.btn_save_project.Text = "Save Project";
             this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             this.toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             this.btn_create_backup.Enabled = false;
             this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(180, 22);
+            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
             this.btn_create_backup.Text = "Create Backup";
             this.btn_create_backup.Visible = false;
             this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
@@ -178,13 +179,13 @@ namespace LAMP
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_compile_ROM
             // 
             this.btn_compile_ROM.Enabled = false;
             this.btn_compile_ROM.Name = "btn_compile_ROM";
-            this.btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
+            this.btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
             this.btn_compile_ROM.Text = "Compile ROM";
             this.btn_compile_ROM.Click += new System.EventHandler(this.btn_compile_ROM_Click);
             // 
@@ -192,7 +193,8 @@ namespace LAMP
             // 
             this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_rol_file,
+            this.btn_rom_file,
+            this.btn_project_settings,
             this.btn_tileset_definitions});
             this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
             this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -201,18 +203,26 @@ namespace LAMP
             this.tool_strip_options.Size = new System.Drawing.Size(53, 22);
             this.tool_strip_options.Text = "Options";
             // 
-            // btn_rol_file
+            // btn_rom_file
             // 
-            this.btn_rol_file.Name = "btn_rol_file";
-            this.btn_rol_file.Size = new System.Drawing.Size(167, 22);
-            this.btn_rol_file.Text = "ROM File";
-            this.btn_rol_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
+            this.btn_rom_file.Name = "btn_rom_file";
+            this.btn_rom_file.Size = new System.Drawing.Size(180, 22);
+            this.btn_rom_file.Text = "ROM File";
+            this.btn_rom_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
+            // 
+            // btn_project_settings
+            // 
+            this.btn_project_settings.Enabled = false;
+            this.btn_project_settings.Name = "btn_project_settings";
+            this.btn_project_settings.Size = new System.Drawing.Size(180, 22);
+            this.btn_project_settings.Text = "Project Settings";
+            this.btn_project_settings.Click += new System.EventHandler(this.btn_project_settings_Click);
             // 
             // btn_tileset_definitions
             // 
             this.btn_tileset_definitions.Enabled = false;
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(167, 22);
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
             this.btn_tileset_definitions.Text = "Tileset Definitions";
             this.btn_tileset_definitions.Visible = false;
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
@@ -783,10 +793,11 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_options;
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
         private System.Windows.Forms.ToolStripMenuItem btn_new_project;
-        private System.Windows.Forms.ToolStripMenuItem btn_rol_file;
+        private System.Windows.Forms.ToolStripMenuItem btn_rom_file;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem btn_compile_ROM;
         private System.Windows.Forms.ComboBox cbb_metatile_table;
+        private System.Windows.Forms.ToolStripMenuItem btn_project_settings;
     }
 }
 

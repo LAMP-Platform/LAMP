@@ -89,9 +89,7 @@ public partial class MainWindow : Form
         btn_object_mode.Enabled = value;
         btn_tileset_definitions.Enabled = value;
         btn_compile_ROM.Enabled = value;
-
-        btn_tweaks_editor.Visible = false;
-        btn_open_tweaks_editor_image.Visible = false;
+        btn_project_settings.Enabled = value;
 
         if (value != true) return;
 
@@ -684,6 +682,9 @@ public partial class MainWindow : Form
 
     private void btn_compile_ROM_Click(object sender, EventArgs e)
         => Editor.CompileROM();
+
+    private void btn_project_settings_Click(object sender, EventArgs e)
+        => new ProjectSettings().Show();
     #endregion
 
     #endregion
