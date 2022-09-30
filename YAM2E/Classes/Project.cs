@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace LAMP.Classes;
 
-namespace LAMP.Classes
+public class Project
 {
-    public class Project
+    //constructor
+    public Project()
     {
-        //constructor
-        public Project()
-        {
-        }
-
-        public bool OptimizeObjectData { get; set; } = false;
     }
+
+    public bool OptimizeObjectData { get; set; } = false;
 }

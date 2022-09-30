@@ -68,30 +68,28 @@ public partial class MainWindow : Form
         #endregion
     }
 
-    public void ProjectLoaded(bool value = true) //greys out buttons or enables them if a Project is loaded
+    public void ProjectLoaded() //greys out buttons or enables them if a Project is loaded
     {
         //Enabling UI
-        btn_save_project.Enabled = value;
-        btn_create_backup.Enabled = value;
-        tool_strip_editors.Enabled = value;
+        btn_save_project.Enabled = true;
+        btn_create_backup.Enabled = true;
+        tool_strip_editors.Enabled = true;
         tool_strip_tools.Visible = false;
-        grp_data_selector.Visible = value;
-        btn_open_tweaks_editor_image.Enabled = value;
-        btn_save_rom_image.Enabled = value;
-        btn_open_transition_editor_image.Enabled = value;
-        grp_main_tileset_viewer.Visible = value;
-        grp_main_room_viewer.Visible = value;
-        tool_strip_view.Enabled = value;
-        grp_main_view.Visible = value;
-        btn_tile_mode.Enabled = value;
+        grp_data_selector.Visible = true;
+        btn_open_tweaks_editor_image.Enabled = true;
+        btn_save_rom_image.Enabled = true;
+        btn_open_transition_editor_image.Enabled = true;
+        grp_main_tileset_viewer.Visible = true;
+        grp_main_room_viewer.Visible = true;
+        tool_strip_view.Enabled = true;
+        grp_main_view.Visible = true;
+        btn_tile_mode.Enabled = true;
         btn_tile_mode.Checked = true;
         btn_object_mode.Checked = false;
-        btn_object_mode.Enabled = value;
-        btn_tileset_definitions.Enabled = value;
-        btn_compile_ROM.Enabled = value;
-        btn_project_settings.Enabled = value;
-
-        if (value != true) return;
+        btn_object_mode.Enabled = true;
+        btn_tileset_definitions.Enabled = true;
+        btn_compile_ROM.Enabled = true;
+        btn_project_settings.Enabled = true;
 
         cbb_metatile_table.SelectedIndex = 9;
 

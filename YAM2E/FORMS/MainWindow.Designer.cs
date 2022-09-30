@@ -224,7 +224,6 @@ namespace LAMP
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
             this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
             this.btn_tileset_definitions.Text = "Tileset Definitions";
-            this.btn_tileset_definitions.Visible = false;
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
             // tool_strip_tools

@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
-namespace LAMP.Classes.M2_Data
+namespace LAMP.Classes.M2_Data;
+
+public class Area
 {
-    public class Area
-    {
-        [JsonConstructor]
-        public Area() { }
+    [JsonConstructor]
+    public Area() { }
 
-        public int[] Screens { get; set; } = new int[256];
-        public byte[] Scrolls { get; set; } = new byte[256];
-        public int[] Tansitions { get; set; } = new int[256];
-        public bool[] Priorities { get; set; } = new bool[256];
-    }
+    public int[] Screens { get; set; } = new int[256];
+    public byte[] Scrolls { get; set; } = new byte[256];
+    public int[] Tansitions { get; set; } = new int[256];
+    public bool[] Priorities { get; set; } = new bool[256];
 }

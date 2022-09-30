@@ -1,55 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
-namespace LAMP.Classes
+namespace LAMP.Classes;
+
+public class Pointer
 {
-    public class Pointer
+    [JsonConstructor]
+    public Pointer (int offset)
     {
-        [JsonConstructor]
-        public Pointer (int offset)
-        {
-            Offset = offset;
+        Offset = offset;
 
-            //calculating bank and pointer
-            int bankNr = Offset / 0x4000;
+        //calculating bank and pointer
+        int bankNr = Offset / 0x4000;
+        Bank = bankNr;
+
+        int bOff = bankNr * 0x4000;
+        bOff = Offset - bOff + 0x4000;
+        bOffset = bOff;
+    }
+
+    public Pointer (int bank, int pointer)
+    {
+        Bank = bank;
+        bOffset = pointer;
+
+        //calculating direct offset
+        int offset = (int)((pointer - 0x4000) + bank * 0x4000);
+        Offset = offset;
+    }
+
+    public int Offset { get; set; }
+    public int Bank { get; set; }
+    public int bOffset { get; set; }
+
+    public bool Add(int amount) //returns true if added amount is still inside the bank
+    {
+        Offset += amount;
+
+        int bankNr = Offset / 0x4000;
+        int bOff = bankNr * 0x4000;
+        bOff = Offset - bOff + 0x4000;
+        bOffset = bOff;
+        if (bankNr != Bank)
+        {
             Bank = bankNr;
-
-            int bOff = bankNr * 0x4000;
-            bOff = Offset - bOff + 0x4000;
-            bOffset = bOff;
+            return false;
         }
-
-        public Pointer (int bank, int pointer)
-        {
-            Bank = bank;
-            bOffset = pointer;
-
-            //calculating direct offset
-            int offset = (int)((pointer - 0x4000) + bank * 0x4000);
-            Offset = offset;
-        }
-
-        public int Offset { get; set; }
-        public int Bank { get; set; }
-        public int bOffset { get; set; }
-
-        public bool Add(int amount) //returns true if added amount is still inside the bank
-        {
-            Offset += amount;
-
-            int bankNr = Offset / 0x4000;
-            int bOff = bankNr * 0x4000;
-            bOff = Offset - bOff + 0x4000;
-            bOffset = bOff;
-            if (bankNr != Bank)
-            {
-                Bank = bankNr;
-                return false;
-            }
-            return true;
-        }
+        return true;
     }
 }
