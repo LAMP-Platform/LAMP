@@ -92,6 +92,7 @@ namespace LAMP
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -206,15 +207,15 @@ namespace LAMP
             // btn_rom_file
             // 
             this.btn_rom_file.Name = "btn_rom_file";
-            this.btn_rom_file.Size = new System.Drawing.Size(180, 22);
-            this.btn_rom_file.Text = "ROM File";
+            this.btn_rom_file.Size = new System.Drawing.Size(167, 22);
+            this.btn_rom_file.Text = "Program Settings";
             this.btn_rom_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
             // 
             // btn_project_settings
             // 
             this.btn_project_settings.Enabled = false;
             this.btn_project_settings.Name = "btn_project_settings";
-            this.btn_project_settings.Size = new System.Drawing.Size(180, 22);
+            this.btn_project_settings.Size = new System.Drawing.Size(167, 22);
             this.btn_project_settings.Text = "Project Settings";
             this.btn_project_settings.Click += new System.EventHandler(this.btn_project_settings_Click);
             // 
@@ -222,7 +223,7 @@ namespace LAMP
             // 
             this.btn_tileset_definitions.Enabled = false;
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(167, 22);
             this.btn_tileset_definitions.Text = "Tileset Definitions";
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
@@ -689,12 +690,23 @@ namespace LAMP
             this.ctx_btn_test_here.Visible = false;
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 717);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(36, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 771);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.grp_main_view);
             this.Controls.Add(this.grp_main_room_viewer);
             this.Controls.Add(this.grp_main_tileset_viewer);
@@ -797,6 +809,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_compile_ROM;
         private System.Windows.Forms.ComboBox cbb_metatile_table;
         private System.Windows.Forms.ToolStripMenuItem btn_project_settings;
+        private System.Windows.Forms.Button button1;
     }
 }
 

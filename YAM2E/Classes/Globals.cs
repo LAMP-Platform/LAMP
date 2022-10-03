@@ -96,6 +96,12 @@ internal static class Globals
     public static int SelectedScreenY = 0;
     public static int SelectedScreenNr = 0;
 
+    #region User Settings
+    public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
+    public static string hexPrefix = Properties.programsettings.Default.hexPrefix;
+    public static string hexSuffix = Properties.programsettings.Default.hexSuffix;
+    #endregion
+
     #region Tweaks
     public static readonly int[] CenterSamusOnHorizontalMovementOffset = { 0x96C, 0x980, 0x9F3, 0xA07 };
     public static readonly byte[] CenterSamusOnHorizontalMovementValues = { 0x58, 0x57, 0x58, 0x59 };

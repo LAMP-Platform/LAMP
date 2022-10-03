@@ -670,7 +670,7 @@ public partial class MainWindow : Form
     }
 
     private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)
-        => new Start().Show();
+        => new ProgramSettins().Show();
 
     private void ctx_btn_remove_object_Click(object sender, EventArgs e)
         => Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
@@ -686,4 +686,9 @@ public partial class MainWindow : Form
     #endregion
 
     #endregion
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        new Test_form().Show();
+    }
 }

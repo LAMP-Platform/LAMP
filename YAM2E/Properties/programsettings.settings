@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="LAMP.Properties" GeneratedClassName="programsettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="bankOffsets" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="hexPrefix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0x</Value>
+    </Setting>
+    <Setting Name="hexSuffix" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
