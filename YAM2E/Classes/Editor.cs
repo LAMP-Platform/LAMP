@@ -221,6 +221,7 @@ public static class Editor
             //Loading Data
             Globals.LoadedProject = JsonSerializer.Deserialize<Project>(json);
 
+            ///METROID 2 DATA
             //Screens
             Globals.Screens = new();
             for (int area = 0; area < 7; area ++)
@@ -241,6 +242,14 @@ public static class Editor
             //Transitions
             json = File.ReadAllText(dirData + "/Transitions.json");
             Globals.Transitions = JsonSerializer.Deserialize<List<Transition>>(json);
+
+            ///CUSTOM DATA
+            //Tilesets
+            if (File.Exists(dirCustom + "/Tilesets.json"))
+            {
+                json = File.ReadAllText(dirCustom + "/Tilesets.json");
+                Globals.Tilesets = JsonSerializer.Deserialize<List<Tileset>>(json);
+            }
 
             //Project loaded
             MainWindow.Current.ProjectLoaded();
@@ -472,6 +481,12 @@ public static class Editor
         //Transitions
         path = dirData + "/Transitions.json";
         SaveJsonObject(Globals.Transitions, path);
+
+        if (Globals.Tilesets.Count != 0)
+        {
+            path = dirCustom + "Tilesets.json";
+            SaveJsonObject(Globals.Tilesets, path);
+        }
     }
 
     /// <summary>

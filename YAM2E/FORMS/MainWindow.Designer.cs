@@ -43,13 +43,13 @@ namespace LAMP
             this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_rom_file = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
@@ -195,8 +195,7 @@ namespace LAMP
             this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_rom_file,
-            this.btn_project_settings,
-            this.btn_tileset_definitions});
+            this.btn_project_settings});
             this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
             this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_options.Name = "tool_strip_options";
@@ -207,7 +206,7 @@ namespace LAMP
             // btn_rom_file
             // 
             this.btn_rom_file.Name = "btn_rom_file";
-            this.btn_rom_file.Size = new System.Drawing.Size(167, 22);
+            this.btn_rom_file.Size = new System.Drawing.Size(165, 22);
             this.btn_rom_file.Text = "Program Settings";
             this.btn_rom_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
             // 
@@ -215,17 +214,9 @@ namespace LAMP
             // 
             this.btn_project_settings.Enabled = false;
             this.btn_project_settings.Name = "btn_project_settings";
-            this.btn_project_settings.Size = new System.Drawing.Size(167, 22);
+            this.btn_project_settings.Size = new System.Drawing.Size(165, 22);
             this.btn_project_settings.Text = "Project Settings";
             this.btn_project_settings.Click += new System.EventHandler(this.btn_project_settings_Click);
-            // 
-            // btn_tileset_definitions
-            // 
-            this.btn_tileset_definitions.Enabled = false;
-            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(167, 22);
-            this.btn_tileset_definitions.Text = "Tileset Definitions";
-            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
             // tool_strip_tools
             // 
@@ -254,7 +245,8 @@ namespace LAMP
             this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_tweaks_editor,
             this.btn_transition_editor,
-            this.btn_screen_settings});
+            this.btn_screen_settings,
+            this.btn_tileset_definitions});
             this.tool_strip_editors.Enabled = false;
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
@@ -265,23 +257,30 @@ namespace LAMP
             // btn_tweaks_editor
             // 
             this.btn_tweaks_editor.Name = "btn_tweaks_editor";
-            this.btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_tweaks_editor.Size = new System.Drawing.Size(180, 22);
             this.btn_tweaks_editor.Text = "Tweaks Editor";
             this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
             // 
             // btn_transition_editor
             // 
             this.btn_transition_editor.Name = "btn_transition_editor";
-            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_transition_editor.Size = new System.Drawing.Size(180, 22);
             this.btn_transition_editor.Text = "Transition Editor";
             this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
             // 
             // btn_screen_settings
             // 
             this.btn_screen_settings.Name = "btn_screen_settings";
-            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
+            this.btn_screen_settings.Size = new System.Drawing.Size(180, 22);
             this.btn_screen_settings.Text = "Screen Settings";
             this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
+            // 
+            // btn_tileset_definitions
+            // 
+            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
+            this.btn_tileset_definitions.Text = "Tileset Editor";
+            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
             // 
             // tool_strip_view
             // 
@@ -391,7 +390,7 @@ namespace LAMP
             "7",
             "8",
             "9"});
-            this.cbb_metatile_table.Location = new System.Drawing.Point(103, 52);
+            this.cbb_metatile_table.Location = new System.Drawing.Point(103, 46);
             this.cbb_metatile_table.Name = "cbb_metatile_table";
             this.cbb_metatile_table.Size = new System.Drawing.Size(55, 23);
             this.cbb_metatile_table.TabIndex = 9;
@@ -409,11 +408,11 @@ namespace LAMP
             // lbl_main_metatile
             // 
             this.lbl_main_metatile.AutoSize = true;
-            this.lbl_main_metatile.Location = new System.Drawing.Point(6, 55);
+            this.lbl_main_metatile.Location = new System.Drawing.Point(6, 49);
             this.lbl_main_metatile.Name = "lbl_main_metatile";
-            this.lbl_main_metatile.Size = new System.Drawing.Size(88, 15);
+            this.lbl_main_metatile.Size = new System.Drawing.Size(83, 15);
             this.lbl_main_metatile.TabIndex = 8;
-            this.lbl_main_metatile.Text = "Metatile Offset:";
+            this.lbl_main_metatile.Text = "Metatile Table:";
             // 
             // num_main_graphics_offset
             // 
@@ -698,6 +697,7 @@ namespace LAMP
             this.button1.TabIndex = 7;
             this.button1.Text = "test";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainWindow
@@ -802,7 +802,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_tools;
         private System.Windows.Forms.ToolStripMenuItem btn_data_viewer;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_options;
-        private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
         private System.Windows.Forms.ToolStripMenuItem btn_new_project;
         private System.Windows.Forms.ToolStripMenuItem btn_rom_file;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
@@ -810,6 +809,7 @@ namespace LAMP
         private System.Windows.Forms.ComboBox cbb_metatile_table;
         private System.Windows.Forms.ToolStripMenuItem btn_project_settings;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
     }
 }
 

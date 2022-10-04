@@ -666,7 +666,7 @@ public partial class MainWindow : Form
 
     private void btn_tileset_definitions_Click(object sender, EventArgs e)
     {
-        new TilesetDefinitions(0).Show();
+        new TilesetDefinitions().Show();
     }
 
     private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)

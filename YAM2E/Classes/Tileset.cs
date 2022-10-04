@@ -5,7 +5,7 @@ namespace LAMP.Classes;
 public class Tileset
 {
     [JsonConstructor]
-    public Tileset(int id)
+    public Tileset()
     {
     }
 

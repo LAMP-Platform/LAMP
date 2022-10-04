@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.Controls;
+using System.Windows.Forms.Design;
 
 namespace LAMP.FORMS
 {
@@ -19,7 +20,7 @@ namespace LAMP.FORMS
         private Bitmap tilemap;
         private Pointer MetatilePointer;
 
-        public TilesetDefinitions(int ID)
+        public TilesetDefinitions()
         {
             InitializeComponent();
 
@@ -106,22 +107,23 @@ namespace LAMP.FORMS
         private void btn_add_tileset_Click(object sender, EventArgs e)
         {
             EnableComponents();
-            Globals.Tilesets.Add(new Tileset(Globals.Tilesets.Count));
+            Globals.Tilesets.Add(new Tileset());
             UpdateIdList();
         }
 
         private void UpdateIdList()
         {
+            //Updating the combobox with all the tilesets
             cbb_tileset_id.Items.Clear();
             int width = cbb_tileset_id.Width;
-            foreach (Tileset t in Globals.Tilesets)
+            for (int i = 0; i < Globals.Tilesets.Count; i++)
             {
-                string itemName = t.ID.ToString();
-                if (t.Name != "") itemName += " - " + t.Name;
-                cbb_tileset_id.Items.Add(itemName);
+                Tileset t = Globals.Tilesets[i];
+                string name = i.ToString();
+                if (t.Name != "") name = t.Name;
+                cbb_tileset_id.Items.Add(name);
 
-                //adjust the box width
-                width = Math.Max(t.Name.Length * 7 ,width);
+                //TODO: adjust the box width
             }
             cbb_tileset_id.DropDownWidth = width;
             cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
@@ -133,7 +135,7 @@ namespace LAMP.FORMS
             //saving tileset object and tileset list
             //object
             Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
-            t.ID = cbb_tileset_id.SelectedIndex;
+            //t.ID = cbb_tileset_id.SelectedIndex;
             t.Name = txb_tileset_name.Text;
             t.GfxOffset = new Pointer((int)num_main_graphics_offset.Value);
             t.MetatileTable = cbb_metatile_table.SelectedIndex;

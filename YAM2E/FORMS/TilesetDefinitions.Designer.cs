@@ -276,7 +276,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(665, 246);
             this.Name = "TilesetDefinitions";
-            this.Text = "TilesetDefinitions";
+            this.Text = "Tileset Editor";
             this.grp_tileset_data.ResumeLayout(false);
             this.grp_tileset_data.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_main_graphics_offset)).EndInit();
