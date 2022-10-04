@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="bankOffsets" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="hexPrefix" Type="System.String" Scope="User">
       <Value Profile="(Default)">0x</Value>

@@ -79,4 +79,51 @@ public static class Format
             return s.ToString();
         }
     }
+
+    public static int StringToInt(string input)
+    {
+        if (input.Length == 0) return 0;
+
+        //removing spaces and pre-/suffix
+        input = Regex.Replace(input, @"\s+", "");
+        input = input.Replace("0x", "").Replace("h", "").Replace("$", "");
+        input = input.Replace("ROM", ""); //Replacing ROM (could be copied from disassembly)
+
+        //Splitting bank and relative offset
+        string[] words = input.Split(',');
+        if (words.Length == 1) words = input.Split(':');
+        if (words.Length == 1) words = input.Split(';');
+
+        //Converting to Pointer
+        try
+        {
+            if (words.Length == 1)
+            {
+                int val;
+                if (words[0].Length == 0) val = 0;
+                else val = int.Parse(words[0], System.Globalization.NumberStyles.HexNumber);
+
+                return val;
+            }
+            else
+            {
+                MessageBox.Show("Please only input one value!\nThis field does not accept banks!", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return 0;
+        }
+        catch
+        {
+            MessageBox.Show("One of the characters input is invalid!", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return 0;
+        }
+    }
+
+    public static string IntToString(int input)
+    {
+        StringBuilder s = new();
+        s.Append(Globals.hexPrefix).Append(input.ToString("X")).Append(Globals.hexSuffix);
+        return s.ToString();
+    }
 }

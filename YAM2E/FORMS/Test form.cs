@@ -21,8 +21,8 @@ namespace LAMP.FORMS
 
         private void btn_apply_Click(object sender, EventArgs e)
         {
-            Pointer p = Format.StringToPointer(txt_input.Text);
-            if (p != null) lbl_offset_test.Text = "Offset Value: " + Format.PointerToString(p);
+            int v = Format.StringToInt(txt_input.Text);
+            lbl_offset_test.Text = "Value: " + Format.IntToString(v);
         }
     }
 }

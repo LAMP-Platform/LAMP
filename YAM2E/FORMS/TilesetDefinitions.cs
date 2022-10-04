@@ -139,10 +139,6 @@ namespace LAMP.FORMS
             t.MetatileTable = cbb_metatile_table.SelectedIndex;
             t.CollisionTable = cbb_collision_table.SelectedIndex;
             t.SolidityTable = cbb_solidity_table.SelectedIndex;
-
-            //file
-            string path = Globals.TileDataPath;
-            if (Globals.SaveROMSep) path = Path.GetDirectoryName(Editor.ROM.Filepath) + "/" + Path.GetFileNameWithoutExtension(Editor.ROM.Filepath) + ".tld";
         }
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)

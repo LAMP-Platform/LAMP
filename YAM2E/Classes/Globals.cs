@@ -87,8 +87,6 @@ internal static class Globals
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
-    public static string TileDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/TileDefinitions.tld";
-    public static bool SaveROMSep = false;
 
     //Area data
     public static int SelectedArea = 0;
