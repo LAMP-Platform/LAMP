@@ -29,6 +29,7 @@ namespace LAMP.FORMS
             if (rbt_use_offsets.Checked)
             {
                 Globals.LoadedProject.useTilesets = false;
+                MainWindow.Current.SwitchTilesetOffsetMode();
             }
         }
 
@@ -37,6 +38,7 @@ namespace LAMP.FORMS
             if (rbt_use_tilesets.Checked)
             {
                 Globals.LoadedProject.useTilesets = true;
+                MainWindow.Current.SwitchTilesetOffsetMode();
             }
         }
     }

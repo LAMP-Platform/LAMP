@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TilesetDefinitions));
             this.grp_tileset_data = new System.Windows.Forms.GroupBox();
+            this.txb_gfx_offset = new System.Windows.Forms.TextBox();
             this.btn_remove_tileset = new System.Windows.Forms.Button();
             this.btn_add_tileset = new System.Windows.Forms.Button();
             this.btn_save_tileset = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@
             this.lbl_tileset_gfx_offset = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.grp_tileset_preview = new System.Windows.Forms.GroupBox();
-            this.txb_gfx_offset = new System.Windows.Forms.TextBox();
             this.grp_tileset_data.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,6 +74,13 @@
             this.grp_tileset_data.TabStop = false;
             this.grp_tileset_data.Text = "Tileset Data";
             // 
+            // txb_gfx_offset
+            // 
+            this.txb_gfx_offset.Location = new System.Drawing.Point(103, 44);
+            this.txb_gfx_offset.Name = "txb_gfx_offset";
+            this.txb_gfx_offset.Size = new System.Drawing.Size(55, 23);
+            this.txb_gfx_offset.TabIndex = 0;
+            // 
             // btn_remove_tileset
             // 
             this.btn_remove_tileset.Location = new System.Drawing.Point(255, 135);
@@ -82,6 +89,7 @@
             this.btn_remove_tileset.TabIndex = 21;
             this.btn_remove_tileset.Text = "Remove";
             this.btn_remove_tileset.UseVisualStyleBackColor = true;
+            this.btn_remove_tileset.Click += new System.EventHandler(this.btn_remove_tileset_Click);
             // 
             // btn_add_tileset
             // 
@@ -244,13 +252,6 @@
             this.grp_tileset_preview.TabIndex = 2;
             this.grp_tileset_preview.TabStop = false;
             this.grp_tileset_preview.Text = "Preview";
-            // 
-            // txb_gfx_offset
-            // 
-            this.txb_gfx_offset.Location = new System.Drawing.Point(103, 44);
-            this.txb_gfx_offset.Name = "txb_gfx_offset";
-            this.txb_gfx_offset.Size = new System.Drawing.Size(55, 23);
-            this.txb_gfx_offset.TabIndex = 0;
             // 
             // TilesetDefinitions
             // 

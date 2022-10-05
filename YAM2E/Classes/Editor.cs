@@ -176,6 +176,9 @@ public static class Editor
         }
         SaveJsonObject(Globals.Transitions, path);
 
+        //Clearing tileset list
+        Globals.Tilesets.Clear();
+
         //New Project created
         MainWindow.Current.ProjectLoaded();
     }
@@ -245,6 +248,7 @@ public static class Editor
 
             ///CUSTOM DATA
             //Tilesets
+            Globals.Tilesets.Clear();
             if (File.Exists(dirCustom + "/Tilesets.json"))
             {
                 json = File.ReadAllText(dirCustom + "/Tilesets.json");

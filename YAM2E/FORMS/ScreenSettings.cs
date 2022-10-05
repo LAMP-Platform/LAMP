@@ -54,7 +54,7 @@ public partial class ScreenSettings : Form
 
         //Used screen data
         int usedScreen = Globals.Areas[SelectedBank].Screens[SelectedScreen];
-        if (usedScreen <= 0) cbb_scse_screen_used.Text = "Undefined";
+        if (usedScreen < 0) cbb_scse_screen_used.Text = "Undefined"; //TODO: never happens because some bug
         else
         {
             UsedScreen = usedScreen;

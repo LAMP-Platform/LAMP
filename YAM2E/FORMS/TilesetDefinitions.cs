@@ -97,6 +97,13 @@ namespace LAMP.FORMS
             lbl_tileset_gfx_offset.Enabled = false;
             cbb_tileset_id.Enabled = false;
             lbl_tileset_id.Enabled = false;
+
+            cbb_tileset_id.Text = "";
+            cbb_metatile_table.SelectedIndex = 0;
+            cbb_collision_table.SelectedIndex = 0;
+            cbb_solidity_table.SelectedIndex = 0;
+            txb_gfx_offset.Text = "";
+            txb_tileset_name.Text = "";
         }
 
         private void btn_add_tileset_Click(object sender, EventArgs e)
@@ -108,6 +115,12 @@ namespace LAMP.FORMS
 
         private void UpdateIdList()
         {
+            if (Globals.Tilesets.Count == 0)
+            {
+                DisableComponents();
+                return;
+            }
+
             //Updating the combobox with all the tilesets
             cbb_tileset_id.Items.Clear();
             int width = cbb_tileset_id.Width;
@@ -150,6 +163,9 @@ namespace LAMP.FORMS
             //Updating preview
             UpdateTileset();
             UpdateNames();
+
+            //Updating main window list
+            MainWindow.Current.LoadTilesetList();
         }
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
@@ -162,6 +178,12 @@ namespace LAMP.FORMS
             cbb_solidity_table.SelectedIndex = t.SolidityTable;
 
             UpdateTileset();
+        }
+
+        private void btn_remove_tileset_Click(object sender, EventArgs e)
+        {
+            Globals.Tilesets.RemoveAt(cbb_tileset_id.SelectedIndex);
+            UpdateIdList();
         }
     }
 }

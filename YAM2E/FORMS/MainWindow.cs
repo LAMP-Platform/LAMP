@@ -51,6 +51,10 @@ public partial class MainWindow : Form
             File.WriteAllText(path, "");
         }
 
+        //overlaying both graphic controls
+        grp_data_selector.Controls.Add(grp_tileset_tilesets);
+        grp_tileset_tilesets.Location = grp_tileset_offset.Location;
+
         //Adding custom controls
         #region Tileset
         Controls.Add(Tileset);
@@ -95,6 +99,10 @@ public partial class MainWindow : Form
         btn_tileset_definitions.Enabled = true;
         btn_compile_ROM.Enabled = true;
         btn_project_settings.Enabled = true;
+        btn_open_tileset_editor.Enabled = true;
+
+        //Enabling either offset or tileset UI
+        SwitchTilesetOffsetMode();
 
         //Setting base UI values
         cbb_metatile_table.SelectedIndex = 9;
@@ -116,15 +124,22 @@ public partial class MainWindow : Form
         #endregion
     }
 
-    public void UpdateTileset()
+    private void UpdateTileset()
     {
+        Pointer gfx = gfxOffset;
+        Pointer meta = MetatilePointer;
+        if (Globals.LoadedProject.useTilesets)
+        {
+            gfx = selectedTileset.GfxOffset;
+            meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
+        }
         Globals.Tileset.Dispose();
-        Globals.Tileset = Editor.DrawTileSet(gfxOffset, MetatilePointer, 16, 8);
+        Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8);
         Tileset.BackgroundImage = Globals.Tileset;
         grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
 
-    public void UpdateRoom()
+    private void UpdateRoom()
     {
         Point p = new Point(0, 0);
         Globals.AreaBank.Dispose();
@@ -133,7 +148,7 @@ public partial class MainWindow : Form
         Room.BackgroundImage = Globals.AreaBank;
     }
 
-    public void UpdateSelectedTiles()
+    private void UpdateSelectedTiles()
     {
         if (TilesetSelected)
         {
@@ -186,7 +201,7 @@ public partial class MainWindow : Form
         }
     }
 
-    public void PlaceSelectedTiles()
+    private void PlaceSelectedTiles()
     {
         int x = RoomSelectedTile.X;
         int y = RoomSelectedTile.Y;
@@ -251,19 +266,19 @@ public partial class MainWindow : Form
         g.Dispose();
     }
 
-    public void ToggleScreenOutlines()
+    private void ToggleScreenOutlines()
     {
         Room.ShowScreenOutlines = !Room.ShowScreenOutlines;
         Room.Invalidate();
     }
 
-    public void ToggleDuplicateOutlines()
+    private void ToggleDuplicateOutlines()
     {
         Room.ShowDuplicateOutlines = !Room.ShowDuplicateOutlines;
         Room.Invalidate();
     }
 
-    public void ToggleSelectionFocus(bool TilesetFocused)
+    private void ToggleSelectionFocus(bool TilesetFocused)
     {
         if (TilesetFocused == true)
         {
@@ -278,13 +293,53 @@ public partial class MainWindow : Form
         TilesetSelected = TilesetFocused;
     }
 
-    void ToggleEditingMode()
+    private void ToggleEditingMode()
     {
         EditingTiles = !EditingTiles;
         btn_tile_mode.Checked = EditingTiles;
         btn_object_mode.Checked = !EditingTiles;
         if (EditingTiles) Room.ContextMenuStrip = null;
         else Room.ContextMenuStrip = ctx_room_context_menu;
+    }
+
+    public void SwitchTilesetOffsetMode()
+    {
+        //Changes the usage from direct offsets to defined tilesets and vise versa
+        if (Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1)
+        {
+            grp_tileset_tilesets.Visible = false;
+            grp_tileset_offset.Visible = true;
+        }
+        else
+        {
+            grp_tileset_offset.Visible = false;
+            grp_tileset_tilesets.Visible = true;
+            LoadTilesetList();
+        }
+    }
+
+    public void LoadTilesetList()
+    {
+        //Adding entries
+        cbb_tileset_id.Items.Clear();
+        int width = cbb_tileset_id.Width;
+        foreach (Tileset t in Globals.Tilesets)
+        {
+            cbb_tileset_id.Items.Add("");
+            width = Math.Max(width, t.Name.Length * 7);
+        }
+        cbb_tileset_id.DropDownWidth = width;
+        cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
+
+        //Updating Name
+        for (int i = 0; i < Globals.Tilesets.Count; i++)
+        {
+            Tileset t = Globals.Tilesets[i];
+            string name = i.ToString();
+            if (t.Name != "") name = t.Name;
+
+            cbb_tileset_id.Items[i] = name;
+        }
     }
 
     #region Main Window Events
@@ -688,6 +743,16 @@ public partial class MainWindow : Form
         MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
         gfxOffset = Format.StringToPointer(txb_graphics_offset.Text);
         txb_graphics_offset.Text = Format.PointerToString(gfxOffset);
+        UpdateTileset();
+        UpdateRoom();
+    }
+
+    private void btn_open_tileset_editor_Click(object sender, EventArgs e)
+        => btn_tileset_definitions_Click(sender, e);
+
+    private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        selectedTileset = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
         UpdateTileset();
         UpdateRoom();
     }
