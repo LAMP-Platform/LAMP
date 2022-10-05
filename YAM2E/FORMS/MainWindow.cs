@@ -8,6 +8,7 @@ using LAMP.FORMS;
 using LAMP.Controls;
 using LAMP.Classes.M2_Data;
 using System.Collections.Generic;
+using LAMP.Utilities;
 
 namespace LAMP;
 
@@ -23,12 +24,16 @@ public partial class MainWindow : Form
     private Point RoomSelectedTile = new Point(-1, -1);
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
-    private Pointer MetatilePointer;
     public static Enemy heldObject = null;
 
     //Main Editor vars
     public static bool EditingTiles = true;
     bool TilesetSelected = true;
+
+    //Graphics vars
+    private Pointer gfxOffset;
+    private Pointer MetatilePointer;
+    private Tileset selectedTileset = null;
 
     public MainWindow()
     {
@@ -91,12 +96,17 @@ public partial class MainWindow : Form
         btn_compile_ROM.Enabled = true;
         btn_project_settings.Enabled = true;
 
+        //Setting base UI values
         cbb_metatile_table.SelectedIndex = 9;
+        gfxOffset = new(0x229BC);
+        MetatilePointer = new(0x217BC);
+        txb_graphics_offset.Text = Format.PointerToString(gfxOffset);
+        UpdateTileset();
+        UpdateRoom();
 
         #region Tile Viewer
         Tileset.BringToFront();
         Tileset.ResetSelection();
-        UpdateTileset();
         #endregion
 
         #region Room Viewer
@@ -109,7 +119,7 @@ public partial class MainWindow : Form
     public void UpdateTileset()
     {
         Globals.Tileset.Dispose();
-        Globals.Tileset = Editor.DrawTileSet((int)num_main_graphics_offset.Value, MetatilePointer.Offset, 16, 8);
+        Globals.Tileset = Editor.DrawTileSet(gfxOffset, MetatilePointer, 16, 8);
         Tileset.BackgroundImage = Globals.Tileset;
         grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
@@ -548,18 +558,7 @@ public partial class MainWindow : Form
 
     }
 
-    private void num_main_graphics_offset_ValueChanged(object sender, EventArgs e)
-    {
-        UpdateTileset();
-        UpdateRoom();
-    }
-
-    private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
-        UpdateTileset();
-        UpdateRoom();
-    }
+    private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e) {}
 
     private void main_window_KeyDown(object sender, KeyEventArgs e)
     {
@@ -683,6 +682,15 @@ public partial class MainWindow : Form
 
     private void btn_project_settings_Click(object sender, EventArgs e)
         => new ProjectSettings().Show();
+
+    private void btn_apply_graphics_Click(object sender, EventArgs e)
+    {
+        MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
+        gfxOffset = Format.StringToPointer(txb_graphics_offset.Text);
+        txb_graphics_offset.Text = Format.PointerToString(gfxOffset);
+        UpdateTileset();
+        UpdateRoom();
+    }
     #endregion
 
     #endregion

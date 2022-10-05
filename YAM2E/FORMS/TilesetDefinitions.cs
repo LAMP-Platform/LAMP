@@ -50,7 +50,7 @@ namespace LAMP.FORMS
         {
             if (Globals.Tilesets.Count < 1) return;
             if (tilemap != null) tilemap.Dispose();
-            tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset.Offset, MetatilePointer.Offset, 16, 8);
+            tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, MetatilePointer, 16, 8);
             Tileset.BackgroundImage = tilemap;
             grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
             grp_tileset_data.Height = grp_tileset_preview.Size.Height;
@@ -111,18 +111,28 @@ namespace LAMP.FORMS
             //Updating the combobox with all the tilesets
             cbb_tileset_id.Items.Clear();
             int width = cbb_tileset_id.Width;
-            for (int i = 0; i < Globals.Tilesets.Count; i++)
+            foreach (Tileset t in Globals.Tilesets)
             {
-                Tileset t = Globals.Tilesets[i];
-                string name = i.ToString();
-                if (t.Name != "") name = t.Name;
-                cbb_tileset_id.Items.Add(name);
-
+                cbb_tileset_id.Items.Add("");
                 width = Math.Max(width, t.Name.Length * 7);
             }
             cbb_tileset_id.DropDownWidth = width;
             cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
             if (Globals.Tilesets.Count > 0) btn_save_tileset.Enabled = true;
+            UpdateNames();
+        }
+
+        private void UpdateNames()
+        {
+            //Updating the names of the list
+            for (int i = 0; i < Globals.Tilesets.Count; i++)
+            {
+                Tileset t = Globals.Tilesets[i];
+                string name = i.ToString();
+                if (t.Name != "") name = t.Name;
+
+                cbb_tileset_id.Items[i] = name;
+            }
         }
 
         private void btn_save_tileset_Click(object sender, EventArgs e)
@@ -139,6 +149,7 @@ namespace LAMP.FORMS
 
             //Updating preview
             UpdateTileset();
+            UpdateNames();
         }
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,6 +160,8 @@ namespace LAMP.FORMS
             cbb_metatile_table.SelectedIndex = t.MetatileTable;
             cbb_collision_table.SelectedIndex = t.CollisionTable;
             cbb_solidity_table.SelectedIndex = t.SolidityTable;
+
+            UpdateTileset();
         }
     }
 }

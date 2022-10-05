@@ -8,4 +8,5 @@ public class Project
     }
 
     public bool OptimizeObjectData { get; set; } = false;
+    public bool useTilesets { get; set; } = false;
 }

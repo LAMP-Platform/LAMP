@@ -209,7 +209,7 @@ public static class Editor
     /// <param name="path">The path to the Project file.</param>
     public static void LoadProjectFromPath(string path)
     {
-        try 
+        try
         {
             string json = File.ReadAllText(path);
             Globals.ProjName = path;
@@ -484,7 +484,7 @@ public static class Editor
 
         if (Globals.Tilesets.Count != 0)
         {
-            path = dirCustom + "Tilesets.json";
+            path = dirCustom + "/Tilesets.json";
             SaveJsonObject(Globals.Tilesets, path);
         }
     }
@@ -668,7 +668,7 @@ public static class Editor
         else DrawBlack8(bpm, x + 8, y + 8);
     }
 
-    public static Bitmap DrawTileSet(int gfxOffset, int metaOffset, int tilesWide, int tilesHigh)
+    public static Bitmap DrawTileSet(Pointer gfxOffset, Pointer metaOffset, int tilesWide, int tilesHigh)
     {
         int count = 0;
         for (int i = 0; i < tilesHigh; i++)
@@ -677,7 +677,7 @@ public static class Editor
             {
                 if (Globals.Metatiles[count] != null) Globals.Metatiles[count].Dispose();
                 Globals.Metatiles[count] = new Bitmap(16, 16);
-                DrawMetaTile(gfxOffset, metaOffset + count * 4, Globals.Metatiles[count], 0, 0);
+                DrawMetaTile(gfxOffset.Offset, metaOffset.Offset + count * 4, Globals.Metatiles[count], 0, 0);
                 count++;
             }
         }

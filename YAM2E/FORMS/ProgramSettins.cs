@@ -103,6 +103,7 @@ namespace LAMP.FORMS
         private void rbt_offset_style_CheckedChanged(object sender, EventArgs e)
         {
             if (rbt_offset_style.Checked) Globals.bankOffsets = false;
+            SaveSettings();
         }
     }
 }
