@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.Controls;
+using LAMP.Utilities;
 using System.Windows.Forms.Design;
 
 namespace LAMP.FORMS
@@ -47,30 +48,24 @@ namespace LAMP.FORMS
 
         private void UpdateTileset()
         {
+            if (Globals.Tilesets.Count < 1) return;
             if (tilemap != null) tilemap.Dispose();
-            tilemap = Editor.DrawTileSet((int)num_main_graphics_offset.Value, MetatilePointer.Offset, 16, 8);
+            tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset.Offset, MetatilePointer.Offset, 16, 8);
             Tileset.BackgroundImage = tilemap;
             grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
             grp_tileset_data.Height = grp_tileset_preview.Size.Height;
-        }
-
-        private void num_main_graphics_offset_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateTileset();
         }
 
         private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Table to offset
             MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
-
-            UpdateTileset();
         }
 
         private void EnableComponents()
         {
             grp_tileset_preview.Visible = true;
-            num_main_graphics_offset.Enabled = true;
+            txb_gfx_offset.Enabled = true;
             cbb_metatile_table.Enabled = true;
             cbb_collision_table.Enabled = true;
             cbb_solidity_table.Enabled = true;
@@ -88,7 +83,7 @@ namespace LAMP.FORMS
         private void DisableComponents()
         {
             grp_tileset_preview.Visible = false;
-            num_main_graphics_offset.Enabled = false;
+            txb_gfx_offset.Enabled = false;
             cbb_metatile_table.Enabled = false;
             cbb_collision_table.Enabled = false;
             cbb_solidity_table.Enabled = false;
@@ -123,7 +118,7 @@ namespace LAMP.FORMS
                 if (t.Name != "") name = t.Name;
                 cbb_tileset_id.Items.Add(name);
 
-                //TODO: adjust the box width
+                width = Math.Max(width, t.Name.Length * 7);
             }
             cbb_tileset_id.DropDownWidth = width;
             cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
@@ -135,18 +130,21 @@ namespace LAMP.FORMS
             //saving tileset object and tileset list
             //object
             Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
-            //t.ID = cbb_tileset_id.SelectedIndex;
             t.Name = txb_tileset_name.Text;
-            t.GfxOffset = new Pointer((int)num_main_graphics_offset.Value);
+            t.GfxOffset = Format.StringToPointer(txb_gfx_offset.Text);
+            txb_gfx_offset.Text = Format.PointerToString(t.GfxOffset);
             t.MetatileTable = cbb_metatile_table.SelectedIndex;
             t.CollisionTable = cbb_collision_table.SelectedIndex;
             t.SolidityTable = cbb_solidity_table.SelectedIndex;
+
+            //Updating preview
+            UpdateTileset();
         }
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
         {
             Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
-            num_main_graphics_offset.Value = t.GfxOffset.Offset;
+            txb_gfx_offset.Text = Format.PointerToString(t.GfxOffset);
             txb_tileset_name.Text = t.Name;
             cbb_metatile_table.SelectedIndex = t.MetatileTable;
             cbb_collision_table.SelectedIndex = t.CollisionTable;
