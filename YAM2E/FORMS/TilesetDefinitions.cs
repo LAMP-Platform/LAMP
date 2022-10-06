@@ -111,6 +111,8 @@ namespace LAMP.FORMS
             EnableComponents();
             Globals.Tilesets.Add(new Tileset());
             UpdateIdList();
+            MainWindow.Current.SwitchTilesetOffsetMode();
+            MainWindow.Current.LoadTilesetList();
         }
 
         private void UpdateIdList()
@@ -165,6 +167,7 @@ namespace LAMP.FORMS
             UpdateNames();
 
             //Updating main window list
+            MainWindow.Current.SwitchTilesetOffsetMode();
             MainWindow.Current.LoadTilesetList();
         }
 
@@ -184,6 +187,8 @@ namespace LAMP.FORMS
         {
             Globals.Tilesets.RemoveAt(cbb_tileset_id.SelectedIndex);
             UpdateIdList();
+            MainWindow.Current.SwitchTilesetOffsetMode();
+            MainWindow.Current.LoadTilesetList();
         }
     }
 }
