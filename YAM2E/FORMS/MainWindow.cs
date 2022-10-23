@@ -134,7 +134,7 @@ public partial class MainWindow : Form
             meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
         }
         Globals.Tileset.Dispose();
-        Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8);
+        Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8, true);
         Tileset.BackgroundImage = Globals.Tileset;
         grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }

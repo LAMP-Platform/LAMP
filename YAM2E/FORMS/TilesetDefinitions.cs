@@ -50,7 +50,7 @@ namespace LAMP.FORMS
         {
             if (Globals.Tilesets.Count < 1) return;
             if (tilemap != null) tilemap.Dispose();
-            tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, MetatilePointer, 16, 8);
+            tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, MetatilePointer, 16, 8, false);
             Tileset.BackgroundImage = tilemap;
             grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
             grp_tileset_data.Height = grp_tileset_preview.Size.Height;

@@ -109,6 +109,13 @@ public class RoomViewer : Control
             SelectedScreenOld = SelectedScreen;
         }
 
+        //Draw Unique Screen outlines
+        if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
+        {
+            foreach (Rectangle r in UniqueScreen)
+                e.Graphics.DrawRectangle(UniqueScreenPen, r);
+        }
+
         //screen outlines
         if (ShowScreenOutlines)
         {
@@ -120,13 +127,6 @@ public class RoomViewer : Control
                     e.Graphics.DrawRectangle(ScreenPen, rect);
                 }
             }
-        }
-
-        //Draw Unique Screen outlines
-        if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
-        {
-            foreach (Rectangle r in UniqueScreen)
-                e.Graphics.DrawRectangle(UniqueScreenPen, r);
         }
 
         //Draw held object

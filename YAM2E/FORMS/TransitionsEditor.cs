@@ -46,7 +46,7 @@ public partial class TransitionsEditor : Form
             string newLine = Environment.NewLine;
             txb_transition_info.Text = $"This Transition shares it's data with" + newLine + newLine +
                 $"Transition {LoadedTransition.CopyOf.ToString("X3")}." + newLine + newLine +
-                $"Every change applied to this Transition will also be applied to the base Transition" +
+                $"Every change applied to this Transition will also be applied to the base Transition " +
                 $"and every other duplicate!";
             LoadedTransition = Globals.Transitions[LoadedTransition.CopyOf];
         }

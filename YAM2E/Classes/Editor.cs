@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using LAMP.FORMS;
 using LAMP.Classes.M2_Data;
 using System.ComponentModel.Design;
+using System.Linq;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -212,8 +213,8 @@ public static class Editor
     /// <param name="path">The path to the Project file.</param>
     public static void LoadProjectFromPath(string path)
     {
-        try
-        {
+        //try
+        //{
             string json = File.ReadAllText(path);
             Globals.ProjName = path;
             path = Path.GetDirectoryName(path);
@@ -255,15 +256,23 @@ public static class Editor
                 Globals.Tilesets = JsonSerializer.Deserialize<List<Tileset>>(json);
             }
 
+            //Tweaks
+            Globals.Tweaks.Clear();
+            if (File.Exists(dirCustom + "/Tweaks.json"))
+            {
+                json = File.ReadAllText(dirCustom + "/Tweaks.json");
+                Globals.Tweaks = JsonSerializer.Deserialize<List<Tweak>>(json);
+            }
+
             //Project loaded
             MainWindow.Current.ProjectLoaded();
             UpdateTitlebar(path);
-        }
-        catch(Exception ex)
-        {
-            MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        //}
+        //catch(Exception ex)
+        //{
+        //    MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
+        //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
 
     }
 
@@ -486,10 +495,19 @@ public static class Editor
         path = dirData + "/Transitions.json";
         SaveJsonObject(Globals.Transitions, path);
 
+        ///CUSTOM
+        //Tilesets
         if (Globals.Tilesets.Count != 0)
         {
             path = dirCustom + "/Tilesets.json";
             SaveJsonObject(Globals.Tilesets, path);
+        }
+
+        //Tweaks
+        if (Globals.Tweaks.Count != 0)
+        {
+            path = dirCustom + "/Tweaks.json";
+            SaveJsonObject(Globals.Tweaks, path);
         }
     }
 
@@ -672,20 +690,21 @@ public static class Editor
         else DrawBlack8(bpm, x + 8, y + 8);
     }
 
-    public static Bitmap DrawTileSet(Pointer gfxOffset, Pointer metaOffset, int tilesWide, int tilesHigh)
+    public static Bitmap DrawTileSet(Pointer gfxOffset, Pointer metaOffset, int tilesWide, int tilesHigh, bool updateMain = true)
     {
         int count = 0;
-        for (int i = 0; i < tilesHigh; i++)
+        Bitmap[] Metatiles = new Bitmap[128]; //List of tile bitmaps
+        for (int i = 0; i < tilesHigh; i++) //Filling list
         {
             for (int j = 0; j < tilesWide; j++)
             {
-                if (Globals.Metatiles[count] != null) Globals.Metatiles[count].Dispose();
-                Globals.Metatiles[count] = new Bitmap(16, 16);
-                DrawMetaTile(gfxOffset.Offset, metaOffset.Offset + count * 4, Globals.Metatiles[count], 0, 0);
+                Metatiles[count] = new Bitmap(16, 16);
+                DrawMetaTile(gfxOffset.Offset, metaOffset.Offset + count * 4, Metatiles[count], 0, 0);
                 count++;
             }
         }
 
+        //Drawing the contents of the list onto a tileset bitmap
         Bitmap tileset = new Bitmap(16 * tilesWide, 16 * tilesHigh);
         Graphics g = Graphics.FromImage(tileset);
         count = 0;
@@ -693,12 +712,27 @@ public static class Editor
         {
             for (int j = 0; j < tilesWide; j++)
             {
-                g.DrawImage(Globals.Metatiles[count], new Point(16 * j, 16 * i));
+                g.DrawImage(Metatiles[count], new Point(16 * j, 16 * i));
                 count++;
             }
         }
         g.Dispose();
+
+        if (updateMain)
+        {
+            for (int i = 0; i < Metatiles.Length; i++)
+            {
+                if (Globals.Metatiles[i] != null) Globals.Metatiles[i].Dispose();
+                Globals.Metatiles[i] = (Bitmap)Metatiles[i].Clone();
+                Metatiles[i].Dispose();
+            }
+        }
+
         return tileset;
+    }
+
+    public static void UpdateTileList()
+    {
     }
 
     /// <summary>

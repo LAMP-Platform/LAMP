@@ -80,13 +80,15 @@ internal static class Globals
     public static List<Transition> Transitions;
 
     //Bitmap lists
-    public static Bitmap[] Subtiles = new Bitmap[256];
     public static Bitmap[] Metatiles = new Bitmap[128];
     public static Bitmap Tileset = new Bitmap(1, 1);
     public static Bitmap AreaBank = new Bitmap(1, 1);
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
+
+    //Tweak data
+    public static List<Tweak> Tweaks = new List<Tweak>();
 
     //Area data
     public static int SelectedArea = 0;
