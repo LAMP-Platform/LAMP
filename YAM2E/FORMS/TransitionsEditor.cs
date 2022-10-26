@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using LAMP.Classes.M2_Data;
+using LAMP.Controls;
 
 namespace LAMP.FORMS;
 
@@ -14,7 +16,7 @@ public partial class TransitionsEditor : Form
 
     //Transition Data
     Transition LoadedTransition;
-    int TransitionLength;
+    public int TransitionLength { get; set; }
     byte[] OldTransition;
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
 
@@ -28,12 +30,12 @@ public partial class TransitionsEditor : Form
         Current = this;
         InitializeComponent();
 
-        for (int i = 0; i < 512; i++)
+        for (int i = 0; i < Globals.Transitions.Count; i++)
         {
             cbb_tred_transition_selection.Items.Add(i.ToString("X3"));
         }
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
-        cbb_tred_opcode_add.SelectedIndex = 0;
+        cbb_tred_opcode_add.SelectedIndex = 0; //TODO: probably not needed after rewrite
     }
 
     void LoadTransition(int transition)
@@ -54,7 +56,7 @@ public partial class TransitionsEditor : Form
         {
             grp_transition_warning.Visible = false;
         }
-        OldTransition = LoadedTransition.Data.ToArray();
+        OldTransition = LoadedTransition.Data.ToArray(); //TODO: Not needed idk??
     }
 
     void ReadTransition()
@@ -63,8 +65,21 @@ public partial class TransitionsEditor : Form
 
         //generating new Tree
         NodeData.Clear();
+        pnlTransition.Controls.Clear();
         try
         {
+            //NEW TRANSITION LOADING
+            for (int i = 0; i < LoadedTransition.Data.Count;)
+            {
+                //putting data for each opcode into lists
+                int length = GetOpcodeLength(LoadedTransition.Data[i]);
+                List<Byte> data = LoadedTransition.Data.GetRange(i, length);
+
+                pnlTransition.Controls.Add(new TransitionOpcode(data, this));
+                i += length;
+            }
+
+            //OLD TRANSITION LOADING
             for (int i = 0; i < LoadedTransition.Data.Count; i++)
             {
                 byte opcode = LoadedTransition.Data[i];
@@ -289,8 +304,7 @@ public partial class TransitionsEditor : Form
         }
         tre_tred_transition_tree.ExpandAll();
         TransitionLength = LoadedTransition.Data.Count;
-        lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} bytes";
-        gauge1.ChangeValue((double)TransitionLength / (double)64);
+        UpdateTransitionLength();
     }
 
     void ReloadTransition()
@@ -376,6 +390,15 @@ public partial class TransitionsEditor : Form
         }
     }
 
+    public void UpdateTransitionLength()
+    {
+        lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} out of 64 bytes";
+        gauTransitionLength.ChangeValue((double)TransitionLength / (double)64);
+    }
+
+    /// <summary>
+    /// Returns the number of bytes that the opcode uses
+    /// </summary>
     int GetOpcodeLength(byte Value)
     {
         Value &= 0xF0;
@@ -424,7 +447,7 @@ public partial class TransitionsEditor : Form
                 return 1;
 
             case 0xF0:
-                return 0xFF;
+                return 1;
 
             default:
                 return 1;
@@ -433,6 +456,9 @@ public partial class TransitionsEditor : Form
         
     }
 
+    /// <summary>
+    /// Returns the number of bytes that the opcode at the given position in the transition uses
+    /// </summary>
     int GetOpcodeLength(int Offset)
     {
         return (GetOpcodeLength(LoadedTransition.Data[Offset]));

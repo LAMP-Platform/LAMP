@@ -52,13 +52,16 @@ namespace LAMP.FORMS
             this.txb_transition_info = new System.Windows.Forms.TextBox();
             this.btn_seperate_transition = new System.Windows.Forms.Button();
             this.grp_transition_warning = new System.Windows.Forms.GroupBox();
-            this.gauge1 = new LAMP.Controls.Other.Gauge();
+            this.gauTransitionLength = new LAMP.Controls.Other.Gauge();
+            this.grpTransition = new System.Windows.Forms.GroupBox();
+            this.pnlTransition = new System.Windows.Forms.FlowLayoutPanel();
             this.grp_tred_selection.SuspendLayout();
             this.grp_tred_transition.SuspendLayout();
             this.grp_tred_edits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_tred_value)).BeginInit();
             this.sts_tred_status_strip.SuspendLayout();
             this.grp_transition_warning.SuspendLayout();
+            this.grpTransition.SuspendLayout();
             this.SuspendLayout();
             // 
             // grp_tred_selection
@@ -241,7 +244,7 @@ namespace LAMP.FORMS
             this.lbl_tred_transition_length});
             this.sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             this.sts_tred_status_strip.Name = "sts_tred_status_strip";
-            this.sts_tred_status_strip.Size = new System.Drawing.Size(504, 22);
+            this.sts_tred_status_strip.Size = new System.Drawing.Size(985, 22);
             this.sts_tred_status_strip.TabIndex = 3;
             this.sts_tred_status_strip.Text = "statusStrip1";
             // 
@@ -291,20 +294,42 @@ namespace LAMP.FORMS
             this.grp_transition_warning.TabStop = false;
             this.grp_transition_warning.Text = "Warning";
             // 
-            // gauge1
+            // gauTransitionLength
             // 
-            this.gauge1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.gauge1.Location = new System.Drawing.Point(13, 563);
-            this.gauge1.Name = "gauge1";
-            this.gauge1.Size = new System.Drawing.Size(479, 10);
-            this.gauge1.TabIndex = 7;
+            this.gauTransitionLength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
+            this.gauTransitionLength.Location = new System.Drawing.Point(13, 563);
+            this.gauTransitionLength.Name = "gauTransitionLength";
+            this.gauTransitionLength.Size = new System.Drawing.Size(479, 10);
+            this.gauTransitionLength.TabIndex = 7;
+            // 
+            // grpTransition
+            // 
+            this.grpTransition.BackColor = System.Drawing.SystemColors.Control;
+            this.grpTransition.Controls.Add(this.pnlTransition);
+            this.grpTransition.Location = new System.Drawing.Point(498, 13);
+            this.grpTransition.Name = "grpTransition";
+            this.grpTransition.Size = new System.Drawing.Size(352, 544);
+            this.grpTransition.TabIndex = 8;
+            this.grpTransition.TabStop = false;
+            this.grpTransition.Text = "Transition";
+            // 
+            // pnlTransition
+            // 
+            this.pnlTransition.AutoScroll = true;
+            this.pnlTransition.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.pnlTransition.Location = new System.Drawing.Point(6, 22);
+            this.pnlTransition.Name = "pnlTransition";
+            this.pnlTransition.Size = new System.Drawing.Size(340, 516);
+            this.pnlTransition.TabIndex = 0;
+            this.pnlTransition.WrapContents = false;
             // 
             // TransitionsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 604);
-            this.Controls.Add(this.gauge1);
+            this.ClientSize = new System.Drawing.Size(985, 604);
+            this.Controls.Add(this.grpTransition);
+            this.Controls.Add(this.gauTransitionLength);
             this.Controls.Add(this.grp_transition_warning);
             this.Controls.Add(this.sts_tred_status_strip);
             this.Controls.Add(this.grp_tred_edits);
@@ -324,6 +349,7 @@ namespace LAMP.FORMS
             this.sts_tred_status_strip.PerformLayout();
             this.grp_transition_warning.ResumeLayout(false);
             this.grp_transition_warning.PerformLayout();
+            this.grpTransition.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -352,6 +378,8 @@ namespace LAMP.FORMS
         private System.Windows.Forms.TextBox txb_transition_info;
         private System.Windows.Forms.Button btn_seperate_transition;
         private System.Windows.Forms.GroupBox grp_transition_warning;
-        private Controls.Other.Gauge gauge1;
+        private Controls.Other.Gauge gauTransitionLength;
+        private System.Windows.Forms.GroupBox grpTransition;
+        private System.Windows.Forms.FlowLayoutPanel pnlTransition;
     }
 }

@@ -38,16 +38,16 @@
             this.lblOperandName.Location = new System.Drawing.Point(12, 3);
             this.lblOperandName.Margin = new System.Windows.Forms.Padding(12, 0, 3, 0);
             this.lblOperandName.Name = "lblOperandName";
-            this.lblOperandName.Size = new System.Drawing.Size(63, 15);
+            this.lblOperandName.Size = new System.Drawing.Size(88, 15);
             this.lblOperandName.TabIndex = 0;
-            this.lblOperandName.Text = "Operand X";
+            this.lblOperandName.Text = "Operand Name";
             // 
             // txbOperandValue
             // 
-            this.txbOperandValue.Location = new System.Drawing.Point(80, -2);
+            this.txbOperandValue.Location = new System.Drawing.Point(117, -2);
             this.txbOperandValue.Margin = new System.Windows.Forms.Padding(0);
             this.txbOperandValue.Name = "txbOperandValue";
-            this.txbOperandValue.Size = new System.Drawing.Size(137, 23);
+            this.txbOperandValue.Size = new System.Drawing.Size(136, 23);
             this.txbOperandValue.TabIndex = 1;
             // 
             // TransitionOperand
@@ -59,7 +59,7 @@
             this.Controls.Add(this.txbOperandValue);
             this.Controls.Add(this.lblOperandName);
             this.Name = "TransitionOperand";
-            this.Size = new System.Drawing.Size(217, 21);
+            this.Size = new System.Drawing.Size(253, 21);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -57,28 +57,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pbxCollapse.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAIRJREFUSEvt
-        k1EKgCAQRK2LdZz+Okv9ddpsx1wwawNl/Ah8MKCyzOCgrvNLhig+3vubqOTmjADUMF3LTzBTVdkuOkRz
-        2L2ziDCzhl0hCEAPVoiaY2bDQSmjyArJzasq0ueYh1DMU2AAIw2hmivpTejmioY0MW/y0R40D4igHn5F
-        nY6Bcye42lWoqaSq0AAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="pbxExpand.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAIBJREFUSEvt
-        k1EKgDAMQzcv5nH88yzuz9M6E+igFhxMq199EHCjTbYyUxD8ToYmaBdx7QoNaVyhA5ohN6z5ArlB8wL5
-        mtdKv/7JpWYcNkpzdyyqboisGvVoVm5oVN3Qi9IBdv6XkKcBupHchpi6V3Rv4oUNcf3RGi1kk+8g+JSU
-        TuiMVaiwS1FUAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="btnRemoveOpcode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAAIklE
-        QVQ4T2MYBcMKHOUW/08KhmpDAGyK8GGotlEwHAADAwCNPC2RNnbLeAAAAABJRU5ErkJggg==
-</value>
-  </data>
 </root>
