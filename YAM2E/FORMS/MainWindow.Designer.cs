@@ -97,6 +97,7 @@ namespace LAMP
             this.grp_tileset_tilesets = new System.Windows.Forms.GroupBox();
             this.cbb_tileset_id = new System.Windows.Forms.ComboBox();
             this.lbl_tileset_id = new System.Windows.Forms.Label();
+            this.btnTest = new System.Windows.Forms.Button();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -304,6 +305,7 @@ namespace LAMP
             // 
             this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
+            this.btn_show_screen_outlines.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.btn_show_screen_outlines.Size = new System.Drawing.Size(209, 22);
             this.btn_show_screen_outlines.Text = "Screen Outlines";
             this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
@@ -729,12 +731,24 @@ namespace LAMP
             this.lbl_tileset_id.TabIndex = 0;
             this.lbl_tileset_id.Text = "Tileset:";
             // 
+            // btnTest
+            // 
+            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTest.Location = new System.Drawing.Point(12, 717);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.TabIndex = 9;
+            this.btnTest.Text = "Test Button";
+            this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 771);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.grp_tileset_tilesets);
             this.Controls.Add(this.grp_main_view);
             this.Controls.Add(this.grp_main_room_viewer);
@@ -845,6 +859,7 @@ namespace LAMP
         private System.Windows.Forms.GroupBox grp_tileset_tilesets;
         private System.Windows.Forms.Label lbl_tileset_id;
         private System.Windows.Forms.ComboBox cbb_tileset_id;
+        private System.Windows.Forms.Button btnTest;
     }
 }
 

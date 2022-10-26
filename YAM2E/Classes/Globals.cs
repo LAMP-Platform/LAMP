@@ -96,6 +96,9 @@ internal static class Globals
     public static int SelectedScreenY = 0;
     public static int SelectedScreenNr = 0;
 
+    //Data chunks
+    public static List<DataChunk> DataChunks = new List<DataChunk>();
+
     #region User Settings
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;

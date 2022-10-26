@@ -2,6 +2,7 @@
 using System.Text;
 using System.IO;
 using System.Collections.Generic;
+using LAMP.Classes.M2_Data;
 
 namespace LAMP.Classes;
 
@@ -36,12 +37,23 @@ public class Rom
 
     public byte Read8(int offset)
     {
+        foreach (DataChunk c in Globals.DataChunks)
+        {
+            Console.WriteLine("InLoop");
+            if (c.DataStart.Offset <= offset && offset < c.DataStart.Offset + c.DataLength) //Read offset lies within a saved data chunk
+            {
+                //return the value from the data chunk instead of the ROM
+                return c.Data[offset - c.DataStart.Offset];
+            }
+        }
         return Data[offset];
     }
 
     public ushort Read16(int offset)
     {
-        return (ushort)(Data[offset] | (Data[offset + 1] << 8));
+        byte first = Read8(offset);
+        byte second = Read8(offset + 1);
+        return (ushort)(first | (second << 8));
     }
 
     /// <summary>

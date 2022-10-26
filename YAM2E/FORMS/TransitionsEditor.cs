@@ -290,6 +290,7 @@ public partial class TransitionsEditor : Form
         tre_tred_transition_tree.ExpandAll();
         TransitionLength = LoadedTransition.Data.Count;
         lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} bytes";
+        gauge1.ChangeValue((double)TransitionLength / (double)64);
     }
 
     void ReloadTransition()

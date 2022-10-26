@@ -20,7 +20,6 @@ public class RoomViewer : Control
 
     public RoomViewer()
     {
-        //SetStyle(ControlStyles.Opaque, true);
         SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         SuspendLayout();
         ResumeLayout(false);

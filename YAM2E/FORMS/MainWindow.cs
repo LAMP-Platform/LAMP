@@ -764,4 +764,9 @@ public partial class MainWindow : Form
     {
         new Test_form().Show();
     }
+
+    private void btnTest_Click(object sender, EventArgs e)
+    {
+        new Test_form().Show();
+    }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Classes;
+using LAMP.Controls;
 using LAMP.Utilities;
 
 namespace LAMP.FORMS
@@ -17,12 +18,14 @@ namespace LAMP.FORMS
         public Test_form()
         {
             InitializeComponent();
-        }
-
-        private void btn_apply_Click(object sender, EventArgs e)
-        {
-            int v = Format.StringToInt(txt_input.Text);
-            lbl_offset_test.Text = "Value: " + Format.IntToString(v);
+            gauge1.ChangeValue(0.7);
+            //Adding Opcodes
+            for (int i = 0; i < 7; i++)
+            {
+                TransitionOpcode opcode = new TransitionOpcode();
+                opcode.lblOpcodeName.Text = $"Transition Opcode {i + 1}";
+                flowLayoutPanel1.Controls.Add(opcode);
+            }
         }
     }
 }

@@ -213,8 +213,8 @@ public static class Editor
     /// <param name="path">The path to the Project file.</param>
     public static void LoadProjectFromPath(string path)
     {
-        //try
-        //{
+        try
+        {
             string json = File.ReadAllText(path);
             Globals.ProjName = path;
             path = Path.GetDirectoryName(path);
@@ -264,15 +264,23 @@ public static class Editor
                 Globals.Tweaks = JsonSerializer.Deserialize<List<Tweak>>(json);
             }
 
+            //Data Chunks
+            Globals.DataChunks.Clear();
+            if (File.Exists(dirCustom + "/Chunks.json"))
+            {
+                json = File.ReadAllText(dirCustom + "/Chunks.json");
+                Globals.DataChunks = JsonSerializer.Deserialize<List<DataChunk>>(json);
+            }
+
             //Project loaded
             MainWindow.Current.ProjectLoaded();
             UpdateTitlebar(path);
-        //}
-        //catch(Exception ex)
-        //{
-        //    MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
-        //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //}
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
     }
 
@@ -508,6 +516,13 @@ public static class Editor
         {
             path = dirCustom + "/Tweaks.json";
             SaveJsonObject(Globals.Tweaks, path);
+        }
+
+        //DataChunks
+        if (Globals.DataChunks.Count != 0)
+        {
+            path = dirCustom + "/Chunks.json";
+            SaveJsonObject(Globals.DataChunks, path);
         }
     }
 

@@ -1,4 +1,17 @@
-﻿Version B 1.0
+﻿Version B 2.0
+Released: XX.XX.202X
+Changes:
+ + Tileset Editor
+  -> Tilesets can be predefined
+  -> Tilesets can be used instead of direct offsets
+ + Added project settings
+ + Added app settings
+ + New offset interpretation
+Fixes:
+ # F5 Hotkey should now work all the time
+
+
+Version B 1.0
 Released: 24.08.2022
 Changes:
- - Initial Release
+ # Initial Release

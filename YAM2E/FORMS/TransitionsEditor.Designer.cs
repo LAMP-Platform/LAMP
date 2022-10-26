@@ -52,6 +52,7 @@ namespace LAMP.FORMS
             this.txb_transition_info = new System.Windows.Forms.TextBox();
             this.btn_seperate_transition = new System.Windows.Forms.Button();
             this.grp_transition_warning = new System.Windows.Forms.GroupBox();
+            this.gauge1 = new LAMP.Controls.Other.Gauge();
             this.grp_tred_selection.SuspendLayout();
             this.grp_tred_transition.SuspendLayout();
             this.grp_tred_edits.SuspendLayout();
@@ -238,7 +239,7 @@ namespace LAMP.FORMS
             // 
             this.sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lbl_tred_transition_length});
-            this.sts_tred_status_strip.Location = new System.Drawing.Point(0, 559);
+            this.sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             this.sts_tred_status_strip.Name = "sts_tred_status_strip";
             this.sts_tred_status_strip.Size = new System.Drawing.Size(504, 22);
             this.sts_tred_status_strip.TabIndex = 3;
@@ -290,11 +291,20 @@ namespace LAMP.FORMS
             this.grp_transition_warning.TabStop = false;
             this.grp_transition_warning.Text = "Warning";
             // 
+            // gauge1
+            // 
+            this.gauge1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
+            this.gauge1.Location = new System.Drawing.Point(13, 563);
+            this.gauge1.Name = "gauge1";
+            this.gauge1.Size = new System.Drawing.Size(479, 10);
+            this.gauge1.TabIndex = 7;
+            // 
             // TransitionsEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 581);
+            this.ClientSize = new System.Drawing.Size(504, 604);
+            this.Controls.Add(this.gauge1);
             this.Controls.Add(this.grp_transition_warning);
             this.Controls.Add(this.sts_tred_status_strip);
             this.Controls.Add(this.grp_tred_edits);
@@ -342,5 +352,6 @@ namespace LAMP.FORMS
         private System.Windows.Forms.TextBox txb_transition_info;
         private System.Windows.Forms.Button btn_seperate_transition;
         private System.Windows.Forms.GroupBox grp_transition_warning;
+        private Controls.Other.Gauge gauge1;
     }
 }
