@@ -106,12 +106,12 @@ public static class Format
         input = input.Replace("0x", "").Replace("h", "").Replace("$", "");
         input = input.Replace("ROM", ""); //Replacing ROM (could be copied from disassembly)
 
-        //Splitting bank and relative offset
+        //Splitting at "splitters" to throw error at user for being a bad person
         string[] words = input.Split(',');
         if (words.Length == 1) words = input.Split(':');
         if (words.Length == 1) words = input.Split(';');
 
-        //Converting to Pointer
+        //Converting to Int
         try
         {
             if (words.Length == 1)

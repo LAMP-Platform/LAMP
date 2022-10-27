@@ -52,16 +52,52 @@ namespace LAMP.Controls.Transitions
                     //Read value is already whole byte
                     break;
                 case (ReadByte.HighNibble):
-                    val &= 0xF0;
+                    val = (val & 0xF0) >> 4;
                     break;
                 case (ReadByte.LowNibble):
                     val &= 0xF;
                     break;
                 case (ReadByte.Pointer):
-                    val = parent.Data[DataIndex + 1] + (val << 8);
+                    val = (parent.Data[DataIndex + 1] << 8) | val;
                     break;
             }
             txbOperandValue.Text = Format.IntToString(val);
+        }
+
+        private void txbOperandValue_Leave(object sender, EventArgs e)
+        {
+            //write value back to parent data
+            int maxVal;
+            byte val = 0;
+            byte val2 = 0;
+            switch (part)
+            {
+                case (ReadByte.WholeByte):
+                    maxVal = 0xFF;
+                    val = (byte)Format.StringToInt(txbOperandValue.Text, maxVal);
+                    parent.Data[DataIndex] = val;
+                    break;
+                case (ReadByte.HighNibble):
+                    maxVal = 0xF;
+                    val = (byte)((parent.Data[DataIndex] & 0xF) | (Format.StringToInt(txbOperandValue.Text, maxVal) << 4));
+                    parent.Data[DataIndex] = val;
+                    break;
+                case (ReadByte.LowNibble):
+                    maxVal = 0xF;
+                    val = (byte)((parent.Data[DataIndex] & 0xF0) | Format.StringToInt(txbOperandValue.Text, maxVal));
+                    parent.Data[DataIndex] = val;
+                    break;
+                case (ReadByte.Pointer):
+                    maxVal = 0xFFFF;
+                    val = (byte)((Format.StringToInt(txbOperandValue.Text, maxVal) & 0xFF00) >> 8);
+                    val2 = (byte)(Format.StringToInt(txbOperandValue.Text, maxVal) & 0xFF);
+                    parent.Data[DataIndex] = val;
+                    parent.Data[DataIndex + 1] = val2;
+                    break;
+            }
+
+            //Updating text field
+            SetValue();
         }
     }
 }

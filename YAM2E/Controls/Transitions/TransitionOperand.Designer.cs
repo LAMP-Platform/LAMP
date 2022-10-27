@@ -49,6 +49,7 @@
             this.txbOperandValue.Name = "txbOperandValue";
             this.txbOperandValue.Size = new System.Drawing.Size(136, 23);
             this.txbOperandValue.TabIndex = 1;
+            this.txbOperandValue.Leave += new System.EventHandler(this.txbOperandValue_Leave);
             // 
             // TransitionOperand
             // 
