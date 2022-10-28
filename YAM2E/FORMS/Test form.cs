@@ -19,13 +19,6 @@ namespace LAMP.FORMS
         {
             InitializeComponent();
             gauge1.ChangeValue(0.7);
-            //Adding Opcodes
-            for (int i = 0; i < 7; i++)
-            {
-                TransitionOpcode opcode = new TransitionOpcode();
-                opcode.lblOpcodeName.Text = $"Transition Opcode {i + 1}";
-                flowLayoutPanel1.Controls.Add(opcode);
-            }
         }
     }
 }

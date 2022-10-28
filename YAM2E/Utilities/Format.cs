@@ -118,8 +118,8 @@ public static class Format
             {
                 int val;
                 if (words[0].Length == 0) val = 0;
+                else if (words[0].Length > 7) val = 0xFFFFFFF;
                 else val = int.Parse(words[0], System.Globalization.NumberStyles.HexNumber);
-
                 if (maxValue != 0) return Math.Min(val, maxValue);
                 return val;
             }

@@ -68,8 +68,7 @@ namespace LAMP.Controls.Transitions
         {
             //write value back to parent data
             int maxVal;
-            byte val = 0;
-            byte val2 = 0;
+            byte val;
             switch (part)
             {
                 case (ReadByte.WholeByte):
@@ -90,14 +89,43 @@ namespace LAMP.Controls.Transitions
                 case (ReadByte.Pointer):
                     maxVal = 0xFFFF;
                     val = (byte)((Format.StringToInt(txbOperandValue.Text, maxVal) & 0xFF00) >> 8);
-                    val2 = (byte)(Format.StringToInt(txbOperandValue.Text, maxVal) & 0xFF);
-                    parent.Data[DataIndex] = val;
-                    parent.Data[DataIndex + 1] = val2;
+                    byte val2 = (byte)(Format.StringToInt(txbOperandValue.Text, maxVal) & 0xFF);
+                    parent.Data[DataIndex] = val2;
+                    parent.Data[DataIndex + 1] = val;
                     break;
             }
 
             //Updating text field
             SetValue();
+            SaveTransition();
+        }
+
+        private void SaveTransition()
+        {
+            parent.SaveTransition();
         }
     }
+}
+
+/// <summary>
+/// Describes different ways on how bytes can be read.
+/// </summary>
+public enum ReadByte
+{
+    /// <summary>
+    /// Whether to read a whole Byte.
+    /// </summary>
+    WholeByte,
+    /// <summary>
+    /// Whether to read the high nibble (first 4 bits).
+    /// </summary>
+    HighNibble,
+    /// <summary>
+    /// Whether to read the low nibble (last 4 bits).
+    /// </summary>
+    LowNibble,
+    /// <summary>
+    /// Whether to read a Pointer.
+    /// </summary>
+    Pointer
 }

@@ -127,9 +127,9 @@
             // 
             this.btnRemoveOpcode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveOpcode.Image = ((System.Drawing.Image)(resources.GetObject("btnRemoveOpcode.Image")));
-            this.btnRemoveOpcode.Location = new System.Drawing.Point(256, 2);
+            this.btnRemoveOpcode.Location = new System.Drawing.Point(256, 1);
             this.btnRemoveOpcode.Name = "btnRemoveOpcode";
-            this.btnRemoveOpcode.Size = new System.Drawing.Size(24, 23);
+            this.btnRemoveOpcode.Size = new System.Drawing.Size(24, 24);
             this.btnRemoveOpcode.TabIndex = 2;
             this.btnRemoveOpcode.UseVisualStyleBackColor = true;
             this.btnRemoveOpcode.Click += new System.EventHandler(this.btnRemoveOpcode_Click);
@@ -143,7 +143,7 @@
             this.pnlEdit.Location = new System.Drawing.Point(0, 26);
             this.pnlEdit.Margin = new System.Windows.Forms.Padding(0);
             this.pnlEdit.Name = "pnlEdit";
-            this.pnlEdit.Size = new System.Drawing.Size(283, 28);
+            this.pnlEdit.Size = new System.Drawing.Size(283, 26);
             this.pnlEdit.TabIndex = 2;
             this.pnlEdit.Visible = false;
             // 
@@ -157,7 +157,7 @@
             this.Controls.Add(this.pnlEdit);
             this.Controls.Add(this.pnlBasicInfo);
             this.Name = "TransitionOpcode";
-            this.Size = new System.Drawing.Size(283, 54);
+            this.Size = new System.Drawing.Size(283, 52);
             this.pnlBasicInfo.ResumeLayout(false);
             this.pnlBasicInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxCollapse)).EndInit();

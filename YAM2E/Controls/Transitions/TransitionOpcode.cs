@@ -160,7 +160,7 @@ namespace LAMP.Controls
             lblOpcodeName.Text = name;
 
             //Disable the collapse/expand arrow if its the end opcode
-            if (!isEnd) return;
+            if (pnlOperands.Controls.Count != 0) return;
             pbxCollapse.Visible = false;
             pbxExpand.Visible = false;
         }
@@ -177,10 +177,16 @@ namespace LAMP.Controls
             pnlOperands.Controls.Add(new TextInsert(text));
         }
 
+        public void SaveTransition()
+        {
+            editor.SaveTransition();
+        }
+
         //Events
         private void pnlBasicInfo_Click(object sender, EventArgs e)
         {
             if (isEnd) return;
+            if (pnlOperands.Controls.Count == 0) return;
             pnlEdit.Visible = !pnlEdit.Visible;
             seperator.Visible = pnlEdit.Visible;
             pbxCollapse.Visible = pnlEdit.Visible;
@@ -199,8 +205,12 @@ namespace LAMP.Controls
 
         private void btnRemoveOpcode_Click(object sender, EventArgs e)
         {
+            //removing data length from transition
             editor.TransitionLength -= Data.Count();
             editor.UpdateTransitionLength();
+
+            //removing opcode from list
+            editor.Opcodes.Remove(this);
             this.Dispose();
         }
     }

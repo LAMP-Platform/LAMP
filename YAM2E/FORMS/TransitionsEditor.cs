@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Windows.Forms;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
@@ -17,8 +18,8 @@ public partial class TransitionsEditor : Form
     //Transition Data
     Transition LoadedTransition;
     public int TransitionLength { get; set; }
-    byte[] OldTransition;
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
+    public List<TransitionOpcode> Opcodes = new List<TransitionOpcode>();
 
     //Selected Transition Data
     TreeNode SelectedNode;
@@ -56,7 +57,6 @@ public partial class TransitionsEditor : Form
         {
             grp_transition_warning.Visible = false;
         }
-        OldTransition = LoadedTransition.Data.ToArray(); //TODO: Not needed idk??
     }
 
     void ReadTransition()
@@ -66,8 +66,9 @@ public partial class TransitionsEditor : Form
         //generating new Tree
         NodeData.Clear();
         pnlTransition.Controls.Clear();
-        try
-        {
+        Opcodes.Clear();
+        //try
+        //{
             //NEW TRANSITION LOADING
             for (int i = 0; i < LoadedTransition.Data.Count;)
             {
@@ -75,7 +76,8 @@ public partial class TransitionsEditor : Form
                 int length = GetOpcodeLength(LoadedTransition.Data[i]);
                 List<Byte> data = LoadedTransition.Data.GetRange(i, length);
 
-                pnlTransition.Controls.Add(new TransitionOpcode(data, this));
+                Opcodes.Add(new TransitionOpcode(data, this));
+                pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
                 i += length;
             }
 
@@ -296,12 +298,12 @@ public partial class TransitionsEditor : Form
                 }
                 tre_tred_transition_tree.Nodes.Add(Command);
             }
-        }
-        catch
+        //}
+        /*catch
         {
             MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        }*/
         tre_tred_transition_tree.ExpandAll();
         TransitionLength = LoadedTransition.Data.Count;
         UpdateTransitionLength();
@@ -309,16 +311,16 @@ public partial class TransitionsEditor : Form
 
     void ReloadTransition()
     {
-        try
-        {
+        //try
+        //{
             LoadTransition(cbb_tred_transition_selection.SelectedIndex);
             ReadTransition();
-        }
-        catch
+        //}
+        /*catch
         {
             MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        }*/
     }
 
     void EnableEdit()
@@ -352,6 +354,20 @@ public partial class TransitionsEditor : Form
         btn_tred_move_opcode_down.Enabled = false;
         btn_tred_move_opcode_up.Enabled = false;
         cbb_tred_opcode_add.Enabled = false;
+    }
+
+    public void SaveTransition()
+    {
+        LoadedTransition.Data.Clear();
+
+        //Add all the data from all the Opcodes
+        foreach(TransitionOpcode o in Opcodes)
+        {
+            for (int i = 0; i < o.Data.Count; i++)
+            {
+                LoadedTransition.Data.Add(o.Data[i]);
+            }
+        }
     }
 
     void UpdateTransitionValue()
@@ -500,13 +516,6 @@ public partial class TransitionsEditor : Form
     private void btn_tred_transition_update_Click(object sender, EventArgs e)
     {
         UpdateTransitionValue();
-    }
-
-    private void btn_tred_discard_changes_Click(object sender, EventArgs e)
-    {
-        LoadedTransition.Data = OldTransition.ToList();
-        DisableEdit();
-        ReloadTransition();
     }
 
     private void btn_tred_remove_opcode_Click(object sender, EventArgs e)
