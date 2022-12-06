@@ -9,6 +9,7 @@ using LAMP.Controls;
 using LAMP.Classes.M2_Data;
 using System.Collections.Generic;
 using LAMP.Utilities;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace LAMP;
 
@@ -561,6 +562,18 @@ public partial class MainWindow : Form
         flw_main_room_view.Height = grp_main_room_viewer.Height - 30;
     }
 
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        if (Globals.LoadedProject == null) return;
+
+        DialogResult r = MessageBox.Show("Save changes before closing?", "Unsaved changes",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+
+        if (r == DialogResult.Yes) Editor.SaveProject();
+        e.Cancel = (r == DialogResult.Cancel);
+    }
+
     private void btn_open_rom_Click(object sender, EventArgs e)
         => Editor.OpenProjectAndLoad();
 
@@ -759,11 +772,6 @@ public partial class MainWindow : Form
     #endregion
 
     #endregion
-
-    private void button1_Click(object sender, EventArgs e)
-    {
-        new Test_form().Show();
-    }
 
     private void btnTest_Click(object sender, EventArgs e)
     {

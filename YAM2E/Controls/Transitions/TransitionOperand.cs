@@ -64,7 +64,7 @@ namespace LAMP.Controls.Transitions
             txbOperandValue.Text = Format.IntToString(val);
         }
 
-        private void txbOperandValue_Leave(object sender, EventArgs e)
+        public void SaveValue()
         {
             //write value back to parent data
             int maxVal;
@@ -97,12 +97,11 @@ namespace LAMP.Controls.Transitions
 
             //Updating text field
             SetValue();
-            SaveTransition();
         }
 
-        private void SaveTransition()
+        private void txbOperandValue_Leave(object sender, EventArgs e)
         {
-            parent.SaveTransition();
+            parent.editor.SaveTransition();
         }
     }
 }

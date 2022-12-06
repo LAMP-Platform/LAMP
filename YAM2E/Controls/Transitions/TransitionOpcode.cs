@@ -36,13 +36,15 @@ namespace LAMP.Controls
         }
 
         //Fields
-        private TransitionsEditor editor;
+        public TransitionsEditor editor;
         public List<Byte> Data;
+        public List<TransitionOperand> Operands = new();
         private bool isEnd = false;
 
         //Functions
         public void PopulateOperands()
         {
+            Operands.Clear();
             int opcode = Data[0] & 0xF0;
             int parameter = Data[0] & 0xF;
             string name = "Unknown Opcode";
@@ -170,16 +172,12 @@ namespace LAMP.Controls
             TransitionOperand operand = new TransitionOperand(index, read, this);
             operand.ChangeName(Name);
             pnlOperands.Controls.Add(operand);
+            Operands.Add(operand);
         }
 
         public void AddText(string text) 
         {
             pnlOperands.Controls.Add(new TextInsert(text));
-        }
-
-        public void SaveTransition()
-        {
-            editor.SaveTransition();
         }
 
         //Events

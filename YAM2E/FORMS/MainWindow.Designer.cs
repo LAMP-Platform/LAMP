@@ -347,9 +347,9 @@ namespace LAMP
             this.lbl_area_bank.AutoSize = true;
             this.lbl_area_bank.Location = new System.Drawing.Point(6, 19);
             this.lbl_area_bank.Name = "lbl_area_bank";
-            this.lbl_area_bank.Size = new System.Drawing.Size(63, 15);
+            this.lbl_area_bank.Size = new System.Drawing.Size(34, 15);
             this.lbl_area_bank.TabIndex = 0;
-            this.lbl_area_bank.Text = "Area Bank:";
+            this.lbl_area_bank.Text = "Area:";
             // 
             // cbb_area_bank
             // 

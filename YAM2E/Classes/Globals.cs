@@ -71,7 +71,7 @@ internal static class Globals
     public static string ProjName { get; set; }
 
     //Project
-    public static Project LoadedProject;
+    public static Project LoadedProject { get; set; }
 
     //Data lists
     public static List<List<GameScreen>> Screens;

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
+using LAMP.Controls.Transitions;
 
 namespace LAMP.FORMS;
 
@@ -26,6 +27,9 @@ public partial class TransitionsEditor : Form
     int SelectedByte;
     int NodeValue;
 
+    bool preventSave = false; //When changing transitions it saves the old transition on the new one
+                              //preventSave should be set after switching a transition to prevent this
+
     public TransitionsEditor(int TransitionIndex = 0)
     {
         Current = this;
@@ -41,6 +45,9 @@ public partial class TransitionsEditor : Form
 
     void LoadTransition(int transition)
     {
+        SaveTransition();
+        preventSave = true; //preventing copy of old transition
+
         LoadedTransition = Globals.Transitions[transition];
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
@@ -358,11 +365,22 @@ public partial class TransitionsEditor : Form
 
     public void SaveTransition()
     {
+        if (LoadedTransition == null || preventSave)
+        {
+            preventSave = false;
+            return;
+        }
+
         LoadedTransition.Data.Clear();
 
         //Add all the data from all the Opcodes
         foreach(TransitionOpcode o in Opcodes)
         {
+            foreach(TransitionOperand operand in o.Operands)
+            {
+                operand.SaveValue();
+            }
+
             for (int i = 0; i < o.Data.Count; i++)
             {
                 LoadedTransition.Data.Add(o.Data[i]);
