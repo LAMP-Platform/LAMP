@@ -129,7 +129,7 @@ public partial class MainWindow : Form
     {
         Pointer gfx = gfxOffset;
         Pointer meta = MetatilePointer;
-        if (Globals.LoadedProject.useTilesets)
+        if (Globals.LoadedProject != null && Globals.LoadedProject.useTilesets)
         {
             gfx = selectedTileset.GfxOffset;
             meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
@@ -306,7 +306,7 @@ public partial class MainWindow : Form
     public void SwitchTilesetOffsetMode()
     {
         //Changes the usage from direct offsets to defined tilesets and vise versa
-        if (Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1)
+        if (Globals.LoadedProject == null || Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1)
         {
             grp_tileset_tilesets.Visible = false;
             grp_tileset_offset.Visible = true;
