@@ -8,6 +8,7 @@ namespace LAMP.FORMS;
 public partial class ScreenSettings : Form
 {
     public ScreenSettings Current;
+    private MainWindow ParentWindow;
 
     //Screen Data
     int SelectedBank;
@@ -22,7 +23,7 @@ public partial class ScreenSettings : Form
     bool ScrollLeft;
     bool ScrollRight;
 
-    public ScreenSettings(int AreaIndex = 0, int ScreenIndex = 0)
+    public ScreenSettings(int AreaIndex = 0, int ScreenIndex = 0, MainWindow Parent = null)
     {
         Current = this;
         InitializeComponent();
@@ -42,6 +43,7 @@ public partial class ScreenSettings : Form
         }
         cbb_scse_screen.SelectedIndex = ScreenIndex;
         cbb_scse_area_bank.SelectedIndex = AreaIndex;
+        ParentWindow = Parent;
     }
 
     /// <summary>
@@ -172,17 +174,17 @@ public partial class ScreenSettings : Form
         Globals.Areas[SelectedBank].Tansitions[SelectedScreen] = cbb_scse_transition_index.SelectedIndex;
         Globals.Areas[SelectedBank].Priorities[SelectedScreen] = chb_samus_priority.Checked;
 
-        //updating screen
-        if ((cbb_scse_screen_used.SelectedIndex != UsedScreen) && (Globals.SelectedArea == SelectedBank))
-        {
-            int ScreenX = SelectedScreen % 16;
-            int ScreenY = SelectedScreen / 16;
+        //updating scroll bounds
+        Editor.GetScrollBorders();
 
-            Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
-            g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].image, new Point(256 * ScreenX, 256 * ScreenY));
-            g.Dispose();
-            MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
-        }
+        //updating screen
+        int ScreenX = SelectedScreen % 16;
+        int ScreenY = SelectedScreen / 16;
+
+        Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
+        g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].image, new Point(256 * ScreenX, 256 * ScreenY));
+        g.Dispose();
+        MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
 
         //Done writing
         DisableApply();

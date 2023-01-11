@@ -29,6 +29,7 @@ public class RoomViewer : Control
 
     public bool ShowScreenOutlines { get; set; } = false;
     public bool ShowDuplicateOutlines { get; set; } = true;
+    public bool ShowScrollBorders { get; set; } = false;
     public bool ShowObjects { get; set; } = true;
 
     public int SelectedScreen { get; set; } = 0;
@@ -52,6 +53,10 @@ public class RoomViewer : Control
     };
     private Pen UniqueScreenPen { get; set; } = new Pen(Globals.UniqueScreenColor, 2)
     { 
+        Alignment = PenAlignment.Inset
+    };
+    private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 2)
+    {
         Alignment = PenAlignment.Inset
     };
 
@@ -108,13 +113,6 @@ public class RoomViewer : Control
             SelectedScreenOld = SelectedScreen;
         }
 
-        //Draw Unique Screen outlines
-        if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
-        {
-            foreach (Rectangle r in UniqueScreen)
-                e.Graphics.DrawRectangle(UniqueScreenPen, r);
-        }
-
         //screen outlines
         if (ShowScreenOutlines)
         {
@@ -126,6 +124,20 @@ public class RoomViewer : Control
                     e.Graphics.DrawRectangle(ScreenPen, rect);
                 }
             }
+        }
+
+        //screen borders
+        if (ShowScrollBorders)
+        {
+            foreach (Rectangle r in Globals.ScrollBorders)
+                e.Graphics.DrawRectangle(BorderOutlinePen, r);
+        }
+
+        //Draw Unique Screen outlines
+        if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
+        {
+            foreach (Rectangle r in UniqueScreen)
+                e.Graphics.DrawRectangle(UniqueScreenPen, r);
         }
 
         //Draw held object

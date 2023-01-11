@@ -40,6 +40,7 @@ namespace LAMP.Controls
         public List<Byte> Data;
         public List<TransitionOperand> Operands = new();
         private bool isEnd = false;
+        private bool Expanded = false;
 
         //Functions
         public void PopulateOperands()
@@ -180,8 +181,10 @@ namespace LAMP.Controls
             pnlOperands.Controls.Add(new TextInsert(text));
         }
 
-        //Events
-        private void pnlBasicInfo_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Switches the state of the Opcode to either be Collapsed or Expanded
+        /// </summary>
+        public void ExpandCollapse()
         {
             if (isEnd) return;
             if (pnlOperands.Controls.Count == 0) return;
@@ -189,6 +192,41 @@ namespace LAMP.Controls
             seperator.Visible = pnlEdit.Visible;
             pbxCollapse.Visible = pnlEdit.Visible;
             pbxExpand.Visible = !pnlEdit.Visible;
+            Expanded = !Expanded;
+        }
+
+        /// <summary>
+        /// Expands the Opcode
+        /// </summary>
+        public void Expand()
+        {
+            if (isEnd) return;
+            if (pnlOperands.Controls.Count == 0) return;
+            pnlEdit.Visible = true;
+            seperator.Visible = true;
+            pbxCollapse.Visible = true;
+            pbxExpand.Visible = true;
+            Expanded = true;
+        }
+
+        /// <summary>
+        /// Collapses the Opcode
+        /// </summary>
+        public void Collapse()
+        {
+            if (isEnd) return;
+            if (pnlOperands.Controls.Count == 0) return;
+            pnlEdit.Visible = false;
+            seperator.Visible = false;
+            pbxCollapse.Visible = false;
+            pbxExpand.Visible = false;
+            Expanded = false;
+        }
+
+        //Events
+        private void pnlBasicInfo_Click(object sender, EventArgs e)
+        {
+            ExpandCollapse();
         }
 
         private void pnlBasicInfo_MouseMove(object sender, MouseEventArgs e)
@@ -209,6 +247,7 @@ namespace LAMP.Controls
 
             //removing opcode from list
             editor.Opcodes.Remove(this);
+            editor.SaveTransition();
             this.Dispose();
         }
     }

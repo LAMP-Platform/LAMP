@@ -147,6 +147,7 @@ public partial class MainWindow : Form
         Globals.AreaBank = new Bitmap(4096, 4096, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
         Editor.DrawAreaBank(Globals.SelectedArea, Globals.AreaBank, p);
         Room.BackgroundImage = Globals.AreaBank;
+        Editor.GetScrollBorders();
     }
 
     private void UpdateSelectedTiles()
@@ -276,6 +277,12 @@ public partial class MainWindow : Form
     private void ToggleDuplicateOutlines()
     {
         Room.ShowDuplicateOutlines = !Room.ShowDuplicateOutlines;
+        Room.Invalidate();
+    }
+
+    private void ToggleScrollBorders()
+    {
+        Room.ShowScrollBorders = !Room.ShowScrollBorders;
         Room.Invalidate();
     }
 
@@ -650,7 +657,7 @@ public partial class MainWindow : Form
 
     private void btn_screen_settings_Click(object sender, EventArgs e)
     {
-        new ScreenSettings().Show();
+        new ScreenSettings(0, 0, Current).Show();
     }
 
     private void btn_tile_mode_Click(object sender, EventArgs e)
@@ -664,12 +671,18 @@ public partial class MainWindow : Form
     }
 
     private void ctx_btn_screen_settings_Click(object sender, EventArgs e)
-        => new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr).Show();
+        => new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr, Current).Show();
 
     private void btn_show_duplicate_outlines_Click(object sender, EventArgs e)
     {
         ToggleDuplicateOutlines();
         btn_show_duplicate_outlines.Checked = Room.ShowDuplicateOutlines;
+    }
+
+    private void scrollBoundariesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        ToggleScrollBorders();
+        btn_show_scroll_bounds.Checked = Room.ShowScrollBorders;
     }
 
     private void chb_view_objects_CheckedChanged(object sender, EventArgs e)
@@ -708,7 +721,6 @@ public partial class MainWindow : Form
             Rom tROM = new Rom(tempPath);
 
             //applying tweaks
-            tROM.ReplaceBytes(Globals.EnableDebugMenuOffset, Globals.EnableDebugMenuValues);
             tROM.Write8(0x140EC, 0x0B); //Start new game on boot
             tROM.ReplaceBytes(new int[]{0x0D12, 0x0D17, 0x0D1C}, new byte[]{0x00, 0x00, 0x00}); //Skip Samus appearance fanfare
 

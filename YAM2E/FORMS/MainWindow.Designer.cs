@@ -45,14 +45,15 @@ namespace LAMP
             this.btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
+            this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
@@ -119,8 +120,8 @@ namespace LAMP
             this.tool_strip_file,
             this.tool_strip_options,
             this.tool_strip_tools,
-            this.tool_strip_editors,
-            this.tool_strip_view});
+            this.tool_strip_view,
+            this.tool_strip_editors});
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -244,6 +245,48 @@ namespace LAMP
             this.btn_data_viewer.Text = "Data Viewer";
             this.btn_data_viewer.Click += new System.EventHandler(this.btn_data_viewer_Click);
             // 
+            // tool_strip_view
+            // 
+            this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_show_scroll_bounds,
+            this.btn_show_screen_outlines,
+            this.btn_show_duplicate_outlines});
+            this.tool_strip_view.Enabled = false;
+            this.tool_strip_view.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_view.Image")));
+            this.tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tool_strip_view.Name = "tool_strip_view";
+            this.tool_strip_view.ShowDropDownArrow = false;
+            this.tool_strip_view.Size = new System.Drawing.Size(36, 22);
+            this.tool_strip_view.Text = "View";
+            // 
+            // btn_show_scroll_bounds
+            // 
+            this.btn_show_scroll_bounds.Name = "btn_show_scroll_bounds";
+            this.btn_show_scroll_bounds.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.btn_show_scroll_bounds.Size = new System.Drawing.Size(228, 22);
+            this.btn_show_scroll_bounds.Text = "Scroll Boundaries";
+            this.btn_show_scroll_bounds.Click += new System.EventHandler(this.scrollBoundariesToolStripMenuItem_Click);
+            // 
+            // btn_show_screen_outlines
+            // 
+            this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
+            this.btn_show_screen_outlines.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.btn_show_screen_outlines.Size = new System.Drawing.Size(228, 22);
+            this.btn_show_screen_outlines.Text = "Screen Outlines";
+            this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
+            // 
+            // btn_show_duplicate_outlines
+            // 
+            this.btn_show_duplicate_outlines.Checked = true;
+            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
+            this.btn_show_duplicate_outlines.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(228, 22);
+            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
+            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
+            // 
             // tool_strip_editors
             // 
             this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -286,38 +329,6 @@ namespace LAMP
             this.btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
             this.btn_tileset_definitions.Text = "Tileset Editor";
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
-            // 
-            // tool_strip_view
-            // 
-            this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_show_screen_outlines,
-            this.btn_show_duplicate_outlines});
-            this.tool_strip_view.Enabled = false;
-            this.tool_strip_view.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_view.Image")));
-            this.tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_view.Name = "tool_strip_view";
-            this.tool_strip_view.ShowDropDownArrow = false;
-            this.tool_strip_view.Size = new System.Drawing.Size(36, 22);
-            this.tool_strip_view.Text = "View";
-            // 
-            // btn_show_screen_outlines
-            // 
-            this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
-            this.btn_show_screen_outlines.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.btn_show_screen_outlines.Size = new System.Drawing.Size(209, 22);
-            this.btn_show_screen_outlines.Text = "Screen Outlines";
-            this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
-            // 
-            // btn_show_duplicate_outlines
-            // 
-            this.btn_show_duplicate_outlines.Checked = true;
-            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
-            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(209, 22);
-            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
-            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
             // 
             // grp_data_selector
             // 
@@ -860,6 +871,7 @@ namespace LAMP
         private System.Windows.Forms.Label lbl_tileset_id;
         private System.Windows.Forms.ComboBox cbb_tileset_id;
         private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.ToolStripMenuItem btn_show_scroll_bounds;
     }
 }
 

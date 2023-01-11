@@ -41,6 +41,7 @@ public partial class TransitionsEditor : Form
         }
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
         cbb_tred_opcode_add.SelectedIndex = 0; //TODO: probably not needed after rewrite
+        chb_expand_all.Checked = Globals.ExpandAllOpcodes;
     }
 
     void LoadTransition(int transition)
@@ -83,7 +84,9 @@ public partial class TransitionsEditor : Form
                 int length = GetOpcodeLength(LoadedTransition.Data[i]);
                 List<Byte> data = LoadedTransition.Data.GetRange(i, length);
 
-                Opcodes.Add(new TransitionOpcode(data, this));
+                TransitionOpcode o = new TransitionOpcode(data, this);
+                if (Globals.ExpandAllOpcodes) o.Expand();
+                Opcodes.Add(o);
                 pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
                 i += length;
             }
@@ -722,6 +725,18 @@ public partial class TransitionsEditor : Form
         t.Data = new List<byte>(LoadedTransition.Data);
         t.CopyOf = -1;
         ReloadTransition();
+    }
+
+    private void chb_expand_all_CheckedChanged(object sender, EventArgs e)
+    {
+        Globals.ExpandAllOpcodes = chb_expand_all.Checked;
+        if (chb_expand_all.Checked == true)
+        {
+            foreach(TransitionOpcode o in Opcodes)
+            {
+                o.Expand();
+            }
+        }
     }
     #endregion
 }

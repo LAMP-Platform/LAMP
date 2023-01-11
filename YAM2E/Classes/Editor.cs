@@ -590,6 +590,31 @@ public static class Editor
         return Globals.Screens[area][screenNr].Data[tileNr];
     }
 
+    #region Borders
+    /// <summary>
+    /// Goes through an entire area and adds border rectangles into a list
+    /// </summary>
+    public static void GetScrollBorders()
+    {
+        Globals.ScrollBorders.Clear();
+        for (int i = 0; i < 16; i++)
+        {
+            for (int j = 0; j < 16; j++)
+            {
+                int nr = j * 16 + i;
+                byte scroll = Globals.Areas[Globals.SelectedArea].Scrolls[nr];
+
+                const int t = 3; //thickness of the rectangle (Adjust pen size as well)
+                                 //Checking if sides are blocked
+                if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new(256 * i + 255 - t, 256 * j, 1 + t, 256)); //Right
+                if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new(256 * i, 256 * j, 1 + t, 256)); //Left
+                if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new(256 * i, 256 * j, 256, 1 + t)); //Up
+                if (ByteOp.IsBitSet(scroll, 3)) Globals.ScrollBorders.Add(new(256 * i, 256 * j + 255 - t, 256, 1 + t)); //Down
+            }
+        }
+    }
+    #endregion
+
     #region Objects
 
     /// <summary>

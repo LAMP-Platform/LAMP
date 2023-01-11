@@ -1,5 +1,5 @@
 ﻿Version B 2.0
-Released: XX.XX.202X
+Released: XX.XX.2023
 Changes:
  + Tileset Editor
   -> Tilesets can be predefined
@@ -7,6 +7,7 @@ Changes:
  + Added project settings
  + Added app settings
  + New offset interpretation
+ + Changed Transitions Editor
 Fixes:
  # F5 Hotkey should now work all the time
 
