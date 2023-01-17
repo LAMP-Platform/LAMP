@@ -625,6 +625,12 @@ public partial class MainWindow : Form
     private void cbb_area_bank_SelectedIndexChanged(object sender, EventArgs e)
     {
         Globals.SelectedArea = cbb_area_bank.SelectedIndex;
+
+        //resetting scroll bars
+        flw_main_room_view.AutoScrollPosition = new Point(0, 0);
+        flw_main_room_view.VerticalScroll.Value = 0;
+        flw_main_room_view.HorizontalScroll.Value = 0;
+
         UpdateRoom();
     }
 

@@ -7,9 +7,13 @@ Changes:
  + Added project settings
  + Added app settings
  + New offset interpretation
+  -> Prefix can be chosen
+  -> Display offsets as Bank:Offset or direct Offset
  + Changed Transitions Editor
+ + Scroll boundaries can be displayed
 Fixes:
  # F5 Hotkey should now work all the time
+ # Scroll bars reset when switching Area banks
 
 
 Version B 1.0
