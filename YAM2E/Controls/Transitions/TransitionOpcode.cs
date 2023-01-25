@@ -163,7 +163,7 @@ namespace LAMP.Controls
             lblOpcodeName.Text = name;
 
             //Disable the collapse/expand arrow if its the end opcode
-            if (pnlOperands.Controls.Count != 0) return;
+            if (!isEnd) return;
             pbxCollapse.Visible = false;
             pbxExpand.Visible = false;
         }
@@ -186,8 +186,7 @@ namespace LAMP.Controls
         /// </summary>
         public void ExpandCollapse()
         {
-            if (isEnd) return;
-            if (pnlOperands.Controls.Count == 0) return;
+            if (isEnd) return; //User should not be able to modify end transition
             pnlEdit.Visible = !pnlEdit.Visible;
             seperator.Visible = pnlEdit.Visible;
             pbxCollapse.Visible = pnlEdit.Visible;
@@ -231,7 +230,7 @@ namespace LAMP.Controls
 
         private void pnlBasicInfo_MouseMove(object sender, MouseEventArgs e)
         {
-            pnlBasicInfo.BackColor = Color.FromArgb(0xFF, 0xe6, 0xe6, 0xe6);
+            if (!isEnd) pnlBasicInfo.BackColor = Color.FromArgb(0xFF, 0xe6, 0xe6, 0xe6);
         }
 
         private void pnlBasicInfo_MouseLeave(object sender, EventArgs e)
@@ -248,7 +247,17 @@ namespace LAMP.Controls
             //removing opcode from list
             editor.Opcodes.Remove(this);
             editor.SaveTransition();
-            this.Dispose();
+            Dispose();
+        }
+
+        private void pnlBasicInfo_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (!isEnd) editor.HeldOpcode = this;
+        }
+
+        private void pnlBasicInfo_MouseUp(object sender, MouseEventArgs e)
+        {
+            editor.MoveOpcode(e.X, e.Y);
         }
     }
 }

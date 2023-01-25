@@ -1,12 +1,10 @@
 ﻿#Stuff that worked once but now doesnt work:
  - Tweaks Editor
  - Data Viewer (Will probably remove)
- - Tileset Definitions
  - Create Backup
 
-#Stuff that should work before beta release
-
-#Nice to have features for future
+#Planned feature list
+ - half tile object placement
  - Undo / Redo
  - Go through Transition
  - Graphics Editor
@@ -16,6 +14,8 @@
  - Unique screen view
  - Clear screen / area data
  - TestROM & Start position editing
+ - Zooming
+ - better object displaying
 
 #Outside Editor things
  - write proper readme.txt

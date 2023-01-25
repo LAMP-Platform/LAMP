@@ -56,8 +56,10 @@
             this.pnlBasicInfo.Size = new System.Drawing.Size(283, 26);
             this.pnlBasicInfo.TabIndex = 0;
             this.pnlBasicInfo.Click += new System.EventHandler(this.pnlBasicInfo_Click);
+            this.pnlBasicInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseDown);
             this.pnlBasicInfo.MouseLeave += new System.EventHandler(this.pnlBasicInfo_MouseLeave);
             this.pnlBasicInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseMove);
+            this.pnlBasicInfo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseUp);
             // 
             // pbxCollapse
             // 
@@ -70,8 +72,10 @@
             this.pbxCollapse.TabStop = false;
             this.pbxCollapse.Visible = false;
             this.pbxCollapse.Click += new System.EventHandler(this.pnlBasicInfo_Click);
+            this.pbxCollapse.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseDown);
             this.pbxCollapse.MouseLeave += new System.EventHandler(this.pnlBasicInfo_MouseLeave);
             this.pbxCollapse.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseMove);
+            this.pbxCollapse.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseUp);
             // 
             // pbxExpand
             // 
@@ -83,8 +87,10 @@
             this.pbxExpand.TabIndex = 2;
             this.pbxExpand.TabStop = false;
             this.pbxExpand.Click += new System.EventHandler(this.pnlBasicInfo_Click);
+            this.pbxExpand.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseDown);
             this.pbxExpand.MouseLeave += new System.EventHandler(this.pnlBasicInfo_MouseLeave);
             this.pbxExpand.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseMove);
+            this.pbxExpand.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseUp);
             // 
             // seperator
             // 
@@ -108,8 +114,10 @@
             this.lblOpcodeName.TabIndex = 0;
             this.lblOpcodeName.Text = "Transition Opcode Name";
             this.lblOpcodeName.Click += new System.EventHandler(this.pnlBasicInfo_Click);
+            this.lblOpcodeName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseDown);
             this.lblOpcodeName.MouseLeave += new System.EventHandler(this.pnlBasicInfo_MouseLeave);
             this.lblOpcodeName.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseMove);
+            this.lblOpcodeName.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlBasicInfo_MouseUp);
             // 
             // pnlOperands
             // 

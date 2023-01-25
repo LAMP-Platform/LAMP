@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
+using LAMP.Controls.Other;
 using LAMP.Controls.Transitions;
 
 namespace LAMP.FORMS;
@@ -21,6 +22,10 @@ public partial class TransitionsEditor : Form
     public int TransitionLength { get; set; }
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
     public List<TransitionOpcode> Opcodes = new List<TransitionOpcode>();
+
+    //Held Opcode data
+    //for moving the opcodes around
+    public TransitionOpcode HeldOpcode = null;
 
     //Selected Transition Data
     TreeNode SelectedNode;
@@ -333,6 +338,22 @@ public partial class TransitionsEditor : Form
         }*/
     }
 
+    public void MoveOpcode(int x, int y)
+    {
+        MessageBox.Show(y.ToString(), "Y",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        for (int i = 0; i < Opcodes.Count; i ++)
+        {
+            TransitionOpcode o = (TransitionOpcode)pnlTransition.Controls[i];
+            TransitionOpcode o2 = (TransitionOpcode)pnlTransition.Controls[i+1];
+            if (y > o.Location.Y && y < o2.Location.Y)
+            {
+                pnlTransition.Controls.SetChildIndex(HeldOpcode, i);
+                return;
+            }
+        }
+    }
+
     void EnableEdit()
     {
         DisableEdit();
@@ -377,7 +398,7 @@ public partial class TransitionsEditor : Form
         LoadedTransition.Data.Clear();
 
         //Add all the data from all the Opcodes
-        foreach(TransitionOpcode o in Opcodes)
+        foreach(TransitionOpcode o in pnlTransition.Controls)
         {
             foreach(TransitionOperand operand in o.Operands)
             {

@@ -10,7 +10,10 @@ Changes:
   -> Prefix can be chosen
   -> Display offsets as Bank:Offset or direct Offset
  + Changed Transitions Editor
+  -> No more obscure Tree View
+  -> Intuitive Design
  + Scroll boundaries can be displayed
+  -> F4 Hotkey
 Fixes:
  # F5 Hotkey should now work all the time
  # Scroll bars reset when switching Area banks
