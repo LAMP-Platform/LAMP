@@ -52,9 +52,8 @@ public partial class MainWindow : Form
             File.WriteAllText(path, "");
         }
 
-        //overlaying both graphic controls
-        grp_data_selector.Controls.Add(grp_tileset_tilesets);
-        grp_tileset_tilesets.Location = grp_tileset_offset.Location;
+        //binding the event to tileset input
+        tls_input.onDataChanged += new EventHandler(this.tls_input_OnDataChanged);
 
         //Adding custom controls
         #region Tileset
@@ -103,13 +102,13 @@ public partial class MainWindow : Form
         btn_open_tileset_editor.Enabled = true;
 
         //Enabling either offset or tileset UI
-        SwitchTilesetOffsetMode();
+        tls_input.setMode();
 
         //Setting base UI values
-        cbb_metatile_table.SelectedIndex = 9;
         gfxOffset = new(0x229BC);
         MetatilePointer = new(0x217BC);
-        txb_graphics_offset.Text = Format.PointerToString(gfxOffset);
+        tls_input.SetGraphics(gfxOffset, 9);
+
         UpdateTileset();
         UpdateRoom();
 
@@ -129,7 +128,7 @@ public partial class MainWindow : Form
     {
         Pointer gfx = gfxOffset;
         Pointer meta = MetatilePointer;
-        if (Globals.LoadedProject != null && Globals.LoadedProject.useTilesets)
+        if (Globals.LoadedProject != null && Globals.LoadedProject.useTilesets && selectedTileset != null)
         {
             gfx = selectedTileset.GfxOffset;
             meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
@@ -312,42 +311,12 @@ public partial class MainWindow : Form
 
     public void SwitchTilesetOffsetMode()
     {
-        //Changes the usage from direct offsets to defined tilesets and vise versa
-        if (Globals.LoadedProject == null || Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1)
-        {
-            grp_tileset_tilesets.Visible = false;
-            grp_tileset_offset.Visible = true;
-        }
-        else
-        {
-            grp_tileset_offset.Visible = false;
-            grp_tileset_tilesets.Visible = true;
-            LoadTilesetList();
-        }
+        tls_input.setMode();
     }
 
     public void LoadTilesetList()
     {
-        //Adding entries
-        cbb_tileset_id.Items.Clear();
-        int width = cbb_tileset_id.Width;
-        foreach (Tileset t in Globals.Tilesets)
-        {
-            cbb_tileset_id.Items.Add("");
-            width = Math.Max(width, t.Name.Length * 7);
-        }
-        cbb_tileset_id.DropDownWidth = width;
-        cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
-
-        //Updating Name
-        for (int i = 0; i < Globals.Tilesets.Count; i++)
-        {
-            Tileset t = Globals.Tilesets[i];
-            string name = i.ToString();
-            if (t.Name != "") name = t.Name;
-
-            cbb_tileset_id.Items[i] = name;
-        }
+        tls_input.populateTilesets();
     }
 
     #region Main Window Events
@@ -639,8 +608,6 @@ public partial class MainWindow : Form
 
     }
 
-    private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e) {}
-
     private void main_window_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.F5)
@@ -769,21 +736,15 @@ public partial class MainWindow : Form
     private void btn_project_settings_Click(object sender, EventArgs e)
         => new ProjectSettings().Show();
 
-    private void btn_apply_graphics_Click(object sender, EventArgs e)
-    {
-        MetatilePointer = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * cbb_metatile_table.SelectedIndex));
-        gfxOffset = Format.StringToPointer(txb_graphics_offset.Text);
-        txb_graphics_offset.Text = Format.PointerToString(gfxOffset);
-        UpdateTileset();
-        UpdateRoom();
-    }
-
     private void btn_open_tileset_editor_Click(object sender, EventArgs e)
         => btn_tileset_definitions_Click(sender, e);
 
-    private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
+    private void tls_input_OnDataChanged(object sender, EventArgs e)
     {
-        selectedTileset = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
+        selectedTileset = tls_input.SelectedTileset;
+        gfxOffset = tls_input.GraphicsOffset;
+        MetatilePointer = tls_input.MetatilePointer;
+
         UpdateTileset();
         UpdateRoom();
     }

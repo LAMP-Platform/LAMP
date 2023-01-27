@@ -60,12 +60,6 @@ namespace LAMP
             this.grp_main_area = new System.Windows.Forms.GroupBox();
             this.lbl_area_bank = new System.Windows.Forms.Label();
             this.cbb_area_bank = new System.Windows.Forms.ComboBox();
-            this.grp_tileset_offset = new System.Windows.Forms.GroupBox();
-            this.txb_graphics_offset = new System.Windows.Forms.TextBox();
-            this.btn_apply_graphics = new System.Windows.Forms.Button();
-            this.cbb_metatile_table = new System.Windows.Forms.ComboBox();
-            this.lbl_main_graphics_pointer = new System.Windows.Forms.Label();
-            this.lbl_main_metatile = new System.Windows.Forms.Label();
             this.tool_strip_image_buttons = new System.Windows.Forms.ToolStrip();
             this.btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
             this.btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
@@ -95,21 +89,17 @@ namespace LAMP
             this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
-            this.grp_tileset_tilesets = new System.Windows.Forms.GroupBox();
-            this.cbb_tileset_id = new System.Windows.Forms.ComboBox();
-            this.lbl_tileset_id = new System.Windows.Forms.Label();
             this.btnTest = new System.Windows.Forms.Button();
+            this.tls_input = new LAMP.Controls.Other.TilesetInput();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
             this.grp_main_area.SuspendLayout();
-            this.grp_tileset_offset.SuspendLayout();
             this.tool_strip_image_buttons.SuspendLayout();
             this.sts_main_status_bar.SuspendLayout();
             this.grp_main_room_viewer.SuspendLayout();
             this.grp_main_view.SuspendLayout();
             this.ctx_room_context_menu.SuspendLayout();
-            this.grp_tileset_tilesets.SuspendLayout();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -332,8 +322,8 @@ namespace LAMP
             // 
             // grp_data_selector
             // 
+            this.grp_data_selector.Controls.Add(this.tls_input);
             this.grp_data_selector.Controls.Add(this.grp_main_area);
-            this.grp_data_selector.Controls.Add(this.grp_tileset_offset);
             this.grp_data_selector.Location = new System.Drawing.Point(12, 53);
             this.grp_data_selector.Name = "grp_data_selector";
             this.grp_data_selector.Size = new System.Drawing.Size(180, 194);
@@ -346,7 +336,7 @@ namespace LAMP
             // 
             this.grp_main_area.Controls.Add(this.lbl_area_bank);
             this.grp_main_area.Controls.Add(this.cbb_area_bank);
-            this.grp_main_area.Location = new System.Drawing.Point(7, 23);
+            this.grp_main_area.Location = new System.Drawing.Point(6, 22);
             this.grp_main_area.Name = "grp_main_area";
             this.grp_main_area.Size = new System.Drawing.Size(166, 50);
             this.grp_main_area.TabIndex = 4;
@@ -379,75 +369,6 @@ namespace LAMP
             this.cbb_area_bank.Size = new System.Drawing.Size(55, 23);
             this.cbb_area_bank.TabIndex = 2;
             this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
-            // 
-            // grp_tileset_offset
-            // 
-            this.grp_tileset_offset.Controls.Add(this.txb_graphics_offset);
-            this.grp_tileset_offset.Controls.Add(this.btn_apply_graphics);
-            this.grp_tileset_offset.Controls.Add(this.cbb_metatile_table);
-            this.grp_tileset_offset.Controls.Add(this.lbl_main_graphics_pointer);
-            this.grp_tileset_offset.Controls.Add(this.lbl_main_metatile);
-            this.grp_tileset_offset.Location = new System.Drawing.Point(7, 79);
-            this.grp_tileset_offset.Name = "grp_tileset_offset";
-            this.grp_tileset_offset.Size = new System.Drawing.Size(166, 109);
-            this.grp_tileset_offset.TabIndex = 3;
-            this.grp_tileset_offset.TabStop = false;
-            this.grp_tileset_offset.Text = "Tileset Data";
-            // 
-            // txb_graphics_offset
-            // 
-            this.txb_graphics_offset.Location = new System.Drawing.Point(103, 16);
-            this.txb_graphics_offset.Name = "txb_graphics_offset";
-            this.txb_graphics_offset.Size = new System.Drawing.Size(55, 23);
-            this.txb_graphics_offset.TabIndex = 11;
-            // 
-            // btn_apply_graphics
-            // 
-            this.btn_apply_graphics.Location = new System.Drawing.Point(103, 75);
-            this.btn_apply_graphics.Name = "btn_apply_graphics";
-            this.btn_apply_graphics.Size = new System.Drawing.Size(55, 23);
-            this.btn_apply_graphics.TabIndex = 10;
-            this.btn_apply_graphics.Text = "Apply";
-            this.btn_apply_graphics.UseVisualStyleBackColor = true;
-            this.btn_apply_graphics.Click += new System.EventHandler(this.btn_apply_graphics_Click);
-            // 
-            // cbb_metatile_table
-            // 
-            this.cbb_metatile_table.FormattingEnabled = true;
-            this.cbb_metatile_table.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9"});
-            this.cbb_metatile_table.Location = new System.Drawing.Point(103, 46);
-            this.cbb_metatile_table.Name = "cbb_metatile_table";
-            this.cbb_metatile_table.Size = new System.Drawing.Size(55, 23);
-            this.cbb_metatile_table.TabIndex = 9;
-            this.cbb_metatile_table.SelectedIndexChanged += new System.EventHandler(this.cbb_metatile_table_SelectedIndexChanged);
-            // 
-            // lbl_main_graphics_pointer
-            // 
-            this.lbl_main_graphics_pointer.AutoSize = true;
-            this.lbl_main_graphics_pointer.Location = new System.Drawing.Point(6, 19);
-            this.lbl_main_graphics_pointer.Name = "lbl_main_graphics_pointer";
-            this.lbl_main_graphics_pointer.Size = new System.Drawing.Size(91, 15);
-            this.lbl_main_graphics_pointer.TabIndex = 0;
-            this.lbl_main_graphics_pointer.Text = "Graphics Offset:";
-            // 
-            // lbl_main_metatile
-            // 
-            this.lbl_main_metatile.AutoSize = true;
-            this.lbl_main_metatile.Location = new System.Drawing.Point(6, 49);
-            this.lbl_main_metatile.Name = "lbl_main_metatile";
-            this.lbl_main_metatile.Size = new System.Drawing.Size(83, 15);
-            this.lbl_main_metatile.TabIndex = 8;
-            this.lbl_main_metatile.Text = "Metatile Table:";
             // 
             // tool_strip_image_buttons
             // 
@@ -607,7 +528,6 @@ namespace LAMP
             // flw_main_room_view
             // 
             this.flw_main_room_view.AutoScroll = true;
-            this.flw_main_room_view.Cursor = System.Windows.Forms.Cursors.Cross;
             this.flw_main_room_view.Location = new System.Drawing.Point(12, 22);
             this.flw_main_room_view.Name = "flw_main_room_view";
             this.flw_main_room_view.Size = new System.Drawing.Size(899, 665);
@@ -713,36 +633,6 @@ namespace LAMP
             this.ctx_btn_test_here.Visible = false;
             this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
             // 
-            // grp_tileset_tilesets
-            // 
-            this.grp_tileset_tilesets.Controls.Add(this.cbb_tileset_id);
-            this.grp_tileset_tilesets.Controls.Add(this.lbl_tileset_id);
-            this.grp_tileset_tilesets.Location = new System.Drawing.Point(19, 409);
-            this.grp_tileset_tilesets.Name = "grp_tileset_tilesets";
-            this.grp_tileset_tilesets.Size = new System.Drawing.Size(166, 109);
-            this.grp_tileset_tilesets.TabIndex = 8;
-            this.grp_tileset_tilesets.TabStop = false;
-            this.grp_tileset_tilesets.Text = "Tileset Data";
-            this.grp_tileset_tilesets.Visible = false;
-            // 
-            // cbb_tileset_id
-            // 
-            this.cbb_tileset_id.FormattingEnabled = true;
-            this.cbb_tileset_id.Location = new System.Drawing.Point(55, 22);
-            this.cbb_tileset_id.Name = "cbb_tileset_id";
-            this.cbb_tileset_id.Size = new System.Drawing.Size(103, 23);
-            this.cbb_tileset_id.TabIndex = 1;
-            this.cbb_tileset_id.SelectedIndexChanged += new System.EventHandler(this.cbb_tileset_id_SelectedIndexChanged);
-            // 
-            // lbl_tileset_id
-            // 
-            this.lbl_tileset_id.AutoSize = true;
-            this.lbl_tileset_id.Location = new System.Drawing.Point(6, 25);
-            this.lbl_tileset_id.Name = "lbl_tileset_id";
-            this.lbl_tileset_id.Size = new System.Drawing.Size(43, 15);
-            this.lbl_tileset_id.TabIndex = 0;
-            this.lbl_tileset_id.Text = "Tileset:";
-            // 
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -754,6 +644,19 @@ namespace LAMP
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
+            // tls_input
+            // 
+            this.tls_input.AutoSize = true;
+            this.tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tls_input.GraphicsOffset = null;
+            this.tls_input.Location = new System.Drawing.Point(3, 73);
+            this.tls_input.MetatilePointer = null;
+            this.tls_input.Name = "tls_input";
+            this.tls_input.onDataChanged = null;
+            this.tls_input.SelectedTileset = null;
+            this.tls_input.Size = new System.Drawing.Size(172, 115);
+            this.tls_input.TabIndex = 5;
+            // 
             // MainWindow
             // 
             this.AllowDrop = true;
@@ -761,7 +664,6 @@ namespace LAMP
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1233, 771);
             this.Controls.Add(this.btnTest);
-            this.Controls.Add(this.grp_tileset_tilesets);
             this.Controls.Add(this.grp_main_view);
             this.Controls.Add(this.grp_main_room_viewer);
             this.Controls.Add(this.grp_main_tileset_viewer);
@@ -784,10 +686,9 @@ namespace LAMP
             this.tool_strip_main_buttons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.grp_data_selector.ResumeLayout(false);
+            this.grp_data_selector.PerformLayout();
             this.grp_main_area.ResumeLayout(false);
             this.grp_main_area.PerformLayout();
-            this.grp_tileset_offset.ResumeLayout(false);
-            this.grp_tileset_offset.PerformLayout();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
             this.sts_main_status_bar.ResumeLayout(false);
@@ -796,8 +697,6 @@ namespace LAMP
             this.grp_main_view.ResumeLayout(false);
             this.grp_main_view.PerformLayout();
             this.ctx_room_context_menu.ResumeLayout(false);
-            this.grp_tileset_tilesets.ResumeLayout(false);
-            this.grp_tileset_tilesets.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -825,9 +724,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripButton btn_open_tweaks_editor_image;
         private System.Windows.Forms.StatusStrip sts_main_status_bar;
         private System.Windows.Forms.GroupBox grp_main_area;
-        private System.Windows.Forms.GroupBox grp_tileset_offset;
-        private System.Windows.Forms.Label lbl_main_graphics_pointer;
-        private System.Windows.Forms.Label lbl_main_metatile;
         private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_selection_size;
         private System.Windows.Forms.GroupBox grp_main_room_viewer;
@@ -862,17 +758,12 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_rom_file;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem btn_compile_ROM;
-        private System.Windows.Forms.ComboBox cbb_metatile_table;
         private System.Windows.Forms.ToolStripMenuItem btn_project_settings;
         private System.Windows.Forms.ToolStripMenuItem btn_tileset_definitions;
-        private System.Windows.Forms.Button btn_apply_graphics;
-        private System.Windows.Forms.TextBox txb_graphics_offset;
         private System.Windows.Forms.ToolStripButton btn_open_tileset_editor;
-        private System.Windows.Forms.GroupBox grp_tileset_tilesets;
-        private System.Windows.Forms.Label lbl_tileset_id;
-        private System.Windows.Forms.ComboBox cbb_tileset_id;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.ToolStripMenuItem btn_show_scroll_bounds;
+        private Controls.Other.TilesetInput tls_input;
     }
 }
 

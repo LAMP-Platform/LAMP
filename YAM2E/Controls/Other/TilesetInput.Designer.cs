@@ -43,13 +43,13 @@
             // 
             // grp_tileset_offset
             // 
-            this.grp_tileset_offset.Controls.Add(this.grp_tileset_tilesets);
             this.grp_tileset_offset.Controls.Add(this.txb_graphics_offset);
             this.grp_tileset_offset.Controls.Add(this.btn_apply_graphics);
             this.grp_tileset_offset.Controls.Add(this.cbb_metatile_table);
             this.grp_tileset_offset.Controls.Add(this.lbl_main_graphics_pointer);
             this.grp_tileset_offset.Controls.Add(this.lbl_main_metatile);
             this.grp_tileset_offset.Location = new System.Drawing.Point(3, 3);
+            this.grp_tileset_offset.Margin = new System.Windows.Forms.Padding(0);
             this.grp_tileset_offset.Name = "grp_tileset_offset";
             this.grp_tileset_offset.Size = new System.Drawing.Size(166, 109);
             this.grp_tileset_offset.TabIndex = 4;
@@ -61,6 +61,7 @@
             this.grp_tileset_tilesets.Controls.Add(this.cbb_tileset_id);
             this.grp_tileset_tilesets.Controls.Add(this.lbl_tileset_id);
             this.grp_tileset_tilesets.Location = new System.Drawing.Point(0, 0);
+            this.grp_tileset_tilesets.Margin = new System.Windows.Forms.Padding(0);
             this.grp_tileset_tilesets.Name = "grp_tileset_tilesets";
             this.grp_tileset_tilesets.Size = new System.Drawing.Size(166, 109);
             this.grp_tileset_tilesets.TabIndex = 9;
@@ -144,11 +145,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.Controls.Add(this.grp_tileset_offset);
+            this.Controls.Add(this.grp_tileset_tilesets);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "TilesetInput";
-            this.Size = new System.Drawing.Size(172, 115);
+            this.Size = new System.Drawing.Size(169, 112);
             this.grp_tileset_offset.ResumeLayout(false);
             this.grp_tileset_offset.PerformLayout();
             this.grp_tileset_tilesets.ResumeLayout(false);

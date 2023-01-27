@@ -17,7 +17,6 @@ namespace LAMP.Controls.Other
         public TilesetInput()
         {
             InitializeComponent();
-
             setMode();
         }
 
@@ -27,6 +26,7 @@ namespace LAMP.Controls.Other
         public Pointer GraphicsOffset { get; set; }
         public Tileset SelectedTileset { get; set; } = null;
 
+        #region EVENT
         //Events
         public EventHandler onDataChanged { get; set; }
         public event EventHandler DataChanged
@@ -45,6 +45,7 @@ namespace LAMP.Controls.Other
         {
             onDataChanged?.Invoke(this, e);
         }
+        #endregion
 
         /// <summary>
         /// Sets the offset mode or tileset mode according to the users setting
@@ -65,12 +66,29 @@ namespace LAMP.Controls.Other
         }
 
         /// <summary>
+        /// Sets the graphics
+        /// </summary>
+        public void SetGraphics(Pointer gfx, int metatable)
+        {
+            txb_graphics_offset.Text = Format.PointerToString(gfx);
+            cbb_metatile_table.SelectedIndex = metatable;
+        }
+
+        /// <summary>
+        /// Sets the selected Tileset
+        /// </summary>
+        public void SetTileset(int TilesetIndex)
+        {
+            cbb_metatile_table.SelectedIndex = TilesetIndex;
+        }
+
+        /// <summary>
         /// Loads all available tilese
         /// </summary>
-        private void populateTilesets()
+        public void populateTilesets()
         {
             //saving current selected entry
-            int selected = cbb_tileset_id.SelectedIndex;
+            int selected = Math.Max(cbb_tileset_id.SelectedIndex, 0);
 
             //Adding entries
             cbb_tileset_id.Items.Clear();
@@ -90,6 +108,7 @@ namespace LAMP.Controls.Other
             cbb_tileset_id.DropDownWidth = width; //updating cbb width
             cbb_tileset_id.SelectedIndex = Math.Min(cbb_tileset_id.Items.Count - 1, selected); //Setting last selected tileset
         }
+
 
         private void cbb_tileset_id_SelectedIndexChanged(object sender, EventArgs e)
         {
