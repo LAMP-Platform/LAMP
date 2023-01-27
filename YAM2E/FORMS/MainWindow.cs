@@ -793,6 +793,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        new Test_form().Show();
+        Room.Size = new Size(Room.Size.Width * 2, Room.Size.Height * 2);
     }
 }

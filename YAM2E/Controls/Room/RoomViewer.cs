@@ -25,6 +25,7 @@ public class RoomViewer : Control
         ResumeLayout(false);
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         BackColor = Color.FromArgb(40, 50, 50);
+        BackgroundImageLayout = ImageLayout.Stretch;
     }
 
     public bool ShowScreenOutlines { get; set; } = false;
@@ -170,5 +171,11 @@ public class RoomViewer : Control
         e.Graphics.DrawRectangle(BlackPen, SelRect);
         e.Graphics.DrawRectangle(SelectionPen, SelRect);
         base.OnPaint(e);
+    }
+
+    protected override void OnPaintBackground(PaintEventArgs pevent)
+    {
+        pevent.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+        base.OnPaintBackground(pevent);
     }
 }

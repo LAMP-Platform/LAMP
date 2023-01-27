@@ -590,6 +590,14 @@ public static class Editor
         return Globals.Screens[area][screenNr].Data[tileNr];
     }
 
+    /// <summary>
+    /// Returns the Metatile Poiner that is stored at the given index in the table
+    /// </summary>
+    public static Pointer GetMetaPointerFromTable(int index)
+    {
+        return new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * index));
+    }
+
     #region Borders
     /// <summary>
     /// Goes through an entire area and adds border rectangles into a list

@@ -607,6 +607,7 @@ namespace LAMP
             // flw_main_room_view
             // 
             this.flw_main_room_view.AutoScroll = true;
+            this.flw_main_room_view.Cursor = System.Windows.Forms.Cursors.Cross;
             this.flw_main_room_view.Location = new System.Drawing.Point(12, 22);
             this.flw_main_room_view.Name = "flw_main_room_view";
             this.flw_main_room_view.Size = new System.Drawing.Size(899, 665);
