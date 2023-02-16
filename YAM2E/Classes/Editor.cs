@@ -58,7 +58,8 @@ public static class Editor
         //Creating folder structure
         string projname = ShowSaveDialog("Project File (*.m2)|*.m2");
         if (projname == String.Empty) return;
-        SaveJsonObject(new Project(), projname);
+        Globals.LoadedProject = new Project();
+        SaveJsonObject(Globals.LoadedProject, projname);
 
         Globals.ProjName = projname;
         string dir = Path.GetDirectoryName(projname);
@@ -177,8 +178,11 @@ public static class Editor
         }
         SaveJsonObject(Globals.Transitions, path);
 
-        //Clearing tileset list
-        Globals.Tilesets.Clear();
+        //Setting Tileset Data
+        path = dirCustom + "/Tilesets.json";
+        SetStandardTilesets();
+        SaveJsonObject(Globals.Tilesets, path);
+
 
         //New Project created
         MainWindow.Current.ProjectLoaded();
@@ -468,7 +472,7 @@ public static class Editor
     /// </summary>
     public static void UpdateTitlebar(string path)
     {
-        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - LAMP";
+        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - LAMP Beta 2.0";
     }
 
     /// <summary>
@@ -596,6 +600,126 @@ public static class Editor
     public static Pointer GetMetaPointerFromTable(int index)
     {
         return new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * index));
+    }
+
+    /// <summary>
+    /// Populates the global tileset list with the standard Metroid 2 tilesets
+    /// </summary>
+    public static void SetStandardTilesets()
+    {
+        Globals.Tilesets.Clear();
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Outside Ruins",
+            GfxOffset = new Pointer(141756),
+            MetatileTable = 9
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Inside Ruins",
+            GfxOffset = new Pointer(116736),
+            MetatileTable = 1
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Landing Site",
+            GfxOffset = new Pointer(122880),
+            MetatileTable = 5
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "First / Last Caves",
+            GfxOffset = new Pointer(120832),
+            MetatileTable = 4
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Final Ruins",
+            GfxOffset = new Pointer(143804),
+            MetatileTable = 0
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Bubbles, Area 3 BrGr.",
+            GfxOffset = new Pointer(114688),
+            MetatileTable = 2
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 1, No Acid",
+            GfxOffset = new Pointer(124928),
+            MetatileTable = 6
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 1, Mid Acid",
+            GfxOffset = new Pointer(124928),
+            MetatileTable = 8
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 1, Full Acid",
+            GfxOffset = new Pointer(124928),
+            MetatileTable = 7
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 2, No Acid",
+            GfxOffset = new Pointer(126256),
+            MetatileTable = 6
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 2, Mid Acid",
+            GfxOffset = new Pointer(126256),
+            MetatileTable = 8
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 2, Full Acid",
+            GfxOffset = new Pointer(126256),
+            MetatileTable = 7
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 3, No Acid",
+            GfxOffset = new Pointer(127584),
+            MetatileTable = 6
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 3, Mid Acid",
+            GfxOffset = new Pointer(127584),
+            MetatileTable = 8
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Caves 3, Full Acid",
+            GfxOffset = new Pointer(127584),
+            MetatileTable = 7
+        });
+
+        Globals.Tilesets.Add(new Tileset()
+        {
+            Name = "Queen",
+            GfxOffset = new Pointer(118784),
+            MetatileTable = 3
+        });
     }
 
     #region Borders

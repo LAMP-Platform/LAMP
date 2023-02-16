@@ -5,10 +5,10 @@
     <Setting Name="bankOffsets" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="hexPrefix" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0x</Value>
-    </Setting>
     <Setting Name="hexSuffix" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hexPrefix" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

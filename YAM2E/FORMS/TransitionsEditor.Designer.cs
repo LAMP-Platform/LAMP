@@ -110,7 +110,7 @@ namespace LAMP.FORMS
             // grp_tred_transition
             // 
             this.grp_tred_transition.Controls.Add(this.tre_tred_transition_tree);
-            this.grp_tred_transition.Location = new System.Drawing.Point(530, 13);
+            this.grp_tred_transition.Location = new System.Drawing.Point(172, 13);
             this.grp_tred_transition.Name = "grp_tred_transition";
             this.grp_tred_transition.Size = new System.Drawing.Size(320, 544);
             this.grp_tred_transition.TabIndex = 1;
@@ -258,7 +258,7 @@ namespace LAMP.FORMS
             this.lbl_tred_transition_length});
             this.sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             this.sts_tred_status_strip.Name = "sts_tred_status_strip";
-            this.sts_tred_status_strip.Size = new System.Drawing.Size(985, 22);
+            this.sts_tred_status_strip.Size = new System.Drawing.Size(504, 22);
             this.sts_tred_status_strip.TabIndex = 3;
             this.sts_tred_status_strip.Text = "statusStrip1";
             // 
@@ -310,22 +310,24 @@ namespace LAMP.FORMS
             // 
             // gauTransitionLength
             // 
+            this.gauTransitionLength.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gauTransitionLength.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
             this.gauTransitionLength.Location = new System.Drawing.Point(13, 563);
             this.gauTransitionLength.Name = "gauTransitionLength";
-            this.gauTransitionLength.Size = new System.Drawing.Size(511, 10);
+            this.gauTransitionLength.Size = new System.Drawing.Size(479, 10);
             this.gauTransitionLength.TabIndex = 7;
             // 
             // grpTransition
             // 
             this.grpTransition.BackColor = System.Drawing.SystemColors.Control;
             this.grpTransition.Controls.Add(this.pnlTransition);
-            this.grpTransition.Location = new System.Drawing.Point(172, 13);
+            this.grpTransition.Location = new System.Drawing.Point(546, 13);
             this.grpTransition.Name = "grpTransition";
             this.grpTransition.Size = new System.Drawing.Size(352, 544);
             this.grpTransition.TabIndex = 8;
             this.grpTransition.TabStop = false;
             this.grpTransition.Text = "Transition";
+            this.grpTransition.Visible = false;
             // 
             // pnlTransition
             // 
@@ -341,7 +343,7 @@ namespace LAMP.FORMS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 604);
+            this.ClientSize = new System.Drawing.Size(504, 604);
             this.Controls.Add(this.grpTransition);
             this.Controls.Add(this.gauTransitionLength);
             this.Controls.Add(this.grp_transition_warning);
@@ -350,7 +352,7 @@ namespace LAMP.FORMS
             this.Controls.Add(this.grp_tred_transition);
             this.Controls.Add(this.grp_tred_selection);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(520, 620);
+            this.MinimumSize = new System.Drawing.Size(520, 643);
             this.Name = "TransitionsEditor";
             this.Text = "Transitions Editor";
             this.grp_tred_selection.ResumeLayout(false);

@@ -57,6 +57,7 @@ namespace LAMP
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
+            this.tls_input = new LAMP.Controls.Other.TilesetInput();
             this.grp_main_area = new System.Windows.Forms.GroupBox();
             this.lbl_area_bank = new System.Windows.Forms.Label();
             this.cbb_area_bank = new System.Windows.Forms.ComboBox();
@@ -90,7 +91,6 @@ namespace LAMP
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTest = new System.Windows.Forms.Button();
-            this.tls_input = new LAMP.Controls.Other.TilesetInput();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -297,6 +297,7 @@ namespace LAMP
             this.btn_tweaks_editor.Name = "btn_tweaks_editor";
             this.btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_tweaks_editor.Text = "Tweaks Editor";
+            this.btn_tweaks_editor.Visible = false;
             this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
             // 
             // btn_transition_editor
@@ -331,6 +332,21 @@ namespace LAMP
             this.grp_data_selector.TabStop = false;
             this.grp_data_selector.Text = "Data Selector";
             this.grp_data_selector.Visible = false;
+            // 
+            // tls_input
+            // 
+            this.tls_input.AutoSize = true;
+            this.tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tls_input.BackColor = System.Drawing.SystemColors.Control;
+            this.tls_input.GraphicsOffset = null;
+            this.tls_input.Location = new System.Drawing.Point(3, 73);
+            this.tls_input.Margin = new System.Windows.Forms.Padding(0);
+            this.tls_input.MetatilePointer = null;
+            this.tls_input.Name = "tls_input";
+            this.tls_input.onDataChanged = null;
+            this.tls_input.SelectedTileset = null;
+            this.tls_input.Size = new System.Drawing.Size(169, 112);
+            this.tls_input.TabIndex = 5;
             // 
             // grp_main_area
             // 
@@ -468,6 +484,7 @@ namespace LAMP
             this.btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
             this.btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
             this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
+            this.btn_open_tweaks_editor_image.Visible = false;
             this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
             // 
             // btn_open_tileset_editor
@@ -642,20 +659,8 @@ namespace LAMP
             this.btnTest.TabIndex = 9;
             this.btnTest.Text = "Test Button";
             this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Visible = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
-            // tls_input
-            // 
-            this.tls_input.AutoSize = true;
-            this.tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tls_input.GraphicsOffset = null;
-            this.tls_input.Location = new System.Drawing.Point(3, 73);
-            this.tls_input.MetatilePointer = null;
-            this.tls_input.Name = "tls_input";
-            this.tls_input.onDataChanged = null;
-            this.tls_input.SelectedTileset = null;
-            this.tls_input.Size = new System.Drawing.Size(172, 115);
-            this.tls_input.TabIndex = 5;
             // 
             // MainWindow
             // 

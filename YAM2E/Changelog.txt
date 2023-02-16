@@ -4,14 +4,12 @@ Changes:
  + Tileset Editor
   -> Tilesets can be predefined
   -> Tilesets can be used instead of direct offsets
+  -> All standard Tilesets included by default
  + Added project settings
  + Added app settings
  + New offset interpretation
   -> Prefix can be chosen
   -> Display offsets as Bank:Offset or direct Offset
- + Changed Transitions Editor
-  -> No more obscure Tree View
-  -> Intuitive Design
  + Scroll boundaries can be displayed
   -> F4 Hotkey
 Fixes:
