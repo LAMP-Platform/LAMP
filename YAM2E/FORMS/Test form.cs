@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel.Design;
 using LAMP.Classes;
 using LAMP.Controls;
 using LAMP.Utilities;
@@ -18,7 +19,6 @@ namespace LAMP.FORMS
         public Test_form()
         {
             InitializeComponent();
-            gauge1.ChangeValue(0.7);
         }
     }
 }
