@@ -1,5 +1,5 @@
 ﻿Version B 2.0
-Released: XX.XX.2023
+Released: 16.02.2023
 Changes:
  + Tileset Editor
   -> Tilesets can be predefined

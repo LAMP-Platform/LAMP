@@ -8,6 +8,8 @@
     <LangVersion>10</LangVersion>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>LAMP.ico</ApplicationIcon>
+	<PublishSingleFile>true</PublishSingleFile>
+	<DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
