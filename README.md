@@ -4,7 +4,7 @@
 Level Arranging Metroid (2) Program
 
 LAMP is a feature-rich Metroid 2: Return of Samus editor. Made with .NET and Windows Forms.
-At least .NET 6 (x86/32bit) is needed to launch LAMP.
+At least [.NET 6 (x86/32bit)](https://dotnet.microsoft.com/en-us/download) is needed to launch LAMP (Newer versions reccommended and supported!).
 
 <details>
   <summary>Current Features</summary>
