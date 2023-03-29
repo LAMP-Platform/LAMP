@@ -33,6 +33,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panel1 = new System.Windows.Forms.Panel();
             this.grp_testROM = new System.Windows.Forms.GroupBox();
+            this.btn_set_savegame = new System.Windows.Forms.Button();
             this.btn_test = new System.Windows.Forms.Button();
             this.grp_position = new System.Windows.Forms.GroupBox();
             this.grp_cam = new System.Windows.Forms.GroupBox();
@@ -70,16 +71,16 @@
             this.lbl_sprite_graphics = new System.Windows.Forms.Label();
             this.tls_tileset_input = new LAMP.Controls.Other.TilesetInput();
             this.grp_misc_data = new System.Windows.Forms.GroupBox();
-            this.num_metroid_count = new System.Windows.Forms.NumericUpDown();
+            this.txb_metroids = new System.Windows.Forms.TextBox();
+            this.txb_missiles = new System.Windows.Forms.TextBox();
+            this.txb_max_missiles = new System.Windows.Forms.TextBox();
+            this.txb_energy = new System.Windows.Forms.TextBox();
             this.txb_music = new System.Windows.Forms.TextBox();
             this.lbl_music = new System.Windows.Forms.Label();
             this.lbl_metroid_count = new System.Windows.Forms.Label();
             this.lbl_missiles = new System.Windows.Forms.Label();
-            this.num_missiles = new System.Windows.Forms.NumericUpDown();
             this.lbl_max_missiles = new System.Windows.Forms.Label();
-            this.num_max_missiles = new System.Windows.Forms.NumericUpDown();
             this.lbl_energy = new System.Windows.Forms.Label();
-            this.num_energy = new System.Windows.Forms.NumericUpDown();
             this.grp_beams = new System.Windows.Forms.GroupBox();
             this.rdb_power = new System.Windows.Forms.RadioButton();
             this.rdb_plasma = new System.Windows.Forms.RadioButton();
@@ -104,10 +105,6 @@
             this.grp_misc.SuspendLayout();
             this.grp_more_data.SuspendLayout();
             this.grp_misc_data.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_metroid_count)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_missiles)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_max_missiles)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_energy)).BeginInit();
             this.grp_beams.SuspendLayout();
             this.grp_items.SuspendLayout();
             this.SuspendLayout();
@@ -133,6 +130,7 @@
             // grp_testROM
             // 
             this.grp_testROM.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.grp_testROM.Controls.Add(this.btn_set_savegame);
             this.grp_testROM.Controls.Add(this.btn_test);
             this.grp_testROM.Controls.Add(this.grp_position);
             this.grp_testROM.Controls.Add(this.grp_level_data);
@@ -145,6 +143,17 @@
             this.grp_testROM.TabIndex = 7;
             this.grp_testROM.TabStop = false;
             this.grp_testROM.Text = "Test ROM";
+            // 
+            // btn_set_savegame
+            // 
+            this.btn_set_savegame.Location = new System.Drawing.Point(540, 312);
+            this.btn_set_savegame.Name = "btn_set_savegame";
+            this.btn_set_savegame.Size = new System.Drawing.Size(89, 23);
+            this.btn_set_savegame.TabIndex = 7;
+            this.btn_set_savegame.Text = "Set as start";
+            this.tlt_bank_tip.SetToolTip(this.btn_set_savegame, "This will save the current values onto\r\nthe initial save file!");
+            this.btn_set_savegame.UseVisualStyleBackColor = true;
+            this.btn_set_savegame.Click += new System.EventHandler(this.btn_set_savegame_Click);
             // 
             // btn_test
             // 
@@ -190,6 +199,8 @@
             this.txb_cam_y.Name = "txb_cam_y";
             this.txb_cam_y.Size = new System.Drawing.Size(40, 23);
             this.txb_cam_y.TabIndex = 7;
+            this.txb_cam_y.TextChanged += new System.EventHandler(this.txb_cam_y_TextChanged);
+            this.txb_cam_y.Leave += new System.EventHandler(this.txb_leave);
             // 
             // txb_cam_x
             // 
@@ -197,6 +208,8 @@
             this.txb_cam_x.Name = "txb_cam_x";
             this.txb_cam_x.Size = new System.Drawing.Size(40, 23);
             this.txb_cam_x.TabIndex = 6;
+            this.txb_cam_x.TextChanged += new System.EventHandler(this.txb_cam_x_TextChanged);
+            this.txb_cam_x.Leave += new System.EventHandler(this.txb_leave);
             // 
             // txb_cam_screen_y
             // 
@@ -204,6 +217,8 @@
             this.txb_cam_screen_y.Name = "txb_cam_screen_y";
             this.txb_cam_screen_y.Size = new System.Drawing.Size(40, 23);
             this.txb_cam_screen_y.TabIndex = 5;
+            this.txb_cam_screen_y.TextChanged += new System.EventHandler(this.txb_cam_screen_y_TextChanged);
+            this.txb_cam_screen_y.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_cam_y
             // 
@@ -229,6 +244,8 @@
             this.txb_cam_screen_x.Name = "txb_cam_screen_x";
             this.txb_cam_screen_x.Size = new System.Drawing.Size(40, 23);
             this.txb_cam_screen_x.TabIndex = 4;
+            this.txb_cam_screen_x.TextChanged += new System.EventHandler(this.txb_cam_screen_x_TextChanged);
+            this.txb_cam_screen_x.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_cam_screen_x
             // 
@@ -271,6 +288,8 @@
             this.txb_sam_y.Name = "txb_sam_y";
             this.txb_sam_y.Size = new System.Drawing.Size(40, 23);
             this.txb_sam_y.TabIndex = 7;
+            this.txb_sam_y.TextChanged += new System.EventHandler(this.txb_sam_y_TextChanged);
+            this.txb_sam_y.Leave += new System.EventHandler(this.txb_leave);
             // 
             // txb_sam_x
             // 
@@ -278,6 +297,8 @@
             this.txb_sam_x.Name = "txb_sam_x";
             this.txb_sam_x.Size = new System.Drawing.Size(40, 23);
             this.txb_sam_x.TabIndex = 6;
+            this.txb_sam_x.TextChanged += new System.EventHandler(this.txb_sam_x_TextChanged);
+            this.txb_sam_x.Leave += new System.EventHandler(this.txb_leave);
             // 
             // txb_sam_screen_y
             // 
@@ -285,6 +306,8 @@
             this.txb_sam_screen_y.Name = "txb_sam_screen_y";
             this.txb_sam_screen_y.Size = new System.Drawing.Size(40, 23);
             this.txb_sam_screen_y.TabIndex = 5;
+            this.txb_sam_screen_y.TextChanged += new System.EventHandler(this.txb_sam_screen_y_TextChanged);
+            this.txb_sam_screen_y.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_samus_y
             // 
@@ -310,6 +333,8 @@
             this.txb_sam_screen_x.Name = "txb_sam_screen_x";
             this.txb_sam_screen_x.Size = new System.Drawing.Size(40, 23);
             this.txb_sam_screen_x.TabIndex = 4;
+            this.txb_sam_screen_x.TextChanged += new System.EventHandler(this.txb_sam_screen_x_TextChanged);
+            this.txb_sam_screen_x.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_samus_screen_x
             // 
@@ -362,6 +387,8 @@
             this.txb_spike_damage.Name = "txb_spike_damage";
             this.txb_spike_damage.Size = new System.Drawing.Size(42, 23);
             this.txb_spike_damage.TabIndex = 10;
+            this.txb_spike_damage.TextChanged += new System.EventHandler(this.txb_spike_damage_TextChanged);
+            this.txb_spike_damage.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_spike_damage
             // 
@@ -378,6 +405,8 @@
             this.txb_acid_damage.Name = "txb_acid_damage";
             this.txb_acid_damage.Size = new System.Drawing.Size(42, 23);
             this.txb_acid_damage.TabIndex = 8;
+            this.txb_acid_damage.TextChanged += new System.EventHandler(this.txb_acid_damage_TextChanged);
+            this.txb_acid_damage.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_acid_damage
             // 
@@ -407,12 +436,12 @@
             "C",
             "D",
             "E",
-            "F",
-            "G"});
+            "F"});
             this.cbb_area_bank.Location = new System.Drawing.Point(98, 16);
             this.cbb_area_bank.Name = "cbb_area_bank";
             this.cbb_area_bank.Size = new System.Drawing.Size(42, 23);
             this.cbb_area_bank.TabIndex = 6;
+            this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
             // 
             // grp_more_data
             // 
@@ -445,6 +474,7 @@
             this.cbb_collision_table.Name = "cbb_collision_table";
             this.cbb_collision_table.Size = new System.Drawing.Size(43, 23);
             this.cbb_collision_table.TabIndex = 9;
+            this.cbb_collision_table.SelectedIndexChanged += new System.EventHandler(this.cbb_collision_table_SelectedIndexChanged);
             // 
             // lbl_collision_table
             // 
@@ -473,6 +503,7 @@
             this.cbb_solidity.Name = "cbb_solidity";
             this.cbb_solidity.Size = new System.Drawing.Size(43, 23);
             this.cbb_solidity.TabIndex = 7;
+            this.cbb_solidity.SelectedIndexChanged += new System.EventHandler(this.cbb_solidity_SelectedIndexChanged);
             // 
             // lbl_solidity_table
             // 
@@ -492,6 +523,9 @@
             this.txb_sprite_graphics.Size = new System.Drawing.Size(43, 23);
             this.txb_sprite_graphics.TabIndex = 1;
             this.txb_sprite_graphics.Text = "0x7420";
+            this.tlt_bank_tip.SetToolTip(this.txb_sprite_graphics, "Sprite Graphics will always be loaded from Bank 8!\r\n");
+            this.txb_sprite_graphics.TextChanged += new System.EventHandler(this.txb_sprite_graphics_TextChanged);
+            this.txb_sprite_graphics.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_sprite_graphics
             // 
@@ -507,6 +541,7 @@
             // tls_tileset_input
             // 
             this.tls_tileset_input.BackColor = System.Drawing.SystemColors.Control;
+            this.tls_tileset_input.ForceOffsets = false;
             this.tls_tileset_input.GraphicsOffset = null;
             this.tls_tileset_input.Location = new System.Drawing.Point(6, 19);
             this.tls_tileset_input.Margin = new System.Windows.Forms.Padding(0);
@@ -516,19 +551,20 @@
             this.tls_tileset_input.SelectedTileset = null;
             this.tls_tileset_input.Size = new System.Drawing.Size(169, 112);
             this.tls_tileset_input.TabIndex = 4;
+            this.tls_tileset_input.DataChanged += new System.EventHandler(this.tls_tileset_input_DataChanged);
             // 
             // grp_misc_data
             // 
-            this.grp_misc_data.Controls.Add(this.num_metroid_count);
+            this.grp_misc_data.Controls.Add(this.txb_metroids);
+            this.grp_misc_data.Controls.Add(this.txb_missiles);
+            this.grp_misc_data.Controls.Add(this.txb_max_missiles);
+            this.grp_misc_data.Controls.Add(this.txb_energy);
             this.grp_misc_data.Controls.Add(this.txb_music);
             this.grp_misc_data.Controls.Add(this.lbl_music);
             this.grp_misc_data.Controls.Add(this.lbl_metroid_count);
             this.grp_misc_data.Controls.Add(this.lbl_missiles);
-            this.grp_misc_data.Controls.Add(this.num_missiles);
             this.grp_misc_data.Controls.Add(this.lbl_max_missiles);
-            this.grp_misc_data.Controls.Add(this.num_max_missiles);
             this.grp_misc_data.Controls.Add(this.lbl_energy);
-            this.grp_misc_data.Controls.Add(this.num_energy);
             this.grp_misc_data.Location = new System.Drawing.Point(234, 22);
             this.grp_misc_data.Name = "grp_misc_data";
             this.grp_misc_data.Size = new System.Drawing.Size(141, 199);
@@ -536,36 +572,63 @@
             this.grp_misc_data.TabStop = false;
             this.grp_misc_data.Text = "Miscellaneous";
             // 
-            // num_metroid_count
+            // txb_metroids
             // 
-            this.num_metroid_count.Location = new System.Drawing.Point(92, 108);
-            this.num_metroid_count.Maximum = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
-            this.num_metroid_count.Name = "num_metroid_count";
-            this.num_metroid_count.Size = new System.Drawing.Size(40, 23);
-            this.num_metroid_count.TabIndex = 14;
-            this.tlt_bank_tip.SetToolTip(this.num_metroid_count, "This is a decimal number because the values are BCD\r\n(Binary Coded Decimal). This" +
-        " Means that the\r\nvalues A-F dont have a proper value and 10=10!\r\n");
-            this.num_metroid_count.Value = new decimal(new int[] {
-            39,
-            0,
-            0,
-            0});
+            this.txb_metroids.Location = new System.Drawing.Point(92, 107);
+            this.txb_metroids.Name = "txb_metroids";
+            this.txb_metroids.Size = new System.Drawing.Size(40, 23);
+            this.txb_metroids.TabIndex = 15;
+            this.tlt_bank_tip.SetToolTip(this.txb_metroids, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
+        "t have a \r\nproper value and 10=10!");
+            this.txb_metroids.TextChanged += new System.EventHandler(this.num_metroid_count_ValueChanged);
+            this.txb_metroids.Leave += new System.EventHandler(this.txb_leave);
+            // 
+            // txb_missiles
+            // 
+            this.txb_missiles.Location = new System.Drawing.Point(92, 78);
+            this.txb_missiles.Name = "txb_missiles";
+            this.txb_missiles.Size = new System.Drawing.Size(40, 23);
+            this.txb_missiles.TabIndex = 14;
+            this.tlt_bank_tip.SetToolTip(this.txb_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
+        "t have a \r\nproper value and 10=10!");
+            this.txb_missiles.TextChanged += new System.EventHandler(this.num_missiles_ValueChanged);
+            this.txb_missiles.Leave += new System.EventHandler(this.txb_leave);
+            // 
+            // txb_max_missiles
+            // 
+            this.txb_max_missiles.Location = new System.Drawing.Point(92, 49);
+            this.txb_max_missiles.Name = "txb_max_missiles";
+            this.txb_max_missiles.Size = new System.Drawing.Size(40, 23);
+            this.txb_max_missiles.TabIndex = 13;
+            this.tlt_bank_tip.SetToolTip(this.txb_max_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
+        "t have a \r\nproper value and 10=10!");
+            this.txb_max_missiles.TextChanged += new System.EventHandler(this.num_max_missiles_ValueChanged);
+            this.txb_max_missiles.Leave += new System.EventHandler(this.txb_leave);
+            // 
+            // txb_energy
+            // 
+            this.txb_energy.Location = new System.Drawing.Point(92, 20);
+            this.txb_energy.Name = "txb_energy";
+            this.txb_energy.Size = new System.Drawing.Size(40, 23);
+            this.txb_energy.TabIndex = 12;
+            this.tlt_bank_tip.SetToolTip(this.txb_energy, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
+        "t have a \r\nproper value and 10=10!");
+            this.txb_energy.TextChanged += new System.EventHandler(this.num_energy_ValueChanged);
+            this.txb_energy.Leave += new System.EventHandler(this.txb_leave);
             // 
             // txb_music
             // 
-            this.txb_music.Location = new System.Drawing.Point(92, 137);
+            this.txb_music.Location = new System.Drawing.Point(92, 136);
             this.txb_music.Name = "txb_music";
             this.txb_music.Size = new System.Drawing.Size(40, 23);
             this.txb_music.TabIndex = 8;
+            this.txb_music.TextChanged += new System.EventHandler(this.txb_music_TextChanged);
+            this.txb_music.Leave += new System.EventHandler(this.txb_leave);
             // 
             // lbl_music
             // 
             this.lbl_music.AutoSize = true;
-            this.lbl_music.Location = new System.Drawing.Point(6, 140);
+            this.lbl_music.Location = new System.Drawing.Point(6, 137);
             this.lbl_music.Name = "lbl_music";
             this.lbl_music.Size = new System.Drawing.Size(42, 15);
             this.lbl_music.TabIndex = 7;
@@ -589,25 +652,6 @@
             this.lbl_missiles.TabIndex = 5;
             this.lbl_missiles.Text = "Missiles:";
             // 
-            // num_missiles
-            // 
-            this.num_missiles.Location = new System.Drawing.Point(92, 79);
-            this.num_missiles.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.num_missiles.Name = "num_missiles";
-            this.num_missiles.Size = new System.Drawing.Size(40, 23);
-            this.num_missiles.TabIndex = 4;
-            this.tlt_bank_tip.SetToolTip(this.num_missiles, "This is a decimal number because the values are BCD\r\n(Binary Coded Decimal). This" +
-        " Means that the\r\nvalues A-F dont have a proper value and 10=10!");
-            this.num_missiles.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            // 
             // lbl_max_missiles
             // 
             this.lbl_max_missiles.AutoSize = true;
@@ -617,25 +661,6 @@
             this.lbl_max_missiles.TabIndex = 3;
             this.lbl_max_missiles.Text = "Max. Missiles:";
             // 
-            // num_max_missiles
-            // 
-            this.num_max_missiles.Location = new System.Drawing.Point(92, 50);
-            this.num_max_missiles.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.num_max_missiles.Name = "num_max_missiles";
-            this.num_max_missiles.Size = new System.Drawing.Size(40, 23);
-            this.num_max_missiles.TabIndex = 2;
-            this.tlt_bank_tip.SetToolTip(this.num_max_missiles, "This is a decimal number because the values are BCD\r\n(Binary Coded Decimal). This" +
-        " Means that the\r\nvalues A-F dont have a proper value and 10=10!\r\n");
-            this.num_max_missiles.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            // 
             // lbl_energy
             // 
             this.lbl_energy.AutoSize = true;
@@ -644,25 +669,6 @@
             this.lbl_energy.Size = new System.Drawing.Size(46, 15);
             this.lbl_energy.TabIndex = 1;
             this.lbl_energy.Text = "Energy:";
-            // 
-            // num_energy
-            // 
-            this.num_energy.Location = new System.Drawing.Point(92, 21);
-            this.num_energy.Maximum = new decimal(new int[] {
-            699,
-            0,
-            0,
-            0});
-            this.num_energy.Name = "num_energy";
-            this.num_energy.Size = new System.Drawing.Size(40, 23);
-            this.num_energy.TabIndex = 0;
-            this.tlt_bank_tip.SetToolTip(this.num_energy, "This is a decimal number because the values are BCD\r\n(Binary Coded Decimal). This" +
-        " Means that the\r\nvalues A-F dont have a proper value and 10=10!\r\n");
-            this.num_energy.Value = new decimal(new int[] {
-            99,
-            0,
-            0,
-            0});
             // 
             // grp_beams
             // 
@@ -862,10 +868,6 @@
             this.grp_more_data.PerformLayout();
             this.grp_misc_data.ResumeLayout(false);
             this.grp_misc_data.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_metroid_count)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_missiles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_max_missiles)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_energy)).EndInit();
             this.grp_beams.ResumeLayout(false);
             this.grp_beams.PerformLayout();
             this.grp_items.ResumeLayout(false);
@@ -895,11 +897,8 @@
         private System.Windows.Forms.CheckBox chb_spring;
         private System.Windows.Forms.GroupBox grp_misc_data;
         private System.Windows.Forms.Label lbl_missiles;
-        private System.Windows.Forms.NumericUpDown num_missiles;
         private System.Windows.Forms.Label lbl_max_missiles;
-        private System.Windows.Forms.NumericUpDown num_max_missiles;
         private System.Windows.Forms.Label lbl_energy;
-        private System.Windows.Forms.NumericUpDown num_energy;
         private System.Windows.Forms.GroupBox grp_position;
         private System.Windows.Forms.GroupBox grp_cam;
         private System.Windows.Forms.TextBox txb_cam_y;
@@ -939,8 +938,12 @@
         private System.Windows.Forms.TextBox txb_acid_damage;
         private System.Windows.Forms.Label lbl_acid_damage;
         private System.Windows.Forms.Button btn_test;
-        private System.Windows.Forms.NumericUpDown num_metroid_count;
         private System.Windows.Forms.Label lbl_metroid_count;
         private System.Windows.Forms.RadioButton rdb_power;
+        private System.Windows.Forms.Button btn_set_savegame;
+        private System.Windows.Forms.TextBox txb_metroids;
+        private System.Windows.Forms.TextBox txb_missiles;
+        private System.Windows.Forms.TextBox txb_max_missiles;
+        private System.Windows.Forms.TextBox txb_energy;
     }
 }

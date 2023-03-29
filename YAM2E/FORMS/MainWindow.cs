@@ -42,8 +42,8 @@ public partial class MainWindow : Form
         Current = this;
         InitializeComponent();
 
-        //TODO
         //Check for new Version
+        Editor.CheckForUpdate();
 
         //Reading vanilla ROM path
         string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
@@ -451,7 +451,7 @@ public partial class MainWindow : Form
         {
             Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
         }
-        lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX}, {Globals.SelectedScreenY}";
+        lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX.ToString("X2")}, {Globals.SelectedScreenY.ToString("X2")}";
 
         //Moving selected object
         if ((RoomSelectedCoordinate.X != e.X || RoomSelectedCoordinate.Y != e.Y) && !(e.X < 0 || e.Y < 0) && !(e.X > Room.BackgroundImage.Width || e.Y > Room.BackgroundImage.Height) && heldObject != null)
@@ -691,7 +691,7 @@ public partial class MainWindow : Form
     {
         Save s = Globals.TestROMSave;
 
-        if (Globals.LoadedProject.useTilesets == true || Globals.Tilesets.Count >= 1)
+        if (Globals.LoadedProject.useTilesets == true && Globals.Tilesets.Count >= 1)
         {
             s.setTilesetID(tls_input.SelectedTileset);
         }
@@ -752,6 +752,17 @@ public partial class MainWindow : Form
         UpdateTileset();
         UpdateRoom();
     }
+
+    private void btn_wiki_Click(object sender, EventArgs e)
+    {
+        string target = "https://github.com/ConConner/LAMP/wiki";
+        Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+    }
+
+    private void btn_save_editor_Click(object sender, EventArgs e)
+    {
+        new TestRom(Globals.InitialSaveGame, true).Show();
+    }
     #endregion
 
     #endregion
@@ -760,4 +771,5 @@ public partial class MainWindow : Form
     {
         //Room.Size = new Size(Room.Size.Width * 2, Room.Size.Height * 2);
     }
+
 }

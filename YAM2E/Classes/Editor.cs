@@ -8,6 +8,8 @@ using LAMP.FORMS;
 using LAMP.Classes.M2_Data;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Net;
+using System.Diagnostics;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -16,7 +18,7 @@ public static class Editor
     /// <summary>
     /// Current version being used
     /// </summary>
-    public const string Version = "LAMP Beta v2.0";
+    public const string Version = "LAMP Beta 3.0";
 
     /// <summary>
     /// The ROM as a byte array.
@@ -42,6 +44,34 @@ public static class Editor
     /// The contents of the tile selection.
     /// </summary>
     public static byte[] SelectedTiles;
+
+    /// <summary>
+    /// Checks a PasteBin (probably not the best solution) for the newest version name and opens a window if not the same.
+    /// </summary>
+    public static void CheckForUpdate()
+    {
+        WebClient webClient = new WebClient();
+        string latestVersion = webClient.DownloadString("https://pastebin.com/6HPaBaZD");
+        try
+        {
+            if (!latestVersion.Contains(Version))
+            {
+                //Extracting the update info from the site (Probably a super stupid way of doing things)
+                string first = "{UpdateInfo}";
+                string second = "{/UpdateInfo}";
+                string updateData = latestVersion.Substring(latestVersion.IndexOf(first) + first.Length, latestVersion.IndexOf(second) - (latestVersion.IndexOf(first) + first.Length));
+                string[] UpdateInfo = updateData.Split(",");
+
+                //The update Info should always be laid out as: 0 = Update Title, List of features
+
+                new UpdateAvailable(UpdateInfo).Show();
+            }
+        }
+        catch
+        {
+
+        }
+    }
 
     /// <summary>
     /// Creates a new project file and the needed data folders with data read from the ROM in it
@@ -191,9 +221,9 @@ public static class Editor
 
         //Creating the Saves
         path = dirData + "/Saves/InitialSave.json";
-        SaveJsonObject(Globals.InitialSaveGame, path);
+        SaveJsonObject(new Save(), path);
         path = dirData + "/Saves/TestROMSave.json";
-        SaveJsonObject(Globals.TestROMSave, path);
+        SaveJsonObject(new Save(), path);
 
         //New Project created
         MainWindow.Current.ProjectLoaded();
@@ -477,6 +507,9 @@ public static class Editor
                 }
             }
 
+            //Save
+            Globals.InitialSaveGame.WriteToROM(ROM);
+
             //Saving the ROM
             ROM.Compile(filepath);
         }
@@ -492,7 +525,7 @@ public static class Editor
     /// </summary>
     public static void UpdateTitlebar(string path)
     {
-        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - LAMP Beta 2.0";
+        MainWindow.Current.Text = $"{Path.GetFileNameWithoutExtension(path)} - {Version}";
     }
 
     /// <summary>

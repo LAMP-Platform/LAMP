@@ -73,6 +73,47 @@ namespace LAMP.Classes.M2_Data
             r.Write8(0x4E89, MetroidCount);
         }
 
+        /// <summary>
+        /// Copies all values to another save
+        /// </summary>
+        public void CopyTo(Save s)
+        {
+            s.SamusScreenX = SamusScreenX;
+            s.SamusScreenY = SamusScreenY;
+            s.SamusX = SamusX;
+            s.SamusY = SamusY;
+            s.CamScreenX = CamScreenX;
+            s.CamScreenY = CamScreenY;
+            s.CamX = CamX;
+            s.CamY = CamY;
+            s.TilesetUsed = TilesetUsed;
+            s.SpriteGraphics = SpriteGraphics;
+            s.TileGraphics = TileGraphics;
+            s.MetatileData = MetatileData;
+            s.MetatileTable = MetatileTable;
+            s.CollisionData = CollisionData;
+            s.CollisionTable = CollisionTable;
+            s.MapBank = MapBank;
+            s.SolidityTable = SolidityTable;
+            s.SamusSolidity = SamusSolidity;
+            s.EnemySolidity = EnemySolidity;
+            s.ProjectileSolidity = ProjectileSolidity;
+            s.Items = Items;
+            s.Beam = Beam;
+            s.EnergyTanksAmount = EnergyTanksAmount;
+            s.StartEnegery = StartEnegery;
+            s.EnergyTanksFilled = EnergyTanksFilled;
+            s.MaxMissiles = MaxMissiles;
+            s.StartMissiles= StartMissiles;
+            s.AcidDamage = AcidDamage;
+            s.SpikeDamage = SpikeDamage;
+            s.RealMetroidCount = RealMetroidCount;
+            s.MetroidCount = MetroidCount;
+            s.Music = Music;
+            s.IGTHours = IGTHours;
+            s.IGTMinutes = IGTMinutes;
+        }
+
         #region Save Data
 
         //Position Data
@@ -89,14 +130,14 @@ namespace LAMP.Classes.M2_Data
         public byte CamY { get; set; } = 0xC0;
 
         //Level and Graphics Data
-        public int TilesetUsed { get; set; } = 0;
-        public Pointer SpriteGraphics { get; set; } = new Pointer(6, 0x7529); //Sprite graphics are always in B6
+        public int TilesetUsed { get; set; } = -1;
+        public Pointer SpriteGraphics { get; set; } = new Pointer(6, 0x7520); //Sprite graphics are always in B6
         public Pointer TileGraphics { get; set; } = new Pointer(7, 0x6000);
         public Pointer MetatileData { get; set; } = new Pointer(8, 0x5280);
         public int MetatileTable { get; set; } = 4;
         public Pointer CollisionData { get; set; } = new Pointer(8, 0x4580);
         public int CollisionTable { get; set; } = 4;
-        public byte MapBank { get; set; } = 0x7;
+        public byte MapBank { get; set; } = 0x6;
         public int SolidityTable { get; set; } = 0;
         public byte SamusSolidity { get; set; } = 0x64;
         public byte EnemySolidity { get; set; } = 0x64;

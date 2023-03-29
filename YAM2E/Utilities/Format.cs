@@ -18,6 +18,7 @@ public static class Format
     /// Takes a string and interpretes it into a pointer object.
     /// You can input a bank + offset or a direct offset.
     /// Does not care about pre- and suffixes.
+    /// Returns a null object if the input is invalid! CHECK FOR NULL OBJECT!
     /// </summary>
     public static Pointer StringToPointer(string input)
     {
@@ -54,21 +55,13 @@ public static class Format
 
                 return new(offset);
             }
-            else
-            {
-                MessageBox.Show("You can only seperate one bank from an offset!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             return null;
         }
         catch
         {
-            MessageBox.Show("One of the characters input is invalid!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
             return null;
         }
     }
-
 
     /// <summary>
     /// Takes a pointer and represents it as a string.
@@ -84,7 +77,8 @@ public static class Format
             s.Append(", ");
             s.Append(Globals.hexPrefix).Append(input.bOffset.ToString("X")).Append(Globals.hexSuffix);
             return s.ToString();
-        } else
+        } 
+        else
         {
             StringBuilder s = new();
             s.Append(Globals.hexPrefix).Append(input.Offset.ToString("X")).Append(Globals.hexSuffix);
@@ -92,10 +86,12 @@ public static class Format
         }
     }
 
+
     /// <summary>
     /// Takes a string and interprets it as a hex intiger.
     /// Only allows a direct value.
     /// Does not care about pre- and suffixes.
+    /// Returns 0 if it gets an invalid input
     /// </summary>
     public static int StringToInt(string input, int maxValue = 0)
     {
@@ -123,21 +119,13 @@ public static class Format
                 if (maxValue != 0) return Math.Min(val, maxValue);
                 return val;
             }
-            else
-            {
-                MessageBox.Show("Please only input one value!\nThis field does not accept banks!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             return 0;
         }
         catch
         {
-            MessageBox.Show("One of the characters input is invalid!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
             return 0;
         }
     }
-
 
     /// <summary>
     /// Takes an integer and represents it as a hex string.

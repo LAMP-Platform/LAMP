@@ -25,6 +25,7 @@ namespace LAMP.Controls.Other
         public Pointer MetatilePointer { get; set; }
         public Pointer GraphicsOffset { get; set; }
         public Tileset SelectedTileset { get; set; } = null;
+        public bool ForceOffsets { get; set; } = false;
 
         #region EVENT
         //Events
@@ -52,7 +53,7 @@ namespace LAMP.Controls.Other
         /// </summary>
         public void setMode()
         {
-            if (Globals.LoadedProject == null || Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1)
+            if (Globals.LoadedProject == null || Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1 || ForceOffsets)
             {
                 grp_tileset_tilesets.Visible = false;
                 grp_tileset_offset.Visible = true;
@@ -72,6 +73,9 @@ namespace LAMP.Controls.Other
         {
             txb_graphics_offset.Text = Format.PointerToString(gfx);
             cbb_metatile_table.SelectedIndex = metatable;
+
+            GraphicsOffset = gfx;
+            MetatilePointer = Editor.GetMetaPointerFromTable(metatable);
         }
 
         /// <summary>
@@ -117,12 +121,21 @@ namespace LAMP.Controls.Other
             OnDataChanged(new EventArgs());
         }
 
-        private void btn_apply_graphics_Click(object sender, EventArgs e)
+        private void txb_graphics_offset_TextChanged(object sender, EventArgs e)
         {
-            GraphicsOffset = Format.StringToPointer(txb_graphics_offset.Text);
-            MetatilePointer = Editor.GetMetaPointerFromTable(cbb_metatile_table.SelectedIndex);
+            Pointer p = Format.StringToPointer(txb_graphics_offset.Text);
+            if (p != null && p.Offset < Editor.ROM.Data.Length)
+            {
+                GraphicsOffset = p;
+                MetatilePointer = Editor.GetMetaPointerFromTable(cbb_metatile_table.SelectedIndex);
+            }
 
             OnDataChanged(new EventArgs());
+        }
+
+        private void txb_graphics_offset_Leave(object sender, EventArgs e)
+        {
+            txb_graphics_offset.Text = Format.PointerToString(GraphicsOffset);
         }
     }
 }

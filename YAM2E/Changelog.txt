@@ -1,6 +1,12 @@
-﻿Version B2.X
+﻿Version B 3.0
 Released: XX.XX.202X
 Changes:
+ + Test ROM
+  -> Game can now be tested from anywhere
+ + Save File editing
+  -> Initial Savegame can be changed
+ + Help button
+ + Automatic Update Checking
 Fixes:
 
 

@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.grp_tileset_offset = new System.Windows.Forms.GroupBox();
-            this.grp_tileset_tilesets = new System.Windows.Forms.GroupBox();
-            this.cbb_tileset_id = new System.Windows.Forms.ComboBox();
-            this.lbl_tileset_id = new System.Windows.Forms.Label();
             this.txb_graphics_offset = new System.Windows.Forms.TextBox();
-            this.btn_apply_graphics = new System.Windows.Forms.Button();
             this.cbb_metatile_table = new System.Windows.Forms.ComboBox();
             this.lbl_main_graphics_pointer = new System.Windows.Forms.Label();
             this.lbl_main_metatile = new System.Windows.Forms.Label();
+            this.grp_tileset_tilesets = new System.Windows.Forms.GroupBox();
+            this.cbb_tileset_id = new System.Windows.Forms.ComboBox();
+            this.lbl_tileset_id = new System.Windows.Forms.Label();
             this.grp_tileset_offset.SuspendLayout();
             this.grp_tileset_tilesets.SuspendLayout();
             this.SuspendLayout();
@@ -44,7 +43,6 @@
             // grp_tileset_offset
             // 
             this.grp_tileset_offset.Controls.Add(this.txb_graphics_offset);
-            this.grp_tileset_offset.Controls.Add(this.btn_apply_graphics);
             this.grp_tileset_offset.Controls.Add(this.cbb_metatile_table);
             this.grp_tileset_offset.Controls.Add(this.lbl_main_graphics_pointer);
             this.grp_tileset_offset.Controls.Add(this.lbl_main_metatile);
@@ -56,53 +54,14 @@
             this.grp_tileset_offset.TabStop = false;
             this.grp_tileset_offset.Text = "Tileset Data";
             // 
-            // grp_tileset_tilesets
-            // 
-            this.grp_tileset_tilesets.Controls.Add(this.cbb_tileset_id);
-            this.grp_tileset_tilesets.Controls.Add(this.lbl_tileset_id);
-            this.grp_tileset_tilesets.Location = new System.Drawing.Point(0, 0);
-            this.grp_tileset_tilesets.Margin = new System.Windows.Forms.Padding(0);
-            this.grp_tileset_tilesets.Name = "grp_tileset_tilesets";
-            this.grp_tileset_tilesets.Size = new System.Drawing.Size(166, 109);
-            this.grp_tileset_tilesets.TabIndex = 9;
-            this.grp_tileset_tilesets.TabStop = false;
-            this.grp_tileset_tilesets.Text = "Tileset Data";
-            this.grp_tileset_tilesets.Visible = false;
-            // 
-            // cbb_tileset_id
-            // 
-            this.cbb_tileset_id.FormattingEnabled = true;
-            this.cbb_tileset_id.Location = new System.Drawing.Point(55, 22);
-            this.cbb_tileset_id.Name = "cbb_tileset_id";
-            this.cbb_tileset_id.Size = new System.Drawing.Size(103, 23);
-            this.cbb_tileset_id.TabIndex = 1;
-            this.cbb_tileset_id.SelectedIndexChanged += new System.EventHandler(this.cbb_tileset_id_SelectedIndexChanged);
-            // 
-            // lbl_tileset_id
-            // 
-            this.lbl_tileset_id.AutoSize = true;
-            this.lbl_tileset_id.Location = new System.Drawing.Point(6, 25);
-            this.lbl_tileset_id.Name = "lbl_tileset_id";
-            this.lbl_tileset_id.Size = new System.Drawing.Size(43, 15);
-            this.lbl_tileset_id.TabIndex = 0;
-            this.lbl_tileset_id.Text = "Tileset:";
-            // 
             // txb_graphics_offset
             // 
             this.txb_graphics_offset.Location = new System.Drawing.Point(103, 16);
             this.txb_graphics_offset.Name = "txb_graphics_offset";
             this.txb_graphics_offset.Size = new System.Drawing.Size(55, 23);
             this.txb_graphics_offset.TabIndex = 11;
-            // 
-            // btn_apply_graphics
-            // 
-            this.btn_apply_graphics.Location = new System.Drawing.Point(103, 75);
-            this.btn_apply_graphics.Name = "btn_apply_graphics";
-            this.btn_apply_graphics.Size = new System.Drawing.Size(55, 23);
-            this.btn_apply_graphics.TabIndex = 10;
-            this.btn_apply_graphics.Text = "Apply";
-            this.btn_apply_graphics.UseVisualStyleBackColor = true;
-            this.btn_apply_graphics.Click += new System.EventHandler(this.btn_apply_graphics_Click);
+            this.txb_graphics_offset.TextChanged += new System.EventHandler(this.txb_graphics_offset_TextChanged);
+            this.txb_graphics_offset.Leave += new System.EventHandler(this.txb_graphics_offset_Leave);
             // 
             // cbb_metatile_table
             // 
@@ -141,6 +100,37 @@
             this.lbl_main_metatile.TabIndex = 8;
             this.lbl_main_metatile.Text = "Metatile Table:";
             // 
+            // grp_tileset_tilesets
+            // 
+            this.grp_tileset_tilesets.Controls.Add(this.cbb_tileset_id);
+            this.grp_tileset_tilesets.Controls.Add(this.lbl_tileset_id);
+            this.grp_tileset_tilesets.Location = new System.Drawing.Point(0, 0);
+            this.grp_tileset_tilesets.Margin = new System.Windows.Forms.Padding(0);
+            this.grp_tileset_tilesets.Name = "grp_tileset_tilesets";
+            this.grp_tileset_tilesets.Size = new System.Drawing.Size(166, 109);
+            this.grp_tileset_tilesets.TabIndex = 9;
+            this.grp_tileset_tilesets.TabStop = false;
+            this.grp_tileset_tilesets.Text = "Tileset Data";
+            this.grp_tileset_tilesets.Visible = false;
+            // 
+            // cbb_tileset_id
+            // 
+            this.cbb_tileset_id.FormattingEnabled = true;
+            this.cbb_tileset_id.Location = new System.Drawing.Point(55, 22);
+            this.cbb_tileset_id.Name = "cbb_tileset_id";
+            this.cbb_tileset_id.Size = new System.Drawing.Size(103, 23);
+            this.cbb_tileset_id.TabIndex = 1;
+            this.cbb_tileset_id.SelectedIndexChanged += new System.EventHandler(this.cbb_tileset_id_SelectedIndexChanged);
+            // 
+            // lbl_tileset_id
+            // 
+            this.lbl_tileset_id.AutoSize = true;
+            this.lbl_tileset_id.Location = new System.Drawing.Point(6, 25);
+            this.lbl_tileset_id.Name = "lbl_tileset_id";
+            this.lbl_tileset_id.Size = new System.Drawing.Size(43, 15);
+            this.lbl_tileset_id.TabIndex = 0;
+            this.lbl_tileset_id.Text = "Tileset:";
+            // 
             // TilesetInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -163,7 +153,6 @@
 
         private System.Windows.Forms.GroupBox grp_tileset_offset;
         private System.Windows.Forms.TextBox txb_graphics_offset;
-        private System.Windows.Forms.Button btn_apply_graphics;
         private System.Windows.Forms.ComboBox cbb_metatile_table;
         private System.Windows.Forms.Label lbl_main_graphics_pointer;
         private System.Windows.Forms.Label lbl_main_metatile;
