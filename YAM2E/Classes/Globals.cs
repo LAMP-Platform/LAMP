@@ -111,6 +111,10 @@ internal static class Globals
     //Data chunks
     public static List<DataChunk> DataChunks = new List<DataChunk>();
 
+    //Save data
+    public static Save InitialSaveGame = new Save();
+    public static Save TestROMSave = new Save();
+
     #region User Settings
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;

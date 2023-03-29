@@ -10,6 +10,7 @@ using LAMP.Classes.M2_Data;
 using System.Collections.Generic;
 using LAMP.Utilities;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Linq;
 
 namespace LAMP;
 
@@ -22,7 +23,7 @@ public partial class MainWindow : Form
     public static RoomViewer Room = new RoomViewer();
     private Point StartSelection = new Point(-1, -1);
     private Point TilesetSelectedTile = new Point(-1, -1);
-    private Point RoomSelectedTile = new Point(-1, -1);
+    private Point RoomSelectedTile = new Point(-1, -1); //Despite of what the name might suggest, this is not actually the selected tile but the top-left corner of the selected tile
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
     public static Enemy heldObject = null;
@@ -41,6 +42,9 @@ public partial class MainWindow : Form
         Current = this;
         InitializeComponent();
 
+        //TODO
+        //Check for new Version
+
         //Reading vanilla ROM path
         string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
         Directory.CreateDirectory(Path.GetDirectoryName(path));
@@ -53,7 +57,7 @@ public partial class MainWindow : Form
         }
 
         //binding the event to tileset input
-        tls_input.onDataChanged += new EventHandler(this.tls_input_OnDataChanged);
+        //tls_input.onDataChanged += new EventHandler(this.tls_input_OnDataChanged);
 
         //Adding custom controls
         #region Tileset
@@ -685,30 +689,30 @@ public partial class MainWindow : Form
 
     private void ctx_btn_test_here_Click(object sender, EventArgs e)
     {
-        try
+        Save s = Globals.TestROMSave;
+
+        if (Globals.LoadedProject.useTilesets == true || Globals.Tilesets.Count >= 1)
         {
-            string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
-            Editor.ROM.Compile(tempPath);
-
-            //inefficient way of making changes only to TestROM
-            Rom tROM = new Rom(tempPath);
-
-            //applying tweaks
-            tROM.Write8(0x140EC, 0x0B); //Start new game on boot
-            tROM.ReplaceBytes(new int[]{0x0D12, 0x0D17, 0x0D1C}, new byte[]{0x00, 0x00, 0x00}); //Skip Samus appearance fanfare
-
-            //saving test ROM
-            tROM.Compile(tempPath);
-
-            ProcessStartInfo testROM = new ProcessStartInfo();
-            testROM.FileName = tempPath;
-            testROM.UseShellExecute = true;
-            Process.Start(testROM);
+            s.setTilesetID(tls_input.SelectedTileset);
         }
-        catch (Exception ex)
+        else
         {
-            MessageBox.Show("Test ROM could not be launched.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            s.TilesetUsed = -1;
+
+            //setting data manually
+            s.TileGraphics = tls_input.GraphicsOffset;
+            s.MetatileData = tls_input.MetatilePointer;
         }
+
+        //populating the rest of data
+        //Position
+        s.MapBank = (byte)(cbb_area_bank.SelectedIndex); // +9 because the Game expects the actual bank and nost just an index
+        s.CamScreenX = s.SamusScreenX = (byte)(RoomSelectedTile.X / 256);
+        s.CamScreenY = s.SamusScreenY = (byte)(RoomSelectedTile.Y / 256);
+        s.CamX = s.SamusX = (byte)RoomSelectedTile.X;
+        s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
+
+        new TestRom(s).Show();
     }
 
     private void ctx_btn_add_object_Click(object sender, EventArgs e)
@@ -755,6 +759,5 @@ public partial class MainWindow : Form
     private void btnTest_Click(object sender, EventArgs e)
     {
         //Room.Size = new Size(Room.Size.Width * 2, Room.Size.Height * 2);
-        new Test_form().Show();
     }
 }

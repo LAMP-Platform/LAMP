@@ -1,4 +1,10 @@
-﻿Version B 2.0
+﻿Version B2.X
+Released: XX.XX.202X
+Changes:
+Fixes:
+
+
+Version B 2.0
 Released: 16.02.2023
 Changes:
  + Tileset Editor

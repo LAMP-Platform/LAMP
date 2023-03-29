@@ -14,6 +14,11 @@ namespace LAMP.Classes;
 public static class Editor
 {
     /// <summary>
+    /// Current version being used
+    /// </summary>
+    public const string Version = "LAMP Beta v2.0";
+
+    /// <summary>
     /// The ROM as a byte array.
     /// </summary>
     public static Rom ROM;
@@ -67,6 +72,7 @@ public static class Editor
         string dirData = dir + "/Data";
         string dirCustom = dir + "/Custom";
         Directory.CreateDirectory(dirData + "/Screens");
+        Directory.CreateDirectory(dirData + "/Saves");
         Directory.CreateDirectory(dirCustom);
 
         //populating Data
@@ -183,6 +189,11 @@ public static class Editor
         SetStandardTilesets();
         SaveJsonObject(Globals.Tilesets, path);
 
+        //Creating the Saves
+        path = dirData + "/Saves/InitialSave.json";
+        SaveJsonObject(Globals.InitialSaveGame, path);
+        path = dirData + "/Saves/TestROMSave.json";
+        SaveJsonObject(Globals.TestROMSave, path);
 
         //New Project created
         MainWindow.Current.ProjectLoaded();
@@ -274,6 +285,15 @@ public static class Editor
             {
                 json = File.ReadAllText(dirCustom + "/Chunks.json");
                 Globals.DataChunks = JsonSerializer.Deserialize<List<DataChunk>>(json);
+            }
+
+            //Save Data
+            if (File.Exists(dirData + "/Saves/InitialSave.json"))
+            {
+                json = File.ReadAllText(dirData + "/Saves/InitialSave.json");
+                Globals.InitialSaveGame = JsonSerializer.Deserialize<Save>(json);
+                json = File.ReadAllText(dirData + "/Saves/TestROMSave.json");
+                Globals.TestROMSave = JsonSerializer.Deserialize<Save>(json);
             }
 
             //Project loaded
@@ -528,6 +548,16 @@ public static class Editor
             path = dirCustom + "/Chunks.json";
             SaveJsonObject(Globals.DataChunks, path);
         }
+
+        //Save Data
+        if (!File.Exists(dirData + "/Saves/InitialSave.json"))
+        {
+            Directory.CreateDirectory(dirData + "/Saves");
+        }
+        path = dirData + "/Saves/InitialSave.json";
+        SaveJsonObject(Globals.InitialSaveGame, path);
+        path = dirData + "/Saves/TestROMSave.json";
+        SaveJsonObject(Globals.TestROMSave, path);
     }
 
     /// <summary>
@@ -599,7 +629,28 @@ public static class Editor
     /// </summary>
     public static Pointer GetMetaPointerFromTable(int index)
     {
-        return new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * index));
+        return new Pointer(0x8, ROM.Read16(ROM.MetatilePointers.Offset + 2 * index));
+    }
+
+    /// <summary>
+    /// Returns the Collision Pointer that is stored at the given index in the table
+    /// </summary>
+    public static Pointer GetCollisionPointerFromTable(int index)
+    {
+        return new Pointer(0x8, ROM.Read16(ROM.CollisionPointers.Offset + 2 * index));
+    }
+
+    /// <summary>
+    /// Returns an Array of Solidity Indices in the order Samus, Enemy, Projectile
+    /// </summary>
+    public static byte[] GetSolidityIndices(int index)
+    {
+        byte[] indices = new byte[3];
+        indices[0] = ROM.Read8(ROM.SolidityIndices.Offset + (4 * index));
+        indices[1] = ROM.Read8(ROM.SolidityIndices.Offset + (4 * index) + 1);
+        indices[2] = ROM.Read8(ROM.SolidityIndices.Offset + (4 * index) + 2);
+
+        return indices;
     }
 
     /// <summary>
