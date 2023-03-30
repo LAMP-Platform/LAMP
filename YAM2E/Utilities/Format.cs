@@ -137,4 +137,69 @@ public static class Format
         s.Append(Globals.hexPrefix).Append(input.ToString("X")).Append(Globals.hexSuffix);
         return s.ToString();
     }
+
+
+    //BCD Functions
+    /// <summary>
+    /// Takes a BCD value and turns it into a decimal value.
+    /// It does not check for correctnes of the BCD value!!
+    /// 
+    /// This function was written with Chat-GPT.
+    /// Notes: It needed one retry after the first iteration
+    /// gave the wrong results. It figured the error out by itself.
+    /// </summary>
+    public static int BcdToInt(int bcdValue)
+    {
+        int result = 0;
+        int factor = 1;
+
+        // Iterate over the BCD digits from right to left
+        while (bcdValue != 0)
+        {
+            // Extract the rightmost BCD digit
+            int digit = bcdValue & 0x0F;
+
+            // Convert the BCD digit to decimal and add it to the result
+            result += digit * factor;
+
+            // Multiply the factor by 10 for the next BCD digit
+            factor *= 10;
+
+            // Shift the BCD value to the right by 4 bits to remove the processed digit
+            bcdValue >>= 4;
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Takes a decimal value and turns it into a BCD value.
+    /// It does not check for correctnes of the decimal value!!
+    /// 
+    /// This function was written with Chat-GPT.
+    /// Notes:
+    /// </summary>
+    public static int DecimalToBcd(int decimalValue)
+    {
+        int result = 0;
+        int factor = 1;
+
+        // Iterate over the decimal digits from right to left
+        while (decimalValue != 0)
+        {
+            // Extract the rightmost decimal digit
+            int digit = decimalValue % 10;
+
+            // Convert the decimal digit to BCD and add it to the result
+            result += digit * factor;
+
+            // Multiply the factor by 16 for the next BCD digit
+            factor *= 16;
+
+            // Shift the decimal value to the right by 1 digit to remove the processed digit
+            decimalValue /= 10;
+        }
+
+        return result;
+    }
 }

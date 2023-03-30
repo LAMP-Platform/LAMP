@@ -50,6 +50,7 @@ namespace LAMP
             this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +98,7 @@ namespace LAMP
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTest = new System.Windows.Forms.Button();
-            this.btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -266,7 +267,7 @@ namespace LAMP
             // btn_tweaks_editor
             // 
             this.btn_tweaks_editor.Name = "btn_tweaks_editor";
-            this.btn_tweaks_editor.Size = new System.Drawing.Size(180, 22);
+            this.btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_tweaks_editor.Text = "Tweaks Editor";
             this.btn_tweaks_editor.Visible = false;
             this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
@@ -274,23 +275,30 @@ namespace LAMP
             // btn_transition_editor
             // 
             this.btn_transition_editor.Name = "btn_transition_editor";
-            this.btn_transition_editor.Size = new System.Drawing.Size(180, 22);
+            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
             this.btn_transition_editor.Text = "Transition Editor";
             this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
             // 
             // btn_screen_settings
             // 
             this.btn_screen_settings.Name = "btn_screen_settings";
-            this.btn_screen_settings.Size = new System.Drawing.Size(180, 22);
+            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
             this.btn_screen_settings.Text = "Screen Settings";
             this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
             // 
             // btn_tileset_definitions
             // 
             this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
             this.btn_tileset_definitions.Text = "Tileset Editor";
             this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
+            // 
+            // btn_save_editor
+            // 
+            this.btn_save_editor.Name = "btn_save_editor";
+            this.btn_save_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_save_editor.Text = "Save Editor";
+            this.btn_save_editor.Click += new System.EventHandler(this.btn_save_editor_Click);
             // 
             // tool_strip_view
             // 
@@ -364,7 +372,8 @@ namespace LAMP
             this.tool_strip_help.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_wiki,
-            this.btn_about});
+            this.btn_about,
+            this.btn_bug_report});
             this.tool_strip_help.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_help.Image")));
             this.tool_strip_help.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_help.Name = "tool_strip_help";
@@ -375,14 +384,14 @@ namespace LAMP
             // btn_wiki
             // 
             this.btn_wiki.Name = "btn_wiki";
-            this.btn_wiki.Size = new System.Drawing.Size(142, 22);
+            this.btn_wiki.Size = new System.Drawing.Size(180, 22);
             this.btn_wiki.Text = "View Wiki";
             this.btn_wiki.Click += new System.EventHandler(this.btn_wiki_Click);
             // 
             // btn_about
             // 
             this.btn_about.Name = "btn_about";
-            this.btn_about.Size = new System.Drawing.Size(142, 22);
+            this.btn_about.Size = new System.Drawing.Size(180, 22);
             this.btn_about.Text = "About LAMP";
             this.btn_about.Visible = false;
             // 
@@ -403,10 +412,12 @@ namespace LAMP
             this.tls_input.AutoSize = true;
             this.tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tls_input.BackColor = System.Drawing.SystemColors.Control;
+            this.tls_input.ForceOffsets = false;
             this.tls_input.GraphicsOffset = null;
             this.tls_input.Location = new System.Drawing.Point(3, 73);
             this.tls_input.Margin = new System.Windows.Forms.Padding(0);
             this.tls_input.MetatilePointer = null;
+            this.tls_input.MetatileTable = 0;
             this.tls_input.Name = "tls_input";
             this.tls_input.onDataChanged = null;
             this.tls_input.SelectedTileset = null;
@@ -714,7 +725,6 @@ namespace LAMP
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
-            this.toolStripSeparator6.Visible = false;
             // 
             // ctx_btn_test_here
             // 
@@ -732,14 +742,15 @@ namespace LAMP
             this.btnTest.TabIndex = 9;
             this.btnTest.Text = "Test Button";
             this.btnTest.UseVisualStyleBackColor = true;
+            this.btnTest.Visible = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
             // 
-            // btn_save_editor
+            // btn_bug_report
             // 
-            this.btn_save_editor.Name = "btn_save_editor";
-            this.btn_save_editor.Size = new System.Drawing.Size(180, 22);
-            this.btn_save_editor.Text = "Save Editor";
-            this.btn_save_editor.Click += new System.EventHandler(this.btn_save_editor_Click);
+            this.btn_bug_report.Name = "btn_bug_report";
+            this.btn_bug_report.Size = new System.Drawing.Size(180, 22);
+            this.btn_bug_report.Text = "I found a bug!!!";
+            this.btn_bug_report.Click += new System.EventHandler(this.btn_bug_report_Click);
             // 
             // MainWindow
             // 
@@ -855,6 +866,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_zoom_in;
         private System.Windows.Forms.ToolStripMenuItem btn_zoom_out;
         private System.Windows.Forms.ToolStripMenuItem btn_save_editor;
+        private System.Windows.Forms.ToolStripMenuItem btn_bug_report;
     }
 }
 

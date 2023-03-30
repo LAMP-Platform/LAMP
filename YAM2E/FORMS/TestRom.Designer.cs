@@ -579,7 +579,7 @@
             this.txb_metroids.Size = new System.Drawing.Size(40, 23);
             this.txb_metroids.TabIndex = 15;
             this.tlt_bank_tip.SetToolTip(this.txb_metroids, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 10=10!");
+        "t have a \r\nproper value and 0x10=10.");
             this.txb_metroids.TextChanged += new System.EventHandler(this.num_metroid_count_ValueChanged);
             this.txb_metroids.Leave += new System.EventHandler(this.txb_leave);
             // 
@@ -590,7 +590,7 @@
             this.txb_missiles.Size = new System.Drawing.Size(40, 23);
             this.txb_missiles.TabIndex = 14;
             this.tlt_bank_tip.SetToolTip(this.txb_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 10=10!");
+        "t have a \r\nproper value and 0x10=10.\r\n");
             this.txb_missiles.TextChanged += new System.EventHandler(this.num_missiles_ValueChanged);
             this.txb_missiles.Leave += new System.EventHandler(this.txb_leave);
             // 
@@ -601,7 +601,7 @@
             this.txb_max_missiles.Size = new System.Drawing.Size(40, 23);
             this.txb_max_missiles.TabIndex = 13;
             this.tlt_bank_tip.SetToolTip(this.txb_max_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 10=10!");
+        "t have a \r\nproper value and 0x10=10.\r\n");
             this.txb_max_missiles.TextChanged += new System.EventHandler(this.num_max_missiles_ValueChanged);
             this.txb_max_missiles.Leave += new System.EventHandler(this.txb_leave);
             // 
@@ -612,7 +612,7 @@
             this.txb_energy.Size = new System.Drawing.Size(40, 23);
             this.txb_energy.TabIndex = 12;
             this.tlt_bank_tip.SetToolTip(this.txb_energy, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 10=10!");
+        "t have a \r\nproper value and 0x10=10.\r\n");
             this.txb_energy.TextChanged += new System.EventHandler(this.num_energy_ValueChanged);
             this.txb_energy.Leave += new System.EventHandler(this.txb_leave);
             // 

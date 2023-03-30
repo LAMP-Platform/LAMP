@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LAMP.Classes.M2_Data
 {
@@ -134,7 +135,7 @@ namespace LAMP.Classes.M2_Data
         public Pointer SpriteGraphics { get; set; } = new Pointer(6, 0x7520); //Sprite graphics are always in B6
         public Pointer TileGraphics { get; set; } = new Pointer(7, 0x6000);
         public Pointer MetatileData { get; set; } = new Pointer(8, 0x5280);
-        public int MetatileTable { get; set; } = 4;
+        public int MetatileTable { get; set; } = 5;
         public Pointer CollisionData { get; set; } = new Pointer(8, 0x4580);
         public int CollisionTable { get; set; } = 4;
         public byte MapBank { get; set; } = 0x6;

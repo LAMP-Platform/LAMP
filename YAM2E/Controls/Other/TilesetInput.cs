@@ -25,6 +25,7 @@ namespace LAMP.Controls.Other
         public Pointer MetatilePointer { get; set; }
         public Pointer GraphicsOffset { get; set; }
         public Tileset SelectedTileset { get; set; } = null;
+        public int MetatileTable { get; set; }
         public bool ForceOffsets { get; set; } = false;
 
         #region EVENT
@@ -71,11 +72,14 @@ namespace LAMP.Controls.Other
         /// </summary>
         public void SetGraphics(Pointer gfx, int metatable)
         {
-            txb_graphics_offset.Text = Format.PointerToString(gfx);
+            if (gfx != null) txb_graphics_offset.Text = Format.PointerToString(gfx);
             cbb_metatile_table.SelectedIndex = metatable;
+            MetatileTable = metatable;
 
             GraphicsOffset = gfx;
             MetatilePointer = Editor.GetMetaPointerFromTable(metatable);
+
+            OnDataChanged(new EventArgs());
         }
 
         /// <summary>
@@ -136,6 +140,11 @@ namespace LAMP.Controls.Other
         private void txb_graphics_offset_Leave(object sender, EventArgs e)
         {
             txb_graphics_offset.Text = Format.PointerToString(GraphicsOffset);
+        }
+
+        private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetGraphics(GraphicsOffset, cbb_metatile_table.SelectedIndex);
         }
     }
 }

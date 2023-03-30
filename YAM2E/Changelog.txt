@@ -6,6 +6,8 @@ Changes:
  + Save File editing
   -> Initial Savegame can be changed
  + Help button
+  -> Access to Wiki
+  -> Report Bugs
  + Automatic Update Checking
 Fixes:
 

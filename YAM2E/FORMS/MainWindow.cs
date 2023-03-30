@@ -702,6 +702,7 @@ public partial class MainWindow : Form
             //setting data manually
             s.TileGraphics = tls_input.GraphicsOffset;
             s.MetatileData = tls_input.MetatilePointer;
+            s.MetatileTable = tls_input.MetatileTable;
         }
 
         //populating the rest of data
@@ -763,13 +764,17 @@ public partial class MainWindow : Form
     {
         new TestRom(Globals.InitialSaveGame, true).Show();
     }
+
+    private void btn_bug_report_Click(object sender, EventArgs e)
+    {
+        string target = "https://github.com/ConConner/LAMP/issues";
+        Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
+    }
     #endregion
 
     #endregion
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        //Room.Size = new Size(Room.Size.Width * 2, Room.Size.Height * 2);
     }
-
 }

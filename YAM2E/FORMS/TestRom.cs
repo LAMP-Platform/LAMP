@@ -166,9 +166,10 @@ namespace LAMP.FORMS
 
         private void num_energy_ValueChanged(object sender, EventArgs e)
         {
-            int val = Format.StringToInt(txb_energy.Text);
-            save.EnergyTanksAmount = save.EnergyTanksFilled = (byte)(val / 100);
-            save.StartEnegery = (byte)(val - (save.EnergyTanksAmount * 100));
+            int val = Format.StringToInt(txb_energy.Text, 0x699);
+            val = Format.BcdToInt(val);
+            save.EnergyTanksAmount = save.EnergyTanksFilled = (byte)Format.DecimalToBcd(val / 100);
+            save.StartEnegery = (byte)Format.DecimalToBcd(val - ((val / 100) * 100));
         }
 
         private void num_max_missiles_ValueChanged(object sender, EventArgs e)
@@ -183,8 +184,9 @@ namespace LAMP.FORMS
 
         private void num_metroid_count_ValueChanged(object sender, EventArgs e)
         {
-            save.MetroidCount = (byte)Format.StringToInt(txb_metroids.Text);
-            save.RealMetroidCount = (byte)(Format.StringToInt(txb_metroids.Text) + 0x8);
+            int val = Format.StringToInt(txb_metroids.Text);
+            save.MetroidCount = (byte)val;
+            save.RealMetroidCount = (byte)(Format.DecimalToBcd(Format.BcdToInt(val) + 0x8));
         }
 
         private void txb_music_TextChanged(object sender, EventArgs e)
@@ -194,9 +196,10 @@ namespace LAMP.FORMS
 
         private void tls_tileset_input_DataChanged(object sender, EventArgs e)
         {
-            if (Globals.LoadedProject.useTilesets && Globals.Tilesets.Count >= 1)
+            if (Globals.LoadedProject.useTilesets && Globals.Tilesets.Count >= 1 && save.TilesetUsed != -1)
             {
                 Tileset t = tls_tileset_input.SelectedTileset;
+                if (t == null) return;
                 save.TileGraphics = t.GfxOffset;
                 save.MetatileData = Editor.GetMetaPointerFromTable(t.MetatileTable);
                 cbb_collision_table.SelectedIndex = t.CollisionTable;
@@ -206,6 +209,7 @@ namespace LAMP.FORMS
             {
                 save.TileGraphics = tls_tileset_input.GraphicsOffset;
                 save.MetatileData = tls_tileset_input.MetatilePointer;
+                save.MetatileTable = tls_tileset_input.MetatileTable;
             }
         }
 

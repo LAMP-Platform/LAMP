@@ -81,6 +81,7 @@
             this.cbb_metatile_table.Name = "cbb_metatile_table";
             this.cbb_metatile_table.Size = new System.Drawing.Size(55, 23);
             this.cbb_metatile_table.TabIndex = 9;
+            this.cbb_metatile_table.SelectedIndexChanged += new System.EventHandler(this.cbb_metatile_table_SelectedIndexChanged);
             // 
             // lbl_main_graphics_pointer
             // 
