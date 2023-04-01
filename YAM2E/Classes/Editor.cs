@@ -18,7 +18,7 @@ public static class Editor
     /// <summary>
     /// Current version being used
     /// </summary>
-    public const string Version = "LAMP Beta 3.0";
+    public const string Version = "LAMP Beta 3.1";
 
     /// <summary>
     /// The ROM as a byte array.
@@ -81,7 +81,7 @@ public static class Editor
         //checking if a vanilla ROM exists
         if (!File.Exists(Globals.RomPath))
         {
-            MessageBox.Show("No Metroid 2: Return to Samus ROM has been selected yet!", "ROM missing",
+            MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             new ProgramSettins().Show();
             return;
@@ -237,7 +237,7 @@ public static class Editor
         //checking if a vanilla ROM exists
         if (!File.Exists(Globals.RomPath))
         {
-            MessageBox.Show("No Metroid 2: Return to Samus ROM has been selected yet!", "ROM missing",
+            MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             new ProgramSettins().Show();
             return;
@@ -410,107 +410,7 @@ public static class Editor
             if (filepath == String.Empty) return;
             SaveProject();
 
-            //Compiling ROM by writing loaded data
-            //Screens
-            for (int area = 0; area < 7; area++)
-            {
-                for (int i = 0; i < 59; i++)
-                {
-                    Pointer pointer = new Pointer(ROM.A_BANKS[area].Offset + 0x500 + 0x100 * i);
-                    ROM.ReplaceBytes(pointer.Offset, Globals.Screens[area][i].Data);
-                }
-            }
-
-            //Areas
-            for (int area = 0; area < 7; area++)
-            {
-                Area a = Globals.Areas[area];
-                for (int i = 0; i < 256; i++)
-                {
-                    Pointer offset = ROM.A_BANKS[area];
-
-                    //Screens used
-                    int data = a.Screens[i];
-                    data *= 0x100;
-                    data += 0x4500;
-                    ROM.Write16(offset.Offset + 2 * i, (ushort)data);
-
-                    //Scroll data
-                    data = a.Scrolls[i];
-                    ROM.Write8(offset.Offset + 0x200 + i, (byte)data);
-
-                    //Transition and Priorities data
-                    data = a.Tansitions[i];
-                    if (a.Priorities[i]) data |= 0x800;
-                    ROM.Write16(offset.Offset + 0x300 + 2 * i, (ushort)data);
-                }
-            }
-
-            //Objects
-            Pointer lastAdd = new Pointer(ROM.ObjectDataLists.Offset);
-            for (int i = 0; i < 256 * 7; i++)
-            {
-                //Empty object list
-                if (Globals.Objects[i].Count == 0)
-                {
-                    if (Globals.LoadedProject.OptimizeObjectData) ROM.Write16(ROM.ObjectPointerTable.Offset + 2 * i, (ushort)ROM.ObjectDataLists.bOffset); //Writing pointer to list
-                    else
-                    {
-                        lastAdd.Add(1);
-                        ROM.Write8(lastAdd.Offset, 0xFF);
-                    }
-                }
-                else //Objects on screen
-                {
-                    lastAdd.Add(1);
-                    ROM.Write16(ROM.ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
-                    foreach (Enemy o in Globals.Objects[i])
-                    {
-                        //Writing Object list consecutively
-                        ROM.Write8(lastAdd.Offset, o.Number);
-                        lastAdd.Add(1);
-                        ROM.Write8(lastAdd.Offset, o.Type);
-                        lastAdd.Add(1);
-                        ROM.Write8(lastAdd.Offset, o.sX);
-                        lastAdd.Add(1);
-                        ROM.Write8(lastAdd.Offset, o.sY);
-                        lastAdd.Add(1);
-                    }
-                    ROM.Write8(lastAdd.Offset, 0xFF);
-                }
-            }
-
-            //Transitions
-            lastAdd = new Pointer(ROM.TransitionDataLists.Offset);
-            lastAdd.Add(1);
-            List<int> offsets = new List<int>(); //List saving written pointers for duplicate tansitions
-            for (int i = 0; i < 0x200; i++)
-            {
-                Transition t = Globals.Transitions[i]; //Transition is empty / ends instantly
-                if (t.Data.Count == 1)
-                {
-                    ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)ROM.TransitionDataLists.bOffset); //Writing pointer to list
-                    offsets.Add(ROM.TransitionDataLists.bOffset);
-                }
-                else if (t.CopyOf != -1) //Transition is a duplicate and the data is already written
-                {
-                    ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
-                    offsets.Add(offsets[t.CopyOf]);
-                }
-                else //Transition is used and unique
-                {
-                    ROM.Write16(ROM.TransitionPointerTable.Offset + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
-                    offsets.Add(lastAdd.bOffset);
-                    //Writing transition
-                    ROM.ReplaceBytes(lastAdd.Offset, t.Data);
-                    lastAdd.Add(t.Data.Count);
-                }
-            }
-
-            //Save
-            Globals.InitialSaveGame.WriteToROM(ROM);
-
-            //Saving the ROM
+            //Compiling ROM
             ROM.Compile(filepath);
         }
         catch (Exception ex)

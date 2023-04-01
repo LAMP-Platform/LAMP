@@ -1,5 +1,10 @@
-﻿Version B 3.0
-Released: XX.XX.202X
+﻿Version B 3.1
+Released: 01.04.2023
+Fixes:
+ # TestROM now actually works with modified data
+
+Version B 3.0
+Released: 30.03.2023
 Changes:
  + Test ROM
   -> Game can now be tested from anywhere
@@ -9,7 +14,6 @@ Changes:
   -> Access to Wiki
   -> Report Bugs
  + Automatic Update Checking
-Fixes:
 
 
 Version B 2.0

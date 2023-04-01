@@ -61,6 +61,7 @@ namespace LAMP
             this.tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_about = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.grp_data_selector = new System.Windows.Forms.GroupBox();
@@ -98,7 +99,6 @@ namespace LAMP
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTest = new System.Windows.Forms.Button();
-            this.btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.grp_data_selector.SuspendLayout();
@@ -355,6 +355,8 @@ namespace LAMP
             // btn_zoom_in
             // 
             this.btn_zoom_in.Name = "btn_zoom_in";
+            this.btn_zoom_in.ShortcutKeyDisplayString = "Ctrl +";
+            this.btn_zoom_in.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
             this.btn_zoom_in.Size = new System.Drawing.Size(228, 22);
             this.btn_zoom_in.Text = "Zoom +";
             this.btn_zoom_in.Visible = false;
@@ -362,6 +364,8 @@ namespace LAMP
             // btn_zoom_out
             // 
             this.btn_zoom_out.Name = "btn_zoom_out";
+            this.btn_zoom_out.ShortcutKeyDisplayString = "Ctrl - ";
+            this.btn_zoom_out.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
             this.btn_zoom_out.Size = new System.Drawing.Size(228, 22);
             this.btn_zoom_out.Text = "Zoom -";
             this.btn_zoom_out.Visible = false;
@@ -384,16 +388,23 @@ namespace LAMP
             // btn_wiki
             // 
             this.btn_wiki.Name = "btn_wiki";
-            this.btn_wiki.Size = new System.Drawing.Size(180, 22);
+            this.btn_wiki.Size = new System.Drawing.Size(154, 22);
             this.btn_wiki.Text = "View Wiki";
             this.btn_wiki.Click += new System.EventHandler(this.btn_wiki_Click);
             // 
             // btn_about
             // 
             this.btn_about.Name = "btn_about";
-            this.btn_about.Size = new System.Drawing.Size(180, 22);
+            this.btn_about.Size = new System.Drawing.Size(154, 22);
             this.btn_about.Text = "About LAMP";
             this.btn_about.Visible = false;
+            // 
+            // btn_bug_report
+            // 
+            this.btn_bug_report.Name = "btn_bug_report";
+            this.btn_bug_report.Size = new System.Drawing.Size(154, 22);
+            this.btn_bug_report.Text = "I found a bug!!!";
+            this.btn_bug_report.Click += new System.EventHandler(this.btn_bug_report_Click);
             // 
             // grp_data_selector
             // 
@@ -744,13 +755,6 @@ namespace LAMP
             this.btnTest.UseVisualStyleBackColor = true;
             this.btnTest.Visible = false;
             this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
-            // 
-            // btn_bug_report
-            // 
-            this.btn_bug_report.Name = "btn_bug_report";
-            this.btn_bug_report.Size = new System.Drawing.Size(180, 22);
-            this.btn_bug_report.Text = "I found a bug!!!";
-            this.btn_bug_report.Click += new System.EventHandler(this.btn_bug_report_Click);
             // 
             // MainWindow
             // 
