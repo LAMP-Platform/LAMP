@@ -28,137 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.grp_data_selection = new System.Windows.Forms.GroupBox();
-            this.num_length = new System.Windows.Forms.NumericUpDown();
-            this.lbl_length = new System.Windows.Forms.Label();
-            this.btn_go = new System.Windows.Forms.Button();
-            this.num_bank = new System.Windows.Forms.NumericUpDown();
-            this.lbl_bank = new System.Windows.Forms.Label();
-            this.lbl_offset = new System.Windows.Forms.Label();
-            this.num_offset = new System.Windows.Forms.NumericUpDown();
-            this.chb_bank_offset = new System.Windows.Forms.CheckBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DataViewer));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.txb_raw_data = new System.Windows.Forms.TextBox();
-            this.grp_raw_data = new System.Windows.Forms.GroupBox();
-            this.btn_rewrite = new System.Windows.Forms.Button();
+            this.grp_data_selection = new System.Windows.Forms.GroupBox();
+            this.btn_view = new System.Windows.Forms.Button();
+            this.txb_length = new System.Windows.Forms.TextBox();
+            this.lbl_length = new System.Windows.Forms.Label();
+            this.txb_offset = new System.Windows.Forms.TextBox();
+            this.lbl_offset = new System.Windows.Forms.Label();
+            this.grp_data = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.grp_data_selection.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_length)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_bank)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_offset)).BeginInit();
-            this.grp_raw_data.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // grp_data_selection
-            // 
-            this.grp_data_selection.Controls.Add(this.num_length);
-            this.grp_data_selection.Controls.Add(this.lbl_length);
-            this.grp_data_selection.Controls.Add(this.btn_go);
-            this.grp_data_selection.Controls.Add(this.num_bank);
-            this.grp_data_selection.Controls.Add(this.lbl_bank);
-            this.grp_data_selection.Controls.Add(this.lbl_offset);
-            this.grp_data_selection.Controls.Add(this.num_offset);
-            this.grp_data_selection.Controls.Add(this.chb_bank_offset);
-            this.grp_data_selection.Location = new System.Drawing.Point(12, 12);
-            this.grp_data_selection.Name = "grp_data_selection";
-            this.grp_data_selection.Size = new System.Drawing.Size(848, 109);
-            this.grp_data_selection.TabIndex = 0;
-            this.grp_data_selection.TabStop = false;
-            this.grp_data_selection.Text = "Data Selection";
-            // 
-            // num_length
-            // 
-            this.num_length.Hexadecimal = true;
-            this.num_length.Location = new System.Drawing.Point(65, 74);
-            this.num_length.Maximum = new decimal(new int[] {
-            512,
-            0,
-            0,
-            0});
-            this.num_length.Name = "num_length";
-            this.num_length.Size = new System.Drawing.Size(48, 23);
-            this.num_length.TabIndex = 7;
-            this.num_length.Value = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
-            // 
-            // lbl_length
-            // 
-            this.lbl_length.AutoSize = true;
-            this.lbl_length.Location = new System.Drawing.Point(9, 76);
-            this.lbl_length.Name = "lbl_length";
-            this.lbl_length.Size = new System.Drawing.Size(50, 15);
-            this.lbl_length.TabIndex = 6;
-            this.lbl_length.Text = "Length: ";
-            // 
-            // btn_go
-            // 
-            this.btn_go.Location = new System.Drawing.Point(124, 74);
-            this.btn_go.Name = "btn_go";
-            this.btn_go.Size = new System.Drawing.Size(75, 23);
-            this.btn_go.TabIndex = 5;
-            this.btn_go.Text = "Go";
-            this.btn_go.UseVisualStyleBackColor = true;
-            this.btn_go.Click += new System.EventHandler(this.btn_go_Click);
-            // 
-            // num_bank
-            // 
-            this.num_bank.Hexadecimal = true;
-            this.num_bank.Location = new System.Drawing.Point(164, 17);
-            this.num_bank.Maximum = new decimal(new int[] {
-            96,
-            0,
-            0,
-            0});
-            this.num_bank.Name = "num_bank";
-            this.num_bank.Size = new System.Drawing.Size(35, 23);
-            this.num_bank.TabIndex = 4;
-            this.num_bank.Visible = false;
-            // 
-            // lbl_bank
-            // 
-            this.lbl_bank.AutoSize = true;
-            this.lbl_bank.Location = new System.Drawing.Point(119, 19);
-            this.lbl_bank.Name = "lbl_bank";
-            this.lbl_bank.Size = new System.Drawing.Size(39, 15);
-            this.lbl_bank.TabIndex = 3;
-            this.lbl_bank.Text = "Bank: ";
-            this.lbl_bank.Visible = false;
-            // 
-            // lbl_offset
-            // 
-            this.lbl_offset.AutoSize = true;
-            this.lbl_offset.Location = new System.Drawing.Point(6, 19);
-            this.lbl_offset.Name = "lbl_offset";
-            this.lbl_offset.Size = new System.Drawing.Size(42, 15);
-            this.lbl_offset.TabIndex = 2;
-            this.lbl_offset.Text = "Offset:";
-            // 
-            // num_offset
-            // 
-            this.num_offset.Hexadecimal = true;
-            this.num_offset.Location = new System.Drawing.Point(54, 17);
-            this.num_offset.Maximum = new decimal(new int[] {
-            8000000,
-            0,
-            0,
-            0});
-            this.num_offset.Name = "num_offset";
-            this.num_offset.Size = new System.Drawing.Size(59, 23);
-            this.num_offset.TabIndex = 1;
-            // 
-            // chb_bank_offset
-            // 
-            this.chb_bank_offset.AutoSize = true;
-            this.chb_bank_offset.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chb_bank_offset.Location = new System.Drawing.Point(6, 49);
-            this.chb_bank_offset.Name = "chb_bank_offset";
-            this.chb_bank_offset.Size = new System.Drawing.Size(79, 19);
-            this.chb_bank_offset.TabIndex = 0;
-            this.chb_bank_offset.Text = "Use Banks";
-            this.chb_bank_offset.UseVisualStyleBackColor = true;
-            this.chb_bank_offset.CheckedChanged += new System.EventHandler(this.chb_bank_offset_CheckedChanged);
             // 
             // statusStrip1
             // 
@@ -168,75 +52,126 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // txb_raw_data
+            // grp_data_selection
             // 
-            this.txb_raw_data.BackColor = System.Drawing.SystemColors.Control;
-            this.txb_raw_data.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txb_raw_data.Location = new System.Drawing.Point(9, 22);
-            this.txb_raw_data.Multiline = true;
-            this.txb_raw_data.Name = "txb_raw_data";
-            this.txb_raw_data.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txb_raw_data.Size = new System.Drawing.Size(833, 441);
-            this.txb_raw_data.TabIndex = 2;
+            this.grp_data_selection.Controls.Add(this.btn_view);
+            this.grp_data_selection.Controls.Add(this.txb_length);
+            this.grp_data_selection.Controls.Add(this.lbl_length);
+            this.grp_data_selection.Controls.Add(this.txb_offset);
+            this.grp_data_selection.Controls.Add(this.lbl_offset);
+            this.grp_data_selection.Location = new System.Drawing.Point(12, 12);
+            this.grp_data_selection.Margin = new System.Windows.Forms.Padding(3, 3, 3, 1);
+            this.grp_data_selection.Name = "grp_data_selection";
+            this.grp_data_selection.Size = new System.Drawing.Size(165, 110);
+            this.grp_data_selection.TabIndex = 2;
+            this.grp_data_selection.TabStop = false;
+            this.grp_data_selection.Text = "Data Selector";
             // 
-            // grp_raw_data
+            // btn_view
             // 
-            this.grp_raw_data.Controls.Add(this.btn_rewrite);
-            this.grp_raw_data.Controls.Add(this.txb_raw_data);
-            this.grp_raw_data.Location = new System.Drawing.Point(12, 127);
-            this.grp_raw_data.Name = "grp_raw_data";
-            this.grp_raw_data.Size = new System.Drawing.Size(848, 498);
-            this.grp_raw_data.TabIndex = 3;
-            this.grp_raw_data.TabStop = false;
-            this.grp_raw_data.Text = "Data";
+            this.btn_view.Location = new System.Drawing.Point(84, 80);
+            this.btn_view.Name = "btn_view";
+            this.btn_view.Size = new System.Drawing.Size(75, 23);
+            this.btn_view.TabIndex = 6;
+            this.btn_view.Text = "View";
+            this.btn_view.UseVisualStyleBackColor = true;
+            this.btn_view.Click += new System.EventHandler(this.btn_view_Click);
             // 
-            // btn_rewrite
+            // txb_length
             // 
-            this.btn_rewrite.Location = new System.Drawing.Point(9, 469);
-            this.btn_rewrite.Name = "btn_rewrite";
-            this.btn_rewrite.Size = new System.Drawing.Size(833, 23);
-            this.btn_rewrite.TabIndex = 4;
-            this.btn_rewrite.Text = "Write data at selected offset";
-            this.btn_rewrite.UseVisualStyleBackColor = true;
-            this.btn_rewrite.Click += new System.EventHandler(this.btn_rewrite_Click);
+            this.txb_length.Location = new System.Drawing.Point(59, 51);
+            this.txb_length.Name = "txb_length";
+            this.txb_length.Size = new System.Drawing.Size(100, 23);
+            this.txb_length.TabIndex = 5;
+            // 
+            // lbl_length
+            // 
+            this.lbl_length.AutoSize = true;
+            this.lbl_length.Location = new System.Drawing.Point(6, 54);
+            this.lbl_length.Name = "lbl_length";
+            this.lbl_length.Size = new System.Drawing.Size(47, 15);
+            this.lbl_length.TabIndex = 4;
+            this.lbl_length.Text = "Length:";
+            // 
+            // txb_offset
+            // 
+            this.txb_offset.Location = new System.Drawing.Point(59, 22);
+            this.txb_offset.Name = "txb_offset";
+            this.txb_offset.Size = new System.Drawing.Size(100, 23);
+            this.txb_offset.TabIndex = 3;
+            // 
+            // lbl_offset
+            // 
+            this.lbl_offset.AutoSize = true;
+            this.lbl_offset.Location = new System.Drawing.Point(6, 25);
+            this.lbl_offset.Name = "lbl_offset";
+            this.lbl_offset.Size = new System.Drawing.Size(42, 15);
+            this.lbl_offset.TabIndex = 0;
+            this.lbl_offset.Text = "Offset:";
+            // 
+            // grp_data
+            // 
+            this.grp_data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grp_data.Location = new System.Drawing.Point(0, 0);
+            this.grp_data.Name = "grp_data";
+            this.grp_data.Size = new System.Drawing.Size(868, 509);
+            this.grp_data.TabIndex = 3;
+            this.grp_data.TabStop = false;
+            this.grp_data.Text = "Data";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.grp_data_selection);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(868, 123);
+            this.panel1.TabIndex = 4;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.grp_data);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 123);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(868, 509);
+            this.panel2.TabIndex = 5;
             // 
             // DataViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(868, 654);
-            this.Controls.Add(this.grp_raw_data);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.grp_data_selection);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(884, 693);
             this.Name = "DataViewer";
             this.Text = "Data Viewer";
             this.grp_data_selection.ResumeLayout(false);
             this.grp_data_selection.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_length)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_bank)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_offset)).EndInit();
-            this.grp_raw_data.ResumeLayout(false);
-            this.grp_raw_data.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox grp_data_selection;
-        private System.Windows.Forms.Label lbl_length;
-        private System.Windows.Forms.Button btn_go;
-        private System.Windows.Forms.NumericUpDown num_bank;
-        private System.Windows.Forms.Label lbl_bank;
-        private System.Windows.Forms.Label lbl_offset;
-        private System.Windows.Forms.NumericUpDown num_offset;
-        private System.Windows.Forms.CheckBox chb_bank_offset;
-        private System.Windows.Forms.NumericUpDown num_length;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TextBox txb_raw_data;
-        private System.Windows.Forms.GroupBox grp_raw_data;
-        private System.Windows.Forms.Button btn_rewrite;
+        private System.Windows.Forms.GroupBox grp_data_selection;
+        private System.Windows.Forms.Button btn_view;
+        private System.Windows.Forms.TextBox txb_length;
+        private System.Windows.Forms.Label lbl_length;
+        private System.Windows.Forms.TextBox txb_offset;
+        private System.Windows.Forms.Label lbl_offset;
+        private System.Windows.Forms.GroupBox grp_data;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

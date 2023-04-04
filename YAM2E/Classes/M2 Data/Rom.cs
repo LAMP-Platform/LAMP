@@ -145,11 +145,10 @@ public class Rom
     {
         foreach (DataChunk c in Globals.DataChunks)
         {
-            Console.WriteLine("InLoop");
             if (c.DataStart.Offset <= offset && offset < c.DataStart.Offset + c.DataLength) //Read offset lies within a saved data chunk
             {
                 //return the value from the data chunk instead of the ROM
-                return c.Data[offset - c.DataStart.Offset];
+                return c.Read8(offset);
             }
         }
         return Data[offset];
@@ -165,6 +164,7 @@ public class Rom
     /// <summary>
     /// Returns len amount of ASCII characters, read from the given offset.
     /// </summary>
+    //TODO: probably wont return correct ASCII if used with DataChunk
     public string ReadAscii(int offset, int len)
     {
         byte[] text = new byte[len];
@@ -235,6 +235,7 @@ public class Rom
     /// <summary>
     /// Reads amount bytes from the offset in the ROM and writes them to dstArray
     /// </summary>
+    //TODO: Wont work with datachunks
     public void ReadBytes(int offset, byte[] dstArray, int amount)
     {
         Buffer.BlockCopy(Data, offset, dstArray, 0, amount);

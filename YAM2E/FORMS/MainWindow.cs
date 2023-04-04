@@ -87,15 +87,11 @@ public partial class MainWindow : Form
         btn_save_project.Enabled = true;
         btn_create_backup.Enabled = true;
         tool_strip_editors.Enabled = true;
-        tool_strip_tools.Visible = false;
-        grp_data_selector.Visible = true;
+        tool_strip_tools.Enabled = true;
         btn_open_tweaks_editor_image.Enabled = true;
         btn_save_rom_image.Enabled = true;
         btn_open_transition_editor_image.Enabled = true;
-        grp_main_tileset_viewer.Visible = true;
-        grp_main_room_viewer.Visible = true;
         tool_strip_view.Enabled = true;
-        grp_main_view.Visible = true;
         btn_tile_mode.Enabled = true;
         btn_tile_mode.Checked = true;
         btn_object_mode.Checked = false;
@@ -126,6 +122,8 @@ public partial class MainWindow : Form
         Room.BringToFront();
         Room.ResetSelection();
         #endregion
+
+        pnl_main_window_view.Visible = true;
     }
 
     private void UpdateTileset()
@@ -776,5 +774,9 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
+        DataChunk d = new DataChunk(new Pointer(0x3), new byte[] { 0xFF, 0xFE, 0xEF, 0x3D, 0x5F, 0x99, 0xDD, 0x69});
+        DataChunk c = new DataChunk(new Pointer(0x20), new byte[] { 0x42, 0x66, 0x88, 0x43, 0x55, 0xAB, 0xCD, 0xEF });
+        d = d.Merge(c, true);
+        Globals.DataChunks.Add(d);
     }
 }
