@@ -100,6 +100,9 @@ public partial class MainWindow : Form
         btn_compile_ROM.Enabled = true;
         btn_project_settings.Enabled = true;
         btn_open_tileset_editor.Enabled = true;
+        btn_show_objects.Enabled = true;
+        btn_show_scrolls.Enabled = true;
+        btn_show_objects.Checked = true;
 
         //Enabling either offset or tileset UI
         tls_input.setMode();
@@ -534,10 +537,10 @@ public partial class MainWindow : Form
     #region Main Events
     private void main_window_Resize(object sender, EventArgs e)
     {
-        grp_main_room_viewer.Width = this.Width - 28 - grp_main_room_viewer.Location.X;
-        grp_main_room_viewer.Height = this.Height - 64 - grp_main_room_viewer.Location.Y;
-        flw_main_room_view.Width = grp_main_room_viewer.Width - 30;
-        flw_main_room_view.Height = grp_main_room_viewer.Height - 30;
+        grp_main_room_viewer.Width = Width - 28 - grp_main_room_viewer.Location.X;
+        grp_main_room_viewer.Height = Height - 117 - grp_main_room_viewer.Location.Y;
+        //flw_main_room_view.Width = grp_main_room_viewer.Width - 30;
+        //flw_main_room_view.Height = grp_main_room_viewer.Height - 30;
     }
 
     protected override void OnFormClosing(FormClosingEventArgs e)
@@ -610,14 +613,6 @@ public partial class MainWindow : Form
 
     }
 
-    private void main_window_KeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode == Keys.F5)
-        {
-            ToggleScreenOutlines();
-        }
-    }
-
     private void btn_transition_editor_Click(object sender, EventArgs e)
         => new TransitionsEditor().Show();
 
@@ -657,12 +652,13 @@ public partial class MainWindow : Form
     private void scrollBoundariesToolStripMenuItem_Click(object sender, EventArgs e)
     {
         ToggleScrollBorders();
-        btn_show_scroll_bounds.Checked = Room.ShowScrollBorders;
+        btn_show_scrolls.Checked = btn_show_scroll_bounds.Checked = Room.ShowScrollBorders;
     }
 
     private void chb_view_objects_CheckedChanged(object sender, EventArgs e)
     {
-        if (chb_view_objects.Checked == true)
+        btn_view_show_objects.Checked = btn_show_objects.Checked = !btn_show_objects.Checked;
+        if (btn_show_objects.Checked == true)
         {
             Room.ShowObjects = true;
         }

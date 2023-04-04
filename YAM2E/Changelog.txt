@@ -1,7 +1,20 @@
-﻿Version B 3.1
+﻿Version B 4.0
+Released: XX.XX.20XX
+Changes:
+ + Data Viewer
+  -> Basic Hex Viewer of the ROM Data
+ + Toolbar Buttons
+  -> Show Objects
+  -> Show Scrolls
+Fixes:
+ # Controls all appear at once now when loading a project
+
+
+Version B 3.1
 Released: 01.04.2023
 Fixes:
  # TestROM now actually works with modified data
+
 
 Version B 3.0
 Released: 30.03.2023

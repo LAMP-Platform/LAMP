@@ -46,12 +46,15 @@ namespace LAMP
             this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
             this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
             this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btn_view_show_objects = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,9 +67,7 @@ namespace LAMP
             this.btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.grp_data_selector = new System.Windows.Forms.GroupBox();
             this.tls_input = new LAMP.Controls.Other.TilesetInput();
-            this.grp_main_area = new System.Windows.Forms.GroupBox();
             this.lbl_area_bank = new System.Windows.Forms.Label();
             this.cbb_area_bank = new System.Windows.Forms.ComboBox();
             this.tool_strip_image_buttons = new System.Windows.Forms.ToolStrip();
@@ -76,6 +77,9 @@ namespace LAMP
             this.btn_tile_mode = new System.Windows.Forms.ToolStripButton();
             this.btn_object_mode = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btn_show_objects = new System.Windows.Forms.ToolStripButton();
+            this.btn_show_scrolls = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
             this.btn_open_tileset_editor = new System.Windows.Forms.ToolStripButton();
@@ -86,8 +90,6 @@ namespace LAMP
             this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
             this.flw_main_room_view = new System.Windows.Forms.FlowLayoutPanel();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.grp_main_view = new System.Windows.Forms.GroupBox();
-            this.chb_view_objects = new System.Windows.Forms.CheckBox();
             this.ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -100,16 +102,16 @@ namespace LAMP
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTest = new System.Windows.Forms.Button();
             this.pnl_main_window_view = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-            this.grp_data_selector.SuspendLayout();
-            this.grp_main_area.SuspendLayout();
             this.tool_strip_image_buttons.SuspendLayout();
             this.sts_main_status_bar.SuspendLayout();
             this.grp_main_room_viewer.SuspendLayout();
-            this.grp_main_view.SuspendLayout();
             this.ctx_room_context_menu.SuspendLayout();
             this.pnl_main_window_view.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -253,17 +255,57 @@ namespace LAMP
             this.tool_strip_editors.AutoToolTip = false;
             this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_tweaks_editor,
-            this.btn_transition_editor,
             this.btn_screen_settings,
+            this.btn_transition_editor,
+            this.toolStripSeparator10,
             this.btn_tileset_definitions,
-            this.btn_save_editor});
+            this.toolStripSeparator11,
+            this.btn_save_editor,
+            this.btn_tweaks_editor});
             this.tool_strip_editors.Enabled = false;
             this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_strip_editors.Name = "tool_strip_editors";
             this.tool_strip_editors.ShowDropDownArrow = false;
             this.tool_strip_editors.Size = new System.Drawing.Size(47, 22);
             this.tool_strip_editors.Text = "Editors";
+            // 
+            // btn_screen_settings
+            // 
+            this.btn_screen_settings.Name = "btn_screen_settings";
+            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
+            this.btn_screen_settings.Text = "Screen Settings";
+            this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
+            // 
+            // btn_transition_editor
+            // 
+            this.btn_transition_editor.Name = "btn_transition_editor";
+            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_transition_editor.Text = "Transition Editor";
+            this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
+            // 
+            // btn_tileset_definitions
+            // 
+            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
+            this.btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
+            this.btn_tileset_definitions.Text = "Tileset Editor";
+            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
+            // 
+            // btn_save_editor
+            // 
+            this.btn_save_editor.Name = "btn_save_editor";
+            this.btn_save_editor.Size = new System.Drawing.Size(159, 22);
+            this.btn_save_editor.Text = "Save Editor";
+            this.btn_save_editor.Click += new System.EventHandler(this.btn_save_editor_Click);
             // 
             // btn_tweaks_editor
             // 
@@ -273,39 +315,12 @@ namespace LAMP
             this.btn_tweaks_editor.Visible = false;
             this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
             // 
-            // btn_transition_editor
-            // 
-            this.btn_transition_editor.Name = "btn_transition_editor";
-            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
-            this.btn_transition_editor.Text = "Transition Editor";
-            this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
-            // 
-            // btn_screen_settings
-            // 
-            this.btn_screen_settings.Name = "btn_screen_settings";
-            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
-            this.btn_screen_settings.Text = "Screen Settings";
-            this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
-            // 
-            // btn_tileset_definitions
-            // 
-            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
-            this.btn_tileset_definitions.Text = "Tileset Editor";
-            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
-            // 
-            // btn_save_editor
-            // 
-            this.btn_save_editor.Name = "btn_save_editor";
-            this.btn_save_editor.Size = new System.Drawing.Size(159, 22);
-            this.btn_save_editor.Text = "Save Editor";
-            this.btn_save_editor.Click += new System.EventHandler(this.btn_save_editor_Click);
-            // 
             // tool_strip_view
             // 
             this.tool_strip_view.AutoToolTip = false;
             this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btn_view_show_objects,
             this.btn_show_scroll_bounds,
             this.btn_show_screen_outlines,
             this.btn_show_duplicate_outlines,
@@ -319,6 +334,16 @@ namespace LAMP
             this.tool_strip_view.ShowDropDownArrow = false;
             this.tool_strip_view.Size = new System.Drawing.Size(36, 22);
             this.tool_strip_view.Text = "View";
+            // 
+            // btn_view_show_objects
+            // 
+            this.btn_view_show_objects.Checked = true;
+            this.btn_view_show_objects.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btn_view_show_objects.Name = "btn_view_show_objects";
+            this.btn_view_show_objects.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.btn_view_show_objects.Size = new System.Drawing.Size(228, 22);
+            this.btn_view_show_objects.Text = "Objects";
+            this.btn_view_show_objects.Click += new System.EventHandler(this.chb_view_objects_CheckedChanged);
             // 
             // btn_show_scroll_bounds
             // 
@@ -407,17 +432,6 @@ namespace LAMP
             this.btn_bug_report.Text = "I found a bug!!!";
             this.btn_bug_report.Click += new System.EventHandler(this.btn_bug_report_Click);
             // 
-            // grp_data_selector
-            // 
-            this.grp_data_selector.Controls.Add(this.tls_input);
-            this.grp_data_selector.Controls.Add(this.grp_main_area);
-            this.grp_data_selector.Location = new System.Drawing.Point(12, 3);
-            this.grp_data_selector.Name = "grp_data_selector";
-            this.grp_data_selector.Size = new System.Drawing.Size(180, 194);
-            this.grp_data_selector.TabIndex = 1;
-            this.grp_data_selector.TabStop = false;
-            this.grp_data_selector.Text = "Data Selector";
-            // 
             // tls_input
             // 
             this.tls_input.AutoSize = true;
@@ -425,32 +439,21 @@ namespace LAMP
             this.tls_input.BackColor = System.Drawing.SystemColors.Control;
             this.tls_input.ForceOffsets = false;
             this.tls_input.GraphicsOffset = null;
-            this.tls_input.Location = new System.Drawing.Point(6, 75);
+            this.tls_input.Location = new System.Drawing.Point(82, 78);
             this.tls_input.Margin = new System.Windows.Forms.Padding(0);
             this.tls_input.MetatilePointer = null;
             this.tls_input.MetatileTable = 0;
             this.tls_input.Name = "tls_input";
             this.tls_input.onDataChanged = null;
             this.tls_input.SelectedTileset = null;
-            this.tls_input.Size = new System.Drawing.Size(169, 112);
+            this.tls_input.Size = new System.Drawing.Size(163, 64);
             this.tls_input.TabIndex = 5;
             this.tls_input.DataChanged += new System.EventHandler(this.tls_input_OnDataChanged);
-            // 
-            // grp_main_area
-            // 
-            this.grp_main_area.Controls.Add(this.lbl_area_bank);
-            this.grp_main_area.Controls.Add(this.cbb_area_bank);
-            this.grp_main_area.Location = new System.Drawing.Point(6, 22);
-            this.grp_main_area.Name = "grp_main_area";
-            this.grp_main_area.Size = new System.Drawing.Size(166, 50);
-            this.grp_main_area.TabIndex = 4;
-            this.grp_main_area.TabStop = false;
-            this.grp_main_area.Text = "Area Data";
             // 
             // lbl_area_bank
             // 
             this.lbl_area_bank.AutoSize = true;
-            this.lbl_area_bank.Location = new System.Drawing.Point(6, 19);
+            this.lbl_area_bank.Location = new System.Drawing.Point(25, 36);
             this.lbl_area_bank.Name = "lbl_area_bank";
             this.lbl_area_bank.Size = new System.Drawing.Size(34, 15);
             this.lbl_area_bank.TabIndex = 0;
@@ -468,7 +471,7 @@ namespace LAMP
             "D",
             "E",
             "F"});
-            this.cbb_area_bank.Location = new System.Drawing.Point(103, 16);
+            this.cbb_area_bank.Location = new System.Drawing.Point(65, 33);
             this.cbb_area_bank.Name = "cbb_area_bank";
             this.cbb_area_bank.Size = new System.Drawing.Size(55, 23);
             this.cbb_area_bank.TabIndex = 2;
@@ -485,6 +488,9 @@ namespace LAMP
             this.btn_tile_mode,
             this.btn_object_mode,
             this.toolStripSeparator3,
+            this.btn_show_objects,
+            this.btn_show_scrolls,
+            this.toolStripSeparator9,
             this.btn_open_transition_editor_image,
             this.btn_open_tweaks_editor_image,
             this.btn_open_tileset_editor});
@@ -549,6 +555,33 @@ namespace LAMP
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btn_show_objects
+            // 
+            this.btn_show_objects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_show_objects.Enabled = false;
+            this.btn_show_objects.Image = ((System.Drawing.Image)(resources.GetObject("btn_show_objects.Image")));
+            this.btn_show_objects.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_show_objects.Name = "btn_show_objects";
+            this.btn_show_objects.Size = new System.Drawing.Size(23, 22);
+            this.btn_show_objects.Text = "Show Objects";
+            this.btn_show_objects.Click += new System.EventHandler(this.chb_view_objects_CheckedChanged);
+            // 
+            // btn_show_scrolls
+            // 
+            this.btn_show_scrolls.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_show_scrolls.Enabled = false;
+            this.btn_show_scrolls.Image = ((System.Drawing.Image)(resources.GetObject("btn_show_scrolls.Image")));
+            this.btn_show_scrolls.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_show_scrolls.Name = "btn_show_scrolls";
+            this.btn_show_scrolls.Size = new System.Drawing.Size(23, 22);
+            this.btn_show_scrolls.Text = "Show Scrolls";
+            this.btn_show_scrolls.Click += new System.EventHandler(this.scrollBoundariesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_open_transition_editor_image
             // 
@@ -619,7 +652,7 @@ namespace LAMP
             // 
             // grp_main_tileset_viewer
             // 
-            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(12, 203);
+            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(12, 170);
             this.grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
             this.grp_main_tileset_viewer.Size = new System.Drawing.Size(286, 150);
             this.grp_main_tileset_viewer.TabIndex = 4;
@@ -631,7 +664,7 @@ namespace LAMP
             this.grp_main_room_viewer.Controls.Add(this.flw_main_room_view);
             this.grp_main_room_viewer.Location = new System.Drawing.Point(304, 3);
             this.grp_main_room_viewer.Name = "grp_main_room_viewer";
-            this.grp_main_room_viewer.Size = new System.Drawing.Size(917, 693);
+            this.grp_main_room_viewer.Size = new System.Drawing.Size(917, 690);
             this.grp_main_room_viewer.TabIndex = 5;
             this.grp_main_room_viewer.TabStop = false;
             this.grp_main_room_viewer.Text = "Room";
@@ -639,34 +672,14 @@ namespace LAMP
             // flw_main_room_view
             // 
             this.flw_main_room_view.AutoScroll = true;
-            this.flw_main_room_view.Location = new System.Drawing.Point(12, 22);
+            this.flw_main_room_view.AutoSize = true;
+            this.flw_main_room_view.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flw_main_room_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flw_main_room_view.Location = new System.Drawing.Point(3, 19);
             this.flw_main_room_view.Name = "flw_main_room_view";
-            this.flw_main_room_view.Size = new System.Drawing.Size(899, 665);
+            this.flw_main_room_view.Padding = new System.Windows.Forms.Padding(3);
+            this.flw_main_room_view.Size = new System.Drawing.Size(911, 668);
             this.flw_main_room_view.TabIndex = 0;
-            // 
-            // grp_main_view
-            // 
-            this.grp_main_view.Controls.Add(this.chb_view_objects);
-            this.grp_main_view.Location = new System.Drawing.Point(198, 3);
-            this.grp_main_view.Name = "grp_main_view";
-            this.grp_main_view.Size = new System.Drawing.Size(100, 194);
-            this.grp_main_view.TabIndex = 6;
-            this.grp_main_view.TabStop = false;
-            this.grp_main_view.Text = "View";
-            // 
-            // chb_view_objects
-            // 
-            this.chb_view_objects.AutoSize = true;
-            this.chb_view_objects.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chb_view_objects.Checked = true;
-            this.chb_view_objects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chb_view_objects.Location = new System.Drawing.Point(17, 22);
-            this.chb_view_objects.Name = "chb_view_objects";
-            this.chb_view_objects.Size = new System.Drawing.Size(66, 19);
-            this.chb_view_objects.TabIndex = 1;
-            this.chb_view_objects.Text = "Objects";
-            this.chb_view_objects.UseVisualStyleBackColor = true;
-            this.chb_view_objects.CheckedChanged += new System.EventHandler(this.chb_view_objects_CheckedChanged);
             // 
             // ctx_room_context_menu
             // 
@@ -754,17 +767,38 @@ namespace LAMP
             // 
             // pnl_main_window_view
             // 
-            this.pnl_main_window_view.Controls.Add(this.grp_data_selector);
+            this.pnl_main_window_view.Controls.Add(this.panel1);
+            this.pnl_main_window_view.Controls.Add(this.lbl_area_bank);
+            this.pnl_main_window_view.Controls.Add(this.tls_input);
+            this.pnl_main_window_view.Controls.Add(this.cbb_area_bank);
             this.pnl_main_window_view.Controls.Add(this.grp_main_tileset_viewer);
             this.pnl_main_window_view.Controls.Add(this.btnTest);
             this.pnl_main_window_view.Controls.Add(this.grp_main_room_viewer);
-            this.pnl_main_window_view.Controls.Add(this.grp_main_view);
             this.pnl_main_window_view.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_main_window_view.Location = new System.Drawing.Point(0, 50);
             this.pnl_main_window_view.Name = "pnl_main_window_view";
             this.pnl_main_window_view.Size = new System.Drawing.Size(1233, 697);
             this.pnl_main_window_view.TabIndex = 10;
             this.pnl_main_window_view.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Location = new System.Drawing.Point(25, 410);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.panel1.Size = new System.Drawing.Size(186, 117);
+            this.panel1.TabIndex = 10;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(5, 5);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(176, 107);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
             // MainWindow
             // 
@@ -785,24 +819,20 @@ namespace LAMP
             this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.main_window_KeyDown);
             this.Resize += new System.EventHandler(this.main_window_Resize);
             this.tool_strip_main_buttons.ResumeLayout(false);
             this.tool_strip_main_buttons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-            this.grp_data_selector.ResumeLayout(false);
-            this.grp_data_selector.PerformLayout();
-            this.grp_main_area.ResumeLayout(false);
-            this.grp_main_area.PerformLayout();
             this.tool_strip_image_buttons.ResumeLayout(false);
             this.tool_strip_image_buttons.PerformLayout();
             this.sts_main_status_bar.ResumeLayout(false);
             this.sts_main_status_bar.PerformLayout();
             this.grp_main_room_viewer.ResumeLayout(false);
-            this.grp_main_view.ResumeLayout(false);
-            this.grp_main_view.PerformLayout();
+            this.grp_main_room_viewer.PerformLayout();
             this.ctx_room_context_menu.ResumeLayout(false);
             this.pnl_main_window_view.ResumeLayout(false);
+            this.pnl_main_window_view.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -818,7 +848,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_create_backup;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.GroupBox grp_data_selector;
         private System.Windows.Forms.ComboBox cbb_area_bank;
         private System.Windows.Forms.Label lbl_area_bank;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_editors;
@@ -829,7 +858,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btn_open_tweaks_editor_image;
         private System.Windows.Forms.StatusStrip sts_main_status_bar;
-        private System.Windows.Forms.GroupBox grp_main_area;
         private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_selection_size;
         private System.Windows.Forms.GroupBox grp_main_room_viewer;
@@ -841,11 +869,9 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_view;
         private System.Windows.Forms.ToolStripMenuItem btn_show_screen_outlines;
         private System.Windows.Forms.ToolStripMenuItem btn_screen_settings;
-        private System.Windows.Forms.GroupBox grp_main_view;
         private System.Windows.Forms.ToolStripButton btn_tile_mode;
         private System.Windows.Forms.ToolStripButton btn_object_mode;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.CheckBox chb_view_objects;
         private System.Windows.Forms.ContextMenuStrip ctx_room_context_menu;
         private System.Windows.Forms.ToolStripMenuItem ctx_btn_screen_settings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
@@ -879,6 +905,14 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_save_editor;
         private System.Windows.Forms.ToolStripMenuItem btn_bug_report;
         private System.Windows.Forms.Panel pnl_main_window_view;
+        private System.Windows.Forms.ToolStripButton btn_show_objects;
+        private System.Windows.Forms.ToolStripButton btn_show_scrolls;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem btn_view_show_objects;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

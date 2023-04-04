@@ -56,13 +56,13 @@ namespace LAMP.Controls.Other
         {
             if (Globals.LoadedProject == null || Globals.LoadedProject.useTilesets != true || Globals.Tilesets.Count < 1 || ForceOffsets)
             {
-                grp_tileset_tilesets.Visible = false;
-                grp_tileset_offset.Visible = true;
+                pnl_tilesets.Visible = false;
+                pnl_offsets.Visible = true;
             }
             else
             {
-                grp_tileset_offset.Visible = false;
-                grp_tileset_tilesets.Visible = true;
+                pnl_offsets.Visible = false;
+                pnl_tilesets.Visible = true;
                 populateTilesets();
             }
         }

@@ -175,6 +175,7 @@ public class RoomViewer : Control
 
     protected override void OnPaintBackground(PaintEventArgs pevent)
     {
+        pevent.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
         pevent.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
         base.OnPaintBackground(pevent);
     }
