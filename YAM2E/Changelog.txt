@@ -12,7 +12,7 @@ Changes:
   -> Show Scrolls
 Fixes:
  # Controls all appear at once now when loading a project
-
+ # Selected tiles in the room would continuesly reselect
 
 Version B 3.1
 Released: 01.04.2023

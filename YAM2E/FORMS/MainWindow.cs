@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using LAMP.Utilities;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Linq;
+using Microsoft.VisualBasic.Devices;
 
 namespace LAMP;
 
@@ -567,7 +568,7 @@ public partial class MainWindow : Form
             Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
             heldObject = null;
         }
-        UpdateSelectedTiles();
+        if (e.Button == MouseButtons.Right) UpdateSelectedTiles();
     }
 
     #endregion
@@ -592,14 +593,57 @@ public partial class MainWindow : Form
 
         switch (e.KeyCode)
         {
+            //QuickTest
             case Keys.T:
                 SetTestSaveValues();
                 Editor.QuickTest();
                 break;
+
+            //Quick object delete
             case Keys.Delete:
                 Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
                 break;
+
             //TODO: some keybind to quickly edit scrolls
+
+            //Copying tiles
+            case Keys.C:
+                if (e.Modifiers == Keys.Control)
+                {
+                    //copy currently selected tiles
+                    TileSelection sel = new TileSelection(Editor.SelectionWidth, Editor.SelectionHeight, Editor.SelectedTiles);
+
+                    DataObject data = new DataObject();
+                    data.SetData(typeof(TileSelection), sel);
+                    Clipboard.SetDataObject(data, true);
+                }
+                break;
+
+            //Pasting tiles
+            case Keys.V:
+                if (e.Modifiers == Keys.Control)
+                {
+                    DataObject retrievedData = Clipboard.GetDataObject() as DataObject;
+
+                    if (retrievedData == null || !retrievedData.GetDataPresent(typeof(TileSelection))) return;
+
+                    TileSelection sel = retrievedData.GetData(typeof(TileSelection)) as TileSelection;
+                    Editor.SelectedTiles = sel.Tiles;
+                    Editor.SelectionHeight = sel.SelectionHeight;
+                    Editor.SelectionWidth = sel.SelectionWidth;
+                    RoomSelectedSize.Height = sel.SelectionHeight * 16 - 1;
+                    RoomSelectedSize.Width = sel.SelectionWidth * 16 - 1;
+
+                    Rectangle rect = Room.RedRect; //old Position of the rectangle
+                    Room.RedRect = new Rectangle(RoomSelectedTile.X, RoomSelectedTile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
+                    Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
+                    unirect.X -= 1;
+                    unirect.Y -= 1;
+                    unirect.Width += 2;
+                    unirect.Height += 2;
+                    Room.Invalidate(unirect);
+                }
+                break;
         }
     }
 
