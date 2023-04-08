@@ -62,8 +62,8 @@ public partial class MainWindow : Form
         //Adding custom controls
         #region Tileset
         Controls.Add(Tileset);
-        grp_main_tileset_viewer.Controls.Add(Tileset);
-        Tileset.Location = new Point(15, 20);
+        flw_tileset_view.Controls.Add(Tileset);
+        Tileset.Location = new Point(0, 0);
         Tileset.BackColor = Globals.ColorBlack;
         Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
         Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
@@ -141,7 +141,6 @@ public partial class MainWindow : Form
         Globals.Tileset.Dispose();
         Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8, true);
         Tileset.BackgroundImage = Globals.Tileset;
-        grp_main_tileset_viewer.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
 
     private void UpdateRoom()
@@ -156,32 +155,34 @@ public partial class MainWindow : Form
 
     private void UpdateSelectedTiles()
     {
-        if (TilesetSelected)
+        if (TilesetSelected) //Grabbing Tiles from the Tileset view
         {
-            RoomSelectedSize = new Size(Tileset.SelRect.Width, Tileset.SelRect.Height);
-            int x = Tileset.SelRect.X / 16;
-            int y = Tileset.SelRect.Y / 16;
-            int width = (Tileset.SelRect.Width + 1) / 16;
-            int height = (Tileset.SelRect.Height + 1) / 16;
+            int tileWidth = 16 * Tileset.Zoom;
+
+            RoomSelectedSize = new Size(Tileset.SelRect.Width / Tileset.Zoom, Tileset.SelRect.Height / Tileset.Zoom);
+            int x = Tileset.SelRect.X / tileWidth;
+            int y = Tileset.SelRect.Y / tileWidth;
+            int width = (Tileset.SelRect.Width + 1) / tileWidth;
+            int height = (Tileset.SelRect.Height + 1) / tileWidth;
             Editor.SelectionWidth = width;
             Editor.SelectionHeight = height;
             lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
 
             //returns the selected Metatile offsets
-            int tiles_width = Tileset.BackgroundImage.Width / 16;
+            int tilesWide = Tileset.BackgroundImage.Width / 16;
             Editor.SelectedTiles = new byte[width * height];
             int count = 0;
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    int val = (y + i) * tiles_width + j + x;
+                    int val = (y + i) * tilesWide + j + x;
                     Editor.SelectedTiles[count] = (byte)val;
                     count++;
                 }
             }
         }
-        else
+        else //Grabbing tiles from the Room view
         {
             RoomSelectedSize = new Size(Room.SelRect.Width, Room.SelRect.Height);
             int x = Room.SelRect.X;
@@ -324,34 +325,71 @@ public partial class MainWindow : Form
         tls_input.populateTilesets();
     }
 
+    private void SetTestSaveValues()
+    {
+        Save s = Globals.TestROMSave;
+
+        if (Globals.LoadedProject.useTilesets == true && Globals.Tilesets.Count >= 1)
+        {
+            s.setTilesetID(tls_input.SelectedTileset);
+        }
+        else
+        {
+            s.TilesetUsed = -1;
+
+            //setting data manually
+            s.TileGraphics = tls_input.GraphicsOffset;
+            s.MetatileData = tls_input.MetatilePointer;
+            s.MetatileTable = tls_input.MetatileTable;
+        }
+
+        //populating the rest of data
+        //Position
+        s.MapBank = (byte)(cbb_area_bank.SelectedIndex); // +9 because the Game expects the actual bank and nost just an index
+        s.CamScreenX = s.SamusScreenX = (byte)(RoomSelectedTile.X / 256);
+        s.CamScreenY = s.SamusScreenY = (byte)(RoomSelectedTile.Y / 256);
+        s.CamX = s.SamusX = (byte)RoomSelectedTile.X;
+        s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
+    }
+
     #region Main Window Events
 
     #region Tileset Events
     private void Tileset_MouseDown(object sender, MouseEventArgs e)
     {
+        int tileWidth = (16 * Tileset.Zoom);
+
         ToggleSelectionFocus(true);
-        int x = (e.X >> 4) * 16; //tile position at moment of click
-        int y = (e.Y >> 4) * 16; //
+
+        int x = (e.X / tileWidth) * tileWidth; //tile position at moment of click
+        int y = (e.Y / tileWidth) * tileWidth; //
+
         //setting start position for selection
         StartSelection.X = x;
         StartSelection.Y = y;
+
         Rectangle rect = Tileset.SelRect; //old selection rectangle
-        Tileset.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
+        Tileset.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, tileWidth - 1, tileWidth - 1);
         Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
     }
 
     private void Tileset_MouseMove(object sender, MouseEventArgs e)
     {
-        int x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
-        int y = (e.Y >> 4) * 16; //
-        if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width - 16 || y > Tileset.BackgroundImage.Height - 16)) //if mouse out of Tileset bounds
+        int tileWidth = (16 * Tileset.Zoom);
+
+        int x = (e.X / tileWidth) * tileWidth; //locks position of mouse to edge of tiles
+        int y = (e.Y / tileWidth) * tileWidth; //
+
+        if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width * Tileset.Zoom - tileWidth || y > Tileset.BackgroundImage.Height * Tileset.Zoom - tileWidth)) //if mouse out of Tileset bounds
             return;
+
         TilesetSelectedTile.X = x;
         TilesetSelectedTile.Y = y;
+
         if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
         {
-            int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
-            int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+            int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + tileWidth - 1; //Width and Height of the Selection
+            int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + tileWidth - 1;//
 
             Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
             Rectangle rect = Tileset.SelRect; //old selection rectangle
@@ -363,7 +401,7 @@ public partial class MainWindow : Form
         else
         {
             Rectangle rect = Tileset.RedRect; //old Position of the rectangle
-            Tileset.RedRect = new Rectangle(TilesetSelectedTile.X, TilesetSelectedTile.Y, 16 - 1, 16 - 1);
+            Tileset.RedRect = new Rectangle(TilesetSelectedTile.X, TilesetSelectedTile.Y, tileWidth - 1, tileWidth - 1);
             Tileset.Invalidate(Editor.UniteRect(Tileset.RedRect, rect));
         }
 
@@ -535,13 +573,6 @@ public partial class MainWindow : Form
     #endregion
 
     #region Main Events
-    private void main_window_Resize(object sender, EventArgs e)
-    {
-        grp_main_room_viewer.Width = Width - 28 - grp_main_room_viewer.Location.X;
-        grp_main_room_viewer.Height = Height - 117 - grp_main_room_viewer.Location.Y;
-        //flw_main_room_view.Width = grp_main_room_viewer.Width - 30;
-        //flw_main_room_view.Height = grp_main_room_viewer.Height - 30;
-    }
 
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
@@ -553,6 +584,23 @@ public partial class MainWindow : Form
 
         if (r == DialogResult.Yes) Editor.SaveProject();
         e.Cancel = (r == DialogResult.Cancel);
+    }
+
+    private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (Globals.LoadedProject == null) return;
+
+        switch (e.KeyCode)
+        {
+            case Keys.T:
+                SetTestSaveValues();
+                Editor.QuickTest();
+                break;
+            case Keys.Delete:
+                Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+                break;
+            //TODO: some keybind to quickly edit scrolls
+        }
     }
 
     private void btn_open_rom_Click(object sender, EventArgs e)
@@ -606,11 +654,6 @@ public partial class MainWindow : Form
         flw_main_room_view.HorizontalScroll.Value = 0;
 
         UpdateRoom();
-    }
-
-    private void main_window_Load(object sender, EventArgs e)
-    {
-
     }
 
     private void btn_transition_editor_Click(object sender, EventArgs e)
@@ -683,31 +726,9 @@ public partial class MainWindow : Form
 
     private void ctx_btn_test_here_Click(object sender, EventArgs e)
     {
-        Save s = Globals.TestROMSave;
+        SetTestSaveValues();
 
-        if (Globals.LoadedProject.useTilesets == true && Globals.Tilesets.Count >= 1)
-        {
-            s.setTilesetID(tls_input.SelectedTileset);
-        }
-        else
-        {
-            s.TilesetUsed = -1;
-
-            //setting data manually
-            s.TileGraphics = tls_input.GraphicsOffset;
-            s.MetatileData = tls_input.MetatilePointer;
-            s.MetatileTable = tls_input.MetatileTable;
-        }
-
-        //populating the rest of data
-        //Position
-        s.MapBank = (byte)(cbb_area_bank.SelectedIndex); // +9 because the Game expects the actual bank and nost just an index
-        s.CamScreenX = s.SamusScreenX = (byte)(RoomSelectedTile.X / 256);
-        s.CamScreenY = s.SamusScreenY = (byte)(RoomSelectedTile.Y / 256);
-        s.CamX = s.SamusX = (byte)RoomSelectedTile.X;
-        s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
-
-        new TestRom(s).Show();
+        new TestRom(Globals.TestROMSave).Show();
     }
 
     private void ctx_btn_add_object_Click(object sender, EventArgs e)
@@ -770,9 +791,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        DataChunk d = new DataChunk(new Pointer(0x3), new byte[] { 0xFF, 0xFE, 0xEF, 0x3D, 0x5F, 0x99, 0xDD, 0x69});
-        DataChunk c = new DataChunk(new Pointer(0x20), new byte[] { 0x42, 0x66, 0x88, 0x43, 0x55, 0xAB, 0xCD, 0xEF });
-        d = d.Merge(c, true);
-        Globals.DataChunks.Add(d);
+        Tileset.Zoom = 2;
     }
 }

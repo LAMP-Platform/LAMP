@@ -114,6 +114,7 @@
             // 
             // cbb_solidity_table
             // 
+            this.cbb_solidity_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_solidity_table.FormattingEnabled = true;
             this.cbb_solidity_table.Items.AddRange(new object[] {
             "0",
@@ -140,6 +141,7 @@
             // 
             // cbb_collision_table
             // 
+            this.cbb_collision_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_collision_table.FormattingEnabled = true;
             this.cbb_collision_table.Items.AddRange(new object[] {
             "0",
@@ -182,6 +184,7 @@
             // 
             // cbb_metatile_table
             // 
+            this.cbb_metatile_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_metatile_table.FormattingEnabled = true;
             this.cbb_metatile_table.Items.AddRange(new object[] {
             "0",
@@ -211,6 +214,7 @@
             // 
             // cbb_tileset_id
             // 
+            this.cbb_tileset_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_tileset_id.FormattingEnabled = true;
             this.cbb_tileset_id.Location = new System.Drawing.Point(103, 16);
             this.cbb_tileset_id.Name = "cbb_tileset_id";

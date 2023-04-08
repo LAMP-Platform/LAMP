@@ -55,6 +55,10 @@
             this.lbl_samus_screen_x = new System.Windows.Forms.Label();
             this.lbl_samus_screen_y = new System.Windows.Forms.Label();
             this.grp_level_data = new System.Windows.Forms.GroupBox();
+            this.grp_graphics = new System.Windows.Forms.GroupBox();
+            this.tls_tileset_input = new LAMP.Controls.Other.TilesetInput();
+            this.lbl_sprite_graphics = new System.Windows.Forms.Label();
+            this.txb_sprite_graphics = new System.Windows.Forms.TextBox();
             this.grp_misc = new System.Windows.Forms.GroupBox();
             this.txb_spike_damage = new System.Windows.Forms.TextBox();
             this.lbl_spike_damage = new System.Windows.Forms.Label();
@@ -67,9 +71,6 @@
             this.lbl_collision_table = new System.Windows.Forms.Label();
             this.cbb_solidity = new System.Windows.Forms.ComboBox();
             this.lbl_solidity_table = new System.Windows.Forms.Label();
-            this.txb_sprite_graphics = new System.Windows.Forms.TextBox();
-            this.lbl_sprite_graphics = new System.Windows.Forms.Label();
-            this.tls_tileset_input = new LAMP.Controls.Other.TilesetInput();
             this.grp_misc_data = new System.Windows.Forms.GroupBox();
             this.txb_metroids = new System.Windows.Forms.TextBox();
             this.txb_missiles = new System.Windows.Forms.TextBox();
@@ -102,6 +103,7 @@
             this.grp_cam.SuspendLayout();
             this.grp_samus.SuspendLayout();
             this.grp_level_data.SuspendLayout();
+            this.grp_graphics.SuspendLayout();
             this.grp_misc.SuspendLayout();
             this.grp_more_data.SuspendLayout();
             this.grp_misc_data.SuspendLayout();
@@ -356,15 +358,68 @@
             // 
             // grp_level_data
             // 
+            this.grp_level_data.Controls.Add(this.grp_graphics);
             this.grp_level_data.Controls.Add(this.grp_misc);
             this.grp_level_data.Controls.Add(this.grp_more_data);
-            this.grp_level_data.Controls.Add(this.tls_tileset_input);
             this.grp_level_data.Location = new System.Drawing.Point(6, 227);
             this.grp_level_data.Name = "grp_level_data";
             this.grp_level_data.Size = new System.Drawing.Size(528, 137);
             this.grp_level_data.TabIndex = 5;
             this.grp_level_data.TabStop = false;
             this.grp_level_data.Text = "Advanced";
+            // 
+            // grp_graphics
+            // 
+            this.grp_graphics.Controls.Add(this.tls_tileset_input);
+            this.grp_graphics.Controls.Add(this.lbl_sprite_graphics);
+            this.grp_graphics.Controls.Add(this.txb_sprite_graphics);
+            this.grp_graphics.Location = new System.Drawing.Point(6, 22);
+            this.grp_graphics.Name = "grp_graphics";
+            this.grp_graphics.Size = new System.Drawing.Size(198, 109);
+            this.grp_graphics.TabIndex = 9;
+            this.grp_graphics.TabStop = false;
+            this.grp_graphics.Text = "Graphics";
+            // 
+            // tls_tileset_input
+            // 
+            this.tls_tileset_input.AutoSize = true;
+            this.tls_tileset_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tls_tileset_input.BackColor = System.Drawing.SystemColors.Control;
+            this.tls_tileset_input.ForceOffsets = false;
+            this.tls_tileset_input.GraphicsOffset = null;
+            this.tls_tileset_input.Location = new System.Drawing.Point(6, 50);
+            this.tls_tileset_input.Margin = new System.Windows.Forms.Padding(0);
+            this.tls_tileset_input.MetatilePointer = null;
+            this.tls_tileset_input.MetatileTable = 0;
+            this.tls_tileset_input.Name = "tls_tileset_input";
+            this.tls_tileset_input.onDataChanged = null;
+            this.tls_tileset_input.SelectedTileset = null;
+            this.tls_tileset_input.Size = new System.Drawing.Size(186, 52);
+            this.tls_tileset_input.TabIndex = 4;
+            this.tls_tileset_input.DataChanged += new System.EventHandler(this.tls_tileset_input_DataChanged);
+            // 
+            // lbl_sprite_graphics
+            // 
+            this.lbl_sprite_graphics.AutoSize = true;
+            this.lbl_sprite_graphics.Location = new System.Drawing.Point(6, 24);
+            this.lbl_sprite_graphics.Name = "lbl_sprite_graphics";
+            this.lbl_sprite_graphics.Size = new System.Drawing.Size(124, 15);
+            this.lbl_sprite_graphics.TabIndex = 0;
+            this.lbl_sprite_graphics.Text = "Sprite Graphics Offset:";
+            this.tlt_bank_tip.SetToolTip(this.lbl_sprite_graphics, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
+        "ffset in Bank 6!");
+            // 
+            // txb_sprite_graphics
+            // 
+            this.txb_sprite_graphics.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txb_sprite_graphics.Location = new System.Drawing.Point(137, 21);
+            this.txb_sprite_graphics.Name = "txb_sprite_graphics";
+            this.txb_sprite_graphics.Size = new System.Drawing.Size(55, 23);
+            this.txb_sprite_graphics.TabIndex = 1;
+            this.txb_sprite_graphics.Text = "0x7420";
+            this.tlt_bank_tip.SetToolTip(this.txb_sprite_graphics, "Sprite Graphics will always be loaded from Bank 8!\r\n");
+            this.txb_sprite_graphics.TextChanged += new System.EventHandler(this.txb_sprite_graphics_TextChanged);
+            this.txb_sprite_graphics.Leave += new System.EventHandler(this.txb_leave);
             // 
             // grp_misc
             // 
@@ -428,6 +483,7 @@
             // 
             // cbb_area_bank
             // 
+            this.cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_area_bank.FormattingEnabled = true;
             this.cbb_area_bank.Items.AddRange(new object[] {
             "9",
@@ -449,17 +505,16 @@
             this.grp_more_data.Controls.Add(this.lbl_collision_table);
             this.grp_more_data.Controls.Add(this.cbb_solidity);
             this.grp_more_data.Controls.Add(this.lbl_solidity_table);
-            this.grp_more_data.Controls.Add(this.txb_sprite_graphics);
-            this.grp_more_data.Controls.Add(this.lbl_sprite_graphics);
-            this.grp_more_data.Location = new System.Drawing.Point(181, 22);
+            this.grp_more_data.Location = new System.Drawing.Point(210, 22);
             this.grp_more_data.Name = "grp_more_data";
-            this.grp_more_data.Size = new System.Drawing.Size(188, 109);
+            this.grp_more_data.Size = new System.Drawing.Size(159, 109);
             this.grp_more_data.TabIndex = 7;
             this.grp_more_data.TabStop = false;
             this.grp_more_data.Text = "Collision and Sprites";
             // 
             // cbb_collision_table
             // 
+            this.cbb_collision_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_collision_table.FormattingEnabled = true;
             this.cbb_collision_table.Items.AddRange(new object[] {
             "0",
@@ -470,16 +525,16 @@
             "5",
             "6",
             "7"});
-            this.cbb_collision_table.Location = new System.Drawing.Point(136, 45);
+            this.cbb_collision_table.Location = new System.Drawing.Point(101, 21);
             this.cbb_collision_table.Name = "cbb_collision_table";
-            this.cbb_collision_table.Size = new System.Drawing.Size(43, 23);
+            this.cbb_collision_table.Size = new System.Drawing.Size(49, 23);
             this.cbb_collision_table.TabIndex = 9;
             this.cbb_collision_table.SelectedIndexChanged += new System.EventHandler(this.cbb_collision_table_SelectedIndexChanged);
             // 
             // lbl_collision_table
             // 
             this.lbl_collision_table.AutoSize = true;
-            this.lbl_collision_table.Location = new System.Drawing.Point(6, 48);
+            this.lbl_collision_table.Location = new System.Drawing.Point(6, 24);
             this.lbl_collision_table.Name = "lbl_collision_table";
             this.lbl_collision_table.Size = new System.Drawing.Size(86, 15);
             this.lbl_collision_table.TabIndex = 8;
@@ -489,6 +544,7 @@
             // 
             // cbb_solidity
             // 
+            this.cbb_solidity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbb_solidity.FormattingEnabled = true;
             this.cbb_solidity.Items.AddRange(new object[] {
             "0",
@@ -499,59 +555,22 @@
             "5",
             "6",
             "7"});
-            this.cbb_solidity.Location = new System.Drawing.Point(136, 74);
+            this.cbb_solidity.Location = new System.Drawing.Point(101, 50);
             this.cbb_solidity.Name = "cbb_solidity";
-            this.cbb_solidity.Size = new System.Drawing.Size(43, 23);
+            this.cbb_solidity.Size = new System.Drawing.Size(49, 23);
             this.cbb_solidity.TabIndex = 7;
             this.cbb_solidity.SelectedIndexChanged += new System.EventHandler(this.cbb_solidity_SelectedIndexChanged);
             // 
             // lbl_solidity_table
             // 
             this.lbl_solidity_table.AutoSize = true;
-            this.lbl_solidity_table.Location = new System.Drawing.Point(6, 77);
+            this.lbl_solidity_table.Location = new System.Drawing.Point(6, 53);
             this.lbl_solidity_table.Name = "lbl_solidity_table";
             this.lbl_solidity_table.Size = new System.Drawing.Size(89, 15);
             this.lbl_solidity_table.TabIndex = 2;
             this.lbl_solidity_table.Text = "Solidity Indices:";
             this.tlt_bank_tip.SetToolTip(this.lbl_solidity_table, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
         "ffset in Bank 6!");
-            // 
-            // txb_sprite_graphics
-            // 
-            this.txb_sprite_graphics.Location = new System.Drawing.Point(136, 16);
-            this.txb_sprite_graphics.Name = "txb_sprite_graphics";
-            this.txb_sprite_graphics.Size = new System.Drawing.Size(43, 23);
-            this.txb_sprite_graphics.TabIndex = 1;
-            this.txb_sprite_graphics.Text = "0x7420";
-            this.tlt_bank_tip.SetToolTip(this.txb_sprite_graphics, "Sprite Graphics will always be loaded from Bank 8!\r\n");
-            this.txb_sprite_graphics.TextChanged += new System.EventHandler(this.txb_sprite_graphics_TextChanged);
-            this.txb_sprite_graphics.Leave += new System.EventHandler(this.txb_leave);
-            // 
-            // lbl_sprite_graphics
-            // 
-            this.lbl_sprite_graphics.AutoSize = true;
-            this.lbl_sprite_graphics.Location = new System.Drawing.Point(6, 19);
-            this.lbl_sprite_graphics.Name = "lbl_sprite_graphics";
-            this.lbl_sprite_graphics.Size = new System.Drawing.Size(124, 15);
-            this.lbl_sprite_graphics.TabIndex = 0;
-            this.lbl_sprite_graphics.Text = "Sprite Graphics Offset:";
-            this.tlt_bank_tip.SetToolTip(this.lbl_sprite_graphics, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
-        "ffset in Bank 6!");
-            // 
-            // tls_tileset_input
-            // 
-            this.tls_tileset_input.BackColor = System.Drawing.SystemColors.Control;
-            this.tls_tileset_input.ForceOffsets = false;
-            this.tls_tileset_input.GraphicsOffset = null;
-            this.tls_tileset_input.Location = new System.Drawing.Point(6, 19);
-            this.tls_tileset_input.Margin = new System.Windows.Forms.Padding(0);
-            this.tls_tileset_input.MetatilePointer = null;
-            this.tls_tileset_input.Name = "tls_tileset_input";
-            this.tls_tileset_input.onDataChanged = null;
-            this.tls_tileset_input.SelectedTileset = null;
-            this.tls_tileset_input.Size = new System.Drawing.Size(169, 112);
-            this.tls_tileset_input.TabIndex = 4;
-            this.tls_tileset_input.DataChanged += new System.EventHandler(this.tls_tileset_input_DataChanged);
             // 
             // grp_misc_data
             // 
@@ -862,6 +881,8 @@
             this.grp_samus.ResumeLayout(false);
             this.grp_samus.PerformLayout();
             this.grp_level_data.ResumeLayout(false);
+            this.grp_graphics.ResumeLayout(false);
+            this.grp_graphics.PerformLayout();
             this.grp_misc.ResumeLayout(false);
             this.grp_misc.PerformLayout();
             this.grp_more_data.ResumeLayout(false);
@@ -945,5 +966,6 @@
         private System.Windows.Forms.TextBox txb_missiles;
         private System.Windows.Forms.TextBox txb_max_missiles;
         private System.Windows.Forms.TextBox txb_energy;
+        private System.Windows.Forms.GroupBox grp_graphics;
     }
 }

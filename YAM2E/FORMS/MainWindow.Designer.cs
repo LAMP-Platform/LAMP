@@ -87,6 +87,7 @@ namespace LAMP
             this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
             this.grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
+            this.flw_tileset_view = new System.Windows.Forms.FlowLayoutPanel();
             this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
             this.flw_main_room_view = new System.Windows.Forms.FlowLayoutPanel();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
@@ -101,17 +102,29 @@ namespace LAMP
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
             this.btnTest = new System.Windows.Forms.Button();
-            this.pnl_main_window_view = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pnl_main_window_view = new System.Windows.Forms.SplitContainer();
+            this.pnl_tileset = new System.Windows.Forms.Panel();
+            this.pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
+            this.pnl_data_selection = new System.Windows.Forms.Panel();
+            this.grp_data_selector = new System.Windows.Forms.GroupBox();
             this.tool_strip_main_buttons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tool_strip_image_buttons.SuspendLayout();
             this.sts_main_status_bar.SuspendLayout();
+            this.grp_main_tileset_viewer.SuspendLayout();
             this.grp_main_room_viewer.SuspendLayout();
             this.ctx_room_context_menu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pnl_main_window_view)).BeginInit();
+            this.pnl_main_window_view.Panel1.SuspendLayout();
+            this.pnl_main_window_view.Panel2.SuspendLayout();
             this.pnl_main_window_view.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pnl_tileset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pnl_tileset_resize)).BeginInit();
+            this.pnl_tileset_resize.Panel1.SuspendLayout();
+            this.pnl_tileset_resize.Panel2.SuspendLayout();
+            this.pnl_tileset_resize.SuspendLayout();
+            this.pnl_data_selection.SuspendLayout();
+            this.grp_data_selector.SuspendLayout();
             this.SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -128,7 +141,7 @@ namespace LAMP
             this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1233, 25);
+            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1218, 25);
             this.tool_strip_main_buttons.TabIndex = 0;
             this.tool_strip_main_buttons.Text = "toolStrip2";
             // 
@@ -439,21 +452,21 @@ namespace LAMP
             this.tls_input.BackColor = System.Drawing.SystemColors.Control;
             this.tls_input.ForceOffsets = false;
             this.tls_input.GraphicsOffset = null;
-            this.tls_input.Location = new System.Drawing.Point(82, 78);
-            this.tls_input.Margin = new System.Windows.Forms.Padding(0);
+            this.tls_input.Location = new System.Drawing.Point(9, 51);
             this.tls_input.MetatilePointer = null;
             this.tls_input.MetatileTable = 0;
             this.tls_input.Name = "tls_input";
             this.tls_input.onDataChanged = null;
             this.tls_input.SelectedTileset = null;
-            this.tls_input.Size = new System.Drawing.Size(163, 64);
+            this.tls_input.Size = new System.Drawing.Size(152, 52);
             this.tls_input.TabIndex = 5;
             this.tls_input.DataChanged += new System.EventHandler(this.tls_input_OnDataChanged);
             // 
             // lbl_area_bank
             // 
             this.lbl_area_bank.AutoSize = true;
-            this.lbl_area_bank.Location = new System.Drawing.Point(25, 36);
+            this.lbl_area_bank.Location = new System.Drawing.Point(9, 25);
+            this.lbl_area_bank.Margin = new System.Windows.Forms.Padding(3);
             this.lbl_area_bank.Name = "lbl_area_bank";
             this.lbl_area_bank.Size = new System.Drawing.Size(34, 15);
             this.lbl_area_bank.TabIndex = 0;
@@ -471,7 +484,7 @@ namespace LAMP
             "D",
             "E",
             "F"});
-            this.cbb_area_bank.Location = new System.Drawing.Point(65, 33);
+            this.cbb_area_bank.Location = new System.Drawing.Point(106, 22);
             this.cbb_area_bank.Name = "cbb_area_bank";
             this.cbb_area_bank.Size = new System.Drawing.Size(55, 23);
             this.cbb_area_bank.TabIndex = 2;
@@ -496,7 +509,7 @@ namespace LAMP
             this.btn_open_tileset_editor});
             this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
-            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1233, 25);
+            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1218, 25);
             this.tool_strip_image_buttons.TabIndex = 2;
             this.tool_strip_image_buttons.Text = "toolStrip1";
             // 
@@ -626,7 +639,7 @@ namespace LAMP
             this.lbl_main_hovered_screen});
             this.sts_main_status_bar.Location = new System.Drawing.Point(0, 747);
             this.sts_main_status_bar.Name = "sts_main_status_bar";
-            this.sts_main_status_bar.Size = new System.Drawing.Size(1233, 24);
+            this.sts_main_status_bar.Size = new System.Drawing.Size(1218, 24);
             this.sts_main_status_bar.TabIndex = 3;
             this.sts_main_status_bar.Text = "statusStrip1";
             // 
@@ -652,19 +665,31 @@ namespace LAMP
             // 
             // grp_main_tileset_viewer
             // 
-            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(12, 170);
+            this.grp_main_tileset_viewer.Controls.Add(this.flw_tileset_view);
+            this.grp_main_tileset_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(9, 6);
             this.grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
-            this.grp_main_tileset_viewer.Size = new System.Drawing.Size(286, 150);
+            this.grp_main_tileset_viewer.Size = new System.Drawing.Size(268, 156);
             this.grp_main_tileset_viewer.TabIndex = 4;
             this.grp_main_tileset_viewer.TabStop = false;
             this.grp_main_tileset_viewer.Text = "Tileset";
             // 
+            // flw_tileset_view
+            // 
+            this.flw_tileset_view.AutoScroll = true;
+            this.flw_tileset_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flw_tileset_view.Location = new System.Drawing.Point(3, 19);
+            this.flw_tileset_view.Name = "flw_tileset_view";
+            this.flw_tileset_view.Size = new System.Drawing.Size(262, 134);
+            this.flw_tileset_view.TabIndex = 0;
+            // 
             // grp_main_room_viewer
             // 
             this.grp_main_room_viewer.Controls.Add(this.flw_main_room_view);
-            this.grp_main_room_viewer.Location = new System.Drawing.Point(304, 3);
+            this.grp_main_room_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grp_main_room_viewer.Location = new System.Drawing.Point(3, 6);
             this.grp_main_room_viewer.Name = "grp_main_room_viewer";
-            this.grp_main_room_viewer.Size = new System.Drawing.Size(917, 690);
+            this.grp_main_room_viewer.Size = new System.Drawing.Size(925, 685);
             this.grp_main_room_viewer.TabIndex = 5;
             this.grp_main_room_viewer.TabStop = false;
             this.grp_main_room_viewer.Text = "Room";
@@ -678,7 +703,7 @@ namespace LAMP
             this.flw_main_room_view.Location = new System.Drawing.Point(3, 19);
             this.flw_main_room_view.Name = "flw_main_room_view";
             this.flw_main_room_view.Padding = new System.Windows.Forms.Padding(3);
-            this.flw_main_room_view.Size = new System.Drawing.Size(911, 668);
+            this.flw_main_room_view.Size = new System.Drawing.Size(919, 663);
             this.flw_main_room_view.TabIndex = 0;
             // 
             // ctx_room_context_menu
@@ -757,9 +782,9 @@ namespace LAMP
             // btnTest
             // 
             this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTest.Location = new System.Drawing.Point(12, 667);
+            this.btnTest.Location = new System.Drawing.Point(12, 369);
             this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(75, 23);
+            this.btnTest.Size = new System.Drawing.Size(82, 23);
             this.btnTest.TabIndex = 9;
             this.btnTest.Text = "Test Button";
             this.btnTest.UseVisualStyleBackColor = true;
@@ -767,45 +792,87 @@ namespace LAMP
             // 
             // pnl_main_window_view
             // 
-            this.pnl_main_window_view.Controls.Add(this.panel1);
-            this.pnl_main_window_view.Controls.Add(this.lbl_area_bank);
-            this.pnl_main_window_view.Controls.Add(this.tls_input);
-            this.pnl_main_window_view.Controls.Add(this.cbb_area_bank);
-            this.pnl_main_window_view.Controls.Add(this.grp_main_tileset_viewer);
-            this.pnl_main_window_view.Controls.Add(this.btnTest);
-            this.pnl_main_window_view.Controls.Add(this.grp_main_room_viewer);
             this.pnl_main_window_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_main_window_view.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.pnl_main_window_view.Location = new System.Drawing.Point(0, 50);
+            this.pnl_main_window_view.Margin = new System.Windows.Forms.Padding(3, 3, 6, 6);
             this.pnl_main_window_view.Name = "pnl_main_window_view";
-            this.pnl_main_window_view.Size = new System.Drawing.Size(1233, 697);
-            this.pnl_main_window_view.TabIndex = 10;
+            // 
+            // pnl_main_window_view.Panel1
+            // 
+            this.pnl_main_window_view.Panel1.Controls.Add(this.pnl_tileset);
+            this.pnl_main_window_view.Panel1.Controls.Add(this.pnl_data_selection);
+            // 
+            // pnl_main_window_view.Panel2
+            // 
+            this.pnl_main_window_view.Panel2.Controls.Add(this.grp_main_room_viewer);
+            this.pnl_main_window_view.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
+            this.pnl_main_window_view.Size = new System.Drawing.Size(1218, 697);
+            this.pnl_main_window_view.SplitterDistance = 280;
+            this.pnl_main_window_view.TabIndex = 6;
             this.pnl_main_window_view.Visible = false;
             // 
-            // panel1
+            // pnl_tileset
             // 
-            this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Location = new System.Drawing.Point(25, 410);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(5);
-            this.panel1.Size = new System.Drawing.Size(186, 117);
-            this.panel1.TabIndex = 10;
+            this.pnl_tileset.Controls.Add(this.pnl_tileset_resize);
+            this.pnl_tileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_tileset.Location = new System.Drawing.Point(0, 127);
+            this.pnl_tileset.Name = "pnl_tileset";
+            this.pnl_tileset.Size = new System.Drawing.Size(280, 570);
+            this.pnl_tileset.TabIndex = 11;
             // 
-            // groupBox1
+            // pnl_tileset_resize
             // 
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(5, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(176, 107);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.pnl_tileset_resize.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_tileset_resize.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.pnl_tileset_resize.Location = new System.Drawing.Point(0, 0);
+            this.pnl_tileset_resize.Name = "pnl_tileset_resize";
+            this.pnl_tileset_resize.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // pnl_tileset_resize.Panel1
+            // 
+            this.pnl_tileset_resize.Panel1.Controls.Add(this.grp_main_tileset_viewer);
+            this.pnl_tileset_resize.Panel1.Padding = new System.Windows.Forms.Padding(9, 6, 3, 0);
+            // 
+            // pnl_tileset_resize.Panel2
+            // 
+            this.pnl_tileset_resize.Panel2.Controls.Add(this.btnTest);
+            this.pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
+            this.pnl_tileset_resize.Size = new System.Drawing.Size(280, 570);
+            this.pnl_tileset_resize.SplitterDistance = 162;
+            this.pnl_tileset_resize.TabIndex = 5;
+            // 
+            // pnl_data_selection
+            // 
+            this.pnl_data_selection.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.pnl_data_selection.Controls.Add(this.grp_data_selector);
+            this.pnl_data_selection.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_data_selection.Location = new System.Drawing.Point(0, 0);
+            this.pnl_data_selection.Name = "pnl_data_selection";
+            this.pnl_data_selection.Padding = new System.Windows.Forms.Padding(9, 6, 3, 6);
+            this.pnl_data_selection.Size = new System.Drawing.Size(280, 127);
+            this.pnl_data_selection.TabIndex = 10;
+            // 
+            // grp_data_selector
+            // 
+            this.grp_data_selector.Controls.Add(this.tls_input);
+            this.grp_data_selector.Controls.Add(this.lbl_area_bank);
+            this.grp_data_selector.Controls.Add(this.cbb_area_bank);
+            this.grp_data_selector.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grp_data_selector.Location = new System.Drawing.Point(9, 6);
+            this.grp_data_selector.Name = "grp_data_selector";
+            this.grp_data_selector.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            this.grp_data_selector.Size = new System.Drawing.Size(268, 115);
+            this.grp_data_selector.TabIndex = 0;
+            this.grp_data_selector.TabStop = false;
+            this.grp_data_selector.Text = "Data Selector";
             // 
             // MainWindow
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1233, 771);
+            this.ClientSize = new System.Drawing.Size(1218, 771);
             this.Controls.Add(this.pnl_main_window_view);
             this.Controls.Add(this.sts_main_status_bar);
             this.Controls.Add(this.tool_strip_image_buttons);
@@ -816,10 +883,9 @@ namespace LAMP
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LAMP";
-            this.Load += new System.EventHandler(this.main_window_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);
-            this.Resize += new System.EventHandler(this.main_window_Resize);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.tool_strip_main_buttons.ResumeLayout(false);
             this.tool_strip_main_buttons.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
@@ -827,12 +893,22 @@ namespace LAMP
             this.tool_strip_image_buttons.PerformLayout();
             this.sts_main_status_bar.ResumeLayout(false);
             this.sts_main_status_bar.PerformLayout();
+            this.grp_main_tileset_viewer.ResumeLayout(false);
             this.grp_main_room_viewer.ResumeLayout(false);
             this.grp_main_room_viewer.PerformLayout();
             this.ctx_room_context_menu.ResumeLayout(false);
+            this.pnl_main_window_view.Panel1.ResumeLayout(false);
+            this.pnl_main_window_view.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pnl_main_window_view)).EndInit();
             this.pnl_main_window_view.ResumeLayout(false);
-            this.pnl_main_window_view.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.pnl_tileset.ResumeLayout(false);
+            this.pnl_tileset_resize.Panel1.ResumeLayout(false);
+            this.pnl_tileset_resize.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pnl_tileset_resize)).EndInit();
+            this.pnl_tileset_resize.ResumeLayout(false);
+            this.pnl_data_selection.ResumeLayout(false);
+            this.grp_data_selector.ResumeLayout(false);
+            this.grp_data_selector.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -904,15 +980,18 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_zoom_out;
         private System.Windows.Forms.ToolStripMenuItem btn_save_editor;
         private System.Windows.Forms.ToolStripMenuItem btn_bug_report;
-        private System.Windows.Forms.Panel pnl_main_window_view;
         private System.Windows.Forms.ToolStripButton btn_show_objects;
         private System.Windows.Forms.ToolStripButton btn_show_scrolls;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem btn_view_show_objects;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.SplitContainer pnl_main_window_view;
+        private System.Windows.Forms.Panel pnl_tileset;
+        private System.Windows.Forms.Panel pnl_data_selection;
+        private System.Windows.Forms.GroupBox grp_data_selector;
+        private System.Windows.Forms.FlowLayoutPanel flw_tileset_view;
+        private System.Windows.Forms.SplitContainer pnl_tileset_resize;
     }
 }
 

@@ -12,9 +12,22 @@ public class TileViewer : Control
         set
         {
             base.BackgroundImage = value;
-            Size = base.BackgroundImage.Size;
+            Size = base.BackgroundImage.Size * zoom;
         }
     }
+
+    public int Zoom { 
+        get
+        {
+            return zoom;
+        }
+        set
+        {
+            zoom = value;
+            Size = BackgroundImage.Size * zoom;
+        }
+    }
+    private int zoom = 1;
 
     //TODO:unused?
     public bool HasSelection => SelRect.X != -1; //Selection rectangle doesn't have a negative x value
@@ -40,6 +53,8 @@ public class TileViewer : Control
         ResumeLayout(false);
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         BackColor = Color.FromArgb(40, 50, 50);
+
+        BackgroundImageLayout = ImageLayout.Stretch;
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -49,10 +64,18 @@ public class TileViewer : Control
         if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))
             return;
 
+        //Dash pattern
         SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
         BlackPen.DashOffset = 2;
         e.Graphics.DrawRectangle(BlackPen, SelRect);
         e.Graphics.DrawRectangle(SelectionPen, SelRect);
         base.OnPaint(e);
+    }
+
+    protected override void OnPaintBackground(PaintEventArgs pevent)
+    {
+        pevent.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+        pevent.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+        base.OnPaintBackground(pevent);
     }
 }

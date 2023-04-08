@@ -95,34 +95,7 @@ namespace LAMP.FORMS
         #region Events
         private void btn_test_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
-                Editor.ROM.Compile(tempPath);
-
-                //inefficient way of making changes only to TestROM
-                Rom tROM = new Rom(tempPath);
-                
-                //Applying the save file
-                save.WriteToROM(tROM);
-
-                //applying tweaks
-                tROM.Write8(0x140EC, 0x0B); //Start new game on boot
-                tROM.ReplaceBytes(new int[]{0x0D12, 0x0D17, 0x0D1C}, new byte[]{0x00, 0x00, 0x00}); //Skip Samus appearance fanfare
-                tROM.ReplaceBytes(new int[] {0x2CB6, 0x2D02 }, new byte[] {0x20, 0x28 }); //Enables Debug menu
-            
-                //saving test ROM
-                tROM.SaveROMAsFile(tempPath);
-            
-                ProcessStartInfo testROM = new ProcessStartInfo();
-                testROM.FileName = tempPath;
-                testROM.UseShellExecute = true;
-                Process.Start(testROM);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Test ROM could not be launched.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            Editor.QuickTest(save);
         }
 
         private void chb_bombs_CheckedChanged(object sender, EventArgs e) //Triggers if any checkbox is changed
