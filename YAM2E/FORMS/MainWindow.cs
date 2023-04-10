@@ -9,6 +9,7 @@ using LAMP.Controls;
 using LAMP.Classes.M2_Data;
 using System.Collections.Generic;
 using LAMP.Utilities;
+using LAMP.Controls.Room;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Linq;
 using Microsoft.VisualBasic.Devices;
@@ -52,13 +53,16 @@ public partial class MainWindow : Form
         if (File.Exists(path))
         {
             Globals.RomPath = File.ReadAllText(path);
-        } else
+        }
+        else
         {
             File.WriteAllText(path, "");
         }
 
-        //binding the event to tileset input
-        //tls_input.onDataChanged += new EventHandler(this.tls_input_OnDataChanged);
+        //Toolbars
+        toolbar_tileset.SetTools(false, true, false);
+        toolbar_tileset.SetCopyPaste(false, false);
+        toolbar_tileset.SetTransform(false, false, false, false);
 
         //Adding custom controls
         #region Tileset
@@ -69,12 +73,12 @@ public partial class MainWindow : Form
         Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
         Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
         Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
+        Tileset.ContextMenuStrip = ctx_tileset_context_menu;
         #endregion
 
         #region Room
         Controls.Add(Room);
         flw_main_room_view.Controls.Add(Room);
-        Room.Location = new Point(15, 20);
         Room.BackColor = Globals.ColorBlack;
         Room.MouseDown += new MouseEventHandler(Room_MouseDown);
         Room.MouseMove += new MouseEventHandler(Room_MouseMove);
@@ -82,7 +86,7 @@ public partial class MainWindow : Form
         #endregion
     }
 
-    public void ProjectLoaded() //greys out buttons or enables them if a Project is loaded
+    public void ProjectLoaded() //Enables all the Controls and more things once a project gets loaded
     {
         //Enabling UI
         btn_save_project.Enabled = true;
@@ -353,11 +357,25 @@ public partial class MainWindow : Form
         s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
     }
 
+    private void SetTilesetZoom(int zoom)
+    {
+        const int maxZoom = 4;
+        const int minZoom = 1;
+        Tileset.Zoom = Math.Max(minZoom, Math.Min(zoom, maxZoom));
+        if (Tileset.Zoom == maxZoom) btn_tileset_zoom_in.Enabled = false;
+        else btn_tileset_zoom_in.Enabled = true;
+        if (Tileset.Zoom == minZoom) btn_tileset_zoom_out.Enabled = false;
+        else btn_tileset_zoom_out.Enabled = true;
+
+        txb_tileset_zoom_level.Text = $"{Tileset.Zoom * 100}%";
+    }
+
     #region Main Window Events
 
     #region Tileset Events
     private void Tileset_MouseDown(object sender, MouseEventArgs e)
     {
+        if (e.Button != MouseButtons.Left) return;
         int tileWidth = (16 * Tileset.Zoom);
 
         ToggleSelectionFocus(true);
@@ -417,6 +435,8 @@ public partial class MainWindow : Form
     #region Room Events
     private void Room_MouseDown(object sender, MouseEventArgs e)
     {
+        Room.Focus();
+
         int x = (e.X >> 4) * 16; //tile position at moment of click
         int y = (e.Y >> 4) * 16; //
         if (e.Button == MouseButtons.Left)
@@ -452,7 +472,8 @@ public partial class MainWindow : Form
                 RoomSelectedCoordinate.Y = e.Y;
 
                 //Checking if object selected
-                if (Editor.FindObject(e.X, e.Y, Globals.SelectedArea) == null) {
+                if (Editor.FindObject(e.X, e.Y, Globals.SelectedArea) == null)
+                {
                     ctx_btn_remove_object.Enabled = false;
                     ctx_btn_edit_object.Enabled = false;
                 }
@@ -490,8 +511,10 @@ public partial class MainWindow : Form
         if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr])
         {
             Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
+            if (pnl_main_window_view.Visible == true) Room.Invalidate(new Rectangle(0, 0, 0, 0));
         }
-        lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX.ToString("X2")}, {Globals.SelectedScreenY.ToString("X2")}";
+        lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX:X2}, {Globals.SelectedScreenY:X2}";
+        lbl_screen_used.Text = $"Used: {Room.SelectedScreen:X2}";
 
         //Moving selected object
         if ((RoomSelectedCoordinate.X != e.X || RoomSelectedCoordinate.Y != e.Y) && !(e.X < 0 || e.Y < 0) && !(e.X > Room.BackgroundImage.Width || e.Y > Room.BackgroundImage.Height) && heldObject != null)
@@ -522,16 +545,16 @@ public partial class MainWindow : Form
         {
             Rectangle oldCursor = Room.CursorRect;
             Room.CursorRect = new Rectangle(mouse_x, mouse_y, 15, 15);
-            Room.Invalidate(Editor.UniteRect(oldCursor,Room.CursorRect));
+            Room.Invalidate(Editor.UniteRect(oldCursor, Room.CursorRect));
         }
 
         Rectangle rect = Room.RedRect; //old Position of the rectangle
         Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
         Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
-        unirect.X -= 1;
-        unirect.Y -= 1;
-        unirect.Width += 2;
-        unirect.Height += 2;
+        //unirect.X -= 1;
+        //unirect.Y -= 1;
+        //unirect.Width += 2;
+        //unirect.Height += 2;
         Room.Invalidate(unirect);
 
         if (e.Button == MouseButtons.Left)
@@ -829,6 +852,15 @@ public partial class MainWindow : Form
         string target = "https://github.com/ConConner/LAMP/issues";
         Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
     }
+    private void btn_tileset_zoom_in_Click(object sender, EventArgs e)
+    {
+        SetTilesetZoom(Tileset.Zoom + 1);
+    }
+
+    private void btn_tileset_zoom_out_Click(object sender, EventArgs e)
+    {
+        SetTilesetZoom(Tileset.Zoom - 1);
+    }
     #endregion
 
     #endregion
@@ -836,5 +868,18 @@ public partial class MainWindow : Form
     private void btnTest_Click(object sender, EventArgs e)
     {
         Tileset.Zoom = 2;
+    }
+
+    private void toolbar_tileset_ToolCommandTriggered(object sender, EventArgs e)
+    {
+        switch (toolbar_tileset.TriggeredCommand)
+        {
+            case (LampToolCommand.ZoomIn):
+                SetTilesetZoom(Tileset.Zoom + 1);
+                break;
+            case (LampToolCommand.ZoomOut):
+                SetTilesetZoom(Tileset.Zoom - 1);
+                break;
+        }
     }
 }

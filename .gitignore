@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .idea/
+.vs/YAM2E/DesignTimeBuild/.dtbcache.v2

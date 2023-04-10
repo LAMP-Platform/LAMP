@@ -20,6 +20,7 @@ public class RoomViewer : Control
 
     public RoomViewer()
     {
+        DoubleBuffered = true;
         SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         SuspendLayout();
         ResumeLayout(false);

@@ -29,889 +29,903 @@ namespace LAMP
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.tool_strip_main_buttons = new System.Windows.Forms.ToolStrip();
-            this.tool_strip_file = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_new_project = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_open_rom = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_save_project = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_rom_file = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_view_show_objects = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_zoom_in = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_zoom_out = new System.Windows.Forms.ToolStripMenuItem();
-            this.tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_about = new System.Windows.Forms.ToolStripMenuItem();
-            this.btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.tls_input = new LAMP.Controls.Other.TilesetInput();
-            this.lbl_area_bank = new System.Windows.Forms.Label();
-            this.cbb_area_bank = new System.Windows.Forms.ComboBox();
-            this.tool_strip_image_buttons = new System.Windows.Forms.ToolStrip();
-            this.btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
-            this.btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_tile_mode = new System.Windows.Forms.ToolStripButton();
-            this.btn_object_mode = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_show_objects = new System.Windows.Forms.ToolStripButton();
-            this.btn_show_scrolls = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
-            this.btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
-            this.btn_open_tileset_editor = new System.Windows.Forms.ToolStripButton();
-            this.sts_main_status_bar = new System.Windows.Forms.StatusStrip();
-            this.lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
-            this.grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
-            this.flw_tileset_view = new System.Windows.Forms.FlowLayoutPanel();
-            this.grp_main_room_viewer = new System.Windows.Forms.GroupBox();
-            this.flw_main_room_view = new System.Windows.Forms.FlowLayoutPanel();
-            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
-            this.ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctx_btn_add_object = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctx_btn_edit_object = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctx_btn_remove_object = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTest = new System.Windows.Forms.Button();
-            this.pnl_main_window_view = new System.Windows.Forms.SplitContainer();
-            this.pnl_tileset = new System.Windows.Forms.Panel();
-            this.pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
-            this.pnl_data_selection = new System.Windows.Forms.Panel();
-            this.grp_data_selector = new System.Windows.Forms.GroupBox();
-            this.tool_strip_main_buttons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-            this.tool_strip_image_buttons.SuspendLayout();
-            this.sts_main_status_bar.SuspendLayout();
-            this.grp_main_tileset_viewer.SuspendLayout();
-            this.grp_main_room_viewer.SuspendLayout();
-            this.ctx_room_context_menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pnl_main_window_view)).BeginInit();
-            this.pnl_main_window_view.Panel1.SuspendLayout();
-            this.pnl_main_window_view.Panel2.SuspendLayout();
-            this.pnl_main_window_view.SuspendLayout();
-            this.pnl_tileset.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pnl_tileset_resize)).BeginInit();
-            this.pnl_tileset_resize.Panel1.SuspendLayout();
-            this.pnl_tileset_resize.Panel2.SuspendLayout();
-            this.pnl_tileset_resize.SuspendLayout();
-            this.pnl_data_selection.SuspendLayout();
-            this.grp_data_selector.SuspendLayout();
-            this.SuspendLayout();
+            tool_strip_main_buttons = new System.Windows.Forms.ToolStrip();
+            tool_strip_file = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_new_project = new System.Windows.Forms.ToolStripMenuItem();
+            btn_open_rom = new System.Windows.Forms.ToolStripMenuItem();
+            btn_save_project = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
+            tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_rom_file = new System.Windows.Forms.ToolStripMenuItem();
+            btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
+            tool_strip_tools = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_data_viewer = new System.Windows.Forms.ToolStripMenuItem();
+            tool_strip_editors = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
+            btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
+            btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
+            tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_view_show_objects = new System.Windows.Forms.ToolStripMenuItem();
+            btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
+            btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
+            btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            btn_zoom_in = new System.Windows.Forms.ToolStripMenuItem();
+            btn_zoom_out = new System.Windows.Forms.ToolStripMenuItem();
+            tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
+            btn_about = new System.Windows.Forms.ToolStripMenuItem();
+            btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
+            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            bindingSource1 = new System.Windows.Forms.BindingSource(components);
+            tls_input = new Controls.Other.TilesetInput();
+            lbl_area_bank = new System.Windows.Forms.Label();
+            cbb_area_bank = new System.Windows.Forms.ComboBox();
+            tool_strip_image_buttons = new System.Windows.Forms.ToolStrip();
+            btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
+            btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            btn_tile_mode = new System.Windows.Forms.ToolStripButton();
+            btn_object_mode = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            btn_show_objects = new System.Windows.Forms.ToolStripButton();
+            btn_show_scrolls = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
+            btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
+            btn_open_tileset_editor = new System.Windows.Forms.ToolStripButton();
+            sts_main_status_bar = new System.Windows.Forms.StatusStrip();
+            lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
+            lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
+            lbl_screen_used = new System.Windows.Forms.ToolStripStatusLabel();
+            grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
+            flw_tileset_view = new System.Windows.Forms.FlowLayoutPanel();
+            toolbar_tileset = new Controls.Room.ToolBar();
+            grp_main_room_viewer = new System.Windows.Forms.GroupBox();
+            flw_main_room_view = new Controls.Overrides.FixedScrollPanel();
+            toolbar_room = new Controls.Room.ToolBar();
+            pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
+            ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(components);
+            ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            ctx_btn_add_object = new System.Windows.Forms.ToolStripMenuItem();
+            ctx_btn_edit_object = new System.Windows.Forms.ToolStripMenuItem();
+            ctx_btn_remove_object = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            ctx_btn_set_start_location = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            ctx_btn_test_here = new System.Windows.Forms.ToolStripMenuItem();
+            btnTest = new System.Windows.Forms.Button();
+            pnl_main_window_view = new System.Windows.Forms.SplitContainer();
+            pnl_tileset = new System.Windows.Forms.Panel();
+            pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
+            pnl_data_selection = new System.Windows.Forms.Panel();
+            grp_data_selector = new System.Windows.Forms.GroupBox();
+            ctx_tileset_context_menu = new System.Windows.Forms.ContextMenuStrip(components);
+            btn_tileset_zoom_in = new System.Windows.Forms.ToolStripMenuItem();
+            btn_tileset_zoom_out = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            txb_tileset_zoom_level = new System.Windows.Forms.ToolStripTextBox();
+            tool_strip_main_buttons.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
+            tool_strip_image_buttons.SuspendLayout();
+            sts_main_status_bar.SuspendLayout();
+            grp_main_tileset_viewer.SuspendLayout();
+            grp_main_room_viewer.SuspendLayout();
+            ctx_room_context_menu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pnl_main_window_view).BeginInit();
+            pnl_main_window_view.Panel1.SuspendLayout();
+            pnl_main_window_view.Panel2.SuspendLayout();
+            pnl_main_window_view.SuspendLayout();
+            pnl_tileset.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pnl_tileset_resize).BeginInit();
+            pnl_tileset_resize.Panel1.SuspendLayout();
+            pnl_tileset_resize.Panel2.SuspendLayout();
+            pnl_tileset_resize.SuspendLayout();
+            pnl_data_selection.SuspendLayout();
+            grp_data_selector.SuspendLayout();
+            ctx_tileset_context_menu.SuspendLayout();
+            SuspendLayout();
             // 
             // tool_strip_main_buttons
             // 
-            this.tool_strip_main_buttons.BackColor = System.Drawing.Color.Gainsboro;
-            this.tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tool_strip_file,
-            this.tool_strip_options,
-            this.tool_strip_tools,
-            this.tool_strip_editors,
-            this.tool_strip_view,
-            this.tool_strip_help});
-            this.tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
-            this.tool_strip_main_buttons.Name = "tool_strip_main_buttons";
-            this.tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.tool_strip_main_buttons.Size = new System.Drawing.Size(1218, 25);
-            this.tool_strip_main_buttons.TabIndex = 0;
-            this.tool_strip_main_buttons.Text = "toolStrip2";
+            tool_strip_main_buttons.BackColor = System.Drawing.Color.Gainsboro;
+            tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tool_strip_file, tool_strip_options, tool_strip_tools, tool_strip_editors, tool_strip_view, tool_strip_help });
+            tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
+            tool_strip_main_buttons.Name = "tool_strip_main_buttons";
+            tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            tool_strip_main_buttons.Size = new System.Drawing.Size(1218, 25);
+            tool_strip_main_buttons.TabIndex = 0;
+            tool_strip_main_buttons.Text = "toolStrip2";
             // 
             // tool_strip_file
             // 
-            this.tool_strip_file.AutoToolTip = false;
-            this.tool_strip_file.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_new_project,
-            this.btn_open_rom,
-            this.btn_save_project,
-            this.toolStripSeparator1,
-            this.btn_create_backup,
-            this.toolStripSeparator7,
-            this.btn_compile_ROM});
-            this.tool_strip_file.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_file.Name = "tool_strip_file";
-            this.tool_strip_file.ShowDropDownArrow = false;
-            this.tool_strip_file.Size = new System.Drawing.Size(29, 22);
-            this.tool_strip_file.Text = "File";
+            tool_strip_file.AutoToolTip = false;
+            tool_strip_file.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_file.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_new_project, btn_open_rom, btn_save_project, toolStripSeparator1, btn_create_backup, toolStripSeparator7, btn_compile_ROM });
+            tool_strip_file.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_file.Name = "tool_strip_file";
+            tool_strip_file.ShowDropDownArrow = false;
+            tool_strip_file.Size = new System.Drawing.Size(29, 22);
+            tool_strip_file.Text = "File";
             // 
             // btn_new_project
             // 
-            this.btn_new_project.Name = "btn_new_project";
-            this.btn_new_project.Size = new System.Drawing.Size(150, 22);
-            this.btn_new_project.Text = "New Project";
-            this.btn_new_project.Click += new System.EventHandler(this.btn_new_project_Click);
+            btn_new_project.Name = "btn_new_project";
+            btn_new_project.Size = new System.Drawing.Size(150, 22);
+            btn_new_project.Text = "New Project";
+            btn_new_project.Click += btn_new_project_Click;
             // 
             // btn_open_rom
             // 
-            this.btn_open_rom.Name = "btn_open_rom";
-            this.btn_open_rom.Size = new System.Drawing.Size(150, 22);
-            this.btn_open_rom.Text = "Open Project";
-            this.btn_open_rom.Click += new System.EventHandler(this.btn_open_rom_Click);
+            btn_open_rom.Name = "btn_open_rom";
+            btn_open_rom.Size = new System.Drawing.Size(150, 22);
+            btn_open_rom.Text = "Open Project";
+            btn_open_rom.Click += btn_open_rom_Click;
             // 
             // btn_save_project
             // 
-            this.btn_save_project.Enabled = false;
-            this.btn_save_project.Name = "btn_save_project";
-            this.btn_save_project.Size = new System.Drawing.Size(150, 22);
-            this.btn_save_project.Text = "Save Project";
-            this.btn_save_project.Click += new System.EventHandler(this.btn_save_project_Click);
+            btn_save_project.Enabled = false;
+            btn_save_project.Name = "btn_save_project";
+            btn_save_project.Size = new System.Drawing.Size(150, 22);
+            btn_save_project.Text = "Save Project";
+            btn_save_project.Click += btn_save_project_Click;
             // 
             // toolStripSeparator1
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
-            this.toolStripSeparator1.Visible = false;
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
-            this.btn_create_backup.Enabled = false;
-            this.btn_create_backup.Name = "btn_create_backup";
-            this.btn_create_backup.Size = new System.Drawing.Size(150, 22);
-            this.btn_create_backup.Text = "Create Backup";
-            this.btn_create_backup.Visible = false;
-            this.btn_create_backup.Click += new System.EventHandler(this.btn_create_backup_Click);
+            btn_create_backup.Enabled = false;
+            btn_create_backup.Name = "btn_create_backup";
+            btn_create_backup.Size = new System.Drawing.Size(150, 22);
+            btn_create_backup.Text = "Create Backup";
+            btn_create_backup.Visible = false;
+            btn_create_backup.Click += btn_create_backup_Click;
             // 
             // toolStripSeparator7
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_compile_ROM
             // 
-            this.btn_compile_ROM.Enabled = false;
-            this.btn_compile_ROM.Name = "btn_compile_ROM";
-            this.btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
-            this.btn_compile_ROM.Text = "Compile ROM";
-            this.btn_compile_ROM.Click += new System.EventHandler(this.btn_compile_ROM_Click);
+            btn_compile_ROM.Enabled = false;
+            btn_compile_ROM.Name = "btn_compile_ROM";
+            btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
+            btn_compile_ROM.Text = "Compile ROM";
+            btn_compile_ROM.Click += btn_compile_ROM_Click;
             // 
             // tool_strip_options
             // 
-            this.tool_strip_options.AutoToolTip = false;
-            this.tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_rom_file,
-            this.btn_project_settings});
-            this.tool_strip_options.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_options.Image")));
-            this.tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_options.Name = "tool_strip_options";
-            this.tool_strip_options.ShowDropDownArrow = false;
-            this.tool_strip_options.Size = new System.Drawing.Size(53, 22);
-            this.tool_strip_options.Text = "Options";
+            tool_strip_options.AutoToolTip = false;
+            tool_strip_options.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_options.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_rom_file, btn_project_settings });
+            tool_strip_options.Image = (System.Drawing.Image)resources.GetObject("tool_strip_options.Image");
+            tool_strip_options.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_options.Name = "tool_strip_options";
+            tool_strip_options.ShowDropDownArrow = false;
+            tool_strip_options.Size = new System.Drawing.Size(53, 22);
+            tool_strip_options.Text = "Options";
             // 
             // btn_rom_file
             // 
-            this.btn_rom_file.Name = "btn_rom_file";
-            this.btn_rom_file.Size = new System.Drawing.Size(165, 22);
-            this.btn_rom_file.Text = "Program Settings";
-            this.btn_rom_file.Click += new System.EventHandler(this.rOMFileToolStripMenuItem_Click);
+            btn_rom_file.Name = "btn_rom_file";
+            btn_rom_file.Size = new System.Drawing.Size(165, 22);
+            btn_rom_file.Text = "Program Settings";
+            btn_rom_file.Click += rOMFileToolStripMenuItem_Click;
             // 
             // btn_project_settings
             // 
-            this.btn_project_settings.Enabled = false;
-            this.btn_project_settings.Name = "btn_project_settings";
-            this.btn_project_settings.Size = new System.Drawing.Size(165, 22);
-            this.btn_project_settings.Text = "Project Settings";
-            this.btn_project_settings.Click += new System.EventHandler(this.btn_project_settings_Click);
+            btn_project_settings.Enabled = false;
+            btn_project_settings.Name = "btn_project_settings";
+            btn_project_settings.Size = new System.Drawing.Size(165, 22);
+            btn_project_settings.Text = "Project Settings";
+            btn_project_settings.Click += btn_project_settings_Click;
             // 
             // tool_strip_tools
             // 
-            this.tool_strip_tools.AutoToolTip = false;
-            this.tool_strip_tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_data_viewer});
-            this.tool_strip_tools.Enabled = false;
-            this.tool_strip_tools.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_tools.Image")));
-            this.tool_strip_tools.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_tools.Name = "tool_strip_tools";
-            this.tool_strip_tools.ShowDropDownArrow = false;
-            this.tool_strip_tools.Size = new System.Drawing.Size(38, 22);
-            this.tool_strip_tools.Text = "Tools";
+            tool_strip_tools.AutoToolTip = false;
+            tool_strip_tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_data_viewer });
+            tool_strip_tools.Enabled = false;
+            tool_strip_tools.Image = (System.Drawing.Image)resources.GetObject("tool_strip_tools.Image");
+            tool_strip_tools.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_tools.Name = "tool_strip_tools";
+            tool_strip_tools.ShowDropDownArrow = false;
+            tool_strip_tools.Size = new System.Drawing.Size(38, 22);
+            tool_strip_tools.Text = "Tools";
             // 
             // btn_data_viewer
             // 
-            this.btn_data_viewer.Name = "btn_data_viewer";
-            this.btn_data_viewer.Size = new System.Drawing.Size(136, 22);
-            this.btn_data_viewer.Text = "Data Viewer";
-            this.btn_data_viewer.Click += new System.EventHandler(this.btn_data_viewer_Click);
+            btn_data_viewer.Name = "btn_data_viewer";
+            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
+            btn_data_viewer.Text = "Data Viewer";
+            btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // tool_strip_editors
             // 
-            this.tool_strip_editors.AutoToolTip = false;
-            this.tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_screen_settings,
-            this.btn_transition_editor,
-            this.toolStripSeparator10,
-            this.btn_tileset_definitions,
-            this.toolStripSeparator11,
-            this.btn_save_editor,
-            this.btn_tweaks_editor});
-            this.tool_strip_editors.Enabled = false;
-            this.tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_editors.Name = "tool_strip_editors";
-            this.tool_strip_editors.ShowDropDownArrow = false;
-            this.tool_strip_editors.Size = new System.Drawing.Size(47, 22);
-            this.tool_strip_editors.Text = "Editors";
+            tool_strip_editors.AutoToolTip = false;
+            tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_screen_settings, btn_transition_editor, toolStripSeparator10, btn_tileset_definitions, toolStripSeparator11, btn_save_editor, btn_tweaks_editor });
+            tool_strip_editors.Enabled = false;
+            tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_editors.Name = "tool_strip_editors";
+            tool_strip_editors.ShowDropDownArrow = false;
+            tool_strip_editors.Size = new System.Drawing.Size(47, 22);
+            tool_strip_editors.Text = "Editors";
             // 
             // btn_screen_settings
             // 
-            this.btn_screen_settings.Name = "btn_screen_settings";
-            this.btn_screen_settings.Size = new System.Drawing.Size(159, 22);
-            this.btn_screen_settings.Text = "Screen Settings";
-            this.btn_screen_settings.Click += new System.EventHandler(this.btn_screen_settings_Click);
+            btn_screen_settings.Name = "btn_screen_settings";
+            btn_screen_settings.Size = new System.Drawing.Size(159, 22);
+            btn_screen_settings.Text = "Screen Settings";
+            btn_screen_settings.Click += btn_screen_settings_Click;
             // 
             // btn_transition_editor
             // 
-            this.btn_transition_editor.Name = "btn_transition_editor";
-            this.btn_transition_editor.Size = new System.Drawing.Size(159, 22);
-            this.btn_transition_editor.Text = "Transition Editor";
-            this.btn_transition_editor.Click += new System.EventHandler(this.btn_transition_editor_Click);
+            btn_transition_editor.Name = "btn_transition_editor";
+            btn_transition_editor.Size = new System.Drawing.Size(159, 22);
+            btn_transition_editor.Text = "Transition Editor";
+            btn_transition_editor.Click += btn_transition_editor_Click;
             // 
             // toolStripSeparator10
             // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
             // 
             // btn_tileset_definitions
             // 
-            this.btn_tileset_definitions.Name = "btn_tileset_definitions";
-            this.btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
-            this.btn_tileset_definitions.Text = "Tileset Editor";
-            this.btn_tileset_definitions.Click += new System.EventHandler(this.btn_tileset_definitions_Click);
+            btn_tileset_definitions.Name = "btn_tileset_definitions";
+            btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
+            btn_tileset_definitions.Text = "Tileset Editor";
+            btn_tileset_definitions.Click += btn_tileset_definitions_Click;
             // 
             // toolStripSeparator11
             // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
+            toolStripSeparator11.Name = "toolStripSeparator11";
+            toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
             // 
             // btn_save_editor
             // 
-            this.btn_save_editor.Name = "btn_save_editor";
-            this.btn_save_editor.Size = new System.Drawing.Size(159, 22);
-            this.btn_save_editor.Text = "Save Editor";
-            this.btn_save_editor.Click += new System.EventHandler(this.btn_save_editor_Click);
+            btn_save_editor.Name = "btn_save_editor";
+            btn_save_editor.Size = new System.Drawing.Size(159, 22);
+            btn_save_editor.Text = "Save Editor";
+            btn_save_editor.Click += btn_save_editor_Click;
             // 
             // btn_tweaks_editor
             // 
-            this.btn_tweaks_editor.Name = "btn_tweaks_editor";
-            this.btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
-            this.btn_tweaks_editor.Text = "Tweaks Editor";
-            this.btn_tweaks_editor.Visible = false;
-            this.btn_tweaks_editor.Click += new System.EventHandler(this.btn_tweaks_editor_Click);
+            btn_tweaks_editor.Name = "btn_tweaks_editor";
+            btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
+            btn_tweaks_editor.Text = "Tweaks Editor";
+            btn_tweaks_editor.Visible = false;
+            btn_tweaks_editor.Click += btn_tweaks_editor_Click;
             // 
             // tool_strip_view
             // 
-            this.tool_strip_view.AutoToolTip = false;
-            this.tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_view_show_objects,
-            this.btn_show_scroll_bounds,
-            this.btn_show_screen_outlines,
-            this.btn_show_duplicate_outlines,
-            this.toolStripSeparator8,
-            this.btn_zoom_in,
-            this.btn_zoom_out});
-            this.tool_strip_view.Enabled = false;
-            this.tool_strip_view.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_view.Image")));
-            this.tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_view.Name = "tool_strip_view";
-            this.tool_strip_view.ShowDropDownArrow = false;
-            this.tool_strip_view.Size = new System.Drawing.Size(36, 22);
-            this.tool_strip_view.Text = "View";
+            tool_strip_view.AutoToolTip = false;
+            tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_view_show_objects, btn_show_scroll_bounds, btn_show_screen_outlines, btn_show_duplicate_outlines, toolStripSeparator8, btn_zoom_in, btn_zoom_out });
+            tool_strip_view.Enabled = false;
+            tool_strip_view.Image = (System.Drawing.Image)resources.GetObject("tool_strip_view.Image");
+            tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_view.Name = "tool_strip_view";
+            tool_strip_view.ShowDropDownArrow = false;
+            tool_strip_view.Size = new System.Drawing.Size(36, 22);
+            tool_strip_view.Text = "View";
             // 
             // btn_view_show_objects
             // 
-            this.btn_view_show_objects.Checked = true;
-            this.btn_view_show_objects.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btn_view_show_objects.Name = "btn_view_show_objects";
-            this.btn_view_show_objects.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.btn_view_show_objects.Size = new System.Drawing.Size(228, 22);
-            this.btn_view_show_objects.Text = "Objects";
-            this.btn_view_show_objects.Click += new System.EventHandler(this.chb_view_objects_CheckedChanged);
+            btn_view_show_objects.Checked = true;
+            btn_view_show_objects.CheckState = System.Windows.Forms.CheckState.Checked;
+            btn_view_show_objects.Name = "btn_view_show_objects";
+            btn_view_show_objects.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            btn_view_show_objects.Size = new System.Drawing.Size(228, 22);
+            btn_view_show_objects.Text = "Objects";
+            btn_view_show_objects.Click += chb_view_objects_CheckedChanged;
             // 
             // btn_show_scroll_bounds
             // 
-            this.btn_show_scroll_bounds.Name = "btn_show_scroll_bounds";
-            this.btn_show_scroll_bounds.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.btn_show_scroll_bounds.Size = new System.Drawing.Size(228, 22);
-            this.btn_show_scroll_bounds.Text = "Scroll Boundaries";
-            this.btn_show_scroll_bounds.Click += new System.EventHandler(this.scrollBoundariesToolStripMenuItem_Click);
+            btn_show_scroll_bounds.Name = "btn_show_scroll_bounds";
+            btn_show_scroll_bounds.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            btn_show_scroll_bounds.Size = new System.Drawing.Size(228, 22);
+            btn_show_scroll_bounds.Text = "Scroll Boundaries";
+            btn_show_scroll_bounds.Click += scrollBoundariesToolStripMenuItem_Click;
             // 
             // btn_show_screen_outlines
             // 
-            this.btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btn_show_screen_outlines.Name = "btn_show_screen_outlines";
-            this.btn_show_screen_outlines.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.btn_show_screen_outlines.Size = new System.Drawing.Size(228, 22);
-            this.btn_show_screen_outlines.Text = "Screen Outlines";
-            this.btn_show_screen_outlines.Click += new System.EventHandler(this.btn_show_screen_outlines_Click);
+            btn_show_screen_outlines.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            btn_show_screen_outlines.Name = "btn_show_screen_outlines";
+            btn_show_screen_outlines.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            btn_show_screen_outlines.Size = new System.Drawing.Size(228, 22);
+            btn_show_screen_outlines.Text = "Screen Outlines";
+            btn_show_screen_outlines.Click += btn_show_screen_outlines_Click;
             // 
             // btn_show_duplicate_outlines
             // 
-            this.btn_show_duplicate_outlines.Checked = true;
-            this.btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
-            this.btn_show_duplicate_outlines.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.btn_show_duplicate_outlines.Size = new System.Drawing.Size(228, 22);
-            this.btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
-            this.btn_show_duplicate_outlines.Click += new System.EventHandler(this.btn_show_duplicate_outlines_Click);
+            btn_show_duplicate_outlines.Checked = true;
+            btn_show_duplicate_outlines.CheckState = System.Windows.Forms.CheckState.Checked;
+            btn_show_duplicate_outlines.Name = "btn_show_duplicate_outlines";
+            btn_show_duplicate_outlines.ShortcutKeys = System.Windows.Forms.Keys.F6;
+            btn_show_duplicate_outlines.Size = new System.Drawing.Size(228, 22);
+            btn_show_duplicate_outlines.Text = "Duplicate Screen Outlines";
+            btn_show_duplicate_outlines.Click += btn_show_duplicate_outlines_Click;
             // 
             // toolStripSeparator8
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
-            this.toolStripSeparator8.Visible = false;
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
+            toolStripSeparator8.Visible = false;
             // 
             // btn_zoom_in
             // 
-            this.btn_zoom_in.Name = "btn_zoom_in";
-            this.btn_zoom_in.ShortcutKeyDisplayString = "Ctrl +";
-            this.btn_zoom_in.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
-            this.btn_zoom_in.Size = new System.Drawing.Size(228, 22);
-            this.btn_zoom_in.Text = "Zoom +";
-            this.btn_zoom_in.Visible = false;
+            btn_zoom_in.Name = "btn_zoom_in";
+            btn_zoom_in.ShortcutKeyDisplayString = "Ctrl +";
+            btn_zoom_in.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus;
+            btn_zoom_in.Size = new System.Drawing.Size(228, 22);
+            btn_zoom_in.Text = "Zoom +";
+            btn_zoom_in.Visible = false;
             // 
             // btn_zoom_out
             // 
-            this.btn_zoom_out.Name = "btn_zoom_out";
-            this.btn_zoom_out.ShortcutKeyDisplayString = "Ctrl - ";
-            this.btn_zoom_out.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
-            this.btn_zoom_out.Size = new System.Drawing.Size(228, 22);
-            this.btn_zoom_out.Text = "Zoom -";
-            this.btn_zoom_out.Visible = false;
+            btn_zoom_out.Name = "btn_zoom_out";
+            btn_zoom_out.ShortcutKeyDisplayString = "Ctrl - ";
+            btn_zoom_out.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus;
+            btn_zoom_out.Size = new System.Drawing.Size(228, 22);
+            btn_zoom_out.Text = "Zoom -";
+            btn_zoom_out.Visible = false;
             // 
             // tool_strip_help
             // 
-            this.tool_strip_help.AutoToolTip = false;
-            this.tool_strip_help.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tool_strip_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_wiki,
-            this.btn_about,
-            this.btn_bug_report});
-            this.tool_strip_help.Image = ((System.Drawing.Image)(resources.GetObject("tool_strip_help.Image")));
-            this.tool_strip_help.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tool_strip_help.Name = "tool_strip_help";
-            this.tool_strip_help.ShowDropDownArrow = false;
-            this.tool_strip_help.Size = new System.Drawing.Size(36, 22);
-            this.tool_strip_help.Text = "Help";
+            tool_strip_help.AutoToolTip = false;
+            tool_strip_help.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tool_strip_help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_wiki, btn_about, btn_bug_report });
+            tool_strip_help.Image = (System.Drawing.Image)resources.GetObject("tool_strip_help.Image");
+            tool_strip_help.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tool_strip_help.Name = "tool_strip_help";
+            tool_strip_help.ShowDropDownArrow = false;
+            tool_strip_help.Size = new System.Drawing.Size(36, 22);
+            tool_strip_help.Text = "Help";
             // 
             // btn_wiki
             // 
-            this.btn_wiki.Name = "btn_wiki";
-            this.btn_wiki.Size = new System.Drawing.Size(154, 22);
-            this.btn_wiki.Text = "View Wiki";
-            this.btn_wiki.Click += new System.EventHandler(this.btn_wiki_Click);
+            btn_wiki.Name = "btn_wiki";
+            btn_wiki.Size = new System.Drawing.Size(154, 22);
+            btn_wiki.Text = "View Wiki";
+            btn_wiki.Click += btn_wiki_Click;
             // 
             // btn_about
             // 
-            this.btn_about.Name = "btn_about";
-            this.btn_about.Size = new System.Drawing.Size(154, 22);
-            this.btn_about.Text = "About LAMP";
-            this.btn_about.Visible = false;
+            btn_about.Name = "btn_about";
+            btn_about.Size = new System.Drawing.Size(154, 22);
+            btn_about.Text = "About LAMP";
+            btn_about.Visible = false;
             // 
             // btn_bug_report
             // 
-            this.btn_bug_report.Name = "btn_bug_report";
-            this.btn_bug_report.Size = new System.Drawing.Size(154, 22);
-            this.btn_bug_report.Text = "I found a bug!!!";
-            this.btn_bug_report.Click += new System.EventHandler(this.btn_bug_report_Click);
+            btn_bug_report.Name = "btn_bug_report";
+            btn_bug_report.Size = new System.Drawing.Size(154, 22);
+            btn_bug_report.Text = "I found a bug!!!";
+            btn_bug_report.Click += btn_bug_report_Click;
             // 
             // tls_input
             // 
-            this.tls_input.AutoSize = true;
-            this.tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tls_input.BackColor = System.Drawing.SystemColors.Control;
-            this.tls_input.ForceOffsets = false;
-            this.tls_input.GraphicsOffset = null;
-            this.tls_input.Location = new System.Drawing.Point(9, 51);
-            this.tls_input.MetatilePointer = null;
-            this.tls_input.MetatileTable = 0;
-            this.tls_input.Name = "tls_input";
-            this.tls_input.onDataChanged = null;
-            this.tls_input.SelectedTileset = null;
-            this.tls_input.Size = new System.Drawing.Size(152, 52);
-            this.tls_input.TabIndex = 5;
-            this.tls_input.DataChanged += new System.EventHandler(this.tls_input_OnDataChanged);
+            tls_input.AutoSize = true;
+            tls_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tls_input.BackColor = System.Drawing.SystemColors.Control;
+            tls_input.ForceOffsets = false;
+            tls_input.GraphicsOffset = null;
+            tls_input.Location = new System.Drawing.Point(9, 51);
+            tls_input.MetatilePointer = null;
+            tls_input.MetatileTable = 0;
+            tls_input.Name = "tls_input";
+            tls_input.onDataChanged = null;
+            tls_input.SelectedTileset = null;
+            tls_input.Size = new System.Drawing.Size(152, 52);
+            tls_input.TabIndex = 5;
+            tls_input.DataChanged += tls_input_OnDataChanged;
             // 
             // lbl_area_bank
             // 
-            this.lbl_area_bank.AutoSize = true;
-            this.lbl_area_bank.Location = new System.Drawing.Point(9, 25);
-            this.lbl_area_bank.Margin = new System.Windows.Forms.Padding(3);
-            this.lbl_area_bank.Name = "lbl_area_bank";
-            this.lbl_area_bank.Size = new System.Drawing.Size(34, 15);
-            this.lbl_area_bank.TabIndex = 0;
-            this.lbl_area_bank.Text = "Area:";
+            lbl_area_bank.AutoSize = true;
+            lbl_area_bank.Location = new System.Drawing.Point(9, 25);
+            lbl_area_bank.Margin = new System.Windows.Forms.Padding(3);
+            lbl_area_bank.Name = "lbl_area_bank";
+            lbl_area_bank.Size = new System.Drawing.Size(34, 15);
+            lbl_area_bank.TabIndex = 0;
+            lbl_area_bank.Text = "Area:";
             // 
             // cbb_area_bank
             // 
-            this.cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbb_area_bank.FormattingEnabled = true;
-            this.cbb_area_bank.Items.AddRange(new object[] {
-            "9",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F"});
-            this.cbb_area_bank.Location = new System.Drawing.Point(106, 22);
-            this.cbb_area_bank.Name = "cbb_area_bank";
-            this.cbb_area_bank.Size = new System.Drawing.Size(55, 23);
-            this.cbb_area_bank.TabIndex = 2;
-            this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
+            cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_area_bank.FormattingEnabled = true;
+            cbb_area_bank.Items.AddRange(new object[] { "9", "A", "B", "C", "D", "E", "F" });
+            cbb_area_bank.Location = new System.Drawing.Point(106, 22);
+            cbb_area_bank.Name = "cbb_area_bank";
+            cbb_area_bank.Size = new System.Drawing.Size(55, 23);
+            cbb_area_bank.TabIndex = 2;
+            cbb_area_bank.SelectedIndexChanged += cbb_area_bank_SelectedIndexChanged;
             // 
             // tool_strip_image_buttons
             // 
-            this.tool_strip_image_buttons.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.tool_strip_image_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btn_open_rom_image,
-            this.btn_save_rom_image,
-            this.toolStripSeparator2,
-            this.btn_tile_mode,
-            this.btn_object_mode,
-            this.toolStripSeparator3,
-            this.btn_show_objects,
-            this.btn_show_scrolls,
-            this.toolStripSeparator9,
-            this.btn_open_transition_editor_image,
-            this.btn_open_tweaks_editor_image,
-            this.btn_open_tileset_editor});
-            this.tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
-            this.tool_strip_image_buttons.Name = "tool_strip_image_buttons";
-            this.tool_strip_image_buttons.Size = new System.Drawing.Size(1218, 25);
-            this.tool_strip_image_buttons.TabIndex = 2;
-            this.tool_strip_image_buttons.Text = "toolStrip1";
+            tool_strip_image_buttons.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            tool_strip_image_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_open_rom_image, btn_save_rom_image, toolStripSeparator2, btn_tile_mode, btn_object_mode, toolStripSeparator3, btn_show_objects, btn_show_scrolls, toolStripSeparator9, btn_open_transition_editor_image, btn_open_tweaks_editor_image, btn_open_tileset_editor });
+            tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
+            tool_strip_image_buttons.Name = "tool_strip_image_buttons";
+            tool_strip_image_buttons.Size = new System.Drawing.Size(1218, 25);
+            tool_strip_image_buttons.TabIndex = 2;
+            tool_strip_image_buttons.Text = "toolStrip1";
             // 
             // btn_open_rom_image
             // 
-            this.btn_open_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_open_rom_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_rom_image.Image")));
-            this.btn_open_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_open_rom_image.Name = "btn_open_rom_image";
-            this.btn_open_rom_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_rom_image.Text = "Open Project";
-            this.btn_open_rom_image.ToolTipText = "Open Project";
-            this.btn_open_rom_image.Click += new System.EventHandler(this.btn_open_rom_image_Click);
+            btn_open_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_rom_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_rom_image.Image");
+            btn_open_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_rom_image.Name = "btn_open_rom_image";
+            btn_open_rom_image.Size = new System.Drawing.Size(23, 22);
+            btn_open_rom_image.Text = "Open Project";
+            btn_open_rom_image.ToolTipText = "Open Project";
+            btn_open_rom_image.Click += btn_open_rom_image_Click;
             // 
             // btn_save_rom_image
             // 
-            this.btn_save_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_save_rom_image.Enabled = false;
-            this.btn_save_rom_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_save_rom_image.Image")));
-            this.btn_save_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_save_rom_image.Name = "btn_save_rom_image";
-            this.btn_save_rom_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_save_rom_image.Text = "Save Project";
-            this.btn_save_rom_image.ToolTipText = "Save Project";
-            this.btn_save_rom_image.Click += new System.EventHandler(this.btn_save_rom_image_Click);
+            btn_save_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_save_rom_image.Enabled = false;
+            btn_save_rom_image.Image = (System.Drawing.Image)resources.GetObject("btn_save_rom_image.Image");
+            btn_save_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_save_rom_image.Name = "btn_save_rom_image";
+            btn_save_rom_image.Size = new System.Drawing.Size(23, 22);
+            btn_save_rom_image.Text = "Save Project";
+            btn_save_rom_image.ToolTipText = "Save Project";
+            btn_save_rom_image.Click += btn_save_rom_image_Click;
             // 
             // toolStripSeparator2
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_tile_mode
             // 
-            this.btn_tile_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_tile_mode.Enabled = false;
-            this.btn_tile_mode.Image = ((System.Drawing.Image)(resources.GetObject("btn_tile_mode.Image")));
-            this.btn_tile_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_tile_mode.Name = "btn_tile_mode";
-            this.btn_tile_mode.Size = new System.Drawing.Size(23, 22);
-            this.btn_tile_mode.Text = "Tile editing mode";
-            this.btn_tile_mode.Click += new System.EventHandler(this.btn_tile_mode_Click);
+            btn_tile_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_tile_mode.Enabled = false;
+            btn_tile_mode.Image = (System.Drawing.Image)resources.GetObject("btn_tile_mode.Image");
+            btn_tile_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_tile_mode.Name = "btn_tile_mode";
+            btn_tile_mode.Size = new System.Drawing.Size(23, 22);
+            btn_tile_mode.Text = "Tile editing mode";
+            btn_tile_mode.Click += btn_tile_mode_Click;
             // 
             // btn_object_mode
             // 
-            this.btn_object_mode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btn_object_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_object_mode.Enabled = false;
-            this.btn_object_mode.Image = ((System.Drawing.Image)(resources.GetObject("btn_object_mode.Image")));
-            this.btn_object_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_object_mode.Name = "btn_object_mode";
-            this.btn_object_mode.Size = new System.Drawing.Size(23, 22);
-            this.btn_object_mode.Text = "Object editing mode";
-            this.btn_object_mode.Click += new System.EventHandler(this.btn_object_mode_Click);
+            btn_object_mode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            btn_object_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_object_mode.Enabled = false;
+            btn_object_mode.Image = (System.Drawing.Image)resources.GetObject("btn_object_mode.Image");
+            btn_object_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_object_mode.Name = "btn_object_mode";
+            btn_object_mode.Size = new System.Drawing.Size(23, 22);
+            btn_object_mode.Text = "Object editing mode";
+            btn_object_mode.Click += btn_object_mode_Click;
             // 
             // toolStripSeparator3
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_show_objects
             // 
-            this.btn_show_objects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_show_objects.Enabled = false;
-            this.btn_show_objects.Image = ((System.Drawing.Image)(resources.GetObject("btn_show_objects.Image")));
-            this.btn_show_objects.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_show_objects.Name = "btn_show_objects";
-            this.btn_show_objects.Size = new System.Drawing.Size(23, 22);
-            this.btn_show_objects.Text = "Show Objects";
-            this.btn_show_objects.Click += new System.EventHandler(this.chb_view_objects_CheckedChanged);
+            btn_show_objects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_show_objects.Enabled = false;
+            btn_show_objects.Image = (System.Drawing.Image)resources.GetObject("btn_show_objects.Image");
+            btn_show_objects.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_show_objects.Name = "btn_show_objects";
+            btn_show_objects.Size = new System.Drawing.Size(23, 22);
+            btn_show_objects.Text = "Show Objects";
+            btn_show_objects.Click += chb_view_objects_CheckedChanged;
             // 
             // btn_show_scrolls
             // 
-            this.btn_show_scrolls.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_show_scrolls.Enabled = false;
-            this.btn_show_scrolls.Image = ((System.Drawing.Image)(resources.GetObject("btn_show_scrolls.Image")));
-            this.btn_show_scrolls.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_show_scrolls.Name = "btn_show_scrolls";
-            this.btn_show_scrolls.Size = new System.Drawing.Size(23, 22);
-            this.btn_show_scrolls.Text = "Show Scrolls";
-            this.btn_show_scrolls.Click += new System.EventHandler(this.scrollBoundariesToolStripMenuItem_Click);
+            btn_show_scrolls.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_show_scrolls.Enabled = false;
+            btn_show_scrolls.Image = (System.Drawing.Image)resources.GetObject("btn_show_scrolls.Image");
+            btn_show_scrolls.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_show_scrolls.Name = "btn_show_scrolls";
+            btn_show_scrolls.Size = new System.Drawing.Size(23, 22);
+            btn_show_scrolls.Text = "Show Scrolls";
+            btn_show_scrolls.Click += scrollBoundariesToolStripMenuItem_Click;
             // 
             // toolStripSeparator9
             // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            toolStripSeparator9.Name = "toolStripSeparator9";
+            toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_open_transition_editor_image
             // 
-            this.btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_open_transition_editor_image.Enabled = false;
-            this.btn_open_transition_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_transition_editor_image.Image")));
-            this.btn_open_transition_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_open_transition_editor_image.Name = "btn_open_transition_editor_image";
-            this.btn_open_transition_editor_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_transition_editor_image.Text = "Open Transition Editor";
-            this.btn_open_transition_editor_image.ToolTipText = "Transition Editor";
-            this.btn_open_transition_editor_image.Click += new System.EventHandler(this.btn_open_transition_editor_image_Click);
+            btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_transition_editor_image.Enabled = false;
+            btn_open_transition_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_transition_editor_image.Image");
+            btn_open_transition_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_transition_editor_image.Name = "btn_open_transition_editor_image";
+            btn_open_transition_editor_image.Size = new System.Drawing.Size(23, 22);
+            btn_open_transition_editor_image.Text = "Open Transition Editor";
+            btn_open_transition_editor_image.ToolTipText = "Transition Editor";
+            btn_open_transition_editor_image.Click += btn_open_transition_editor_image_Click;
             // 
             // btn_open_tweaks_editor_image
             // 
-            this.btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_open_tweaks_editor_image.Enabled = false;
-            this.btn_open_tweaks_editor_image.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_tweaks_editor_image.Image")));
-            this.btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
-            this.btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
-            this.btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
-            this.btn_open_tweaks_editor_image.Visible = false;
-            this.btn_open_tweaks_editor_image.Click += new System.EventHandler(this.btn_open_tweaks_editor_image_Click);
+            btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_tweaks_editor_image.Enabled = false;
+            btn_open_tweaks_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_tweaks_editor_image.Image");
+            btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
+            btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
+            btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
+            btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
+            btn_open_tweaks_editor_image.Visible = false;
+            btn_open_tweaks_editor_image.Click += btn_open_tweaks_editor_image_Click;
             // 
             // btn_open_tileset_editor
             // 
-            this.btn_open_tileset_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_open_tileset_editor.Enabled = false;
-            this.btn_open_tileset_editor.Image = ((System.Drawing.Image)(resources.GetObject("btn_open_tileset_editor.Image")));
-            this.btn_open_tileset_editor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_open_tileset_editor.Name = "btn_open_tileset_editor";
-            this.btn_open_tileset_editor.Size = new System.Drawing.Size(23, 22);
-            this.btn_open_tileset_editor.Text = "Tileset Editor";
-            this.btn_open_tileset_editor.Click += new System.EventHandler(this.btn_open_tileset_editor_Click);
+            btn_open_tileset_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_tileset_editor.Enabled = false;
+            btn_open_tileset_editor.Image = (System.Drawing.Image)resources.GetObject("btn_open_tileset_editor.Image");
+            btn_open_tileset_editor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_tileset_editor.Name = "btn_open_tileset_editor";
+            btn_open_tileset_editor.Size = new System.Drawing.Size(23, 22);
+            btn_open_tileset_editor.Text = "Tileset Editor";
+            btn_open_tileset_editor.Click += btn_open_tileset_editor_Click;
             // 
             // sts_main_status_bar
             // 
-            this.sts_main_status_bar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lbl_main_selection_size,
-            this.lbl_main_hovered_screen});
-            this.sts_main_status_bar.Location = new System.Drawing.Point(0, 747);
-            this.sts_main_status_bar.Name = "sts_main_status_bar";
-            this.sts_main_status_bar.Size = new System.Drawing.Size(1218, 24);
-            this.sts_main_status_bar.TabIndex = 3;
-            this.sts_main_status_bar.Text = "statusStrip1";
+            sts_main_status_bar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_main_selection_size, lbl_main_hovered_screen, lbl_screen_used });
+            sts_main_status_bar.Location = new System.Drawing.Point(0, 747);
+            sts_main_status_bar.Name = "sts_main_status_bar";
+            sts_main_status_bar.Size = new System.Drawing.Size(1218, 24);
+            sts_main_status_bar.TabIndex = 3;
+            sts_main_status_bar.Text = "statusStrip1";
             // 
             // lbl_main_selection_size
             // 
-            this.lbl_main_selection_size.AutoSize = false;
-            this.lbl_main_selection_size.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.lbl_main_selection_size.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.lbl_main_selection_size.Name = "lbl_main_selection_size";
-            this.lbl_main_selection_size.Size = new System.Drawing.Size(136, 19);
-            this.lbl_main_selection_size.Text = "Selected Area: 0 x 0";
-            this.lbl_main_selection_size.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lbl_main_selection_size.AutoSize = false;
+            lbl_main_selection_size.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            lbl_main_selection_size.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            lbl_main_selection_size.Name = "lbl_main_selection_size";
+            lbl_main_selection_size.Size = new System.Drawing.Size(136, 19);
+            lbl_main_selection_size.Text = "Selected Area: 0 x 0";
+            lbl_main_selection_size.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbl_main_hovered_screen
             // 
-            this.lbl_main_hovered_screen.AutoSize = false;
-            this.lbl_main_hovered_screen.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.lbl_main_hovered_screen.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.lbl_main_hovered_screen.Name = "lbl_main_hovered_screen";
-            this.lbl_main_hovered_screen.Size = new System.Drawing.Size(129, 19);
-            this.lbl_main_hovered_screen.Text = "Selected Screen:";
-            this.lbl_main_hovered_screen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lbl_main_hovered_screen.AutoSize = false;
+            lbl_main_hovered_screen.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            lbl_main_hovered_screen.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            lbl_main_hovered_screen.Name = "lbl_main_hovered_screen";
+            lbl_main_hovered_screen.Size = new System.Drawing.Size(129, 19);
+            lbl_main_hovered_screen.Text = "Selected Screen: 00, 00";
+            lbl_main_hovered_screen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lbl_screen_used
+            // 
+            lbl_screen_used.AutoSize = false;
+            lbl_screen_used.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            lbl_screen_used.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            lbl_screen_used.Name = "lbl_screen_used";
+            lbl_screen_used.Size = new System.Drawing.Size(55, 19);
+            lbl_screen_used.Text = "Used: 00";
+            lbl_screen_used.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // grp_main_tileset_viewer
             // 
-            this.grp_main_tileset_viewer.Controls.Add(this.flw_tileset_view);
-            this.grp_main_tileset_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_main_tileset_viewer.Location = new System.Drawing.Point(9, 6);
-            this.grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
-            this.grp_main_tileset_viewer.Size = new System.Drawing.Size(268, 156);
-            this.grp_main_tileset_viewer.TabIndex = 4;
-            this.grp_main_tileset_viewer.TabStop = false;
-            this.grp_main_tileset_viewer.Text = "Tileset";
+            grp_main_tileset_viewer.Controls.Add(flw_tileset_view);
+            grp_main_tileset_viewer.Controls.Add(toolbar_tileset);
+            grp_main_tileset_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_main_tileset_viewer.Location = new System.Drawing.Point(9, 6);
+            grp_main_tileset_viewer.Name = "grp_main_tileset_viewer";
+            grp_main_tileset_viewer.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            grp_main_tileset_viewer.Size = new System.Drawing.Size(274, 187);
+            grp_main_tileset_viewer.TabIndex = 4;
+            grp_main_tileset_viewer.TabStop = false;
+            grp_main_tileset_viewer.Text = "Tileset";
             // 
             // flw_tileset_view
             // 
-            this.flw_tileset_view.AutoScroll = true;
-            this.flw_tileset_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flw_tileset_view.Location = new System.Drawing.Point(3, 19);
-            this.flw_tileset_view.Name = "flw_tileset_view";
-            this.flw_tileset_view.Size = new System.Drawing.Size(262, 134);
-            this.flw_tileset_view.TabIndex = 0;
+            flw_tileset_view.AutoScroll = true;
+            flw_tileset_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            flw_tileset_view.Location = new System.Drawing.Point(6, 47);
+            flw_tileset_view.Name = "flw_tileset_view";
+            flw_tileset_view.Size = new System.Drawing.Size(262, 134);
+            flw_tileset_view.TabIndex = 0;
+            // 
+            // toolbar_tileset
+            // 
+            toolbar_tileset.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_tileset.Location = new System.Drawing.Point(6, 19);
+            toolbar_tileset.Name = "toolbar_tileset";
+            toolbar_tileset.onToolCommandTriggered = null;
+            toolbar_tileset.onToolSwitched = null;
+            toolbar_tileset.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_tileset.Size = new System.Drawing.Size(262, 28);
+            toolbar_tileset.TabIndex = 1;
+            toolbar_tileset.ToolCommandTriggered += toolbar_tileset_ToolCommandTriggered;
             // 
             // grp_main_room_viewer
             // 
-            this.grp_main_room_viewer.Controls.Add(this.flw_main_room_view);
-            this.grp_main_room_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_main_room_viewer.Location = new System.Drawing.Point(3, 6);
-            this.grp_main_room_viewer.Name = "grp_main_room_viewer";
-            this.grp_main_room_viewer.Size = new System.Drawing.Size(925, 685);
-            this.grp_main_room_viewer.TabIndex = 5;
-            this.grp_main_room_viewer.TabStop = false;
-            this.grp_main_room_viewer.Text = "Room";
+            grp_main_room_viewer.Controls.Add(flw_main_room_view);
+            grp_main_room_viewer.Controls.Add(toolbar_room);
+            grp_main_room_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_main_room_viewer.Location = new System.Drawing.Point(3, 6);
+            grp_main_room_viewer.Name = "grp_main_room_viewer";
+            grp_main_room_viewer.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            grp_main_room_viewer.Size = new System.Drawing.Size(919, 685);
+            grp_main_room_viewer.TabIndex = 5;
+            grp_main_room_viewer.TabStop = false;
+            grp_main_room_viewer.Text = "Room";
             // 
             // flw_main_room_view
             // 
-            this.flw_main_room_view.AutoScroll = true;
-            this.flw_main_room_view.AutoSize = true;
-            this.flw_main_room_view.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flw_main_room_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flw_main_room_view.Location = new System.Drawing.Point(3, 19);
-            this.flw_main_room_view.Name = "flw_main_room_view";
-            this.flw_main_room_view.Padding = new System.Windows.Forms.Padding(3);
-            this.flw_main_room_view.Size = new System.Drawing.Size(919, 663);
-            this.flw_main_room_view.TabIndex = 0;
+            flw_main_room_view.AutoScroll = true;
+            flw_main_room_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            flw_main_room_view.Location = new System.Drawing.Point(6, 47);
+            flw_main_room_view.Name = "flw_main_room_view";
+            flw_main_room_view.Size = new System.Drawing.Size(907, 632);
+            flw_main_room_view.TabIndex = 0;
+            // 
+            // toolbar_room
+            // 
+            toolbar_room.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_room.Location = new System.Drawing.Point(6, 19);
+            toolbar_room.Name = "toolbar_room";
+            toolbar_room.onToolCommandTriggered = null;
+            toolbar_room.onToolSwitched = null;
+            toolbar_room.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_room.Size = new System.Drawing.Size(907, 28);
+            toolbar_room.TabIndex = 1;
             // 
             // ctx_room_context_menu
             // 
-            this.ctx_room_context_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctx_btn_screen_settings,
-            this.toolStripSeparator4,
-            this.ctx_btn_add_object,
-            this.ctx_btn_edit_object,
-            this.ctx_btn_remove_object,
-            this.toolStripSeparator5,
-            this.ctx_btn_set_start_location,
-            this.toolStripSeparator6,
-            this.ctx_btn_test_here});
-            this.ctx_room_context_menu.Name = "ctx_room_context_menu";
-            this.ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
+            ctx_room_context_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { ctx_btn_screen_settings, toolStripSeparator4, ctx_btn_add_object, ctx_btn_edit_object, ctx_btn_remove_object, toolStripSeparator5, ctx_btn_set_start_location, toolStripSeparator6, ctx_btn_test_here });
+            ctx_room_context_menu.Name = "ctx_room_context_menu";
+            ctx_room_context_menu.Size = new System.Drawing.Size(167, 154);
             // 
             // ctx_btn_screen_settings
             // 
-            this.ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
-            this.ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_screen_settings.Text = "Screen Settings";
-            this.ctx_btn_screen_settings.Click += new System.EventHandler(this.ctx_btn_screen_settings_Click);
+            ctx_btn_screen_settings.Name = "ctx_btn_screen_settings";
+            ctx_btn_screen_settings.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_screen_settings.Text = "Screen Settings";
+            ctx_btn_screen_settings.Click += ctx_btn_screen_settings_Click;
             // 
             // toolStripSeparator4
             // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
             // 
             // ctx_btn_add_object
             // 
-            this.ctx_btn_add_object.Name = "ctx_btn_add_object";
-            this.ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_add_object.Text = "Add Object";
-            this.ctx_btn_add_object.Click += new System.EventHandler(this.ctx_btn_add_object_Click);
+            ctx_btn_add_object.Name = "ctx_btn_add_object";
+            ctx_btn_add_object.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_add_object.Text = "Add Object";
+            ctx_btn_add_object.Click += ctx_btn_add_object_Click;
             // 
             // ctx_btn_edit_object
             // 
-            this.ctx_btn_edit_object.Name = "ctx_btn_edit_object";
-            this.ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_edit_object.Text = "Edit Object";
-            this.ctx_btn_edit_object.Click += new System.EventHandler(this.ctx_btn_edit_object_Click);
+            ctx_btn_edit_object.Name = "ctx_btn_edit_object";
+            ctx_btn_edit_object.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_edit_object.Text = "Edit Object";
+            ctx_btn_edit_object.Click += ctx_btn_edit_object_Click;
             // 
             // ctx_btn_remove_object
             // 
-            this.ctx_btn_remove_object.Name = "ctx_btn_remove_object";
-            this.ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_remove_object.Text = "Remove Object";
-            this.ctx_btn_remove_object.Click += new System.EventHandler(this.ctx_btn_remove_object_Click);
+            ctx_btn_remove_object.Name = "ctx_btn_remove_object";
+            ctx_btn_remove_object.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_remove_object.Text = "Remove Object";
+            ctx_btn_remove_object.Click += ctx_btn_remove_object_Click;
             // 
             // toolStripSeparator5
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
-            this.toolStripSeparator5.Visible = false;
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new System.Drawing.Size(163, 6);
+            toolStripSeparator5.Visible = false;
             // 
             // ctx_btn_set_start_location
             // 
-            this.ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
-            this.ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_set_start_location.Text = "Set Start Location";
-            this.ctx_btn_set_start_location.Visible = false;
+            ctx_btn_set_start_location.Name = "ctx_btn_set_start_location";
+            ctx_btn_set_start_location.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_set_start_location.Text = "Set Start Location";
+            ctx_btn_set_start_location.Visible = false;
             // 
             // toolStripSeparator6
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new System.Drawing.Size(163, 6);
             // 
             // ctx_btn_test_here
             // 
-            this.ctx_btn_test_here.Name = "ctx_btn_test_here";
-            this.ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
-            this.ctx_btn_test_here.Text = "Test ROM Here";
-            this.ctx_btn_test_here.Click += new System.EventHandler(this.ctx_btn_test_here_Click);
+            ctx_btn_test_here.Name = "ctx_btn_test_here";
+            ctx_btn_test_here.Size = new System.Drawing.Size(166, 22);
+            ctx_btn_test_here.Text = "Test ROM Here";
+            ctx_btn_test_here.Click += ctx_btn_test_here_Click;
             // 
             // btnTest
             // 
-            this.btnTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTest.Location = new System.Drawing.Point(12, 369);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(82, 23);
-            this.btnTest.TabIndex = 9;
-            this.btnTest.Text = "Test Button";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            btnTest.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btnTest.Location = new System.Drawing.Point(12, 338);
+            btnTest.Name = "btnTest";
+            btnTest.Size = new System.Drawing.Size(82, 23);
+            btnTest.TabIndex = 9;
+            btnTest.Text = "Test Button";
+            btnTest.UseVisualStyleBackColor = true;
+            btnTest.Click += btnTest_Click;
             // 
             // pnl_main_window_view
             // 
-            this.pnl_main_window_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_main_window_view.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.pnl_main_window_view.Location = new System.Drawing.Point(0, 50);
-            this.pnl_main_window_view.Margin = new System.Windows.Forms.Padding(3, 3, 6, 6);
-            this.pnl_main_window_view.Name = "pnl_main_window_view";
+            pnl_main_window_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_main_window_view.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            pnl_main_window_view.Location = new System.Drawing.Point(0, 50);
+            pnl_main_window_view.Margin = new System.Windows.Forms.Padding(3, 3, 6, 6);
+            pnl_main_window_view.Name = "pnl_main_window_view";
             // 
             // pnl_main_window_view.Panel1
             // 
-            this.pnl_main_window_view.Panel1.Controls.Add(this.pnl_tileset);
-            this.pnl_main_window_view.Panel1.Controls.Add(this.pnl_data_selection);
+            pnl_main_window_view.Panel1.Controls.Add(pnl_tileset);
+            pnl_main_window_view.Panel1.Controls.Add(pnl_data_selection);
             // 
             // pnl_main_window_view.Panel2
             // 
-            this.pnl_main_window_view.Panel2.Controls.Add(this.grp_main_room_viewer);
-            this.pnl_main_window_view.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            this.pnl_main_window_view.Size = new System.Drawing.Size(1218, 697);
-            this.pnl_main_window_view.SplitterDistance = 280;
-            this.pnl_main_window_view.TabIndex = 6;
-            this.pnl_main_window_view.Visible = false;
+            pnl_main_window_view.Panel2.Controls.Add(grp_main_room_viewer);
+            pnl_main_window_view.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
+            pnl_main_window_view.Size = new System.Drawing.Size(1218, 697);
+            pnl_main_window_view.SplitterDistance = 286;
+            pnl_main_window_view.TabIndex = 6;
+            pnl_main_window_view.Visible = false;
             // 
             // pnl_tileset
             // 
-            this.pnl_tileset.Controls.Add(this.pnl_tileset_resize);
-            this.pnl_tileset.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_tileset.Location = new System.Drawing.Point(0, 127);
-            this.pnl_tileset.Name = "pnl_tileset";
-            this.pnl_tileset.Size = new System.Drawing.Size(280, 570);
-            this.pnl_tileset.TabIndex = 11;
+            pnl_tileset.Controls.Add(pnl_tileset_resize);
+            pnl_tileset.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_tileset.Location = new System.Drawing.Point(0, 127);
+            pnl_tileset.Name = "pnl_tileset";
+            pnl_tileset.Size = new System.Drawing.Size(286, 570);
+            pnl_tileset.TabIndex = 11;
             // 
             // pnl_tileset_resize
             // 
-            this.pnl_tileset_resize.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_tileset_resize.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.pnl_tileset_resize.Location = new System.Drawing.Point(0, 0);
-            this.pnl_tileset_resize.Name = "pnl_tileset_resize";
-            this.pnl_tileset_resize.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            pnl_tileset_resize.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_tileset_resize.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            pnl_tileset_resize.Location = new System.Drawing.Point(0, 0);
+            pnl_tileset_resize.Name = "pnl_tileset_resize";
+            pnl_tileset_resize.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // pnl_tileset_resize.Panel1
             // 
-            this.pnl_tileset_resize.Panel1.Controls.Add(this.grp_main_tileset_viewer);
-            this.pnl_tileset_resize.Panel1.Padding = new System.Windows.Forms.Padding(9, 6, 3, 0);
+            pnl_tileset_resize.Panel1.Controls.Add(grp_main_tileset_viewer);
+            pnl_tileset_resize.Panel1.Padding = new System.Windows.Forms.Padding(9, 6, 3, 0);
             // 
             // pnl_tileset_resize.Panel2
             // 
-            this.pnl_tileset_resize.Panel2.Controls.Add(this.btnTest);
-            this.pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
-            this.pnl_tileset_resize.Size = new System.Drawing.Size(280, 570);
-            this.pnl_tileset_resize.SplitterDistance = 162;
-            this.pnl_tileset_resize.TabIndex = 5;
+            pnl_tileset_resize.Panel2.Controls.Add(btnTest);
+            pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
+            pnl_tileset_resize.Size = new System.Drawing.Size(286, 570);
+            pnl_tileset_resize.SplitterDistance = 193;
+            pnl_tileset_resize.TabIndex = 5;
             // 
             // pnl_data_selection
             // 
-            this.pnl_data_selection.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.pnl_data_selection.Controls.Add(this.grp_data_selector);
-            this.pnl_data_selection.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnl_data_selection.Location = new System.Drawing.Point(0, 0);
-            this.pnl_data_selection.Name = "pnl_data_selection";
-            this.pnl_data_selection.Padding = new System.Windows.Forms.Padding(9, 6, 3, 6);
-            this.pnl_data_selection.Size = new System.Drawing.Size(280, 127);
-            this.pnl_data_selection.TabIndex = 10;
+            pnl_data_selection.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            pnl_data_selection.Controls.Add(grp_data_selector);
+            pnl_data_selection.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_data_selection.Location = new System.Drawing.Point(0, 0);
+            pnl_data_selection.Name = "pnl_data_selection";
+            pnl_data_selection.Padding = new System.Windows.Forms.Padding(9, 6, 3, 6);
+            pnl_data_selection.Size = new System.Drawing.Size(286, 127);
+            pnl_data_selection.TabIndex = 10;
             // 
             // grp_data_selector
             // 
-            this.grp_data_selector.Controls.Add(this.tls_input);
-            this.grp_data_selector.Controls.Add(this.lbl_area_bank);
-            this.grp_data_selector.Controls.Add(this.cbb_area_bank);
-            this.grp_data_selector.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_data_selector.Location = new System.Drawing.Point(9, 6);
-            this.grp_data_selector.Name = "grp_data_selector";
-            this.grp_data_selector.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            this.grp_data_selector.Size = new System.Drawing.Size(268, 115);
-            this.grp_data_selector.TabIndex = 0;
-            this.grp_data_selector.TabStop = false;
-            this.grp_data_selector.Text = "Data Selector";
+            grp_data_selector.Controls.Add(tls_input);
+            grp_data_selector.Controls.Add(lbl_area_bank);
+            grp_data_selector.Controls.Add(cbb_area_bank);
+            grp_data_selector.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_data_selector.Location = new System.Drawing.Point(9, 6);
+            grp_data_selector.Name = "grp_data_selector";
+            grp_data_selector.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            grp_data_selector.Size = new System.Drawing.Size(274, 115);
+            grp_data_selector.TabIndex = 0;
+            grp_data_selector.TabStop = false;
+            grp_data_selector.Text = "Data Selector";
+            // 
+            // ctx_tileset_context_menu
+            // 
+            ctx_tileset_context_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_tileset_zoom_in, btn_tileset_zoom_out, toolStripSeparator12, txb_tileset_zoom_level });
+            ctx_tileset_context_menu.Name = "ctx_tileset_context_menu";
+            ctx_tileset_context_menu.Size = new System.Drawing.Size(161, 72);
+            // 
+            // btn_tileset_zoom_in
+            // 
+            btn_tileset_zoom_in.Name = "btn_tileset_zoom_in";
+            btn_tileset_zoom_in.Size = new System.Drawing.Size(160, 22);
+            btn_tileset_zoom_in.Text = "Zoom +";
+            btn_tileset_zoom_in.Click += btn_tileset_zoom_in_Click;
+            // 
+            // btn_tileset_zoom_out
+            // 
+            btn_tileset_zoom_out.Name = "btn_tileset_zoom_out";
+            btn_tileset_zoom_out.Size = new System.Drawing.Size(160, 22);
+            btn_tileset_zoom_out.Text = "Zoom -";
+            btn_tileset_zoom_out.Click += btn_tileset_zoom_out_Click;
+            // 
+            // toolStripSeparator12
+            // 
+            toolStripSeparator12.Name = "toolStripSeparator12";
+            toolStripSeparator12.Size = new System.Drawing.Size(157, 6);
+            // 
+            // txb_tileset_zoom_level
+            // 
+            txb_tileset_zoom_level.BackColor = System.Drawing.SystemColors.Window;
+            txb_tileset_zoom_level.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            txb_tileset_zoom_level.Name = "txb_tileset_zoom_level";
+            txb_tileset_zoom_level.ReadOnly = true;
+            txb_tileset_zoom_level.Size = new System.Drawing.Size(100, 16);
+            txb_tileset_zoom_level.Text = "100%";
             // 
             // MainWindow
             // 
-            this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1218, 771);
-            this.Controls.Add(this.pnl_main_window_view);
-            this.Controls.Add(this.sts_main_status_bar);
-            this.Controls.Add(this.tool_strip_image_buttons);
-            this.Controls.Add(this.tool_strip_main_buttons);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.KeyPreview = true;
-            this.MinimumSize = new System.Drawing.Size(553, 810);
-            this.Name = "MainWindow";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "LAMP";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.window_file_drop);
-            this.DragOver += new System.Windows.Forms.DragEventHandler(this.window_drag_over);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
-            this.tool_strip_main_buttons.ResumeLayout(false);
-            this.tool_strip_main_buttons.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-            this.tool_strip_image_buttons.ResumeLayout(false);
-            this.tool_strip_image_buttons.PerformLayout();
-            this.sts_main_status_bar.ResumeLayout(false);
-            this.sts_main_status_bar.PerformLayout();
-            this.grp_main_tileset_viewer.ResumeLayout(false);
-            this.grp_main_room_viewer.ResumeLayout(false);
-            this.grp_main_room_viewer.PerformLayout();
-            this.ctx_room_context_menu.ResumeLayout(false);
-            this.pnl_main_window_view.Panel1.ResumeLayout(false);
-            this.pnl_main_window_view.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pnl_main_window_view)).EndInit();
-            this.pnl_main_window_view.ResumeLayout(false);
-            this.pnl_tileset.ResumeLayout(false);
-            this.pnl_tileset_resize.Panel1.ResumeLayout(false);
-            this.pnl_tileset_resize.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pnl_tileset_resize)).EndInit();
-            this.pnl_tileset_resize.ResumeLayout(false);
-            this.pnl_data_selection.ResumeLayout(false);
-            this.grp_data_selector.ResumeLayout(false);
-            this.grp_data_selector.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AllowDrop = true;
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1218, 771);
+            Controls.Add(pnl_main_window_view);
+            Controls.Add(sts_main_status_bar);
+            Controls.Add(tool_strip_image_buttons);
+            Controls.Add(tool_strip_main_buttons);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
+            MinimumSize = new System.Drawing.Size(553, 810);
+            Name = "MainWindow";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "LAMP";
+            DragDrop += window_file_drop;
+            DragOver += window_drag_over;
+            KeyDown += MainWindow_KeyDown;
+            tool_strip_main_buttons.ResumeLayout(false);
+            tool_strip_main_buttons.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
+            tool_strip_image_buttons.ResumeLayout(false);
+            tool_strip_image_buttons.PerformLayout();
+            sts_main_status_bar.ResumeLayout(false);
+            sts_main_status_bar.PerformLayout();
+            grp_main_tileset_viewer.ResumeLayout(false);
+            grp_main_room_viewer.ResumeLayout(false);
+            ctx_room_context_menu.ResumeLayout(false);
+            pnl_main_window_view.Panel1.ResumeLayout(false);
+            pnl_main_window_view.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pnl_main_window_view).EndInit();
+            pnl_main_window_view.ResumeLayout(false);
+            pnl_tileset.ResumeLayout(false);
+            pnl_tileset_resize.Panel1.ResumeLayout(false);
+            pnl_tileset_resize.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pnl_tileset_resize).EndInit();
+            pnl_tileset_resize.ResumeLayout(false);
+            pnl_data_selection.ResumeLayout(false);
+            grp_data_selector.ResumeLayout(false);
+            grp_data_selector.PerformLayout();
+            ctx_tileset_context_menu.ResumeLayout(false);
+            ctx_tileset_context_menu.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -937,7 +951,6 @@ namespace LAMP
         private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_selection_size;
         private System.Windows.Forms.GroupBox grp_main_room_viewer;
-        private System.Windows.Forms.FlowLayoutPanel flw_main_room_view;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_hovered_screen;
         private System.Windows.Forms.ToolStripMenuItem btn_transition_editor;
@@ -992,6 +1005,15 @@ namespace LAMP
         private System.Windows.Forms.GroupBox grp_data_selector;
         private System.Windows.Forms.FlowLayoutPanel flw_tileset_view;
         private System.Windows.Forms.SplitContainer pnl_tileset_resize;
+        private Controls.Overrides.FixedScrollPanel flw_main_room_view;
+        private System.Windows.Forms.ContextMenuStrip ctx_tileset_context_menu;
+        private System.Windows.Forms.ToolStripMenuItem btn_tileset_zoom_in;
+        private System.Windows.Forms.ToolStripMenuItem btn_tileset_zoom_out;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripTextBox txb_tileset_zoom_level;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_screen_used;
+        private Controls.Room.ToolBar toolbar_room;
+        private Controls.Room.ToolBar toolbar_tileset;
     }
 }
 
