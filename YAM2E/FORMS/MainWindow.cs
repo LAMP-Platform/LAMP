@@ -60,9 +60,11 @@ public partial class MainWindow : Form
         }
 
         //Toolbars
-        toolbar_tileset.SetTools(false, true, false);
+        toolbar_tileset.SetTools(false, false, true, false);
         toolbar_tileset.SetCopyPaste(false, false);
         toolbar_tileset.SetTransform(false, false, false, false);
+
+        toolbar_room.SetTransform(false, false, false, false);
 
         //Adding custom controls
         #region Tileset
@@ -359,12 +361,23 @@ public partial class MainWindow : Form
 
     private void SetTilesetZoom(int zoom)
     {
+        toolbar_tileset.EnableZoom(true, true);
         const int maxZoom = 4;
         const int minZoom = 1;
         Tileset.Zoom = Math.Max(minZoom, Math.Min(zoom, maxZoom));
-        if (Tileset.Zoom == maxZoom) btn_tileset_zoom_in.Enabled = false;
+
+        if (Tileset.Zoom == maxZoom)
+        {
+            btn_tileset_zoom_in.Enabled = false;
+            toolbar_tileset.EnableZoom(false, true);
+        }
         else btn_tileset_zoom_in.Enabled = true;
-        if (Tileset.Zoom == minZoom) btn_tileset_zoom_out.Enabled = false;
+
+        if (Tileset.Zoom == minZoom)
+        {
+            btn_tileset_zoom_out.Enabled = false;
+            toolbar_tileset.EnableZoom(true, false);
+        }
         else btn_tileset_zoom_out.Enabled = true;
 
         txb_tileset_zoom_level.Text = $"{Tileset.Zoom * 100}%";
@@ -376,7 +389,7 @@ public partial class MainWindow : Form
     private void Tileset_MouseDown(object sender, MouseEventArgs e)
     {
         if (e.Button != MouseButtons.Left) return;
-        int tileWidth = (16 * Tileset.Zoom);
+        int tileWidth = 16 * Tileset.Zoom;
 
         ToggleSelectionFocus(true);
 
@@ -387,41 +400,40 @@ public partial class MainWindow : Form
         StartSelection.X = x;
         StartSelection.Y = y;
 
-        Rectangle rect = Tileset.SelRect; //old selection rectangle
         Tileset.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, tileWidth - 1, tileWidth - 1);
-        Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
     }
 
     private void Tileset_MouseMove(object sender, MouseEventArgs e)
     {
-        int tileWidth = (16 * Tileset.Zoom);
+        int tileWidth = 16 * Tileset.Zoom;
 
         int x = (e.X / tileWidth) * tileWidth; //locks position of mouse to edge of tiles
         int y = (e.Y / tileWidth) * tileWidth; //
 
-        if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) || (x < 0 || y < 0) || (x > Tileset.BackgroundImage.Width * Tileset.Zoom - tileWidth || y > Tileset.BackgroundImage.Height * Tileset.Zoom - tileWidth)) //if mouse out of Tileset bounds
+        //Guard clause
+        if ((x == TilesetSelectedTile.X && y == TilesetSelectedTile.Y) //same tile still selected
+            || (x < 0 || y < 0) //outside of the tileset
+            || (x > Tileset.BackgroundImage.Width * Tileset.Zoom - tileWidth || y > Tileset.BackgroundImage.Height * Tileset.Zoom - tileWidth)) //also outside of the tileset
+        {
             return;
+        }
 
-        TilesetSelectedTile.X = x;
-        TilesetSelectedTile.Y = y;
+        TilesetSelectedTile.X = x; //Setting currently selected tile on the tileset
+        TilesetSelectedTile.Y = y; //
 
         if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
         {
-            int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + tileWidth - 1; //Width and Height of the Selection
-            int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + tileWidth - 1;//
+            int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + tileWidth - 1;   //Width and Height of the selected
+            int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + tileWidth - 1;  //area on the tileset
 
             Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Rectangle rect = Tileset.SelRect; //old selection rectangle
             Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, TilesetSelectedTile.X), Math.Min(StartSelection.Y, TilesetSelectedTile.Y), width, height);
-            Tileset.Invalidate(Editor.UniteRect(Tileset.SelRect, rect));
 
             lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
         }
-        else
+        else //Only update the cursor rectangle
         {
-            Rectangle rect = Tileset.RedRect; //old Position of the rectangle
             Tileset.RedRect = new Rectangle(TilesetSelectedTile.X, TilesetSelectedTile.Y, tileWidth - 1, tileWidth - 1);
-            Tileset.Invalidate(Editor.UniteRect(Tileset.RedRect, rect));
         }
 
     }

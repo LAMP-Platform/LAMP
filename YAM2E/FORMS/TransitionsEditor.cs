@@ -82,237 +82,237 @@ public partial class TransitionsEditor : Form
         Opcodes.Clear();
         //try
         //{
-            //NEW TRANSITION LOADING
-            for (int i = 0; i < LoadedTransition.Data.Count;)
+        //NEW TRANSITION LOADING
+        for (int i = 0; i < LoadedTransition.Data.Count;)
+        {
+            //putting data for each opcode into lists
+            int length = GetOpcodeLength(LoadedTransition.Data[i]);
+            List<Byte> data = LoadedTransition.Data.GetRange(i, length);
+
+            TransitionOpcode o = new TransitionOpcode(data, this);
+            if (Globals.ExpandAllOpcodes) o.Expand();
+            Opcodes.Add(o);
+            pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
+            i += length;
+        }
+
+        //OLD TRANSITION LOADING
+        for (int i = 0; i < LoadedTransition.Data.Count; i++)
+        {
+            byte opcode = LoadedTransition.Data[i];
+            byte parameter = (byte)(opcode & 0xF);
+            byte parameter2;
+            opcode &= 0xF0;
+
+            TreeNode Command = null;
+            TreeNode Parameter;
+
+            //library of opcodes
+            switch (opcode)
             {
-                //putting data for each opcode into lists
-                int length = GetOpcodeLength(LoadedTransition.Data[i]);
-                List<Byte> data = LoadedTransition.Data.GetRange(i, length);
+                case (0x00): //VRAM / Data Block Transfer
+                    if (parameter == 0x1) Command = new TreeNode("Saves the bank and offset of a BG tileset");
+                    if (parameter == 0x2) Command = new TreeNode("Saves the offset of a sprite tileset");
+                    else Command = new TreeNode("Copies the data");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 8 });
 
-                TransitionOpcode o = new TransitionOpcode(data, this);
-                if (Globals.ExpandAllOpcodes) o.Expand();
-                Opcodes.Add(o);
-                pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
-                i += length;
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"From bank: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"to offset: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Data length: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+                    break;
+
+                case (0x10): //Select metatile table
+                    Command = new TreeNode("Select metatile table from");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
+
+                    Parameter = new TreeNode($"Table: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+                    break;
+
+                case (0x20): //Select collision table
+                    Command = new TreeNode("Select collision table from");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
+
+                    Parameter = new TreeNode($"Table: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+                    break;
+
+                case (0x30): //Select solidity indexes
+                    Command = new TreeNode("Select solidity indices from");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
+
+                    Parameter = new TreeNode($"Table: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+                    break;
+
+                case (0x40): //Warp
+                    Command = new TreeNode("Warp to");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 2 });
+
+                    Parameter = new TreeNode($"Area Bank: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"and Screen X: {(parameter & 0xF):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+
+                    Parameter = new TreeNode($"at Screen Y: {(parameter >> 4):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.HighNibble });
+                    break;
+
+                case (0x50): //Retreat from Queen
+                    Command = new TreeNode("Retreat from Queen fight");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
+                    break;
+
+                case (0x60): //Change acid & spike damage
+                    Command = new TreeNode("Change acid & spike damage");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 3 });
+
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Acid damage: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
+
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Spike damage: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
+                    break;
+
+                case (0x70): //Exit Queen
+                    Command = new TreeNode("Exit Queen fight");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
+                    break;
+
+                case (0x80): //Enter Queen
+                    Command = new TreeNode("Enter Queen fight");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 9 });
+
+                    Parameter = new TreeNode($"Bank for current room: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Scroll Y position: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Scroll X position: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Samus Y position: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Samus X position: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+                    break;
+
+                case (0x90): //Conditional Transition
+                    Command = new TreeNode("If");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
+
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Metroids alive <= {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Go to Transition index: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+                    break;
+
+                case (0xA0): //Fadeout
+                    Command = new TreeNode("Fadeout");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
+                    break;
+
+                case (0xB0): //Load Graphics page
+                    if (parameter == 0x1) Command = new TreeNode("Load Background graphics page from");
+                    else if (parameter == 0x2) Command = new TreeNode("Load Sprite graphics page from");
+                    else Command = new TreeNode("! Load graphics page operator incorrect !");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
+
+                    parameter = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"Bank: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
+
+                    parameter = LoadedTransition.Data[++i];
+                    parameter2 = LoadedTransition.Data[++i];
+                    Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
+                    break;
+
+                case (0xC0): //Change Music
+                    Command = new TreeNode("Change music to");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
+
+                    Parameter = new TreeNode($"Number: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+                    break;
+
+                case (0xD0): //Load Message / Special Graphics
+                    Command = new TreeNode("Change special graphics to");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
+
+                    Parameter = new TreeNode($"Number: {parameter:X}");
+                    Command.Nodes.Add(Parameter);
+                    NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
+                    break;
+
+                case (0xF0): //Exit Transition
+                    if (parameter == 0xF) Command = new TreeNode("END TRANSITION");
+                    else Command = new TreeNode("! i n v a l i d !");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true });
+                    break;
+
+                default:
+                    Command = new TreeNode($"{opcode + parameter:X2}");
+                    NodeData.Add(Command, new TreeNodeExtension() { Byte = i });
+                    break;
             }
-
-            //OLD TRANSITION LOADING
-            for (int i = 0; i < LoadedTransition.Data.Count; i++)
-            {
-                byte opcode = LoadedTransition.Data[i];
-                byte parameter = (byte)(opcode & 0xF);
-                byte parameter2;
-                opcode &= 0xF0;
-
-                TreeNode Command = null;
-                TreeNode Parameter;
-
-                //library of opcodes
-                switch (opcode)
-                {
-                    case (0x00): //VRAM / Data Block Transfer
-                        if (parameter == 0x1) Command = new TreeNode("Saves the bank and offset of a BG tileset");
-                        if (parameter == 0x2) Command = new TreeNode("Saves the offset of a sprite tileset");
-                        else Command = new TreeNode("Copies the data");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 8 });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"From bank: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"to offset: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Data length: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-                        break;
-
-                    case (0x10): //Select metatile table
-                        Command = new TreeNode("Select metatile table from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
-
-                        Parameter = new TreeNode($"Table: { parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-                        break;
-
-                    case (0x20): //Select collision table
-                        Command = new TreeNode("Select collision table from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
-
-                        Parameter = new TreeNode($"Table: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-                        break;
-
-                    case (0x30): //Select solidity indexes
-                        Command = new TreeNode("Select solidity indices from");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
-
-                        Parameter = new TreeNode($"Table: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-                        break;
-
-                    case (0x40): //Warp
-                        Command = new TreeNode("Warp to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 2 });
-
-                        Parameter = new TreeNode($"Area Bank: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"and Screen X: {(parameter & 0xF):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-
-                        Parameter = new TreeNode($"at Screen Y: {(parameter >> 4):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.HighNibble });
-                        break;
-
-                    case (0x50): //Retreat from Queen
-                        Command = new TreeNode("Retreat from Queen fight");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
-                        break;
-
-                    case (0x60): //Change acid & spike damage
-                        Command = new TreeNode("Change acid & spike damage");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 3 });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Acid damage: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Spike damage: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
-                        break;
-
-                    case (0x70): //Exit Queen
-                        Command = new TreeNode("Exit Queen fight");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
-                        break;
-
-                    case (0x80): //Enter Queen
-                        Command = new TreeNode("Enter Queen fight");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 9 });
-
-                        Parameter = new TreeNode($"Bank for current room: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Scroll Y position: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Scroll X position: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Samus Y position: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Samus X position: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-                        break;
-
-                    case (0x90): //Conditional Transition
-                        Command = new TreeNode("If");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Metroids alive <= {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Go to Transition index: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-                        break;
-
-                    case (0xA0): //Fadeout
-                        Command = new TreeNode("Fadeout");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 1 });
-                        break;
-
-                    case (0xB0): //Load Graphics page
-                        if (parameter == 0x1) Command = new TreeNode("Load Background graphics page from");
-                        else if (parameter == 0x2) Command = new TreeNode("Load Sprite graphics page from");
-                        else Command = new TreeNode("! Load graphics page operator incorrect !");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, OpcodeLength = 4 });
-
-                        parameter = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"Bank: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i });
-
-                        parameter = LoadedTransition.Data[++i];
-                        parameter2 = LoadedTransition.Data[++i];
-                        Parameter = new TreeNode($"At offset: {parameter + (parameter2 << 8):X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.Pointer });
-                        break;
-
-                    case (0xC0): //Change Music
-                        Command = new TreeNode("Change music to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
-
-                        Parameter = new TreeNode($"Number: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-                        break;
-
-                    case (0xD0): //Load Message / Special Graphics
-                        Command = new TreeNode("Change special graphics to");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true, WhichByteToRead = ReadByte.HighNibble, OpcodeLength = 1 });
-
-                        Parameter = new TreeNode($"Number: {parameter:X}");
-                        Command.Nodes.Add(Parameter);
-                        NodeData.Add(Parameter, new TreeNodeExtension() { Byte = i, WhichByteToRead = ReadByte.LowNibble });
-                        break;
-
-                    case (0xF0): //Exit Transition
-                        if (parameter == 0xF) Command = new TreeNode("END TRANSITION");
-                        else Command = new TreeNode("! i n v a l i d !");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i, IsOpcode = true });
-                        break;
-
-                    default:
-                        Command = new TreeNode($"{opcode + parameter:X2}");
-                        NodeData.Add(Command, new TreeNodeExtension() { Byte = i });
-                        break;
-                }
-                tre_tred_transition_tree.Nodes.Add(Command);
-            }
+            tre_tred_transition_tree.Nodes.Add(Command);
+        }
         //}
         /*catch
         {
@@ -328,8 +328,8 @@ public partial class TransitionsEditor : Form
     {
         //try
         //{
-            LoadTransition(cbb_tred_transition_selection.SelectedIndex);
-            ReadTransition();
+        LoadTransition(cbb_tred_transition_selection.SelectedIndex);
+        ReadTransition();
         //}
         /*catch
         {
@@ -342,10 +342,10 @@ public partial class TransitionsEditor : Form
     {
         MessageBox.Show(y.ToString(), "Y",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-        for (int i = 0; i < Opcodes.Count; i ++)
+        for (int i = 0; i < Opcodes.Count; i++)
         {
             TransitionOpcode o = (TransitionOpcode)pnlTransition.Controls[i];
-            TransitionOpcode o2 = (TransitionOpcode)pnlTransition.Controls[i+1];
+            TransitionOpcode o2 = (TransitionOpcode)pnlTransition.Controls[i + 1];
             if (y > o.Location.Y && y < o2.Location.Y)
             {
                 pnlTransition.Controls.SetChildIndex(HeldOpcode, i);
@@ -398,9 +398,9 @@ public partial class TransitionsEditor : Form
         LoadedTransition.Data.Clear();
 
         //Add all the data from all the Opcodes
-        foreach(TransitionOpcode o in pnlTransition.Controls)
+        foreach (TransitionOpcode o in pnlTransition.Controls)
         {
-            foreach(TransitionOperand operand in o.Operands)
+            foreach (TransitionOperand operand in o.Operands)
             {
                 operand.SaveValue();
             }
@@ -511,7 +511,7 @@ public partial class TransitionsEditor : Form
                 return 1;
         }
 
-        
+
     }
 
     /// <summary>
@@ -753,7 +753,7 @@ public partial class TransitionsEditor : Form
         Globals.ExpandAllOpcodes = chb_expand_all.Checked;
         if (chb_expand_all.Checked == true)
         {
-            foreach(TransitionOpcode o in Opcodes)
+            foreach (TransitionOpcode o in Opcodes)
             {
                 o.Expand();
             }

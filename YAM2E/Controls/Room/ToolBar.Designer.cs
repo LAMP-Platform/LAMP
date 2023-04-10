@@ -46,6 +46,7 @@
             btn_zoom_in = new System.Windows.Forms.Button();
             btn_zoom_out = new System.Windows.Forms.Button();
             tlt_button_name = new System.Windows.Forms.ToolTip(components);
+            btn_move = new System.Windows.Forms.Button();
             flw_controls.SuspendLayout();
             SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             // 
             btn_pen.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_pen.Image = (System.Drawing.Image)resources.GetObject("btn_pen.Image");
-            btn_pen.Location = new System.Drawing.Point(0, 0);
+            btn_pen.Location = new System.Drawing.Point(24, 0);
             btn_pen.Margin = new System.Windows.Forms.Padding(0);
             btn_pen.Name = "btn_pen";
             btn_pen.Size = new System.Drawing.Size(24, 24);
@@ -66,7 +67,7 @@
             // 
             btn_select.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_select.Image = (System.Drawing.Image)resources.GetObject("btn_select.Image");
-            btn_select.Location = new System.Drawing.Point(24, 0);
+            btn_select.Location = new System.Drawing.Point(48, 0);
             btn_select.Margin = new System.Windows.Forms.Padding(0);
             btn_select.Name = "btn_select";
             btn_select.Size = new System.Drawing.Size(24, 24);
@@ -79,7 +80,7 @@
             // 
             btn_fill.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_fill.Image = (System.Drawing.Image)resources.GetObject("btn_fill.Image");
-            btn_fill.Location = new System.Drawing.Point(48, 0);
+            btn_fill.Location = new System.Drawing.Point(72, 0);
             btn_fill.Margin = new System.Windows.Forms.Padding(0);
             btn_fill.Name = "btn_fill";
             btn_fill.Size = new System.Drawing.Size(24, 24);
@@ -92,7 +93,7 @@
             // 
             btn_flip_hor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_flip_hor.Image = (System.Drawing.Image)resources.GetObject("btn_flip_hor.Image");
-            btn_flip_hor.Location = new System.Drawing.Point(134, 0);
+            btn_flip_hor.Location = new System.Drawing.Point(158, 0);
             btn_flip_hor.Margin = new System.Windows.Forms.Padding(0);
             btn_flip_hor.Name = "btn_flip_hor";
             btn_flip_hor.Size = new System.Drawing.Size(24, 24);
@@ -105,7 +106,7 @@
             // 
             btn_flip_vert.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_flip_vert.Image = (System.Drawing.Image)resources.GetObject("btn_flip_vert.Image");
-            btn_flip_vert.Location = new System.Drawing.Point(158, 0);
+            btn_flip_vert.Location = new System.Drawing.Point(182, 0);
             btn_flip_vert.Margin = new System.Windows.Forms.Padding(0);
             btn_flip_vert.Name = "btn_flip_vert";
             btn_flip_vert.Size = new System.Drawing.Size(24, 24);
@@ -118,7 +119,7 @@
             // 
             btn_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_copy.Image = (System.Drawing.Image)resources.GetObject("btn_copy.Image");
-            btn_copy.Location = new System.Drawing.Point(79, 0);
+            btn_copy.Location = new System.Drawing.Point(103, 0);
             btn_copy.Margin = new System.Windows.Forms.Padding(0);
             btn_copy.Name = "btn_copy";
             btn_copy.Size = new System.Drawing.Size(24, 24);
@@ -131,7 +132,7 @@
             // 
             btn_paste.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_paste.Image = (System.Drawing.Image)resources.GetObject("btn_paste.Image");
-            btn_paste.Location = new System.Drawing.Point(103, 0);
+            btn_paste.Location = new System.Drawing.Point(127, 0);
             btn_paste.Margin = new System.Windows.Forms.Padding(0);
             btn_paste.Name = "btn_paste";
             btn_paste.Size = new System.Drawing.Size(24, 24);
@@ -144,7 +145,7 @@
             // 
             btn_rotate_right.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_rotate_right.Image = (System.Drawing.Image)resources.GetObject("btn_rotate_right.Image");
-            btn_rotate_right.Location = new System.Drawing.Point(182, 0);
+            btn_rotate_right.Location = new System.Drawing.Point(206, 0);
             btn_rotate_right.Margin = new System.Windows.Forms.Padding(0);
             btn_rotate_right.Name = "btn_rotate_right";
             btn_rotate_right.Size = new System.Drawing.Size(24, 24);
@@ -157,7 +158,7 @@
             // 
             btn_rotate_left.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_rotate_left.Image = (System.Drawing.Image)resources.GetObject("btn_rotate_left.Image");
-            btn_rotate_left.Location = new System.Drawing.Point(206, 0);
+            btn_rotate_left.Location = new System.Drawing.Point(230, 0);
             btn_rotate_left.Margin = new System.Windows.Forms.Padding(0);
             btn_rotate_left.Name = "btn_rotate_left";
             btn_rotate_left.Size = new System.Drawing.Size(24, 24);
@@ -170,6 +171,7 @@
             // 
             flw_controls.AutoSize = true;
             flw_controls.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            flw_controls.Controls.Add(btn_move);
             flw_controls.Controls.Add(btn_pen);
             flw_controls.Controls.Add(btn_select);
             flw_controls.Controls.Add(btn_fill);
@@ -187,13 +189,13 @@
             flw_controls.Location = new System.Drawing.Point(0, 0);
             flw_controls.Margin = new System.Windows.Forms.Padding(0);
             flw_controls.Name = "flw_controls";
-            flw_controls.Size = new System.Drawing.Size(285, 24);
+            flw_controls.Size = new System.Drawing.Size(309, 24);
             flw_controls.TabIndex = 9;
             // 
             // sep_copy
             // 
             sep_copy.BackColor = System.Drawing.SystemColors.ControlDark;
-            sep_copy.Location = new System.Drawing.Point(75, 2);
+            sep_copy.Location = new System.Drawing.Point(99, 2);
             sep_copy.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
             sep_copy.Name = "sep_copy";
             sep_copy.Size = new System.Drawing.Size(1, 20);
@@ -202,7 +204,7 @@
             // sep_transform
             // 
             sep_transform.BackColor = System.Drawing.SystemColors.ControlDark;
-            sep_transform.Location = new System.Drawing.Point(130, 2);
+            sep_transform.Location = new System.Drawing.Point(154, 2);
             sep_transform.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
             sep_transform.Name = "sep_transform";
             sep_transform.Size = new System.Drawing.Size(1, 21);
@@ -211,7 +213,7 @@
             // sep_zoom
             // 
             sep_zoom.BackColor = System.Drawing.SystemColors.ControlDark;
-            sep_zoom.Location = new System.Drawing.Point(233, 2);
+            sep_zoom.Location = new System.Drawing.Point(257, 2);
             sep_zoom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
             sep_zoom.Name = "sep_zoom";
             sep_zoom.Size = new System.Drawing.Size(1, 20);
@@ -221,7 +223,7 @@
             // 
             btn_zoom_in.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_zoom_in.Image = (System.Drawing.Image)resources.GetObject("btn_zoom_in.Image");
-            btn_zoom_in.Location = new System.Drawing.Point(237, 0);
+            btn_zoom_in.Location = new System.Drawing.Point(261, 0);
             btn_zoom_in.Margin = new System.Windows.Forms.Padding(0);
             btn_zoom_in.Name = "btn_zoom_in";
             btn_zoom_in.Size = new System.Drawing.Size(24, 24);
@@ -234,7 +236,7 @@
             // 
             btn_zoom_out.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             btn_zoom_out.Image = (System.Drawing.Image)resources.GetObject("btn_zoom_out.Image");
-            btn_zoom_out.Location = new System.Drawing.Point(261, 0);
+            btn_zoom_out.Location = new System.Drawing.Point(285, 0);
             btn_zoom_out.Margin = new System.Windows.Forms.Padding(0);
             btn_zoom_out.Name = "btn_zoom_out";
             btn_zoom_out.Size = new System.Drawing.Size(24, 24);
@@ -248,13 +250,25 @@
             tlt_button_name.AutomaticDelay = 1000;
             tlt_button_name.BackColor = System.Drawing.SystemColors.Control;
             // 
+            // btn_move
+            // 
+            btn_move.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            btn_move.Image = (System.Drawing.Image)resources.GetObject("btn_move.Image");
+            btn_move.Location = new System.Drawing.Point(0, 0);
+            btn_move.Margin = new System.Windows.Forms.Padding(0);
+            btn_move.Name = "btn_move";
+            btn_move.Size = new System.Drawing.Size(24, 24);
+            btn_move.TabIndex = 14;
+            tlt_button_name.SetToolTip(btn_move, "Pen");
+            btn_move.UseVisualStyleBackColor = true;
+            // 
             // ToolBar
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(flw_controls);
             Name = "ToolBar";
-            Size = new System.Drawing.Size(313, 24);
+            Size = new System.Drawing.Size(369, 24);
             flw_controls.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -278,5 +292,6 @@
         private System.Windows.Forms.Button btn_zoom_in;
         private System.Windows.Forms.Button btn_zoom_out;
         private System.Windows.Forms.ToolTip tlt_button_name;
+        private System.Windows.Forms.Button btn_move;
     }
 }

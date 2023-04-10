@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
+using LAMP.Classes;
 
 namespace LAMP.Controls;
 
@@ -16,6 +17,7 @@ public class TileViewer : Control
         }
     }
 
+    #region Fields
     public int Zoom { 
         get
         {
@@ -29,21 +31,50 @@ public class TileViewer : Control
     }
     private int zoom = 1;
 
-    //TODO:unused?
-    public bool HasSelection => SelRect.X != -1; //Selection rectangle doesn't have a negative x value
+    /// <summary>
+    /// The rectangle that shows under the currently selected tile
+    /// </summary>
+    public Rectangle RedRect {
+        get => redRect;
+        set
+        {
+            if (redRect == value) return;
 
-    public Rectangle RedRect { get; set; }
-    private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
+            Rectangle old = redRect;
+            redRect = value;
 
-    public Rectangle SelRect { get; set; }
+            Invalidate(Editor.UniteRect(redRect, old));
+        }
+    }
+    private Rectangle redRect = new Rectangle(-1, -1, 0, 0);
+
+    /// <summary>
+    /// The rectangle that shows the selected area
+    /// </summary>
+    public Rectangle SelRect
+    {
+        get => selRect;
+        set
+        {
+            if (selRect == value) return;
+
+            Rectangle old = selRect;
+            selRect = value;
+
+            Invalidate(Editor.UniteRect(selRect, old));
+        }
+    }
+    private Rectangle selRect = new Rectangle(-1, -1, 0, 0);
+    #endregion
+
+    //Pens
     private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
-
-    //TODO:unused?
+    private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
 
     public void ResetSelection()
     {
-        RedRect = new Rectangle(-1, -1, 0, 0);
+        redRect = new Rectangle(-1, -1, 0, 0);
         SelRect = new Rectangle(-1, -1, 0, 0);
     }
 
@@ -59,10 +90,8 @@ public class TileViewer : Control
 
     protected override void OnPaint(PaintEventArgs e)
     {
-        if (RedRect.X != -1)
-            e.Graphics.DrawRectangle(TilePen, RedRect);
-        if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle))
-            return;
+        if (redRect.X != -1) e.Graphics.DrawRectangle(TilePen, redRect);
+        if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle)) return;
 
         //Dash pattern
         SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
