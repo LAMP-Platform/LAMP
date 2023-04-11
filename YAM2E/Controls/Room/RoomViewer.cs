@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using LAMP.Classes;
+using System.Security.Cryptography;
 
 namespace LAMP.Controls;
 
@@ -38,38 +39,129 @@ public class RoomViewer : Control
     private int SelectedScreenOld = 0;
     private List<Rectangle> UniqueScreen { get; } = new List<Rectangle>();
 
-    //Rectangles
-    //Red selection rectangle
-    public Rectangle RedRect { get; set; }
-    public Rectangle CursorRect { get; set; }
-    private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
+    #region Rectangles
+    /// <summary>
+    /// The rectangle showing the area which is going to be replaced if tiles are placed down
+    /// </summary>
+    public Rectangle RedRect
+    {
+        get => redRect;
+        set
+        {
+            if (redRect == value) return;
 
-    //selection rectangle
-    public Rectangle SelRect { get; set; }
+            Rectangle old = redRect;
+            redRect = value;
+
+            Invalidate(Editor.UniteRect(redRect, old));
+        }
+    }
+    private Rectangle redRect = new Rectangle(-1, -1, 0, 0);
+
+    /// <summary>
+    /// The rectangle that shows the selected tile
+    /// </summary>
+    public Rectangle CursorRect
+    {
+        get => cursorRect;
+        set
+        {
+            if (cursorRect == value) return;
+
+            Rectangle old = cursorRect;
+            cursorRect = value;
+
+            Invalidate(Editor.UniteRect(cursorRect, old));
+        }
+    }
+    private Rectangle cursorRect = new Rectangle(-1, -1, 0, 0);
+
+    /// <summary>
+    /// The rectangle showing the selected tiles in the room
+    /// </summary>
+    public Rectangle SelRect
+    {
+        get => selRect;
+        set
+        {
+            if (selRect == value) return;
+
+            Rectangle old = selRect;
+            selRect = value;
+
+            Invalidate(Editor.UniteRect(selRect, old));
+        }
+    }
+    private Rectangle selRect = new Rectangle(-1, -1, 0, 0);
+
+    /// <summary>
+    /// Rectangle for the current held object
+    /// </summary>
+    public Rectangle HeldObject
+    {
+        get => heldObject;
+        set
+        {
+            if (heldObject == value) return;
+
+            Rectangle old = heldObject;
+            heldObject = value;
+
+            Invalidate(Editor.UniteRect(heldObject, old));
+}
+    }
+    private Rectangle heldObject = new Rectangle(-1, -1, -1, -1);
+    #endregion
+
+    #region Pens
+    /// <summary>
+/// Pen for the selection rectangle
+/// </summary>
     private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
 
-    //screen outline rectangle
-    private Pen ScreenPen { get; set; } = new Pen(Color.White, 2)
+    /// <summary>
+    /// Pen for screen outlines
+    /// </summary>
+    private Pen ScreenPen { get; set; } = new Pen(Color.White, 1)
     {
         Alignment = PenAlignment.Inset
     };
+
+    /// <summary>
+    /// Pen for the unique screen outlines
+    /// </summary>
     private Pen UniqueScreenPen { get; set; } = new Pen(Globals.UniqueScreenColor, 2)
     { 
         Alignment = PenAlignment.Inset
     };
+
+    /// <summary>
+    /// Pen for the scroll outlines
+    /// </summary>
     private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 2)
     {
         Alignment = PenAlignment.Inset
     };
 
+    /// <summary>
+    /// Just a black Pen
+    /// </summary>
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
 
+    /// <summary>
+    /// Pen for the tile placement outlines
+    /// </summary>
+    private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
+
     //Objects
+    /// <summary>
+    /// Pen for Objects
+    /// </summary>
     private Pen ObjectPen { get; set; } = new Pen(Globals.ObjectColor, 2)
     {
         Alignment = PenAlignment.Inset
     };
-    public Rectangle HeldObject { get; set; } = new Rectangle(-1, -1, -1, -1);
+    #endregion
 
     public void ResetSelection()
     {
@@ -82,8 +174,8 @@ public class RoomViewer : Control
         //change render settings
         e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
-        if (RedRect.X != -1 && MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, RedRect);
-        if (!MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, CursorRect);
+        if (redRect.X != -1 && MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, redRect);
+        if (!MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, cursorRect);
 
         //duplicate Screen Outlines
         if (SelectedScreen != SelectedScreenOld && ShowDuplicateOutlines)
@@ -145,7 +237,7 @@ public class RoomViewer : Control
         //Draw held object
         if (MainWindow.heldObject != null)
         {
-            e.Graphics.DrawEllipse(ObjectPen, HeldObject);
+            e.Graphics.DrawEllipse(ObjectPen, heldObject);
         }
 
         //Draw objects
@@ -169,8 +261,8 @@ public class RoomViewer : Control
 
         SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
         BlackPen.DashOffset = 2;
-        e.Graphics.DrawRectangle(BlackPen, SelRect);
-        e.Graphics.DrawRectangle(SelectionPen, SelRect);
+        e.Graphics.DrawRectangle(BlackPen, selRect);
+        e.Graphics.DrawRectangle(SelectionPen, selRect);
         base.OnPaint(e);
     }
 

@@ -449,8 +449,8 @@ public partial class MainWindow : Form
     {
         Room.Focus();
 
-        int x = (e.X >> 4) * 16; //tile position at moment of click
-        int y = (e.Y >> 4) * 16; //
+        int x = (e.X / 16) * 16; //tile position at moment of click
+        int y = (e.Y / 16) * 16; //
         if (e.Button == MouseButtons.Left)
         {
             //Object editing mode
@@ -458,9 +458,7 @@ public partial class MainWindow : Form
             {
                 heldObject = Editor.FindObject(e.X, e.Y, Globals.SelectedArea);
                 Editor.RemoveObject(e.X, e.Y, Globals.SelectedArea);
-                Rectangle oldObject = Room.HeldObject;
                 Room.HeldObject = new Rectangle(e.X - 8, e.Y - 8, 15, 15);
-                Room.Invalidate(Editor.UniteRect(oldObject, Room.HeldObject));
                 return;
             }
 
@@ -504,14 +502,8 @@ public partial class MainWindow : Form
             StartSelection.X = x;
             StartSelection.Y = y;
 
-            Rectangle oldRed = Room.RedRect;
-            oldRed.Width++;
-            oldRed.Height++;
-            Room.Invalidate(oldRed);
             Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Rectangle rect = Room.SelRect; //old selection rectangle
             Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
-            Room.Invalidate(Editor.UniteRect(Room.SelRect, rect));
         }
     }
 
@@ -536,18 +528,18 @@ public partial class MainWindow : Form
 
             if ((ModifierKeys & Keys.Shift) != 0)
             {
-                RoomSelectedCoordinate.X = (e.X >> 4) * 16 + 8;
-                RoomSelectedCoordinate.Y = (e.Y >> 4) * 16 + 8;
+                RoomSelectedCoordinate.X = (e.X / 16) * 16 + 8;
+                RoomSelectedCoordinate.Y = (e.Y / 16) * 16 + 8;
             }
 
-            Rectangle oldObject = Room.HeldObject;
             Room.HeldObject = new Rectangle(RoomSelectedCoordinate.X - 8, RoomSelectedCoordinate.Y - 8, 15, 15);
-            Room.Invalidate(Editor.UniteRect(oldObject, Room.HeldObject));
         }
 
-        int mouse_x = (e.X >> 4) * 16; //locks position of mouse to edge of tiles
-        int mouse_y = (e.Y >> 4) * 16; //
-        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) || (mouse_x < 0 || mouse_y < 0) || (mouse_x >= Room.BackgroundImage.Width || mouse_y >= Room.BackgroundImage.Height)) //if mouse out of Room bounds
+        int mouse_x = (e.X / 16) * 16; //locks position of mouse to edge of tiles
+        int mouse_y = (e.Y / 16) * 16; //
+        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) //if same tile selected
+            || (mouse_x < 0 || mouse_y < 0) //if out of bounds
+            || (mouse_x >= Room.BackgroundImage.Width || mouse_y >= Room.BackgroundImage.Height)) //if out of bounds
             return;
 
         RoomSelectedTile.X = mouse_x;
@@ -555,19 +547,10 @@ public partial class MainWindow : Form
 
         if (!EditingTiles)
         {
-            Rectangle oldCursor = Room.CursorRect;
             Room.CursorRect = new Rectangle(mouse_x, mouse_y, 15, 15);
-            Room.Invalidate(Editor.UniteRect(oldCursor, Room.CursorRect));
         }
 
-        Rectangle rect = Room.RedRect; //old Position of the rectangle
         Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
-        Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
-        //unirect.X -= 1;
-        //unirect.Y -= 1;
-        //unirect.Width += 2;
-        //unirect.Height += 2;
-        Room.Invalidate(unirect);
 
         if (e.Button == MouseButtons.Left)
         {
@@ -580,14 +563,8 @@ public partial class MainWindow : Form
             int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
             int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
 
-            Rectangle oldRed = Room.RedRect;
-            oldRed.Width++;
-            oldRed.Height++;
-            Room.Invalidate(oldRed);
             Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Rectangle sRect = Room.SelRect; //old selection rectangle
             Room.SelRect = new Rectangle(Math.Min(StartSelection.X, RoomSelectedTile.X), Math.Min(StartSelection.Y, RoomSelectedTile.Y), width, height);
-            Room.Invalidate(Editor.UniteRect(Room.SelRect, sRect));
 
             lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
         }
@@ -605,11 +582,9 @@ public partial class MainWindow : Form
         }
         if (e.Button == MouseButtons.Right) UpdateSelectedTiles();
     }
-
     #endregion
 
     #region Main Events
-
     protected override void OnFormClosing(FormClosingEventArgs e)
     {
         if (Globals.LoadedProject == null) return;

@@ -18,6 +18,9 @@ public class TileViewer : Control
     }
 
     #region Fields
+    /// <summary>
+    /// The mutliplier by which everything gets zoomed
+    /// </summary>
     public int Zoom { 
         get
         {
@@ -91,13 +94,13 @@ public class TileViewer : Control
     protected override void OnPaint(PaintEventArgs e)
     {
         if (redRect.X != -1) e.Graphics.DrawRectangle(TilePen, redRect);
-        if (SelRect.X == -1 || !SelRect.IntersectsWith(e.ClipRectangle)) return;
+        if (selRect.X == -1 || !selRect.IntersectsWith(e.ClipRectangle)) return;
 
         //Dash pattern
         SelectionPen.DashPattern = BlackPen.DashPattern = new float[] { 2, 3 };
         BlackPen.DashOffset = 2;
-        e.Graphics.DrawRectangle(BlackPen, SelRect);
-        e.Graphics.DrawRectangle(SelectionPen, SelRect);
+        e.Graphics.DrawRectangle(BlackPen, selRect);
+        e.Graphics.DrawRectangle(SelectionPen, selRect);
         base.OnPaint(e);
     }
 
