@@ -3,9 +3,9 @@ using System.Drawing;
 
 namespace LAMP.Classes;
 
-internal class Tile
+internal class RoomTile
 {
-    public Tile() { }
+    public RoomTile() { }
 
     public GameScreen Screen { get; set; }
     public int ScreenNr { get; set; }

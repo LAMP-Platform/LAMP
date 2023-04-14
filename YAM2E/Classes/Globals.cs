@@ -4,18 +4,12 @@ using LAMP.Classes;
 using LAMP.Classes.M2_Data;
 using System;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace LAMP;
 
 internal static class Globals
 {
-    //TODO: assigned, but never used
-
-    /// <summary>
-    /// Indicates whether a Metroid 2 ROM has been loaded.
-    /// </summary>
-    public static bool RomLoaded = false;
-
     /// <summary>
     /// Path to a vanilla ROM
     /// </summary>
@@ -119,6 +113,7 @@ internal static class Globals
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;
     public static string hexSuffix = Properties.programsettings.Default.hexSuffix;
+    public static List<string> recentFiles = Properties.programsettings.Default.recentFiles.Cast<string>().ToList();
     #endregion
 }
 

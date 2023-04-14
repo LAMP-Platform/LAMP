@@ -50,6 +50,7 @@ namespace LAMP
             btn_transition_editor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             btn_tileset_definitions = new System.Windows.Forms.ToolStripMenuItem();
+            btn_graphics_editor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
             btn_tweaks_editor = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,8 +66,6 @@ namespace LAMP
             btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             btn_about = new System.Windows.Forms.ToolStripMenuItem();
             btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            bindingSource1 = new System.Windows.Forms.BindingSource(components);
             tls_input = new Controls.Other.TilesetInput();
             lbl_area_bank = new System.Windows.Forms.Label();
             cbb_area_bank = new System.Windows.Forms.ComboBox();
@@ -80,9 +79,10 @@ namespace LAMP
             btn_show_objects = new System.Windows.Forms.ToolStripButton();
             btn_show_scrolls = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             btn_open_tweaks_editor_image = new System.Windows.Forms.ToolStripButton();
+            btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             btn_open_tileset_editor = new System.Windows.Forms.ToolStripButton();
+            btn_graphics_editor_image = new System.Windows.Forms.ToolStripButton();
             sts_main_status_bar = new System.Windows.Forms.StatusStrip();
             lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
@@ -93,7 +93,6 @@ namespace LAMP
             grp_main_room_viewer = new System.Windows.Forms.GroupBox();
             flw_main_room_view = new Controls.Overrides.FixedScrollPanel();
             toolbar_room = new Controls.Room.ToolBar();
-            pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             ctx_room_context_menu = new System.Windows.Forms.ContextMenuStrip(components);
             ctx_btn_screen_settings = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -116,7 +115,6 @@ namespace LAMP
             toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             txb_tileset_zoom_level = new System.Windows.Forms.ToolStripTextBox();
             tool_strip_main_buttons.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
             grp_main_tileset_viewer.SuspendLayout();
@@ -224,7 +222,7 @@ namespace LAMP
             // btn_rom_file
             // 
             btn_rom_file.Name = "btn_rom_file";
-            btn_rom_file.Size = new System.Drawing.Size(165, 22);
+            btn_rom_file.Size = new System.Drawing.Size(180, 22);
             btn_rom_file.Text = "Program Settings";
             btn_rom_file.Click += rOMFileToolStripMenuItem_Click;
             // 
@@ -232,7 +230,7 @@ namespace LAMP
             // 
             btn_project_settings.Enabled = false;
             btn_project_settings.Name = "btn_project_settings";
-            btn_project_settings.Size = new System.Drawing.Size(165, 22);
+            btn_project_settings.Size = new System.Drawing.Size(180, 22);
             btn_project_settings.Text = "Project Settings";
             btn_project_settings.Click += btn_project_settings_Click;
             // 
@@ -260,7 +258,7 @@ namespace LAMP
             // 
             tool_strip_editors.AutoToolTip = false;
             tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_screen_settings, btn_transition_editor, toolStripSeparator10, btn_tileset_definitions, toolStripSeparator11, btn_save_editor, btn_tweaks_editor });
+            tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_screen_settings, btn_transition_editor, toolStripSeparator10, btn_tileset_definitions, btn_graphics_editor, toolStripSeparator11, btn_save_editor, btn_tweaks_editor });
             tool_strip_editors.Enabled = false;
             tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             tool_strip_editors.Name = "tool_strip_editors";
@@ -293,6 +291,13 @@ namespace LAMP
             btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
             btn_tileset_definitions.Text = "Tileset Editor";
             btn_tileset_definitions.Click += btn_tileset_definitions_Click;
+            // 
+            // btn_graphics_editor
+            // 
+            btn_graphics_editor.Name = "btn_graphics_editor";
+            btn_graphics_editor.Size = new System.Drawing.Size(159, 22);
+            btn_graphics_editor.Text = "Graphics Editor";
+            btn_graphics_editor.Click += btn_graphics_editor_Click;
             // 
             // toolStripSeparator11
             // 
@@ -463,7 +468,7 @@ namespace LAMP
             // 
             tool_strip_image_buttons.BackColor = System.Drawing.SystemColors.ControlLightLight;
             tool_strip_image_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_open_rom_image, btn_save_rom_image, toolStripSeparator2, btn_tile_mode, btn_object_mode, toolStripSeparator3, btn_show_objects, btn_show_scrolls, toolStripSeparator9, btn_open_transition_editor_image, btn_open_tweaks_editor_image, btn_open_tileset_editor });
+            tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_open_rom_image, btn_save_rom_image, toolStripSeparator2, btn_tile_mode, btn_object_mode, toolStripSeparator3, btn_show_objects, btn_show_scrolls, toolStripSeparator9, btn_open_tweaks_editor_image, btn_open_transition_editor_image, btn_open_tileset_editor, btn_graphics_editor_image });
             tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             tool_strip_image_buttons.Name = "tool_strip_image_buttons";
             tool_strip_image_buttons.Size = new System.Drawing.Size(1218, 25);
@@ -553,6 +558,18 @@ namespace LAMP
             toolStripSeparator9.Name = "toolStripSeparator9";
             toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
+            // btn_open_tweaks_editor_image
+            // 
+            btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_tweaks_editor_image.Enabled = false;
+            btn_open_tweaks_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_tweaks_editor_image.Image");
+            btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
+            btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
+            btn_open_tweaks_editor_image.Text = "Open Data Viewer";
+            btn_open_tweaks_editor_image.ToolTipText = "Data Viewer";
+            btn_open_tweaks_editor_image.Click += btn_data_viewer_Click;
+            // 
             // btn_open_transition_editor_image
             // 
             btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -565,19 +582,6 @@ namespace LAMP
             btn_open_transition_editor_image.ToolTipText = "Transition Editor";
             btn_open_transition_editor_image.Click += btn_open_transition_editor_image_Click;
             // 
-            // btn_open_tweaks_editor_image
-            // 
-            btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_open_tweaks_editor_image.Enabled = false;
-            btn_open_tweaks_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_tweaks_editor_image.Image");
-            btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
-            btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
-            btn_open_tweaks_editor_image.Text = "Open Tweaks Editor";
-            btn_open_tweaks_editor_image.ToolTipText = "Tweaks Editor";
-            btn_open_tweaks_editor_image.Visible = false;
-            btn_open_tweaks_editor_image.Click += btn_open_tweaks_editor_image_Click;
-            // 
             // btn_open_tileset_editor
             // 
             btn_open_tileset_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -588,6 +592,18 @@ namespace LAMP
             btn_open_tileset_editor.Size = new System.Drawing.Size(23, 22);
             btn_open_tileset_editor.Text = "Tileset Editor";
             btn_open_tileset_editor.Click += btn_open_tileset_editor_Click;
+            // 
+            // btn_graphics_editor_image
+            // 
+            btn_graphics_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_graphics_editor_image.Enabled = false;
+            btn_graphics_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_graphics_editor_image.Image");
+            btn_graphics_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_graphics_editor_image.Name = "btn_graphics_editor_image";
+            btn_graphics_editor_image.Size = new System.Drawing.Size(23, 22);
+            btn_graphics_editor_image.Text = "Graphics Editor";
+            btn_graphics_editor_image.ToolTipText = "Graphics Editor";
+            btn_graphics_editor_image.Click += btn_graphics_editor_Click;
             // 
             // sts_main_status_bar
             // 
@@ -694,6 +710,7 @@ namespace LAMP
             toolbar_room.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
             toolbar_room.Size = new System.Drawing.Size(907, 28);
             toolbar_room.TabIndex = 1;
+            toolbar_room.ToolSwitched += toolbar_room_ToolSwitched;
             // 
             // ctx_room_context_menu
             // 
@@ -902,7 +919,6 @@ namespace LAMP
             KeyDown += MainWindow_KeyDown;
             tool_strip_main_buttons.ResumeLayout(false);
             tool_strip_main_buttons.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             tool_strip_image_buttons.ResumeLayout(false);
             tool_strip_image_buttons.PerformLayout();
             sts_main_status_bar.ResumeLayout(false);
@@ -936,8 +952,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_save_project;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem btn_create_backup;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.ComboBox cbb_area_bank;
         private System.Windows.Forms.Label lbl_area_bank;
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_editors;
@@ -951,7 +965,6 @@ namespace LAMP
         private System.Windows.Forms.GroupBox grp_main_tileset_viewer;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_selection_size;
         private System.Windows.Forms.GroupBox grp_main_room_viewer;
-        private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.ToolStripStatusLabel lbl_main_hovered_screen;
         private System.Windows.Forms.ToolStripMenuItem btn_transition_editor;
         private System.Windows.Forms.ToolStripButton btn_open_transition_editor_image;
@@ -1014,6 +1027,8 @@ namespace LAMP
         private System.Windows.Forms.ToolStripStatusLabel lbl_screen_used;
         private Controls.Room.ToolBar toolbar_room;
         private Controls.Room.ToolBar toolbar_tileset;
+        private System.Windows.Forms.ToolStripMenuItem btn_graphics_editor;
+        private System.Windows.Forms.ToolStripButton btn_graphics_editor_image;
     }
 }
 

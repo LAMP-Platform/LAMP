@@ -29,260 +29,278 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicsEditor));
-            this.status_strip = new System.Windows.Forms.StatusStrip();
-            this.grp_data_selector = new System.Windows.Forms.GroupBox();
-            this.lbl_offset = new System.Windows.Forms.Label();
-            this.txb_offset = new System.Windows.Forms.TextBox();
-            this.lbl_width = new System.Windows.Forms.Label();
-            this.lbl_height = new System.Windows.Forms.Label();
-            this.lbl_meta_offset = new System.Windows.Forms.Label();
-            this.txb_meta_offset = new System.Windows.Forms.TextBox();
-            this.num_width = new System.Windows.Forms.NumericUpDown();
-            this.num_height = new System.Windows.Forms.NumericUpDown();
-            this.grp_graphics = new System.Windows.Forms.GroupBox();
-            this.flw_graphics_view = new System.Windows.Forms.FlowLayoutPanel();
-            this.toolbar_graphics = new LAMP.Controls.Room.ToolBar();
-            this.grp_metatiles = new System.Windows.Forms.GroupBox();
-            this.flw_metatile_view = new System.Windows.Forms.FlowLayoutPanel();
-            this.toolbar_metatiles = new LAMP.Controls.Room.ToolBar();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.grp_data_selector.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_width)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_height)).BeginInit();
-            this.grp_graphics.SuspendLayout();
-            this.grp_metatiles.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            this.SuspendLayout();
+            status_strip = new System.Windows.Forms.StatusStrip();
+            grp_data_selector = new System.Windows.Forms.GroupBox();
+            btn_accept = new System.Windows.Forms.Button();
+            num_height = new System.Windows.Forms.NumericUpDown();
+            txb_meta_offset = new System.Windows.Forms.TextBox();
+            lbl_meta_offset = new System.Windows.Forms.Label();
+            num_width = new System.Windows.Forms.NumericUpDown();
+            txb_offset = new System.Windows.Forms.TextBox();
+            lbl_offset = new System.Windows.Forms.Label();
+            lbl_width = new System.Windows.Forms.Label();
+            lbl_height = new System.Windows.Forms.Label();
+            grp_graphics = new System.Windows.Forms.GroupBox();
+            flw_graphics_view = new System.Windows.Forms.FlowLayoutPanel();
+            toolbar_graphics = new Controls.Room.ToolBar();
+            grp_metatiles = new System.Windows.Forms.GroupBox();
+            flw_metatile_view = new System.Windows.Forms.FlowLayoutPanel();
+            toolbar_metatiles = new Controls.Room.ToolBar();
+            splitContainer1 = new System.Windows.Forms.SplitContainer();
+            splitContainer2 = new System.Windows.Forms.SplitContainer();
+            grp_data_selector.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
+            grp_graphics.SuspendLayout();
+            grp_metatiles.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
+            SuspendLayout();
             // 
             // status_strip
             // 
-            this.status_strip.Location = new System.Drawing.Point(0, 707);
-            this.status_strip.Name = "status_strip";
-            this.status_strip.Size = new System.Drawing.Size(1153, 22);
-            this.status_strip.TabIndex = 0;
-            this.status_strip.Text = "statusStrip1";
+            status_strip.Location = new System.Drawing.Point(0, 707);
+            status_strip.Name = "status_strip";
+            status_strip.Size = new System.Drawing.Size(1153, 22);
+            status_strip.TabIndex = 0;
+            status_strip.Text = "statusStrip1";
             // 
             // grp_data_selector
             // 
-            this.grp_data_selector.Controls.Add(this.num_height);
-            this.grp_data_selector.Controls.Add(this.txb_meta_offset);
-            this.grp_data_selector.Controls.Add(this.lbl_meta_offset);
-            this.grp_data_selector.Controls.Add(this.num_width);
-            this.grp_data_selector.Controls.Add(this.txb_offset);
-            this.grp_data_selector.Controls.Add(this.lbl_offset);
-            this.grp_data_selector.Controls.Add(this.lbl_width);
-            this.grp_data_selector.Controls.Add(this.lbl_height);
-            this.grp_data_selector.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grp_data_selector.Location = new System.Drawing.Point(9, 6);
-            this.grp_data_selector.Name = "grp_data_selector";
-            this.grp_data_selector.Size = new System.Drawing.Size(167, 139);
-            this.grp_data_selector.TabIndex = 1;
-            this.grp_data_selector.TabStop = false;
-            this.grp_data_selector.Text = "Data Selector";
+            grp_data_selector.Controls.Add(btn_accept);
+            grp_data_selector.Controls.Add(num_height);
+            grp_data_selector.Controls.Add(txb_meta_offset);
+            grp_data_selector.Controls.Add(lbl_meta_offset);
+            grp_data_selector.Controls.Add(num_width);
+            grp_data_selector.Controls.Add(txb_offset);
+            grp_data_selector.Controls.Add(lbl_offset);
+            grp_data_selector.Controls.Add(lbl_width);
+            grp_data_selector.Controls.Add(lbl_height);
+            grp_data_selector.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_data_selector.Location = new System.Drawing.Point(9, 6);
+            grp_data_selector.Name = "grp_data_selector";
+            grp_data_selector.Size = new System.Drawing.Size(167, 168);
+            grp_data_selector.TabIndex = 1;
+            grp_data_selector.TabStop = false;
+            grp_data_selector.Text = "Data Selector";
             // 
-            // lbl_offset
+            // btn_accept
             // 
-            this.lbl_offset.AutoSize = true;
-            this.lbl_offset.Location = new System.Drawing.Point(6, 25);
-            this.lbl_offset.Name = "lbl_offset";
-            this.lbl_offset.Size = new System.Drawing.Size(42, 15);
-            this.lbl_offset.TabIndex = 0;
-            this.lbl_offset.Text = "Offset:";
-            // 
-            // txb_offset
-            // 
-            this.txb_offset.Location = new System.Drawing.Point(70, 22);
-            this.txb_offset.Name = "txb_offset";
-            this.txb_offset.Size = new System.Drawing.Size(92, 23);
-            this.txb_offset.TabIndex = 1;
-            // 
-            // lbl_width
-            // 
-            this.lbl_width.AutoSize = true;
-            this.lbl_width.Location = new System.Drawing.Point(6, 82);
-            this.lbl_width.Name = "lbl_width";
-            this.lbl_width.Size = new System.Drawing.Size(42, 15);
-            this.lbl_width.TabIndex = 2;
-            this.lbl_width.Text = "Width:";
-            // 
-            // lbl_height
-            // 
-            this.lbl_height.AutoSize = true;
-            this.lbl_height.Location = new System.Drawing.Point(6, 111);
-            this.lbl_height.Name = "lbl_height";
-            this.lbl_height.Size = new System.Drawing.Size(46, 15);
-            this.lbl_height.TabIndex = 3;
-            this.lbl_height.Text = "Height:";
-            // 
-            // lbl_meta_offset
-            // 
-            this.lbl_meta_offset.AutoSize = true;
-            this.lbl_meta_offset.Location = new System.Drawing.Point(6, 54);
-            this.lbl_meta_offset.Name = "lbl_meta_offset";
-            this.lbl_meta_offset.Size = new System.Drawing.Size(58, 15);
-            this.lbl_meta_offset.TabIndex = 4;
-            this.lbl_meta_offset.Text = "Metatiles:";
-            // 
-            // txb_meta_offset
-            // 
-            this.txb_meta_offset.Location = new System.Drawing.Point(70, 51);
-            this.txb_meta_offset.Name = "txb_meta_offset";
-            this.txb_meta_offset.Size = new System.Drawing.Size(92, 23);
-            this.txb_meta_offset.TabIndex = 5;
-            // 
-            // num_width
-            // 
-            this.num_width.Location = new System.Drawing.Point(70, 80);
-            this.num_width.Name = "num_width";
-            this.num_width.Size = new System.Drawing.Size(92, 23);
-            this.num_width.TabIndex = 6;
+            btn_accept.Location = new System.Drawing.Point(70, 138);
+            btn_accept.Name = "btn_accept";
+            btn_accept.Size = new System.Drawing.Size(92, 23);
+            btn_accept.TabIndex = 8;
+            btn_accept.Text = "View";
+            btn_accept.UseVisualStyleBackColor = true;
+            btn_accept.Click += btn_accept_Click;
             // 
             // num_height
             // 
-            this.num_height.Location = new System.Drawing.Point(70, 109);
-            this.num_height.Name = "num_height";
-            this.num_height.Size = new System.Drawing.Size(92, 23);
-            this.num_height.TabIndex = 7;
+            num_height.Location = new System.Drawing.Point(70, 109);
+            num_height.Name = "num_height";
+            num_height.Size = new System.Drawing.Size(92, 23);
+            num_height.TabIndex = 7;
+            // 
+            // txb_meta_offset
+            // 
+            txb_meta_offset.Location = new System.Drawing.Point(70, 51);
+            txb_meta_offset.Name = "txb_meta_offset";
+            txb_meta_offset.Size = new System.Drawing.Size(92, 23);
+            txb_meta_offset.TabIndex = 5;
+            // 
+            // lbl_meta_offset
+            // 
+            lbl_meta_offset.AutoSize = true;
+            lbl_meta_offset.Location = new System.Drawing.Point(6, 54);
+            lbl_meta_offset.Name = "lbl_meta_offset";
+            lbl_meta_offset.Size = new System.Drawing.Size(58, 15);
+            lbl_meta_offset.TabIndex = 4;
+            lbl_meta_offset.Text = "Metatiles:";
+            // 
+            // num_width
+            // 
+            num_width.Location = new System.Drawing.Point(70, 80);
+            num_width.Name = "num_width";
+            num_width.Size = new System.Drawing.Size(92, 23);
+            num_width.TabIndex = 6;
+            // 
+            // txb_offset
+            // 
+            txb_offset.Location = new System.Drawing.Point(70, 22);
+            txb_offset.Name = "txb_offset";
+            txb_offset.Size = new System.Drawing.Size(92, 23);
+            txb_offset.TabIndex = 1;
+            // 
+            // lbl_offset
+            // 
+            lbl_offset.AutoSize = true;
+            lbl_offset.Location = new System.Drawing.Point(6, 25);
+            lbl_offset.Name = "lbl_offset";
+            lbl_offset.Size = new System.Drawing.Size(42, 15);
+            lbl_offset.TabIndex = 0;
+            lbl_offset.Text = "Offset:";
+            // 
+            // lbl_width
+            // 
+            lbl_width.AutoSize = true;
+            lbl_width.Location = new System.Drawing.Point(6, 82);
+            lbl_width.Name = "lbl_width";
+            lbl_width.Size = new System.Drawing.Size(42, 15);
+            lbl_width.TabIndex = 2;
+            lbl_width.Text = "Width:";
+            // 
+            // lbl_height
+            // 
+            lbl_height.AutoSize = true;
+            lbl_height.Location = new System.Drawing.Point(6, 111);
+            lbl_height.Name = "lbl_height";
+            lbl_height.Size = new System.Drawing.Size(46, 15);
+            lbl_height.TabIndex = 3;
+            lbl_height.Text = "Height:";
             // 
             // grp_graphics
             // 
-            this.grp_graphics.Controls.Add(this.flw_graphics_view);
-            this.grp_graphics.Controls.Add(this.toolbar_graphics);
-            this.grp_graphics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_graphics.Location = new System.Drawing.Point(3, 6);
-            this.grp_graphics.Name = "grp_graphics";
-            this.grp_graphics.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            this.grp_graphics.Size = new System.Drawing.Size(958, 320);
-            this.grp_graphics.TabIndex = 5;
-            this.grp_graphics.TabStop = false;
-            this.grp_graphics.Text = "Graphics";
+            grp_graphics.Controls.Add(flw_graphics_view);
+            grp_graphics.Controls.Add(toolbar_graphics);
+            grp_graphics.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_graphics.Location = new System.Drawing.Point(3, 6);
+            grp_graphics.Name = "grp_graphics";
+            grp_graphics.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            grp_graphics.Size = new System.Drawing.Size(958, 328);
+            grp_graphics.TabIndex = 5;
+            grp_graphics.TabStop = false;
+            grp_graphics.Text = "Graphics";
             // 
             // flw_graphics_view
             // 
-            this.flw_graphics_view.AutoScroll = true;
-            this.flw_graphics_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flw_graphics_view.Location = new System.Drawing.Point(6, 47);
-            this.flw_graphics_view.Name = "flw_graphics_view";
-            this.flw_graphics_view.Size = new System.Drawing.Size(946, 267);
-            this.flw_graphics_view.TabIndex = 0;
+            flw_graphics_view.AutoScroll = true;
+            flw_graphics_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            flw_graphics_view.Location = new System.Drawing.Point(6, 47);
+            flw_graphics_view.Name = "flw_graphics_view";
+            flw_graphics_view.Size = new System.Drawing.Size(946, 275);
+            flw_graphics_view.TabIndex = 0;
             // 
             // toolbar_graphics
             // 
-            this.toolbar_graphics.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolbar_graphics.Location = new System.Drawing.Point(6, 19);
-            this.toolbar_graphics.Name = "toolbar_graphics";
-            this.toolbar_graphics.onToolCommandTriggered = null;
-            this.toolbar_graphics.onToolSwitched = null;
-            this.toolbar_graphics.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
-            this.toolbar_graphics.Size = new System.Drawing.Size(946, 28);
-            this.toolbar_graphics.TabIndex = 1;
+            toolbar_graphics.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_graphics.Location = new System.Drawing.Point(6, 19);
+            toolbar_graphics.MaxZoom = 0;
+            toolbar_graphics.Name = "toolbar_graphics";
+            toolbar_graphics.onToolCommandTriggered = null;
+            toolbar_graphics.onToolSwitched = null;
+            toolbar_graphics.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_graphics.Size = new System.Drawing.Size(946, 28);
+            toolbar_graphics.TabIndex = 1;
+            toolbar_graphics.ZoomLevel = 1;
+            toolbar_graphics.ToolCommandTriggered += toolbar_graphics_ToolCommandTriggered;
             // 
             // grp_metatiles
             // 
-            this.grp_metatiles.Controls.Add(this.flw_metatile_view);
-            this.grp_metatiles.Controls.Add(this.toolbar_metatiles);
-            this.grp_metatiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grp_metatiles.Location = new System.Drawing.Point(3, 3);
-            this.grp_metatiles.Name = "grp_metatiles";
-            this.grp_metatiles.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            this.grp_metatiles.Size = new System.Drawing.Size(958, 365);
-            this.grp_metatiles.TabIndex = 6;
-            this.grp_metatiles.TabStop = false;
-            this.grp_metatiles.Text = "Graphics";
+            grp_metatiles.Controls.Add(flw_metatile_view);
+            grp_metatiles.Controls.Add(toolbar_metatiles);
+            grp_metatiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_metatiles.Location = new System.Drawing.Point(3, 3);
+            grp_metatiles.Name = "grp_metatiles";
+            grp_metatiles.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
+            grp_metatiles.Size = new System.Drawing.Size(958, 357);
+            grp_metatiles.TabIndex = 6;
+            grp_metatiles.TabStop = false;
+            grp_metatiles.Text = "Metatiles";
             // 
             // flw_metatile_view
             // 
-            this.flw_metatile_view.AutoScroll = true;
-            this.flw_metatile_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flw_metatile_view.Location = new System.Drawing.Point(6, 47);
-            this.flw_metatile_view.Name = "flw_metatile_view";
-            this.flw_metatile_view.Size = new System.Drawing.Size(946, 312);
-            this.flw_metatile_view.TabIndex = 0;
+            flw_metatile_view.AutoScroll = true;
+            flw_metatile_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            flw_metatile_view.Location = new System.Drawing.Point(6, 47);
+            flw_metatile_view.Name = "flw_metatile_view";
+            flw_metatile_view.Size = new System.Drawing.Size(946, 304);
+            flw_metatile_view.TabIndex = 0;
             // 
             // toolbar_metatiles
             // 
-            this.toolbar_metatiles.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolbar_metatiles.Location = new System.Drawing.Point(6, 19);
-            this.toolbar_metatiles.Name = "toolbar_metatiles";
-            this.toolbar_metatiles.onToolCommandTriggered = null;
-            this.toolbar_metatiles.onToolSwitched = null;
-            this.toolbar_metatiles.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
-            this.toolbar_metatiles.Size = new System.Drawing.Size(946, 28);
-            this.toolbar_metatiles.TabIndex = 1;
+            toolbar_metatiles.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_metatiles.Location = new System.Drawing.Point(6, 19);
+            toolbar_metatiles.MaxZoom = 0;
+            toolbar_metatiles.Name = "toolbar_metatiles";
+            toolbar_metatiles.onToolCommandTriggered = null;
+            toolbar_metatiles.onToolSwitched = null;
+            toolbar_metatiles.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_metatiles.Size = new System.Drawing.Size(946, 28);
+            toolbar_metatiles.TabIndex = 1;
+            toolbar_metatiles.ZoomLevel = 1;
+            toolbar_metatiles.ToolCommandTriggered += toolbar_metatiles_ToolCommandTriggered;
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
+            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splitContainer1.Location = new System.Drawing.Point(0, 0);
+            splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.grp_data_selector);
-            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(9, 6, 3, 6);
+            splitContainer1.Panel1.Controls.Add(grp_data_selector);
+            splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(9, 6, 3, 6);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1153, 707);
-            this.splitContainer1.SplitterDistance = 179;
-            this.splitContainer1.TabIndex = 7;
+            splitContainer1.Panel2.Controls.Add(splitContainer2);
+            splitContainer1.Size = new System.Drawing.Size(1153, 707);
+            splitContainer1.SplitterDistance = 179;
+            splitContainer1.TabIndex = 7;
             // 
             // splitContainer2
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer2.Location = new System.Drawing.Point(0, 0);
+            splitContainer2.Name = "splitContainer2";
+            splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.grp_graphics);
-            this.splitContainer2.Panel1.Padding = new System.Windows.Forms.Padding(3, 6, 9, 3);
+            splitContainer2.Panel1.Controls.Add(grp_graphics);
+            splitContainer2.Panel1.Padding = new System.Windows.Forms.Padding(3, 6, 9, 3);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.grp_metatiles);
-            this.splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 9, 6);
-            this.splitContainer2.Size = new System.Drawing.Size(970, 707);
-            this.splitContainer2.SplitterDistance = 329;
-            this.splitContainer2.TabIndex = 0;
+            splitContainer2.Panel2.Controls.Add(grp_metatiles);
+            splitContainer2.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 9, 6);
+            splitContainer2.Size = new System.Drawing.Size(970, 707);
+            splitContainer2.SplitterDistance = 337;
+            splitContainer2.TabIndex = 0;
             // 
             // GraphicsEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1153, 729);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.status_strip);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "GraphicsEditor";
-            this.Text = "Graphics Editor";
-            this.grp_data_selector.ResumeLayout(false);
-            this.grp_data_selector.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.num_width)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.num_height)).EndInit();
-            this.grp_graphics.ResumeLayout(false);
-            this.grp_metatiles.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(1153, 729);
+            Controls.Add(splitContainer1);
+            Controls.Add(status_strip);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Name = "GraphicsEditor";
+            Text = "Graphics Editor";
+            grp_data_selector.ResumeLayout(false);
+            grp_data_selector.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
+            ((System.ComponentModel.ISupportInitialize)num_width).EndInit();
+            grp_graphics.ResumeLayout(false);
+            grp_metatiles.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -305,5 +323,6 @@
         private Controls.Room.ToolBar toolbar_metatiles;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Button btn_accept;
     }
 }

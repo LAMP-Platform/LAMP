@@ -5,6 +5,7 @@ Changes:
   -> Room View and Data View resizeable
   -> "View" tab removed
  # Slight Save Editor layout changes
+ + Recent Files
  + Data Viewer
   -> Basic Hex Viewer of the ROM Data
  + Toolbar Buttons
@@ -18,6 +19,7 @@ Changes:
 Fixes:
  # Controls all appear at once now when loading a project
  # Selected tiles in the room no longer continuously reselect
+
 
 Version B 3.1
 Released: 01.04.2023

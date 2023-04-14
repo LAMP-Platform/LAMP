@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Controls.Other;
+using LAMP.Properties;
 
 namespace LAMP.Controls.Room
 {
@@ -16,6 +17,7 @@ namespace LAMP.Controls.Room
         public ToolBar()
         {
             InitializeComponent();
+            SelectedTool = LampTool.Pen;
         }
 
         #region EVENTS
@@ -60,15 +62,50 @@ namespace LAMP.Controls.Room
         public LampTool SelectedTool
         {
             get { return selectedTool; }
-            set { selectedTool = value; }
+            set
+            {
+                switch(value)
+                {
+                    case (LampTool.Pen):
+                        btn_pen_Click(null, null);
+                        break;
+                    case (LampTool.Select):
+                        btn_select_Click(null, null);
+                        break;
+                    case (LampTool.Fill):
+                        btn_fill_Click(null, null);
+                        break;
+                    case (LampTool.Move):
+                        btn_move_Click(null, null);
+                        break;
+                }
+            }
         }
-        private LampTool selectedTool = LampTool.Pen;
+        private LampTool selectedTool;
 
         public LampToolCommand TriggeredCommand
         {
             get { return triggeredCommand; }
         }
         private LampToolCommand triggeredCommand = LampToolCommand.Copy;
+
+        public int MaxZoom { get; set; }
+        private int maxZoom = 10;
+
+        public int ZoomLevel
+        {
+            get => zoomLevel;
+            set
+            {
+                btn_zoom_in.Enabled = true;
+                btn_zoom_out.Enabled = true;
+
+                if (value == 1) btn_zoom_out.Enabled = false;
+                if (value >= maxZoom) btn_zoom_in.Enabled = false;
+                zoomLevel = Math.Max(1, Math.Min(maxZoom, value));
+            }
+        }
+        private int zoomLevel = 1;
         #endregion
 
         /// <summary>
@@ -81,21 +118,12 @@ namespace LAMP.Controls.Room
             flw_controls.Controls.Add(control);
         }
 
-        private void SetButtonSelected(Button button, bool selected = false)
-        {
-            button.BackColor = Color.FromArgb(0, 0xF0, 0xF0, 0xF0);
-
-            if (!selected) return;
-
-            button.BackColor = Color.FromArgb(0, 0xA0, 0xA0, 0xFF);
-        }
-
         private void ResetButtonSelected()
         {
-            SetButtonSelected(btn_pen);
-            SetButtonSelected(btn_move);
-            SetButtonSelected(btn_fill);
-            SetButtonSelected(btn_select);
+            btn_pen.Image = Resources.PenOne;
+            btn_select.Image = Resources.SelectXY;
+            btn_fill.Image = Resources.Fill;
+            btn_move.Image = Resources.Cursor;
         }
 
         public void SetTools(bool move, bool pen, bool select, bool fill)
@@ -142,27 +170,27 @@ namespace LAMP.Controls.Room
         private void btn_pen_Click(object sender, EventArgs e)
         {
             ResetButtonSelected();
+            btn_pen.Image = Resources.PenOneSelected;
 
             selectedTool = LampTool.Pen;
-            SetButtonSelected(btn_pen, true);
             OnToolSwitched(new EventArgs());
         }
 
         private void btn_select_Click(object sender, EventArgs e)
         {
             ResetButtonSelected();
+            btn_select.Image = Resources.SelectXYSelected;
 
             selectedTool = LampTool.Select;
-            SetButtonSelected(btn_select, true);
             OnToolSwitched(new EventArgs());
         }
 
         private void btn_fill_Click(object sender, EventArgs e)
         {
             ResetButtonSelected();
+            btn_fill.Image = Resources.FillSelected;
 
             selectedTool = LampTool.Fill;
-            SetButtonSelected(btn_fill, true);
             OnToolSwitched(new EventArgs());
         }
 
@@ -205,21 +233,23 @@ namespace LAMP.Controls.Room
         private void btn_zoom_in_Click(object sender, EventArgs e)
         {
             triggeredCommand = LampToolCommand.ZoomIn;
+            ZoomLevel += 1;
             OnToolCommandTriggered(new EventArgs());
         }
 
         private void btn_zoom_out_Click(object sender, EventArgs e)
         {
             triggeredCommand = LampToolCommand.ZoomOut;
+            ZoomLevel -= 1;
             OnToolCommandTriggered(new EventArgs());
         }
 
         private void btn_move_Click(object sender, EventArgs e)
         {
             ResetButtonSelected();
+            btn_move.Image = Resources.CursorSelected;
 
             selectedTool = LampTool.Move;
-            SetButtonSelected(btn_move, true);
             OnToolSwitched(new EventArgs());
         }
     }

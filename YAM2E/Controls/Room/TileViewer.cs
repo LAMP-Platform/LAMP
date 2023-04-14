@@ -1,6 +1,8 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 using LAMP.Classes;
+using LAMP.Controls.Room;
+using System;
 
 namespace LAMP.Controls;
 
@@ -13,11 +15,24 @@ public class TileViewer : Control
         set
         {
             base.BackgroundImage = value;
-            Size = base.BackgroundImage.Size * zoom;
+            if (BackgroundImage != null) Size = base.BackgroundImage.Size * zoom;
         }
     }
 
     #region Fields
+    /// <summary>
+    /// The tool that is selected from the Toolbar
+    /// </summary>
+    public LampTool SelectedTool
+    {
+        get => selectedTool;
+        set
+        {
+            selectedTool = value;
+        }
+    }
+    private LampTool selectedTool = LampTool.Select;
+
     /// <summary>
     /// The mutliplier by which everything gets zoomed
     /// </summary>
@@ -28,11 +43,16 @@ public class TileViewer : Control
         }
         set
         {
-            zoom = value;
-            Size = BackgroundImage.Size * zoom;
+            //setting rectangles
+            ResetSelection();
+
+            zoom = Math.Max(value, 1);
+            if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
         }
     }
     private int zoom = 1;
+
+    public Point SelectionStart { get; set; }
 
     /// <summary>
     /// The rectangle that shows under the currently selected tile
@@ -77,7 +97,7 @@ public class TileViewer : Control
 
     public void ResetSelection()
     {
-        redRect = new Rectangle(-1, -1, 0, 0);
+        RedRect = new Rectangle(-1, -1, 0, 0);
         SelRect = new Rectangle(-1, -1, 0, 0);
     }
 
@@ -86,7 +106,7 @@ public class TileViewer : Control
         SuspendLayout();
         ResumeLayout(false);
         SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
-        BackColor = Color.FromArgb(40, 50, 50);
+        BackColor = Color.FromArgb(0xF0, 0xF0, 0xF0);
 
         BackgroundImageLayout = ImageLayout.Stretch;
     }

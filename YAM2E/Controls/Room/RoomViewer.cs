@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using LAMP.Classes;
 using System.Security.Cryptography;
+using LAMP.Controls.Room;
 
 namespace LAMP.Controls;
 
@@ -35,9 +36,52 @@ public class RoomViewer : Control
     public bool ShowScrollBorders { get; set; } = false;
     public bool ShowObjects { get; set; } = true;
 
-    public int SelectedScreen { get; set; } = 0;
-    private int SelectedScreenOld = 0;
+    /// <summary>
+    /// Sets the screen ID that is currently selected and highlights all duplicates of it
+    /// </summary>
+    public int SelectedScreen
+    {
+        get => selectedScreen;
+        set
+        {
+            if (selectedScreen == value) return;
+            selectedScreen = value;
+
+            //else a new screen was selected
+            if (UniqueScreen.Count != 0 ) 
+                foreach (Rectangle r in UniqueScreen) Invalidate(r);
+
+            //Populating new list
+            UniqueScreen.Clear();
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 16; j++)
+                {
+                    Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 252, 252);
+                    int nr = j * 16 + i;
+                    if (Globals.Areas[Globals.SelectedArea].Screens[nr] != selectedScreen)
+                        continue;
+                    UniqueScreen.Add(rect);
+                    Invalidate(rect);
+                }
+            }
+        }
+    }
+    private int selectedScreen = 0;
     private List<Rectangle> UniqueScreen { get; } = new List<Rectangle>();
+
+    /// <summary>
+    /// The tool that is selected from the Toolbar
+    /// </summary>
+    public LampTool SelectedTool
+    {
+        get => selectedTool;
+        set
+        {
+            selectedTool = value;
+        }
+    }
+    private LampTool selectedTool = LampTool.Pen;
 
     #region Rectangles
     /// <summary>
@@ -122,7 +166,7 @@ public class RoomViewer : Control
     /// <summary>
     /// Pen for screen outlines
     /// </summary>
-    private Pen ScreenPen { get; set; } = new Pen(Color.White, 1)
+    private Pen ScreenPen { get; set; } = new Pen(Color.White, 4)
     {
         Alignment = PenAlignment.Inset
     };
@@ -177,46 +221,14 @@ public class RoomViewer : Control
         if (redRect.X != -1 && MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, redRect);
         if (!MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, cursorRect);
 
-        //duplicate Screen Outlines
-        if (SelectedScreen != SelectedScreenOld && ShowDuplicateOutlines)
-        {
-            //invalidating old outlines
-            if (UniqueScreen.Count != 0)
-            {
-                Rectangle rect = UniqueScreen[0];
-                foreach (Rectangle r in UniqueScreen)
-                    rect = Editor.UniteRect(rect, r);
-
-                Invalidate(Editor.SetValSize(rect));
-            }
-
-            UniqueScreen.Clear();
-            for (int i = 0; i < 16; i++)
-            {
-                for (int j = 0; j < 16; j++)
-                {
-                    Rectangle rect = new Rectangle(256 * i + 2, 256 * j + 2, 252, 252);
-                    int nr = j * 16 + i;
-                    if (Globals.Areas[Globals.SelectedArea].Screens[nr] != SelectedScreen)
-                        continue;
-                    UniqueScreen.Add(rect);
-                    Invalidate(Editor.SetValSize(rect));
-                }
-            }
-
-            SelectedScreenOld = SelectedScreen;
-        }
-
         //screen outlines
         if (ShowScreenOutlines)
         {
             for (int i = 0; i < 16; i++)
             {
-                for (int j = 0; j < 16; j++)
-                {
-                    Rectangle rect = new Rectangle(256 * i, 256 * j, 256, 256);
-                    e.Graphics.DrawRectangle(ScreenPen, rect);
-                }
+                //drawing lines every 16 pixels
+                e.Graphics.DrawLine(ScreenPen, 256 * i, 0, 256 * i, 256 * 16); //Vertical
+                e.Graphics.DrawLine(ScreenPen, 0, 256 * i, 256 * 16, 256 * i); //Horizontal
             }
         }
 

@@ -10,6 +10,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Net;
 using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -83,7 +84,7 @@ public static class Editor
         {
             MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new ProgramSettins().Show();
+            new ProgramSettins().ShowDialog();
             return;
         }
 
@@ -227,6 +228,8 @@ public static class Editor
 
         //New Project created
         MainWindow.Current.ProjectLoaded();
+        AddRecentFile(Globals.ProjName);
+        UpdateTitlebar(Globals.ProjName);
     }
 
     /// <summary>
@@ -239,7 +242,7 @@ public static class Editor
         {
             MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new ProgramSettins().Show();
+            new ProgramSettins().ShowDialog();
             return;
         }
 
@@ -256,11 +259,14 @@ public static class Editor
     /// Loads a Project from the given path.
     /// </summary>
     /// <param name="path">The path to the Project file.</param>
-    public static void LoadProjectFromPath(string path)
+    public static void LoadProjectFromPath(string filepath)
     {
+        AddRecentFile(filepath);
+
         try
         {
-            string json = File.ReadAllText(path);
+            string path = filepath;
+            string json = File.ReadAllText(path); //reading project file
             Globals.ProjName = path;
             path = Path.GetDirectoryName(path);
             Globals.ProjDirectory = path;
@@ -328,7 +334,7 @@ public static class Editor
 
             //Project loaded
             MainWindow.Current.ProjectLoaded();
-            UpdateTitlebar(path);
+            UpdateTitlebar(filepath);
         }
         catch(Exception ex)
         {
@@ -336,6 +342,27 @@ public static class Editor
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+    }
+
+    /// <summary>
+    /// Adds a filepath to the recently used files list
+    /// </summary>
+    public static void AddRecentFile(string path)
+    {
+        //Add to recent files
+        if (!Globals.recentFiles.Contains(path)) Globals.recentFiles.Add(path);
+        else
+        {
+            //move to front
+            Globals.recentFiles.Remove(path);
+            Globals.recentFiles.Insert(0, path);
+        }
+
+        //saving settings
+        StringCollection c = new StringCollection();
+        c.AddRange(Globals.recentFiles.ToArray());
+        Properties.programsettings.Default.recentFiles = c;
+        Properties.programsettings.Default.Save();
     }
 
     /// <summary>
@@ -348,9 +375,6 @@ public static class Editor
         try
         {
             ROM = new Rom(path);
-
-            //Changing button appearance
-            Globals.RomLoaded = true;
             return true;
         }
         catch
@@ -524,11 +548,6 @@ public static class Editor
         int width = Math.Max(rect1.X + rect1.Width, rect2.X + rect2.Width) - x + 1;
         int height = Math.Max(rect1.Y + rect1.Height, rect2.Y + rect2.Height) - y + 1;
         return new Rectangle(x, y, width, height);
-    }
-
-    public static Rectangle SetValSize(Rectangle rect)
-    {
-        return new Rectangle(rect.X - 1, rect.Y - 1, rect.Width + 1, rect.Height + 1);
     }
 
     /// <summary>
@@ -855,7 +874,6 @@ public static class Editor
                 if (ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorDarkGray);
             }
         }
-
     }
 
     public static void DrawTile8Set(int offset, Bitmap bpm, Point p, int tilesWide, int tilesHigh)

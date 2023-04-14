@@ -13,6 +13,7 @@ using LAMP.Controls.Room;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Linq;
 using Microsoft.VisualBasic.Devices;
+using LAMP.Controls.Other;
 
 namespace LAMP;
 
@@ -23,6 +24,10 @@ public partial class MainWindow : Form
     //Tile Viewer vars
     public static TileViewer Tileset = new TileViewer();
     public static RoomViewer Room = new RoomViewer();
+
+    public static RecentFiles Recent = new RecentFiles();
+    public static Label TitleLabel = new Label();
+
     private Point StartSelection = new Point(-1, -1);
     private Point TilesetSelectedTile = new Point(-1, -1);
     private Point RoomSelectedTile = new Point(-1, -1); //Despite of what the name might suggest, this is not actually the selected tile but the top-left corner of the selected tile
@@ -41,11 +46,16 @@ public partial class MainWindow : Form
 
     public MainWindow()
     {
+        SuspendLayout();
+
         Current = this;
         InitializeComponent();
 
         //Check for new Version
         Editor.CheckForUpdate();
+
+        //Displaying recent files
+        DisplayRecentFiles();
 
         //Reading vanilla ROM path
         string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
@@ -68,9 +78,7 @@ public partial class MainWindow : Form
 
         //Adding custom controls
         #region Tileset
-        Controls.Add(Tileset);
         flw_tileset_view.Controls.Add(Tileset);
-        Tileset.Location = new Point(0, 0);
         Tileset.BackColor = Globals.ColorBlack;
         Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
         Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
@@ -79,17 +87,25 @@ public partial class MainWindow : Form
         #endregion
 
         #region Room
-        Controls.Add(Room);
         flw_main_room_view.Controls.Add(Room);
         Room.BackColor = Globals.ColorBlack;
         Room.MouseDown += new MouseEventHandler(Room_MouseDown);
         Room.MouseMove += new MouseEventHandler(Room_MouseMove);
         Room.MouseUp += new MouseEventHandler(Room_MouseUp);
+        Room.MouseDoubleClick += new MouseEventHandler(RoomDoubleClicked);
         #endregion
+
+        ResumeLayout();
     }
 
     public void ProjectLoaded() //Enables all the Controls and more things once a project gets loaded
     {
+        SuspendLayout();
+
+        //Disabling recent files
+        Recent.Visible = false;
+        TitleLabel.Visible = false;
+
         //Enabling UI
         btn_save_project.Enabled = true;
         btn_create_backup.Enabled = true;
@@ -110,6 +126,12 @@ public partial class MainWindow : Form
         btn_show_objects.Enabled = true;
         btn_show_scrolls.Enabled = true;
         btn_show_objects.Checked = true;
+        btn_graphics_editor_image.Enabled = true;
+
+        tool_strip_main_buttons.Visible = true;
+        tool_strip_main_buttons.SendToBack();
+        tool_strip_image_buttons.Visible = true;
+        sts_main_status_bar.Visible = true;
 
         //Enabling either offset or tileset UI
         tls_input.setMode();
@@ -134,6 +156,9 @@ public partial class MainWindow : Form
         #endregion
 
         pnl_main_window_view.Visible = true;
+        pnl_main_window_view.BringToFront();
+
+        ResumeLayout();
     }
 
     private void UpdateTileset()
@@ -148,6 +173,26 @@ public partial class MainWindow : Form
         Globals.Tileset.Dispose();
         Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8, true);
         Tileset.BackgroundImage = Globals.Tileset;
+    }
+
+    private void DisplayRecentFiles()
+    {
+        //Disabling tool strips
+        tool_strip_main_buttons.Visible = false;
+        tool_strip_image_buttons.Visible = false;
+        sts_main_status_bar.Visible = false;
+
+        //Adding LAMP title
+        TitleLabel.Text = "LAMP - Recent files";
+        TitleLabel.Font = new Font("Century Gothic", 40, FontStyle.Bold);
+        TitleLabel.Height = 60;
+        TitleLabel.Dock = DockStyle.Top;
+        Controls.Add(TitleLabel);
+
+        //Adding the recent view
+        Controls.Add(Recent);
+        Recent.BringToFront();
+        Recent.Dock = DockStyle.Fill;
     }
 
     private void UpdateRoom()
@@ -221,7 +266,7 @@ public partial class MainWindow : Form
         int y = RoomSelectedTile.Y;
 
         //generate array with tiles that have to be replaced
-        Tile[] replaceTiles = new Tile[Editor.SelectionWidth * Editor.SelectionHeight];
+        RoomTile[] replaceTiles = new RoomTile[Editor.SelectionWidth * Editor.SelectionHeight];
         int count = 0;
         for (int i = 0; i < Editor.SelectionHeight; i++)
         {
@@ -229,11 +274,11 @@ public partial class MainWindow : Form
             {
                 int tx = x + 16 * j;
                 int ty = y + 16 * i;
-                Tile t = new Tile();
+                RoomTile t = new RoomTile();
                 int scrnNr = Editor.GetScreenNrFromXY(tx, ty, Globals.SelectedArea);
                 if (scrnNr == -1)
                 {
-                    replaceTiles[count++] = new Tile() { Unused = true };
+                    replaceTiles[count++] = new RoomTile() { Unused = true };
                     continue;
                 }
                 t.ScreenNr = scrnNr;
@@ -247,7 +292,7 @@ public partial class MainWindow : Form
         //Writing data
         count = 0;
         List<int> updatedScreens = new List<int>();
-        foreach (Tile t in replaceTiles)
+        foreach (RoomTile t in replaceTiles)
         {
             if (t.Unused) continue;
             t.ReplaceTile(Editor.SelectedTiles[count]);
@@ -582,6 +627,32 @@ public partial class MainWindow : Form
         }
         if (e.Button == MouseButtons.Right) UpdateSelectedTiles();
     }
+
+    private void RoomDoubleClicked(object sender, MouseEventArgs e)
+    {
+        if (Room.SelectedTool != LampTool.Move) return;
+        new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr, Current).Show();
+    }
+    #endregion
+
+    #region toolbars
+    private void toolbar_tileset_ToolCommandTriggered(object sender, EventArgs e)
+    {
+        switch (toolbar_tileset.TriggeredCommand)
+        {
+            case (LampToolCommand.ZoomIn):
+                SetTilesetZoom(Tileset.Zoom + 1);
+                break;
+            case (LampToolCommand.ZoomOut):
+                SetTilesetZoom(Tileset.Zoom - 1);
+                break;
+        }
+    }
+
+    private void toolbar_room_ToolSwitched(object sender, EventArgs e)
+    {
+        Room.SelectedTool = toolbar_room.SelectedTool;
+    }
     #endregion
 
     #region Main Events
@@ -672,9 +743,6 @@ public partial class MainWindow : Form
     private void btn_open_rom_image_Click(object sender, EventArgs e)
         => btn_open_rom_Click(sender, e);
 
-    private void btn_open_tweaks_editor_image_Click(object sender, EventArgs e)
-        => btn_tweaks_editor_Click(sender, e);
-
     private void btn_save_rom_image_Click(object sender, EventArgs e)
         => Editor.SaveProject();
 
@@ -755,14 +823,7 @@ public partial class MainWindow : Form
     private void chb_view_objects_CheckedChanged(object sender, EventArgs e)
     {
         btn_view_show_objects.Checked = btn_show_objects.Checked = !btn_show_objects.Checked;
-        if (btn_show_objects.Checked == true)
-        {
-            Room.ShowObjects = true;
-        }
-        else
-        {
-            Room.ShowObjects = false;
-        }
+        Room.ShowObjects = btn_show_objects.Checked;
 
         for (int i = 0; i < 256; i++)
         {
@@ -796,7 +857,7 @@ public partial class MainWindow : Form
     }
 
     private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)
-        => new ProgramSettins().Show();
+        => new ProgramSettins().ShowDialog();
 
     private void ctx_btn_remove_object_Click(object sender, EventArgs e)
         => Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
@@ -839,6 +900,7 @@ public partial class MainWindow : Form
         string target = "https://github.com/ConConner/LAMP/issues";
         Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
     }
+
     private void btn_tileset_zoom_in_Click(object sender, EventArgs e)
     {
         SetTilesetZoom(Tileset.Zoom + 1);
@@ -848,25 +910,16 @@ public partial class MainWindow : Form
     {
         SetTilesetZoom(Tileset.Zoom - 1);
     }
+
+    private void btn_graphics_editor_Click(object sender, EventArgs e)
+    {
+        new GraphicsEditor().Show();
+    }
     #endregion
 
     #endregion
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        Tileset.Zoom = 2;
-    }
-
-    private void toolbar_tileset_ToolCommandTriggered(object sender, EventArgs e)
-    {
-        switch (toolbar_tileset.TriggeredCommand)
-        {
-            case (LampToolCommand.ZoomIn):
-                SetTilesetZoom(Tileset.Zoom + 1);
-                break;
-            case (LampToolCommand.ZoomOut):
-                SetTilesetZoom(Tileset.Zoom - 1);
-                break;
-        }
     }
 }
