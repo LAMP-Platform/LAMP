@@ -58,7 +58,7 @@
             btn_open_project.Name = "btn_open_project";
             btn_open_project.Size = new System.Drawing.Size(307, 60);
             btn_open_project.TabIndex = 0;
-            btn_open_project.Text = "Create a new Project. A Metroid II: Return of Samus ROM is needed!";
+            btn_open_project.Text = "Create a new Project.\nA Metroid II: Return of Samus ROM is required.";
             btn_open_project.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             btn_open_project.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             btn_open_project.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             btn_create_project.Name = "btn_create_project";
             btn_create_project.Size = new System.Drawing.Size(307, 60);
             btn_create_project.TabIndex = 1;
-            btn_create_project.Text = "Open an existing Project file. Browse your PC for an .m2 file!";
+            btn_create_project.Text = "Open an existing Project file.\nBrowse your PC for a .m2 file.";
             btn_create_project.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             btn_create_project.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             btn_create_project.UseVisualStyleBackColor = true;
@@ -158,7 +158,7 @@
             btn_project_settings.Name = "btn_project_settings";
             btn_project_settings.Size = new System.Drawing.Size(307, 60);
             btn_project_settings.TabIndex = 0;
-            btn_project_settings.Text = "Open the Program Settings. Set a ROM or change your preferences!\r\n";
+            btn_project_settings.Text = "Change LAMP Settings.\nSet a ROM or change your preferences.\r\n";
             btn_project_settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             btn_project_settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             btn_project_settings.UseVisualStyleBackColor = true;

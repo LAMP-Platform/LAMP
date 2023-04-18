@@ -10,6 +10,17 @@
     <ApplicationIcon>LAMP.ico</ApplicationIcon>
 	<PublishSingleFile>true</PublishSingleFile>
 	<DebugType>embedded</DebugType>
+	<BaseOutputPath>..\bin</BaseOutputPath>
+	<Authors>ConConner</Authors>
+	<Company>ConConner</Company>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

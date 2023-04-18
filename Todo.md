@@ -1,8 +1,8 @@
-﻿#Stuff that worked once but now doesnt work:
+﻿## Stuff that worked once but now doesnt work:
  - Tweaks Editor
  - Create Backup
 
-#Planned feature list
+## Planned feature list
  - half tile object placement
  - Undo / Redo
  - Go through Transition
@@ -16,7 +16,7 @@
  - Zooming
  - better object displaying
 
-#Outside Editor things
+## Outside Editor things
  - write proper readme.txt
  - write documentation
  - document code (please someone do this for me D: )
