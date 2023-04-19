@@ -7,8 +7,8 @@ Changes:
  # Slight Save Editor layout changes
  + Recent Files
  + Data Viewer
-  -> Basic Hex Viewer of the ROM Data
- + Toolbar Buttons
+  -> Basic Hex Viewer of the ROM Data, practically useles
+ + Header Buttons
   -> Show Objects
   -> Show Scrolls
  + Tileset Zoom

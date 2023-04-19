@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             pnl_main = new System.Windows.Forms.Panel();
+            btn_pin = new System.Windows.Forms.Button();
             lbl_path = new System.Windows.Forms.Label();
             lbl_title = new System.Windows.Forms.Label();
             pnl_main.SuspendLayout();
@@ -38,6 +39,7 @@
             // 
             pnl_main.BackColor = System.Drawing.SystemColors.Control;
             pnl_main.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_main.Controls.Add(btn_pin);
             pnl_main.Controls.Add(lbl_path);
             pnl_main.Controls.Add(lbl_title);
             pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -48,6 +50,18 @@
             pnl_main.Click += lbl_title_Click;
             pnl_main.MouseEnter += pnl_main_MouseEnter;
             pnl_main.MouseLeave += pnl_main_MouseLeave;
+            // 
+            // btn_pin
+            // 
+            btn_pin.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_pin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_pin.Image = Properties.Resources.pin;
+            btn_pin.Location = new System.Drawing.Point(421, 10);
+            btn_pin.Name = "btn_pin";
+            btn_pin.Size = new System.Drawing.Size(40, 40);
+            btn_pin.TabIndex = 2;
+            btn_pin.UseVisualStyleBackColor = true;
+            btn_pin.Click += btn_pin_Click;
             // 
             // lbl_path
             // 
@@ -95,5 +109,6 @@
         private System.Windows.Forms.Panel pnl_main;
         private System.Windows.Forms.Label lbl_path;
         private System.Windows.Forms.Label lbl_title;
+        private System.Windows.Forms.Button btn_pin;
     }
 }

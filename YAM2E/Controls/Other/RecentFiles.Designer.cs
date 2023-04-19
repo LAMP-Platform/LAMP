@@ -33,17 +33,17 @@
             btn_create_project = new System.Windows.Forms.Button();
             pnl_main_container = new System.Windows.Forms.SplitContainer();
             pnl_recent_files = new System.Windows.Forms.Panel();
-            pnl_new_button = new System.Windows.Forms.Panel();
-            pnl_open_button = new System.Windows.Forms.Panel();
             pnl_cog_button = new System.Windows.Forms.Panel();
             btn_project_settings = new System.Windows.Forms.Button();
+            pnl_new_button = new System.Windows.Forms.Panel();
+            pnl_open_button = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)pnl_main_container).BeginInit();
             pnl_main_container.Panel1.SuspendLayout();
             pnl_main_container.Panel2.SuspendLayout();
             pnl_main_container.SuspendLayout();
+            pnl_cog_button.SuspendLayout();
             pnl_new_button.SuspendLayout();
             pnl_open_button.SuspendLayout();
-            pnl_cog_button.SuspendLayout();
             SuspendLayout();
             // 
             // btn_open_project
@@ -116,26 +116,6 @@
             pnl_recent_files.Size = new System.Drawing.Size(485, 532);
             pnl_recent_files.TabIndex = 0;
             // 
-            // pnl_new_button
-            // 
-            pnl_new_button.Controls.Add(btn_open_project);
-            pnl_new_button.Dock = System.Windows.Forms.DockStyle.Top;
-            pnl_new_button.Location = new System.Drawing.Point(0, 69);
-            pnl_new_button.Name = "pnl_new_button";
-            pnl_new_button.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            pnl_new_button.Size = new System.Drawing.Size(316, 66);
-            pnl_new_button.TabIndex = 1;
-            // 
-            // pnl_open_button
-            // 
-            pnl_open_button.Controls.Add(btn_create_project);
-            pnl_open_button.Dock = System.Windows.Forms.DockStyle.Top;
-            pnl_open_button.Location = new System.Drawing.Point(0, 0);
-            pnl_open_button.Name = "pnl_open_button";
-            pnl_open_button.Padding = new System.Windows.Forms.Padding(3, 6, 6, 3);
-            pnl_open_button.Size = new System.Drawing.Size(316, 69);
-            pnl_open_button.TabIndex = 0;
-            // 
             // pnl_cog_button
             // 
             pnl_cog_button.Controls.Add(btn_project_settings);
@@ -164,6 +144,26 @@
             btn_project_settings.UseVisualStyleBackColor = true;
             btn_project_settings.Click += btn_project_settings_Click;
             // 
+            // pnl_new_button
+            // 
+            pnl_new_button.Controls.Add(btn_open_project);
+            pnl_new_button.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_new_button.Location = new System.Drawing.Point(0, 69);
+            pnl_new_button.Name = "pnl_new_button";
+            pnl_new_button.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
+            pnl_new_button.Size = new System.Drawing.Size(316, 66);
+            pnl_new_button.TabIndex = 1;
+            // 
+            // pnl_open_button
+            // 
+            pnl_open_button.Controls.Add(btn_create_project);
+            pnl_open_button.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_open_button.Location = new System.Drawing.Point(0, 0);
+            pnl_open_button.Name = "pnl_open_button";
+            pnl_open_button.Padding = new System.Windows.Forms.Padding(3, 6, 6, 3);
+            pnl_open_button.Size = new System.Drawing.Size(316, 69);
+            pnl_open_button.TabIndex = 0;
+            // 
             // RecentFiles
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -176,9 +176,9 @@
             pnl_main_container.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pnl_main_container).EndInit();
             pnl_main_container.ResumeLayout(false);
+            pnl_cog_button.ResumeLayout(false);
             pnl_new_button.ResumeLayout(false);
             pnl_open_button.ResumeLayout(false);
-            pnl_cog_button.ResumeLayout(false);
             ResumeLayout(false);
         }
 

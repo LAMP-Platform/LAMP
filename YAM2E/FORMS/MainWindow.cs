@@ -25,8 +25,8 @@ public partial class MainWindow : Form
     public static TileViewer Tileset = new TileViewer();
     public static RoomViewer Room = new RoomViewer();
 
-    public static RecentFiles Recent = new RecentFiles();
-    public static Label TitleLabel = new Label();
+    private static RecentFiles Recent = new RecentFiles();
+    private static Label TitleLabel = new Label();
 
     private Point StartSelection = new Point(-1, -1);
     private Point TilesetSelectedTile = new Point(-1, -1);

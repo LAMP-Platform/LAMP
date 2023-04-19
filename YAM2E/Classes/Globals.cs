@@ -114,6 +114,7 @@ internal static class Globals
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;
     public static string hexSuffix = Properties.programsettings.Default.hexSuffix;
     public static List<string> recentFiles = Properties.programsettings.Default.recentFiles.Cast<string>().ToList();
+    public static List<string> pinnedFiles = Properties.programsettings.Default.pinnedFiles.Cast<string>().ToList();
     #endregion
 }
 

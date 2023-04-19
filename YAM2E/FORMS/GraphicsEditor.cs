@@ -50,12 +50,8 @@ namespace LAMP.FORMS
             GraphicsSet.MouseMove += new MouseEventHandler(GraphicsSetMouseMove);
             GraphicsSet.MouseUp += new MouseEventHandler(GraphicsSetMouseUp);
 
-            GraphicsSet.Zoom = toolbar_graphics.ZoomLevel = 2;
-
             //Adding the TileViewer for Metatiles
             flw_metatile_view.Controls.Add(MetatileSet);
-
-            MetatileSet.Zoom = toolbar_metatiles.ZoomLevel = 1;
         }
 
         #region Fields
@@ -89,34 +85,26 @@ namespace LAMP.FORMS
 
         private void SetTilesets()
         {
-            if (MetatilePointer == null)
+            if (GraphicsPointer == null)
             {
+                Bitmap b = new(1, 1); //This clears the images
                 if (GraphicsSet.BackgroundImage != null) GraphicsSet.BackgroundImage.Dispose();
+                GraphicsSet.BackgroundImage = b;
                 if (MetatileSet.BackgroundImage != null) MetatileSet.BackgroundImage.Dispose();
+                MetatileSet.BackgroundImage = b;
                 return;
             }
 
             //Graphics View
-            if (GraphicsSet.BackgroundImage != null)
-            {
-                GraphicsSet.BackgroundImage.Dispose();
-            }
+            if (GraphicsSet.BackgroundImage != null) GraphicsSet.BackgroundImage.Dispose();
             Bitmap GFXBitmap = new Bitmap(GfxWidth * 8, GfxHeight * 8);
             Editor.DrawTile8Set(graphicsPointer.Offset, GFXBitmap, new Point(0, 0), GfxWidth, GfxHeight);
             GraphicsSet.BackgroundImage = GFXBitmap;
 
             //Metatile View
-            if (MetatileSet.BackgroundImage != null)
-            {
-                MetatileSet.BackgroundImage.Dispose();
-            }
-            Bitmap MetaBitmap = new Bitmap(256, 128);
-            if (MetatilePointer != null)
-            {
-                MetaBitmap.Dispose();
-                MetaBitmap = Editor.DrawTileSet(GraphicsPointer, MetatilePointer, 16, 8, false);
-            }
-            MetatileSet.BackgroundImage = MetaBitmap;
+            if (MetatileSet.BackgroundImage != null) MetatileSet.BackgroundImage.Dispose();
+            if (MetatilePointer != null) MetatileSet.BackgroundImage = Editor.DrawTileSet(GraphicsPointer, MetatilePointer, 16, 8, false);
+            else MetatileSet.BackgroundImage = new Bitmap(1, 1);
         }
 
         #region Graphics View
@@ -138,17 +126,15 @@ namespace LAMP.FORMS
 
         private void btn_accept_Click(object sender, EventArgs e)
         {
-            GraphicsPointer = Format.StringToPointer(txb_offset.Text);
-            MetatilePointer = Format.StringToPointer(txb_meta_offset.Text);
-            if (txb_offset.Text.Length == 0)
-            {
-                GraphicsPointer = null;
-                metatilePointer = null;
-            }
+            GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
+            MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
 
             SetTilesets();
         }
 
+        /// <summary>
+        /// Toolbar for the GFX Editor
+        /// </summary>
         private void toolbar_graphics_ToolCommandTriggered(object sender, EventArgs e)
         {
             switch (toolbar_graphics.TriggeredCommand)
@@ -160,6 +146,9 @@ namespace LAMP.FORMS
             }
         }
 
+        /// <summary>
+        /// Toolbar for the Metatile Editor
+        /// </summary>
         private void toolbar_metatiles_ToolCommandTriggered(object sender, EventArgs e)
         {
             switch (toolbar_metatiles.TriggeredCommand)
