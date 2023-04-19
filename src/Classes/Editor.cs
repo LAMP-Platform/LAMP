@@ -253,6 +253,17 @@ public static class Editor
         //Get the path to ROM
         if (path == "") path = ShowOpenDialog("Project file (*.m2)|*.m2");
         if (path != String.Empty) LoadProjectFromPath(path);
+
+        //saving recent file lists
+        StringCollection recent = new StringCollection();
+        recent.AddRange(Globals.recentFiles.ToArray());
+        Properties.programsettings.Default.recentFiles = recent;
+
+        StringCollection pinned = new StringCollection();
+        pinned.AddRange(Globals.pinnedFiles.ToArray());
+        Properties.programsettings.Default.pinnedFiles = pinned;
+
+        Properties.programsettings.Default.Save();
     }
 
     /// <summary>
@@ -357,12 +368,6 @@ public static class Editor
             Globals.recentFiles.Remove(path);
             Globals.recentFiles.Insert(0, path);
         }
-
-        //saving settings
-        StringCollection c = new StringCollection();
-        c.AddRange(Globals.recentFiles.ToArray());
-        Properties.programsettings.Default.recentFiles = c;
-        Properties.programsettings.Default.Save();
     }
 
     /// <summary>

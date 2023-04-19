@@ -89,8 +89,7 @@ namespace LAMP.Controls.Room
         }
         private LampToolCommand triggeredCommand = LampToolCommand.Copy;
 
-        public int MaxZoom { get; set; }
-        private int maxZoom = 10;
+        public int MaxZoom { get; set; } = 10;
 
         public int ZoomLevel
         {
@@ -101,8 +100,8 @@ namespace LAMP.Controls.Room
                 btn_zoom_out.Enabled = true;
 
                 if (value == 1) btn_zoom_out.Enabled = false;
-                if (value >= maxZoom) btn_zoom_in.Enabled = false;
-                zoomLevel = Math.Max(1, Math.Min(maxZoom, value));
+                if (value >= MaxZoom) btn_zoom_in.Enabled = false;
+                zoomLevel = Math.Max(1, Math.Min(MaxZoom, value));
             }
         }
         private int zoomLevel = 1;
