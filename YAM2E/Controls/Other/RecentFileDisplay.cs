@@ -25,11 +25,11 @@ namespace LAMP.Controls.Other
             btn_pin.FlatAppearance.BorderSize = 0;
             if (pinned) btn_pin.Image = Resources.pinned;
             Pinned = pinned;
-            Parent = parent;
+            ParentView = parent;
         }
 
         private bool Pinned = false;
-        private RecentFiles Parent;
+        private RecentFiles ParentView;
 
         public void SetBackground(Color c)
         {
@@ -59,7 +59,7 @@ namespace LAMP.Controls.Other
             }
             else Globals.pinnedFiles.Add(lbl_path.Text);
 
-            Parent.LoadRecentFileControls();
+            ParentView.LoadRecentFileControls();
         }
     }
 }

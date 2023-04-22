@@ -1,5 +1,5 @@
 ﻿Version B 4.0
-Released: XX.XX.20XX
+Released: XX.XX.2023
 Changes:
  # Main Window layout redesign
   -> Room View and Data View resizeable
@@ -11,11 +11,13 @@ Changes:
  + Header Buttons
   -> Show Objects
   -> Show Scrolls
- + Tileset Zoom
-  -> Right click to change the zoom of the tileset
+ + Toolbar for every tile based display
+ + Zooming
+  -> Every tile based display can be zoomed
  + Copy & Paste
   -> Copy and paste the seleted tiles
   -> Works between instances of LAMP
+ + Compilation Settings
 Fixes:
  # Controls all appear at once now when loading a project
  # Selected tiles in the room no longer continuously reselect

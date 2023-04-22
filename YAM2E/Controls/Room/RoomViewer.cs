@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using LAMP.Classes;
 using System.Security.Cryptography;
 using LAMP.Controls.Room;
+using System;
 
 namespace LAMP.Controls;
 
@@ -30,6 +31,27 @@ public class RoomViewer : Control
         BackColor = Color.FromArgb(40, 50, 50);
         BackgroundImageLayout = ImageLayout.Stretch;
     }
+
+    #region Fields
+
+    public int Zoom
+    {
+        get
+        {
+            return zoom;
+        }
+        set
+        {
+            //setting rectangles
+            ResetSelection();
+
+            zoom = Math.Max(value, 1);
+            if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
+        }
+    }
+    private int zoom = 1;
+
+    #endregion
 
     public bool ShowScreenOutlines { get; set; } = false;
     public bool ShowDuplicateOutlines { get; set; } = true;

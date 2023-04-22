@@ -86,5 +86,29 @@ namespace LAMP.Properties {
                 this["pinnedFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ROMPath {
+            get {
+                return ((string)(this["ROMPath"]));
+            }
+            set {
+                this["ROMPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int compilerExclude {
+            get {
+                return ((int)(this["compilerExclude"]));
+            }
+            set {
+                this["compilerExclude"] = value;
+            }
+        }
     }
 }

@@ -109,11 +109,6 @@ namespace LAMP
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
-            ctx_tileset_context_menu = new System.Windows.Forms.ContextMenuStrip(components);
-            btn_tileset_zoom_in = new System.Windows.Forms.ToolStripMenuItem();
-            btn_tileset_zoom_out = new System.Windows.Forms.ToolStripMenuItem();
-            toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            txb_tileset_zoom_level = new System.Windows.Forms.ToolStripTextBox();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -131,7 +126,6 @@ namespace LAMP
             pnl_tileset_resize.SuspendLayout();
             pnl_data_selection.SuspendLayout();
             grp_data_selector.SuspendLayout();
-            ctx_tileset_context_menu.SuspendLayout();
             SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -222,7 +216,7 @@ namespace LAMP
             // btn_rom_file
             // 
             btn_rom_file.Name = "btn_rom_file";
-            btn_rom_file.Size = new System.Drawing.Size(180, 22);
+            btn_rom_file.Size = new System.Drawing.Size(165, 22);
             btn_rom_file.Text = "Program Settings";
             btn_rom_file.Click += rOMFileToolStripMenuItem_Click;
             // 
@@ -230,7 +224,7 @@ namespace LAMP
             // 
             btn_project_settings.Enabled = false;
             btn_project_settings.Name = "btn_project_settings";
-            btn_project_settings.Size = new System.Drawing.Size(180, 22);
+            btn_project_settings.Size = new System.Drawing.Size(165, 22);
             btn_project_settings.Text = "Project Settings";
             btn_project_settings.Click += btn_project_settings_Click;
             // 
@@ -670,12 +664,14 @@ namespace LAMP
             // 
             toolbar_tileset.Dock = System.Windows.Forms.DockStyle.Top;
             toolbar_tileset.Location = new System.Drawing.Point(6, 19);
+            toolbar_tileset.MaxZoom = 10;
             toolbar_tileset.Name = "toolbar_tileset";
             toolbar_tileset.onToolCommandTriggered = null;
             toolbar_tileset.onToolSwitched = null;
-            toolbar_tileset.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_tileset.SelectedTool = LAMP.Controls.Room.LampTool.Select;
             toolbar_tileset.Size = new System.Drawing.Size(262, 28);
             toolbar_tileset.TabIndex = 1;
+            toolbar_tileset.ZoomLevel = 1;
             toolbar_tileset.ToolCommandTriggered += toolbar_tileset_ToolCommandTriggered;
             // 
             // grp_main_room_viewer
@@ -704,13 +700,16 @@ namespace LAMP
             // 
             toolbar_room.Dock = System.Windows.Forms.DockStyle.Top;
             toolbar_room.Location = new System.Drawing.Point(6, 19);
+            toolbar_room.MaxZoom = 5;
             toolbar_room.Name = "toolbar_room";
             toolbar_room.onToolCommandTriggered = null;
             toolbar_room.onToolSwitched = null;
             toolbar_room.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
             toolbar_room.Size = new System.Drawing.Size(907, 28);
             toolbar_room.TabIndex = 1;
+            toolbar_room.ZoomLevel = 1;
             toolbar_room.ToolSwitched += toolbar_room_ToolSwitched;
+            toolbar_room.ToolCommandTriggered += toolbar_room_ToolCommandTriggered;
             // 
             // ctx_room_context_menu
             // 
@@ -864,40 +863,6 @@ namespace LAMP
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
-            // ctx_tileset_context_menu
-            // 
-            ctx_tileset_context_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_tileset_zoom_in, btn_tileset_zoom_out, toolStripSeparator12, txb_tileset_zoom_level });
-            ctx_tileset_context_menu.Name = "ctx_tileset_context_menu";
-            ctx_tileset_context_menu.Size = new System.Drawing.Size(161, 72);
-            // 
-            // btn_tileset_zoom_in
-            // 
-            btn_tileset_zoom_in.Name = "btn_tileset_zoom_in";
-            btn_tileset_zoom_in.Size = new System.Drawing.Size(160, 22);
-            btn_tileset_zoom_in.Text = "Zoom +";
-            btn_tileset_zoom_in.Click += btn_tileset_zoom_in_Click;
-            // 
-            // btn_tileset_zoom_out
-            // 
-            btn_tileset_zoom_out.Name = "btn_tileset_zoom_out";
-            btn_tileset_zoom_out.Size = new System.Drawing.Size(160, 22);
-            btn_tileset_zoom_out.Text = "Zoom -";
-            btn_tileset_zoom_out.Click += btn_tileset_zoom_out_Click;
-            // 
-            // toolStripSeparator12
-            // 
-            toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new System.Drawing.Size(157, 6);
-            // 
-            // txb_tileset_zoom_level
-            // 
-            txb_tileset_zoom_level.BackColor = System.Drawing.SystemColors.Window;
-            txb_tileset_zoom_level.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            txb_tileset_zoom_level.Name = "txb_tileset_zoom_level";
-            txb_tileset_zoom_level.ReadOnly = true;
-            txb_tileset_zoom_level.Size = new System.Drawing.Size(100, 16);
-            txb_tileset_zoom_level.Text = "100%";
-            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -938,8 +903,6 @@ namespace LAMP
             pnl_data_selection.ResumeLayout(false);
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
-            ctx_tileset_context_menu.ResumeLayout(false);
-            ctx_tileset_context_menu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1019,11 +982,6 @@ namespace LAMP
         private System.Windows.Forms.FlowLayoutPanel flw_tileset_view;
         private System.Windows.Forms.SplitContainer pnl_tileset_resize;
         private Controls.Overrides.FixedScrollPanel flw_main_room_view;
-        private System.Windows.Forms.ContextMenuStrip ctx_tileset_context_menu;
-        private System.Windows.Forms.ToolStripMenuItem btn_tileset_zoom_in;
-        private System.Windows.Forms.ToolStripMenuItem btn_tileset_zoom_out;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.ToolStripTextBox txb_tileset_zoom_level;
         private System.Windows.Forms.ToolStripStatusLabel lbl_screen_used;
         private Controls.Room.ToolBar toolbar_room;
         private Controls.Room.ToolBar toolbar_tileset;

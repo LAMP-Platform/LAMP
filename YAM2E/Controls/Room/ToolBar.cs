@@ -87,7 +87,7 @@ namespace LAMP.Controls.Room
         {
             get { return triggeredCommand; }
         }
-        private LampToolCommand triggeredCommand = LampToolCommand.Copy;
+        private LampToolCommand triggeredCommand;
 
         public int MaxZoom { get; set; } = 10;
 

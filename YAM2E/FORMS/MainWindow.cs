@@ -57,18 +57,6 @@ public partial class MainWindow : Form
         //Displaying recent files
         DisplayRecentFiles();
 
-        //Reading vanilla ROM path
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
-        Directory.CreateDirectory(Path.GetDirectoryName(path));
-        if (File.Exists(path))
-        {
-            Globals.RomPath = File.ReadAllText(path);
-        }
-        else
-        {
-            File.WriteAllText(path, "");
-        }
-
         //Toolbars
         toolbar_tileset.SetTools(false, false, true, false);
         toolbar_tileset.SetCopyPaste(false, false);
@@ -83,7 +71,6 @@ public partial class MainWindow : Form
         Tileset.MouseDown += new MouseEventHandler(Tileset_MouseDown);
         Tileset.MouseMove += new MouseEventHandler(Tileset_MouseMove);
         Tileset.MouseUp += new MouseEventHandler(Tileset_MouseUp);
-        Tileset.ContextMenuStrip = ctx_tileset_context_menu;
         #endregion
 
         #region Room
@@ -98,10 +85,45 @@ public partial class MainWindow : Form
         ResumeLayout();
     }
 
-    public void ProjectLoaded() //Enables all the Controls and more things once a project gets loaded
+    /// <summary>
+    /// Everything that happens once a project gets loaded
+    /// </summary>
+    public void ProjectLoaded()
     {
         SuspendLayout();
 
+        ShowMainControls();
+
+        //Enabling either offset or tileset UI
+        tls_input.setMode();
+
+        //Setting base UI values
+        gfxOffset = new(0x229BC);
+        MetatilePointer = new(0x217BC);
+        tls_input.SetGraphics(gfxOffset, 9);
+
+        UpdateTileset();
+        UpdateRoom();
+
+        #region Tile Viewer
+        Tileset.BringToFront();
+        Tileset.ResetSelection();
+        #endregion
+
+        #region Room Viewer
+        cbb_area_bank.SelectedIndex = 0;
+        Room.BringToFront();
+        Room.ResetSelection();
+        #endregion
+
+        pnl_main_window_view.Visible = true;
+        pnl_main_window_view.BringToFront();
+
+        ResumeLayout();
+    }
+
+    private void ShowMainControls()
+    {
         //Disabling recent files
         Recent.Visible = false;
         TitleLabel.Visible = false;
@@ -132,33 +154,6 @@ public partial class MainWindow : Form
         tool_strip_main_buttons.SendToBack();
         tool_strip_image_buttons.Visible = true;
         sts_main_status_bar.Visible = true;
-
-        //Enabling either offset or tileset UI
-        tls_input.setMode();
-
-        //Setting base UI values
-        gfxOffset = new(0x229BC);
-        MetatilePointer = new(0x217BC);
-        tls_input.SetGraphics(gfxOffset, 9);
-
-        UpdateTileset();
-        UpdateRoom();
-
-        #region Tile Viewer
-        Tileset.BringToFront();
-        Tileset.ResetSelection();
-        #endregion
-
-        #region Room Viewer
-        cbb_area_bank.SelectedIndex = 0;
-        Room.BringToFront();
-        Room.ResetSelection();
-        #endregion
-
-        pnl_main_window_view.Visible = true;
-        pnl_main_window_view.BringToFront();
-
-        ResumeLayout();
     }
 
     private void UpdateTileset()
@@ -404,30 +399,6 @@ public partial class MainWindow : Form
         s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
     }
 
-    private void SetTilesetZoom(int zoom)
-    {
-        toolbar_tileset.EnableZoom(true, true);
-        const int maxZoom = 4;
-        const int minZoom = 1;
-        Tileset.Zoom = Math.Max(minZoom, Math.Min(zoom, maxZoom));
-
-        if (Tileset.Zoom == maxZoom)
-        {
-            btn_tileset_zoom_in.Enabled = false;
-            toolbar_tileset.EnableZoom(false, true);
-        }
-        else btn_tileset_zoom_in.Enabled = true;
-
-        if (Tileset.Zoom == minZoom)
-        {
-            btn_tileset_zoom_out.Enabled = false;
-            toolbar_tileset.EnableZoom(true, false);
-        }
-        else btn_tileset_zoom_out.Enabled = true;
-
-        txb_tileset_zoom_level.Text = $"{Tileset.Zoom * 100}%";
-    }
-
     #region Main Window Events
 
     #region Tileset Events
@@ -494,8 +465,10 @@ public partial class MainWindow : Form
     {
         Room.Focus();
 
-        int x = (e.X / 16) * 16; //tile position at moment of click
-        int y = (e.Y / 16) * 16; //
+        int tileSize = 16 * Room.Zoom;
+
+        int x = (e.X / tileSize) * tileSize; //tile position at moment of click
+        int y = (e.Y / tileSize) * tileSize; //
         if (e.Button == MouseButtons.Left)
         {
             //Object editing mode
@@ -503,7 +476,7 @@ public partial class MainWindow : Form
             {
                 heldObject = Editor.FindObject(e.X, e.Y, Globals.SelectedArea);
                 Editor.RemoveObject(e.X, e.Y, Globals.SelectedArea);
-                Room.HeldObject = new Rectangle(e.X - 8, e.Y - 8, 15, 15);
+                Room.HeldObject = new Rectangle(e.X - tileSize / 2, e.Y - tileSize / 2, tileSize - 1, tileSize - 1);
                 return;
             }
 
@@ -513,7 +486,7 @@ public partial class MainWindow : Form
         if (e.Button == MouseButtons.Middle)
         {
             ToggleEditingMode();
-            Room.CursorRect = new Rectangle(x, y, 15, 15);
+            Room.CursorRect = new Rectangle(x, y, tileSize - 1, tileSize - 1);
             Room.Invalidate(Editor.UniteRect(Room.RedRect, Room.CursorRect));
         }
         if (e.Button == MouseButtons.Right)
@@ -548,14 +521,15 @@ public partial class MainWindow : Form
             StartSelection.Y = y;
 
             Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, 16 - 1, 16 - 1);
+            Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, tileSize - 1, tileSize - 1);
         }
     }
 
     private void Room_MouseMove(object sender, MouseEventArgs e)
     {
-        Globals.SelectedScreenX = Math.Min(e.X / 256, 15); //screen the mouse cursor is on
-        Globals.SelectedScreenY = Math.Min(e.Y / 256, 15); //
+        int tileSize = Room.Zoom * 16;
+        Globals.SelectedScreenX = Math.Min(e.X / 256 * Room.Zoom, 15); //screen the mouse cursor is on
+        Globals.SelectedScreenY = Math.Min(e.Y / 256 * Room.Zoom, 15); //
         Globals.SelectedScreenNr = Globals.SelectedScreenY * 16 + Globals.SelectedScreenX;
         if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr])
         {
@@ -580,8 +554,8 @@ public partial class MainWindow : Form
             Room.HeldObject = new Rectangle(RoomSelectedCoordinate.X - 8, RoomSelectedCoordinate.Y - 8, 15, 15);
         }
 
-        int mouse_x = (e.X / 16) * 16; //locks position of mouse to edge of tiles
-        int mouse_y = (e.Y / 16) * 16; //
+        int mouse_x = (e.X / tileSize) * tileSize; //locks position of mouse to edge of tiles
+        int mouse_y = (e.Y / tileSize) * tileSize; //
         if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) //if same tile selected
             || (mouse_x < 0 || mouse_y < 0) //if out of bounds
             || (mouse_x >= Room.BackgroundImage.Width || mouse_y >= Room.BackgroundImage.Height)) //if out of bounds
@@ -592,7 +566,7 @@ public partial class MainWindow : Form
 
         if (!EditingTiles)
         {
-            Room.CursorRect = new Rectangle(mouse_x, mouse_y, 15, 15);
+            Room.CursorRect = new Rectangle(mouse_x, mouse_y, tileSize - 1, tileSize - 1);
         }
 
         Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
@@ -605,13 +579,13 @@ public partial class MainWindow : Form
 
         if (e.Button == MouseButtons.Right && EditingTiles)
         {
-            int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + 16 - 1; //Width and Height of the Selection
-            int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + 16 - 1;//
+            int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + tileSize - 1; //Width and Height of the Selection
+            int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + tileSize - 1;//
 
             Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
             Room.SelRect = new Rectangle(Math.Min(StartSelection.X, RoomSelectedTile.X), Math.Min(StartSelection.Y, RoomSelectedTile.Y), width, height);
 
-            lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
+            lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / tileSize} x {(height + 1) / tileSize}";
         }
     }
 
@@ -641,10 +615,19 @@ public partial class MainWindow : Form
         switch (toolbar_tileset.TriggeredCommand)
         {
             case (LampToolCommand.ZoomIn):
-                SetTilesetZoom(Tileset.Zoom + 1);
-                break;
             case (LampToolCommand.ZoomOut):
-                SetTilesetZoom(Tileset.Zoom - 1);
+                Tileset.Zoom = toolbar_tileset.ZoomLevel;
+                break;
+        }
+    }
+
+    private void toolbar_room_ToolCommandTriggered(object sender, EventArgs e)
+    {
+        switch (toolbar_room.TriggeredCommand)
+        {
+            case (LampToolCommand.ZoomIn):
+            case (LampToolCommand.ZoomOut):
+                Room.Zoom = toolbar_room.ZoomLevel;
                 break;
         }
     }
@@ -857,7 +840,7 @@ public partial class MainWindow : Form
     }
 
     private void rOMFileToolStripMenuItem_Click(object sender, EventArgs e)
-        => new ProgramSettins().ShowDialog();
+        => new ProgramSettings().ShowDialog();
 
     private void ctx_btn_remove_object_Click(object sender, EventArgs e)
         => Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
@@ -899,16 +882,6 @@ public partial class MainWindow : Form
     {
         string target = "https://github.com/ConConner/LAMP/issues";
         Process.Start(new ProcessStartInfo(target) { UseShellExecute = true });
-    }
-
-    private void btn_tileset_zoom_in_Click(object sender, EventArgs e)
-    {
-        SetTilesetZoom(Tileset.Zoom + 1);
-    }
-
-    private void btn_tileset_zoom_out_Click(object sender, EventArgs e)
-    {
-        SetTilesetZoom(Tileset.Zoom - 1);
     }
 
     private void btn_graphics_editor_Click(object sender, EventArgs e)

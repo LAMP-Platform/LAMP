@@ -10,11 +10,6 @@ namespace LAMP;
 
 internal static class Globals
 {
-    /// <summary>
-    /// Path to a vanilla ROM
-    /// </summary>
-    public static string RomPath = "";
-
     #region colors
     //Editable Color definitions
     /// <summary>
@@ -110,11 +105,13 @@ internal static class Globals
     public static Save TestROMSave = new Save();
 
     #region User Settings
+    public static string RomPath = Properties.programsettings.Default.ROMPath;
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;
     public static string hexSuffix = Properties.programsettings.Default.hexSuffix;
     public static List<string> recentFiles = Properties.programsettings.Default.recentFiles.Cast<string>().ToList();
     public static List<string> pinnedFiles = Properties.programsettings.Default.pinnedFiles.Cast<string>().ToList();
+    public static CompilationItem CompilerExclude = (CompilationItem)Properties.programsettings.Default.compilerExclude;
     #endregion
 }
 

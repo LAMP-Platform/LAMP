@@ -138,7 +138,7 @@ namespace LAMP.Controls.Other
 
         private void btn_project_settings_Click(object sender, EventArgs e)
         {
-            new ProgramSettins().ShowDialog();
+            new ProgramSettings().ShowDialog();
         }
     }
 }

@@ -84,7 +84,7 @@ public static class Editor
         {
             MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new ProgramSettins().ShowDialog();
+            new ProgramSettings().ShowDialog();
             return;
         }
 
@@ -242,7 +242,7 @@ public static class Editor
         {
             MessageBox.Show("No Metroid 2: Return of Samus ROM has been selected yet!", "ROM missing",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
-            new ProgramSettins().ShowDialog();
+            new ProgramSettings().ShowDialog();
             return;
         }
 

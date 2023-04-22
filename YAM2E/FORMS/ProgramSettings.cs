@@ -12,9 +12,9 @@ using System.IO;
 
 namespace LAMP.FORMS
 {
-    public partial class ProgramSettins : Form
+    public partial class ProgramSettings : Form
     {
-        public ProgramSettins()
+        public ProgramSettings()
         {
             InitializeComponent();
             txb_rom_path.Text = Globals.RomPath;
@@ -27,6 +27,8 @@ namespace LAMP.FORMS
 
             if (Globals.bankOffsets) rbt_bank_style.Checked = true;
             else rbt_offset_style.Checked = true;
+
+            SetCompilationChecks();
         }
 
         private void btn_select_rom_Click(object sender, EventArgs e)
@@ -38,9 +40,8 @@ namespace LAMP.FORMS
         private void txb_rom_path_TextChanged(object sender, EventArgs e)
         {
             Globals.RomPath = txb_rom_path.Text;
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "/LAMP/rompath.txt";
-            File.WriteAllText(path, Globals.RomPath);
+            Properties.programsettings.Default.ROMPath = Globals.RomPath;
+            Properties.programsettings.Default.Save();
         }
 
         private void clearIndication()
@@ -54,8 +55,27 @@ namespace LAMP.FORMS
             Properties.programsettings.Default.hexPrefix = Globals.hexPrefix;
             Properties.programsettings.Default.hexSuffix = Globals.hexSuffix;
             Properties.programsettings.Default.bankOffsets = Globals.bankOffsets;
+            Properties.programsettings.Default.compilerExclude = (int)Globals.CompilerExclude;
 
             Properties.programsettings.Default.Save();
+        }
+
+        private void SetCompilationChecks()
+        {
+            foreach (CheckBox chb in grp_compilation.Controls)
+            {
+                CompilationItem tag = (CompilationItem)Enum.Parse(typeof(CompilationItem), (string)chb.Tag);
+                chb.Checked = (Globals.CompilerExclude & tag) == 0;
+            }
+        }
+
+        private void chb_compilation_itemsCheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox chb = (CheckBox)sender;
+            CompilationItem tag = (CompilationItem)Enum.Parse(typeof(CompilationItem), (string)chb.Tag);
+            Globals.CompilerExclude = chb.Checked ? Globals.CompilerExclude & ~tag : Globals.CompilerExclude | tag;
+
+            SaveSettings();
         }
 
         private void rbt_no_indication_CheckedChanged(object sender, EventArgs e)
