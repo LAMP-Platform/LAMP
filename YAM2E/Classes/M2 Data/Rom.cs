@@ -27,7 +27,7 @@ public class Rom
     public Rom(string filename)
     {
         Data = File.ReadAllBytes(filename);
-        DataCopy = Data;
+        DataCopy = (byte[])Data.Clone();
         Filepath = filename;
 
         // check title and code
@@ -46,7 +46,7 @@ public class Rom
     public void Compile(string filename)
     {
         //Fresh copy of the Data
-        DataCopy = Data;
+        DataCopy = (byte[])Data.Clone();
 
         //This holds the info on items that should not be compiled as per the users choice
         CompilationItem exceptions = Globals.CompilerExclude;

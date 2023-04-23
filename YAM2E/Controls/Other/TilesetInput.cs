@@ -128,7 +128,7 @@ namespace LAMP.Controls.Other
         private void txb_graphics_offset_TextChanged(object sender, EventArgs e)
         {
             Pointer p = Format.StringToPointer(txb_graphics_offset.Text);
-            if (p != null && p.Offset < Editor.ROM.Data.Length)
+            if (p != null && p.Offset < Editor.ROM.Size)
             {
                 GraphicsOffset = p;
                 MetatilePointer = Editor.GetMetaPointerFromTable(cbb_metatile_table.SelectedIndex);
