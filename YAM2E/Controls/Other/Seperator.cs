@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.Controls.Other
+namespace LAMP.Controls.Other;
+
+public partial class Seperator : UserControl
 {
-    public partial class Seperator : UserControl
+    public Seperator()
     {
-        public Seperator()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

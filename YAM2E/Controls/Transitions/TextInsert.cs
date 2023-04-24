@@ -8,19 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.Controls.Transitions
-{
-    public partial class TextInsert : UserControl
-    {
-        public TextInsert(string text)
-        {
-            InitializeComponent();
-            ChangeText(text);
-        }
+namespace LAMP.Controls.Transitions;
 
-        public void ChangeText(string text)
-        {
-            lblText.Text = text;
-        }
+public partial class TextInsert : UserControl
+{
+    public TextInsert(string text)
+    {
+        InitializeComponent();
+        ChangeText(text);
+    }
+
+    public void ChangeText(string text)
+    {
+        lblText.Text = text;
     }
 }

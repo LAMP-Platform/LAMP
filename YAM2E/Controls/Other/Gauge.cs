@@ -8,18 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.Controls.Other
-{
-    public partial class Gauge : UserControl
-    {
-        public Gauge()
-        {
-            InitializeComponent();
-        }
+namespace LAMP.Controls.Other;
 
-        public void ChangeValue(double percent)
-        {
-            pnlBar.Width = (int)(pnlBackground.Width * percent);
-        }
+public partial class Gauge : UserControl
+{
+    public Gauge()
+    {
+        InitializeComponent();
+    }
+
+    public void ChangeValue(double percent)
+    {
+        pnlBar.Width = (int)(pnlBackground.Width * percent);
     }
 }

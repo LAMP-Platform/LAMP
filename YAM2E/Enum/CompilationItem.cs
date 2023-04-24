@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace LAMP
+namespace LAMP;
+
+/// <summary>
+/// All the things that LAMP will compile onto a ROM
+/// </summary>
+[Flags]
+public enum CompilationItem
 {
-    /// <summary>
-    /// All the things that LAMP will compile onto a ROM
-    /// </summary>
-    [Flags]
-    public enum CompilationItem
-    {
-        None = 0,
-        Screens = 1,
-        Areas = 2,
-        Objects = 4,
-        Transitions = 8,
-        Save = 16
-    }
+    None = 0,
+    Screens = 1,
+    Areas = 2,
+    Objects = 4,
+    Transitions = 8,
+    Save = 16
 }

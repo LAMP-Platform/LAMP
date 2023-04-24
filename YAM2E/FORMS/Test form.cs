@@ -12,13 +12,12 @@ using LAMP.Classes;
 using LAMP.Controls;
 using LAMP.Utilities;
 
-namespace LAMP.FORMS
+namespace LAMP.FORMS;
+
+public partial class Test_form : Form
 {
-    public partial class Test_form : Form
+    public Test_form()
     {
-        public Test_form()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

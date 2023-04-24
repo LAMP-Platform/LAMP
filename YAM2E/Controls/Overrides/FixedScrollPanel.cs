@@ -6,13 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.Controls.Overrides
+namespace LAMP.Controls.Overrides;
+
+public class FixedScrollPanel : Panel
 {
-    public class FixedScrollPanel : Panel
+    protected override Point ScrollToControl(Control activeControl)
     {
-        protected override Point ScrollToControl(Control activeControl)
-        {
-            return this.DisplayRectangle.Location;
-        }
+        return this.DisplayRectangle.Location;
     }
 }

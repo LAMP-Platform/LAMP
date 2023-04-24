@@ -8,38 +8,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.FORMS
+namespace LAMP.FORMS;
+
+public partial class ProjectSettings : Form
 {
-    public partial class ProjectSettings : Form
+    public ProjectSettings()
     {
-        public ProjectSettings()
-        {
-            InitializeComponent();
-            chb_rmv_mt_o_list.Checked = Globals.LoadedProject.OptimizeObjectData;
-            rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
-        }
+        InitializeComponent();
+        chb_rmv_mt_o_list.Checked = Globals.LoadedProject.OptimizeObjectData;
+        rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
+    }
 
-        private void chb_rmv_mt_o_list_CheckedChanged(object sender, EventArgs e)
-        {
-            Globals.LoadedProject.OptimizeObjectData = chb_rmv_mt_o_list.Checked;
-        }
+    private void chb_rmv_mt_o_list_CheckedChanged(object sender, EventArgs e)
+    {
+        Globals.LoadedProject.OptimizeObjectData = chb_rmv_mt_o_list.Checked;
+    }
 
-        private void rbt_use_offsets_CheckedChanged(object sender, EventArgs e)
+    private void rbt_use_offsets_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbt_use_offsets.Checked)
         {
-            if (rbt_use_offsets.Checked)
-            {
-                Globals.LoadedProject.useTilesets = false;
-                MainWindow.Current.SwitchTilesetOffsetMode();
-            }
+            Globals.LoadedProject.useTilesets = false;
+            MainWindow.Current.SwitchTilesetOffsetMode();
         }
+    }
 
-        private void rbt_use_tilesets_CheckedChanged(object sender, EventArgs e)
+    private void rbt_use_tilesets_CheckedChanged(object sender, EventArgs e)
+    {
+        if (rbt_use_tilesets.Checked)
         {
-            if (rbt_use_tilesets.Checked)
-            {
-                Globals.LoadedProject.useTilesets = true;
-                MainWindow.Current.SwitchTilesetOffsetMode();
-            }
+            Globals.LoadedProject.useTilesets = true;
+            MainWindow.Current.SwitchTilesetOffsetMode();
         }
     }
 }
