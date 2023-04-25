@@ -21,4 +21,4 @@ At least [.NET 6 (x86/32bit)](https://dotnet.microsoft.com/en-us/download) is ne
   - ROM compilation
 </details>
 
-For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the Development Discord!
+For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the [Development Discord](https://discord.gg/YT6M2rAqqS)!
