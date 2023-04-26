@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Controls.Other;
 using LAMP.Properties;
+using LAMP;
 
 namespace LAMP.Controls.Room;
 
@@ -64,7 +65,7 @@ public partial class ToolBar : UserControl
         get { return selectedTool; }
         set
         {
-            switch(value)
+            switch (value)
             {
                 case (LampTool.Pen):
                     btn_pen_Click(null, null);

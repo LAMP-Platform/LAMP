@@ -182,7 +182,7 @@ public partial class ScreenSettings : Form
         int ScreenY = SelectedScreen / 16;
 
         Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
-        g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].image, new Point(256 * ScreenX, 256 * ScreenY));
+        g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].Image, new Point(256 * ScreenX, 256 * ScreenY));
         g.Dispose();
         MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
 

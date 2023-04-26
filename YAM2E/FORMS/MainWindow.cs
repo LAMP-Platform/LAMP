@@ -10,7 +10,6 @@ using LAMP.Classes.M2_Data;
 using System.Collections.Generic;
 using LAMP.Utilities;
 using LAMP.Controls.Room;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using System.Linq;
 using Microsoft.VisualBasic.Devices;
 using LAMP.Controls.Other;
@@ -21,6 +20,7 @@ public partial class MainWindow : Form
 {
     public static MainWindow Current;
 
+    #region FIELDS
     //Tile Viewer vars
     public static TileViewer Tileset = new TileViewer();
     public static RoomViewer Room = new RoomViewer();
@@ -28,22 +28,37 @@ public partial class MainWindow : Form
     private static RecentFiles Recent = new RecentFiles();
     private static Label TitleLabel = new Label();
 
-    private Point StartSelection = new Point(-1, -1);
+    /// <summary>
+    /// Point where a selection started. Only for temporary storage,
+    /// since it can be used by either the room or the tileset
+    /// </summary>
+    private Point SelectionStart = new Point(-1, -1);
+    /// <summary>
+    /// The top, left coordinates of the currently selected tile in the tileset
+    /// </summary>
     private Point TilesetSelectedTile = new Point(-1, -1);
-    private Point RoomSelectedTile = new Point(-1, -1); //Despite of what the name might suggest, this is not actually the selected tile but the top-left corner of the selected tile
+    /// <summary>
+    /// The top, left coordinates of the currently selected tile in the room
+    /// </summary>
+    private Point RoomSelectedTile = new Point(-1, -1);
+    /// <summary>
+    /// The direct coordinate selected in the room
+    /// </summary>
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
     public static Enemy heldObject = null;
 
     //Main Editor vars
-    public static bool EditingTiles = true;
-    bool TilesetSelected = true;
+    public static bool EditingTiles { get; set; } = true;
+    bool TilesetSelected { get; set; } = true;
 
     //Graphics vars
     private Pointer gfxOffset;
     private Pointer MetatilePointer;
     private Tileset selectedTileset = null;
+    #endregion
 
+    #region Constructor
     public MainWindow()
     {
         SuspendLayout();
@@ -84,6 +99,7 @@ public partial class MainWindow : Form
 
         ResumeLayout();
     }
+    #endregion
 
     /// <summary>
     /// Everything that happens once a project gets loaded
@@ -200,65 +216,62 @@ public partial class MainWindow : Form
         Editor.GetScrollBorders();
     }
 
-    private void UpdateSelectedTiles()
+    private void GetTilesFromTileset()
     {
-        if (TilesetSelected) //Grabbing Tiles from the Tileset view
+        RoomSelectedSize = new Size((Tileset.SelRect.Width + 1) / Tileset.Zoom, (Tileset.SelRect.Height + 1) / Tileset.Zoom);
+        int x = Tileset.SelRect.X / Tileset.TileSize;
+        int y = Tileset.SelRect.Y / Tileset.TileSize;
+        int width = (Tileset.SelRect.Width + 1) / Tileset.TileSize;
+        int height = (Tileset.SelRect.Height + 1) / Tileset.TileSize;
+        Editor.SelectionWidth = width;
+        Editor.SelectionHeight = height;
+        lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
+
+        //returns the selected Metatile offsets
+        int tilesWide = Tileset.BackgroundImage.Width / 16;
+        Editor.SelectedTiles = new byte[width * height];
+        int count = 0;
+        for (int i = 0; i < height; i++)
         {
-            int tileWidth = 16 * Tileset.Zoom;
-
-            RoomSelectedSize = new Size(Tileset.SelRect.Width / Tileset.Zoom, Tileset.SelRect.Height / Tileset.Zoom);
-            int x = Tileset.SelRect.X / tileWidth;
-            int y = Tileset.SelRect.Y / tileWidth;
-            int width = (Tileset.SelRect.Width + 1) / tileWidth;
-            int height = (Tileset.SelRect.Height + 1) / tileWidth;
-            Editor.SelectionWidth = width;
-            Editor.SelectionHeight = height;
-            lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
-
-            //returns the selected Metatile offsets
-            int tilesWide = Tileset.BackgroundImage.Width / 16;
-            Editor.SelectedTiles = new byte[width * height];
-            int count = 0;
-            for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++)
             {
-                for (int j = 0; j < width; j++)
-                {
-                    int val = (y + i) * tilesWide + j + x;
-                    Editor.SelectedTiles[count] = (byte)val;
-                    count++;
-                }
-            }
-        }
-        else //Grabbing tiles from the Room view
-        {
-            RoomSelectedSize = new Size(Room.SelRect.Width, Room.SelRect.Height);
-            int x = Room.SelRect.X;
-            int y = Room.SelRect.Y;
-            int width = (Room.SelRect.Width + 1) / 16;
-            int height = (Room.SelRect.Height + 1) / 16;
-            Editor.SelectionWidth = width;
-            Editor.SelectionHeight = height;
-            lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
-
-            //returns the selected Metatile offsets
-            Editor.SelectedTiles = new byte[width * height];
-            int count = 0;
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    byte value = Editor.GetTileFromXY(x + j * 16, y + i * 16, Globals.SelectedArea);
-                    Editor.SelectedTiles[count] = value;
-                    count++;
-                }
+                int val = (y + i) * tilesWide + j + x;
+                Editor.SelectedTiles[count] = (byte)val;
+                count++;
             }
         }
     }
 
-    private void PlaceSelectedTiles()
+    private void GetTilesFromRoom()
     {
-        int x = RoomSelectedTile.X;
-        int y = RoomSelectedTile.Y;
+        RoomSelectedSize = new Size((Room.SelRect.Width + 1) / Room.Zoom, (Room.SelRect.Height + 1) / Room.Zoom);
+        int x = Room.SelRect.X / Room.Zoom;
+        int y = Room.SelRect.Y / Room.Zoom;
+        int width = (Room.SelRect.Width + 1) / Room.TileSize;
+        int height = (Room.SelRect.Height + 1) / Room.TileSize;
+        Editor.SelectionWidth = width;
+        Editor.SelectionHeight = height;
+        lbl_main_selection_size.Text = $"Selected Area: {width} x {height}";
+
+        //returns the selected Metatile offsets
+        Editor.SelectedTiles = new byte[width * height];
+        int count = 0;
+        for (int i = 0; i < height; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                byte value = Editor.GetTileFromXY(x + j * 16, y + i * 16, Globals.SelectedArea);
+                Editor.SelectedTiles[count] = value;
+                count++;
+            }
+        }
+
+    }
+
+    private void PlaceSelectedTiles(Point tilePosition)
+    {
+        int x = tilePosition.X;
+        int y = tilePosition.Y;
 
         //generate array with tiles that have to be replaced
         RoomTile[] replaceTiles = new RoomTile[Editor.SelectionWidth * Editor.SelectionHeight];
@@ -313,8 +326,8 @@ public partial class MainWindow : Form
                 continue;
             }
             GameScreen screen = Globals.Screens[Globals.SelectedArea][nr];
-            g.DrawImage(screen.image, new Point(sx, sy));
-            Room.Invalidate(new Rectangle(sx, sy, 256, 256));
+            g.DrawImage(screen.Image, new Point(sx, sy));
+            Room.Invalidate(new Rectangle(sx * Room.Zoom, sy * Room.Zoom, 256 * Room.Zoom, 256 * Room.Zoom));
             count++;
         }
         g.Dispose();
@@ -413,10 +426,10 @@ public partial class MainWindow : Form
         int y = (e.Y / tileWidth) * tileWidth; //
 
         //setting start position for selection
-        StartSelection.X = x;
-        StartSelection.Y = y;
+        SelectionStart.X = x;
+        SelectionStart.Y = y;
 
-        Tileset.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, tileWidth - 1, tileWidth - 1);
+        Tileset.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, tileWidth - 1, tileWidth - 1);
     }
 
     private void Tileset_MouseMove(object sender, MouseEventArgs e)
@@ -439,11 +452,11 @@ public partial class MainWindow : Form
 
         if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
         {
-            int width = Math.Abs((TilesetSelectedTile.X) - StartSelection.X) + tileWidth - 1;   //Width and Height of the selected
-            int height = Math.Abs((TilesetSelectedTile.Y) - StartSelection.Y) + tileWidth - 1;  //area on the tileset
+            int width = Math.Abs((TilesetSelectedTile.X) - SelectionStart.X) + tileWidth - 1;   //Width and Height of the selected
+            int height = Math.Abs((TilesetSelectedTile.Y) - SelectionStart.Y) + tileWidth - 1;  //area on the tileset
 
             Tileset.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Tileset.SelRect = new Rectangle(Math.Min(StartSelection.X, TilesetSelectedTile.X), Math.Min(StartSelection.Y, TilesetSelectedTile.Y), width, height);
+            Tileset.SelRect = new Rectangle(Math.Min(SelectionStart.X, TilesetSelectedTile.X), Math.Min(SelectionStart.Y, TilesetSelectedTile.Y), width, height);
 
             lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / 16} x {(height + 1) / 16}";
         }
@@ -456,15 +469,68 @@ public partial class MainWindow : Form
 
     private void Tileset_MouseUp(object sender, MouseEventArgs e)
     {
-        UpdateSelectedTiles();
+        GetTilesFromTileset();
     }
     #endregion
 
     #region Room Events
+    /*                      Setting coordinate based variables
+    * 
+    * Due to zooming, coordinates can be a bit confusing. e.X and e.Y will always give the coordinates
+    * of the mouse inside of the RoomView, however, those might not always directly translate to
+    * coordinates from the game, especially when a zoom is applied. Therefore, there will be coordinates,
+    * which are divided by the zoom factor and represent the currently selected pixel in the room.
+    */
+
     private void Room_MouseDown(object sender, MouseEventArgs e)
     {
         Room.Focus();
 
+        //NEW CODE
+
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom), 0) / Room.Zoom);
+
+        //The number of the tile selected
+        Point tileNum = new Point(pixel.X / Room.PixelTileSize, pixel.Y / Room.PixelTileSize);
+
+        //The room coordinates of the selected tile
+        Point tile = new Point(tileNum.X * Room.PixelTileSize, tileNum.Y * Room.PixelTileSize);
+
+        switch (toolbar_room.SelectedTool)
+        {
+            case (LampTool.Pen): //Used for placing tiles
+
+                if (e.Button == MouseButtons.Left)
+                {
+                    PlaceSelectedTiles(tile);
+                }
+                if (e.Button == MouseButtons.Right) //Quick Select
+                {
+                    //Setting start of selection
+                    SelectionStart = tile;
+                    Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, Room.PixelTileSize, Room.PixelTileSize);
+                }
+
+                break;
+
+            case (LampTool.Select): //Selecting tiles directly from the room window
+
+                //Setting start of selection
+                SelectionStart = tile;
+                Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, Room.PixelTileSize, Room.PixelTileSize);
+
+                break;
+
+            case (LampTool.Fill): //fill everything in with one tile
+                break;
+
+            case (LampTool.Move): //Move selected tiles, objects, edit screens and more
+                break;
+        }
+
+        #region OLD CODE
+        /*
         int tileSize = 16 * Room.Zoom;
 
         int x = (e.X / tileSize) * tileSize; //tile position at moment of click
@@ -517,29 +583,92 @@ public partial class MainWindow : Form
 
             //If not in object mode
             ToggleSelectionFocus(false);
-            StartSelection.X = x;
-            StartSelection.Y = y;
+            SelectionStart.X = x;
+            SelectionStart.Y = y;
 
             Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Room.SelRect = new Rectangle(StartSelection.X, StartSelection.Y, tileSize - 1, tileSize - 1);
+            Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, tileSize - 1, tileSize - 1);
         }
+        */
+        #endregion
     }
 
     private void Room_MouseMove(object sender, MouseEventArgs e)
     {
-        int tileSize = Room.Zoom * 16;
-        Globals.SelectedScreenX = Math.Min(e.X / 256 * Room.Zoom, 15); //screen the mouse cursor is on
-        Globals.SelectedScreenY = Math.Min(e.Y / 256 * Room.Zoom, 15); //
+        //NEW CODE
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom), 0) / Room.Zoom);
+        RoomSelectedCoordinate = pixel;
+
+        //The number of the tile selected
+        Point tileNum = new Point(pixel.X / Room.PixelTileSize, pixel.Y / Room.PixelTileSize);
+
+        //The room coordinates of the selected tile
+        Point tile = new Point(tileNum.X * Room.PixelTileSize, tileNum.Y * Room.PixelTileSize);
+
+        #region General Mouse moving code
+        Globals.SelectedScreenX = Math.Min(pixel.X / 256, 15); //screen the mouse cursor is on
+        Globals.SelectedScreenY = Math.Min(pixel.Y / 256, 15); //
         Globals.SelectedScreenNr = Globals.SelectedScreenY * 16 + Globals.SelectedScreenX;
-        if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr])
-        {
-            Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
-            if (pnl_main_window_view.Visible == true) Room.Invalidate(new Rectangle(0, 0, 0, 0));
-        }
+
+        if (Room.SelectedScreen != Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr]) Room.SelectedScreen = Globals.Areas[Globals.SelectedArea].Screens[Globals.SelectedScreenNr];
         lbl_main_hovered_screen.Text = $"Selected Screen: {Globals.SelectedScreenX:X2}, {Globals.SelectedScreenY:X2}";
         lbl_screen_used.Text = $"Used: {Room.SelectedScreen:X2}";
+        #endregion
 
-        //Moving selected object
+        //Tool specific mouse moving code
+        switch (toolbar_room.SelectedTool)
+        {
+            case (LampTool.Pen): //Used for placing tiles
+
+                if (RoomSelectedTile == tile) break;
+                RoomSelectedTile = tile;
+
+                if (e.Button == MouseButtons.Right) //Quick Select
+                {
+                    int _width = Math.Abs((tile.X) - SelectionStart.X) + Room.PixelTileSize; //Width and Height of the Selection
+                    int _height = Math.Abs((tile.Y) - SelectionStart.Y) + Room.PixelTileSize;//
+
+                    Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
+                    Room.SelRect = new Rectangle(Math.Min(SelectionStart.X, tile.X), Math.Min(SelectionStart.Y, tile.Y), _width, _height);
+
+                    lbl_main_selection_size.Text = $"Selected Area: {(_width) / Room.PixelTileSize} x {(_height) / Room.PixelTileSize}";
+                } 
+                else
+                {
+                    Room.RedRect = new Rectangle(tile.X, tile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
+                }
+
+                if (e.Button != MouseButtons.Left) break;
+
+                PlaceSelectedTiles(tile);
+
+                break;
+
+            case (LampTool.Select): //Selecting tiles directly from the room window
+
+                if (e.Button != MouseButtons.Left || RoomSelectedTile == tile) break;
+                RoomSelectedTile = tile;
+
+                int width = Math.Abs((tile.X) - SelectionStart.X) + Room.PixelTileSize; //Width and Height of the Selection
+                int height = Math.Abs((tile.Y) - SelectionStart.Y) + Room.PixelTileSize;//
+
+                Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
+                Room.SelRect = new Rectangle(Math.Min(SelectionStart.X, tile.X), Math.Min(SelectionStart.Y, tile.Y), width, height);
+
+                lbl_main_selection_size.Text = $"Selected Area: {(width) / Room.PixelTileSize} x {(height) / Room.PixelTileSize}";
+
+                break;
+
+            case (LampTool.Fill): //fill everything in with one tile
+                break;
+
+            case (LampTool.Move): //Move selected tiles, objects, edit screens and more
+                break;
+        }
+
+
+        /*Moving selected object
         if ((RoomSelectedCoordinate.X != e.X || RoomSelectedCoordinate.Y != e.Y) && !(e.X < 0 || e.Y < 0) && !(e.X > Room.BackgroundImage.Width || e.Y > Room.BackgroundImage.Height) && heldObject != null)
         {
             RoomSelectedCoordinate.X = e.X;
@@ -552,45 +681,21 @@ public partial class MainWindow : Form
             }
 
             Room.HeldObject = new Rectangle(RoomSelectedCoordinate.X - 8, RoomSelectedCoordinate.Y - 8, 15, 15);
-        }
-
-        int mouse_x = (e.X / tileSize) * tileSize; //locks position of mouse to edge of tiles
-        int mouse_y = (e.Y / tileSize) * tileSize; //
-        if ((RoomSelectedTile.X == mouse_x && RoomSelectedTile.Y == mouse_y) //if same tile selected
-            || (mouse_x < 0 || mouse_y < 0) //if out of bounds
-            || (mouse_x >= Room.BackgroundImage.Width || mouse_y >= Room.BackgroundImage.Height)) //if out of bounds
-            return;
-
-        RoomSelectedTile.X = mouse_x;
-        RoomSelectedTile.Y = mouse_y;
-
-        if (!EditingTiles)
-        {
-            Room.CursorRect = new Rectangle(mouse_x, mouse_y, tileSize - 1, tileSize - 1);
-        }
-
-        Room.RedRect = new Rectangle(mouse_x, mouse_y, RoomSelectedSize.Width, RoomSelectedSize.Height);
-
-        if (e.Button == MouseButtons.Left)
-        {
-            if (!EditingTiles) return;
-            PlaceSelectedTiles();
-        }
-
-        if (e.Button == MouseButtons.Right && EditingTiles)
-        {
-            int width = Math.Abs((RoomSelectedTile.X) - StartSelection.X) + tileSize - 1; //Width and Height of the Selection
-            int height = Math.Abs((RoomSelectedTile.Y) - StartSelection.Y) + tileSize - 1;//
-
-            Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Room.SelRect = new Rectangle(Math.Min(StartSelection.X, RoomSelectedTile.X), Math.Min(StartSelection.Y, RoomSelectedTile.Y), width, height);
-
-            lbl_main_selection_size.Text = $"Selected Area: {(width + 1) / tileSize} x {(height + 1) / tileSize}";
-        }
+        }*/
     }
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
+        switch (toolbar_room.SelectedTool)
+        {
+            case (LampTool.Pen):
+                if (e.Button == MouseButtons.Right) GetTilesFromRoom();
+                break;
+            case (LampTool.Select):
+                GetTilesFromRoom();
+                break;
+        }
+
         if (heldObject != null)
         {
             heldObject.sX = (byte)(RoomSelectedCoordinate.X % 256);
@@ -599,7 +704,6 @@ public partial class MainWindow : Form
             Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
             heldObject = null;
         }
-        if (e.Button == MouseButtons.Right) UpdateSelectedTiles();
     }
 
     private void RoomDoubleClicked(object sender, MouseEventArgs e)
@@ -695,8 +799,8 @@ public partial class MainWindow : Form
                     Editor.SelectedTiles = sel.Tiles;
                     Editor.SelectionHeight = sel.SelectionHeight;
                     Editor.SelectionWidth = sel.SelectionWidth;
-                    RoomSelectedSize.Height = sel.SelectionHeight * 16 - 1;
-                    RoomSelectedSize.Width = sel.SelectionWidth * 16 - 1;
+                    RoomSelectedSize.Height = sel.SelectionHeight * Room.PixelTileSize;
+                    RoomSelectedSize.Width = sel.SelectionWidth * Room.PixelTileSize;
 
                     Rectangle rect = Room.RedRect; //old Position of the rectangle
                     Room.RedRect = new Rectangle(RoomSelectedTile.X, RoomSelectedTile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);

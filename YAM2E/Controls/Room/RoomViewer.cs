@@ -51,6 +51,16 @@ public class RoomViewer : Control
     }
     private int zoom = 1;
 
+    /// <summary>
+    /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>.
+    /// </summary>
+    public int TileSize => PixelTileSize * zoom;
+
+    /// <summary>
+    /// The amount of pixels that a tile is made of.
+    /// </summary>
+    public int PixelTileSize { get; set; } = 16;
+
     #endregion
 
     public bool ShowScreenOutlines { get; set; } = false;
@@ -70,8 +80,12 @@ public class RoomViewer : Control
             selectedScreen = value;
 
             //else a new screen was selected
-            if (UniqueScreen.Count != 0 ) 
-                foreach (Rectangle r in UniqueScreen) Invalidate(r);
+            if (UniqueScreen.Count != 0)
+                foreach (Rectangle r in UniqueScreen)
+                {
+                    Rectangle result = new(r.X * zoom, r.Y * zoom, r.Width * zoom, r.Height * zoom);
+                    Invalidate(result);
+                }
 
             //Populating new list
             UniqueScreen.Clear();
@@ -84,6 +98,10 @@ public class RoomViewer : Control
                     if (Globals.Areas[Globals.SelectedArea].Screens[nr] != selectedScreen)
                         continue;
                     UniqueScreen.Add(rect);
+                    rect.X *= zoom;
+                    rect.Y *= zoom;
+                    rect.Width *= zoom;
+                    rect.Height *= zoom;
                     Invalidate(rect);
                 }
             }
@@ -107,7 +125,8 @@ public class RoomViewer : Control
 
     #region Rectangles
     /// <summary>
-    /// The rectangle showing the area which is going to be replaced if tiles are placed down
+    /// The rectangle showing the area which is going to be replaced if tiles are placed down.
+    /// Will expect coordinates and size as room-pixels
     /// </summary>
     public Rectangle RedRect
     {
@@ -117,7 +136,13 @@ public class RoomViewer : Control
             if (redRect == value) return;
 
             Rectangle old = redRect;
-            redRect = value;
+
+            //Adjusting the Rectangle for Zoom
+            redRect = new Rectangle();
+            redRect.X = value.X * zoom;
+            redRect.Y = value.Y * zoom;
+            redRect.Width = value.Width * zoom - 1;
+            redRect.Height = value.Height * zoom - 1;
 
             Invalidate(Editor.UniteRect(redRect, old));
         }
@@ -125,25 +150,8 @@ public class RoomViewer : Control
     private Rectangle redRect = new Rectangle(-1, -1, 0, 0);
 
     /// <summary>
-    /// The rectangle that shows the selected tile
-    /// </summary>
-    public Rectangle CursorRect
-    {
-        get => cursorRect;
-        set
-        {
-            if (cursorRect == value) return;
-
-            Rectangle old = cursorRect;
-            cursorRect = value;
-
-            Invalidate(Editor.UniteRect(cursorRect, old));
-        }
-    }
-    private Rectangle cursorRect = new Rectangle(-1, -1, 0, 0);
-
-    /// <summary>
-    /// The rectangle showing the selected tiles in the room
+    /// The rectangle showing the selected tiles in the room.
+    /// Will expect coordinates and size as room-pixels.
     /// </summary>
     public Rectangle SelRect
     {
@@ -153,7 +161,13 @@ public class RoomViewer : Control
             if (selRect == value) return;
 
             Rectangle old = selRect;
-            selRect = value;
+
+            //Adjusting the Rectangle for Zoom
+            selRect = new Rectangle();
+            selRect.X = value.X * zoom;
+            selRect.Y = value.Y * zoom;
+            selRect.Width = value.Width * zoom - 1;
+            selRect.Height = value.Height * zoom - 1;
 
             Invalidate(Editor.UniteRect(selRect, old));
         }
@@ -241,7 +255,6 @@ public class RoomViewer : Control
         e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
         if (redRect.X != -1 && MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, redRect);
-        if (!MainWindow.EditingTiles) e.Graphics.DrawRectangle(TilePen, cursorRect);
 
         //screen outlines
         if (ShowScreenOutlines)
@@ -249,12 +262,12 @@ public class RoomViewer : Control
             for (int i = 0; i < 16; i++)
             {
                 //drawing lines every 16 pixels
-                e.Graphics.DrawLine(ScreenPen, 256 * i, 0, 256 * i, 256 * 16); //Vertical
-                e.Graphics.DrawLine(ScreenPen, 0, 256 * i, 256 * 16, 256 * i); //Horizontal
+                e.Graphics.DrawLine(ScreenPen, 256 * i * zoom, 0, 256 * i * zoom, 256 * 16 * zoom); //Vertical
+                e.Graphics.DrawLine(ScreenPen, 0, 256 * i * zoom, 256 * 16 * zoom, 256 * i * zoom); //Horizontal
             }
         }
 
-        //screen borders
+        //scroll borders
         if (ShowScrollBorders)
         {
             foreach (Rectangle r in Globals.ScrollBorders)
@@ -265,7 +278,11 @@ public class RoomViewer : Control
         if (UniqueScreen.Count != 0 && ShowDuplicateOutlines)
         {
             foreach (Rectangle r in UniqueScreen)
-                e.Graphics.DrawRectangle(UniqueScreenPen, r);
+            {
+                //Updating sizes
+                Rectangle result = new Rectangle(r.X * zoom, r.Y * zoom, r.Width * zoom, r.Height * zoom);
+                e.Graphics.DrawRectangle(UniqueScreenPen, result);
+            }
         }
 
         //Draw held object

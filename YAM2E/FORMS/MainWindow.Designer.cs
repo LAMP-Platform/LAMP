@@ -668,7 +668,7 @@ namespace LAMP
             toolbar_tileset.Name = "toolbar_tileset";
             toolbar_tileset.onToolCommandTriggered = null;
             toolbar_tileset.onToolSwitched = null;
-            toolbar_tileset.SelectedTool = LAMP.Controls.Room.LampTool.Select;
+            toolbar_tileset.SelectedTool = LAMP.LampTool.Select;
             toolbar_tileset.Size = new System.Drawing.Size(262, 28);
             toolbar_tileset.TabIndex = 1;
             toolbar_tileset.ZoomLevel = 1;
@@ -704,7 +704,7 @@ namespace LAMP
             toolbar_room.Name = "toolbar_room";
             toolbar_room.onToolCommandTriggered = null;
             toolbar_room.onToolSwitched = null;
-            toolbar_room.SelectedTool = LAMP.Controls.Room.LampTool.Pen;
+            toolbar_room.SelectedTool = LAMP.LampTool.Pen;
             toolbar_room.Size = new System.Drawing.Size(907, 28);
             toolbar_room.TabIndex = 1;
             toolbar_room.ZoomLevel = 1;

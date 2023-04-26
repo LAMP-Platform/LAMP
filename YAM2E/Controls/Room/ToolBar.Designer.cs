@@ -201,7 +201,7 @@
             btn_move.Name = "btn_move";
             btn_move.Size = new System.Drawing.Size(24, 24);
             btn_move.TabIndex = 14;
-            tlt_button_name.SetToolTip(btn_move, "Pen");
+            tlt_button_name.SetToolTip(btn_move, "Cursor");
             btn_move.UseVisualStyleBackColor = true;
             btn_move.Click += btn_move_Click;
             // 

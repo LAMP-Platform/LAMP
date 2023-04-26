@@ -969,8 +969,7 @@ public static class Editor
             }
         }
         g.Dispose();
-        if (s.image != null) s.image.Dispose();
-        s.image = screen;
+        s.Image = screen;
     }
 
     public static void DrawAreaBank(int bankNr, Bitmap bmp, Point p)
@@ -990,7 +989,7 @@ public static class Editor
             {
                 int screen = a.Screens[count];
                 Point screenPoint = new Point(p.X + (j * 256), p.Y + (i * 256));
-                if (screen >= 0) g.DrawImage(Globals.Screens[bankNr][screen].image, screenPoint);
+                if (screen >= 0) g.DrawImage(Globals.Screens[bankNr][screen].Image, screenPoint);
                 count++;
             }
         }

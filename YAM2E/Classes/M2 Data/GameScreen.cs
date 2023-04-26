@@ -20,5 +20,14 @@ public class GameScreen
     }
 
     public byte[] Data { get; set; }
-    public Bitmap image;
+    public Bitmap Image
+    {
+        get => image;
+        set
+        {
+            if (image != null) image.Dispose();
+            image = value;
+        }
+    }
+    Bitmap image;
 }

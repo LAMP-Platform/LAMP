@@ -52,7 +52,15 @@ public class TileViewer : Control
     }
     private int zoom = 1;
 
-    public Point SelectionStart { get; set; }
+    /// <summary>
+    /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>.
+    /// </summary>
+    public int TileSize => PixelTileSize * zoom;
+
+    /// <summary>
+    /// The amount of pixels that a tile is made of.
+    /// </summary>
+    public int PixelTileSize { get; set; } = 16;
 
     /// <summary>
     /// The rectangle that shows under the currently selected tile
