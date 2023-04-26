@@ -1,4 +1,4 @@
-﻿# Version B 4.0
+# Version B 4.0
 ### Released: XX.XX.2023
 **Changes:**
  * Main Window layout redesign
