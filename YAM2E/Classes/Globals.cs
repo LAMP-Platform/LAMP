@@ -5,6 +5,7 @@ using LAMP.Classes.M2_Data;
 using System;
 using System.Windows.Forms;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace LAMP;
 
@@ -92,7 +93,7 @@ internal static class Globals
     public static int SelectedScreenNr = 0;
 
     //Border data
-    public static List<Rectangle> ScrollBorders = new List<Rectangle>();
+    public static List<(Point, Point)> ScrollBorders = new List<(Point, Point)>();
 
     //Transition Data
     public static bool ExpandAllOpcodes = false;

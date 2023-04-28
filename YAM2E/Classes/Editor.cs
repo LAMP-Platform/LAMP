@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using System.Drawing.Drawing2D;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -783,10 +784,10 @@ public static class Editor
 
                 const int t = 3; //thickness of the rectangle (Adjust pen size as well)
                                  //Checking if sides are blocked
-                if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new(256 * i + 255 - t, 256 * j, 1 + t, 256)); //Right
-                if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new(256 * i, 256 * j, 1 + t, 256)); //Left
-                if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new(256 * i, 256 * j, 256, 1 + t)); //Up
-                if (ByteOp.IsBitSet(scroll, 3)) Globals.ScrollBorders.Add(new(256 * i, 256 * j + 255 - t, 256, 1 + t)); //Down
+                if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new(new Point(256 * i + 254, 256 * j), new Point(256 * i + 255, 256 * j + 254))); //Right
+                if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j), new Point(256 * i, 256 * j + 254))); //Left
+                if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j), new Point(256 * i + 254, 256 * j))); //Up
+                if (ByteOp.IsBitSet(scroll, 3)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j + 254), new Point(256 * i + 255, 256 * j + 254))); //Down
             }
         }
     }

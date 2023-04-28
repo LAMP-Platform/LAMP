@@ -42,8 +42,12 @@ public class RoomViewer : Control
         }
         set
         {
+            if (zoom == value) return;
+
             //setting rectangles
-            ResetSelection();
+            //bad way of rescaling the rectangles, a proper way would be to only scale the rectangles once they get drawn :/
+            selRect = RecOp.Multiply(RecOp.Divide(selRect, zoom), value);
+            redRect = RecOp.Multiply(RecOp.Divide(redRect, zoom), value);
 
             zoom = Math.Max(value, 1);
             if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
@@ -138,11 +142,7 @@ public class RoomViewer : Control
             Rectangle old = redRect;
 
             //Adjusting the Rectangle for Zoom
-            redRect = new Rectangle();
-            redRect.X = value.X * zoom;
-            redRect.Y = value.Y * zoom;
-            redRect.Width = value.Width * zoom - 1;
-            redRect.Height = value.Height * zoom - 1;
+            redRect = RecOp.Add(RecOp.Multiply(value, zoom), -1);
 
             Invalidate(Editor.UniteRect(redRect, old));
         }
@@ -163,11 +163,7 @@ public class RoomViewer : Control
             Rectangle old = selRect;
 
             //Adjusting the Rectangle for Zoom
-            selRect = new Rectangle();
-            selRect.X = value.X * zoom;
-            selRect.Y = value.Y * zoom;
-            selRect.Width = value.Width * zoom - 1;
-            selRect.Height = value.Height * zoom - 1;
+            selRect = RecOp.Add(RecOp.Multiply(value, zoom), -1);
 
             Invalidate(Editor.UniteRect(selRect, old));
         }
@@ -218,7 +214,7 @@ public class RoomViewer : Control
     /// <summary>
     /// Pen for the scroll outlines
     /// </summary>
-    private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 2)
+    private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 4)
     {
         Alignment = PenAlignment.Inset
     };
@@ -270,8 +266,11 @@ public class RoomViewer : Control
         //scroll borders
         if (ShowScrollBorders)
         {
-            foreach (Rectangle r in Globals.ScrollBorders)
-                e.Graphics.DrawRectangle(BorderOutlinePen, r);
+            foreach ((Point, Point) l in Globals.ScrollBorders)
+            {
+                e.Graphics.DrawLine(BorderOutlinePen, l.Item1.X * zoom, l.Item1.Y * zoom, l.Item2.X * zoom, l.Item2.Y * zoom);
+                //e.Graphics.DrawRectangle(BorderOutlinePen, RecOp.Multiply(r, zoom));
+            }
         }
 
         //Draw Unique Screen outlines
@@ -303,7 +302,8 @@ public class RoomViewer : Control
                 {
                     Point p = o.GetPosition(i);
                     Rectangle rec = new Rectangle(p.X, p.Y, 15, 15);
-                    e.Graphics.DrawEllipse(ObjectPen, rec);
+                    ObjectPen.Width = 2 * zoom;
+                    e.Graphics.DrawEllipse(ObjectPen, RecOp.Multiply(rec, zoom));
                     //e.Graphics.DrawRectangle(ObjectPen, rec);
                     //TODO: Add option to switch been circle and rect
                 }
