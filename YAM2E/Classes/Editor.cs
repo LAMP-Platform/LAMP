@@ -12,6 +12,7 @@ using System.Net;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Drawing.Drawing2D;
+using LAMP.Controls;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -53,9 +54,9 @@ public static class Editor
     public static void CheckForUpdate()
     {
         WebClient webClient = new WebClient();
-        string latestVersion = webClient.DownloadString("https://pastebin.com/6HPaBaZD");
         try
         {
+            string latestVersion = webClient.DownloadString("https://pastebin.com/6HPaBaZD");
             if (!latestVersion.Contains(Version))
             {
                 //Extracting the update info from the site (Probably a super stupid way of doing things)
@@ -622,112 +623,144 @@ public static class Editor
         {
             Name = "Outside Ruins",
             GfxOffset = new Pointer(141756),
-            MetatileTable = 9
+            MetatileTable = 9,
+            CollisionTable = 6,
+            SolidityTable = 6
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Inside Ruins",
             GfxOffset = new Pointer(116736),
-            MetatileTable = 1
+            MetatileTable = 1,
+            CollisionTable = 1,
+            SolidityTable = 1
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Landing Site",
             GfxOffset = new Pointer(122880),
-            MetatileTable = 5
+            MetatileTable = 5,
+            CollisionTable = 4,
+            SolidityTable = 4
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "First / Last Caves",
             GfxOffset = new Pointer(120832),
-            MetatileTable = 4
+            MetatileTable = 4,
+            CollisionTable = 3,
+            SolidityTable = 3
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Final Ruins",
             GfxOffset = new Pointer(143804),
-            MetatileTable = 0
+            MetatileTable = 0,
+            CollisionTable = 7,
+            SolidityTable = 7
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Bubbles, Area 3 BrGr.",
             GfxOffset = new Pointer(114688),
-            MetatileTable = 2
+            MetatileTable = 2,
+            CollisionTable = 0,
+            SolidityTable = 0
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 1, No Acid",
             GfxOffset = new Pointer(124928),
-            MetatileTable = 6
+            MetatileTable = 6,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 1, Mid Acid",
             GfxOffset = new Pointer(124928),
-            MetatileTable = 8
+            MetatileTable = 8,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 1, Full Acid",
             GfxOffset = new Pointer(124928),
-            MetatileTable = 7
+            MetatileTable = 7,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 2, No Acid",
             GfxOffset = new Pointer(126256),
-            MetatileTable = 6
+            MetatileTable = 6,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 2, Mid Acid",
             GfxOffset = new Pointer(126256),
-            MetatileTable = 8
+            MetatileTable = 8,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 2, Full Acid",
             GfxOffset = new Pointer(126256),
-            MetatileTable = 7
+            MetatileTable = 7,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 3, No Acid",
             GfxOffset = new Pointer(127584),
-            MetatileTable = 6
+            MetatileTable = 6,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 3, Mid Acid",
             GfxOffset = new Pointer(127584),
-            MetatileTable = 8
+            MetatileTable = 8,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Caves 3, Full Acid",
             GfxOffset = new Pointer(127584),
-            MetatileTable = 7
+            MetatileTable = 7,
+            CollisionTable = 5,
+            SolidityTable = 5
         });
 
         Globals.Tilesets.Add(new Tileset()
         {
             Name = "Queen",
             GfxOffset = new Pointer(118784),
-            MetatileTable = 3
+            MetatileTable = 3,
+            CollisionTable = 2,
+            SolidityTable = 2
         });
     }
 
@@ -796,7 +829,7 @@ public static class Editor
     #region Objects
 
     /// <summary>
-    /// Adds an object at the current mouse location
+    /// Adds an object at the current room location
     /// </summary>
     public static void AddObject(int x, int y, int bank)
     {
@@ -809,6 +842,9 @@ public static class Editor
         Globals.Objects[screen].Add(o);
     }
 
+    /// <summary>
+    /// Finds the first <see cref="Enemy"/> present at the given room location.
+    /// </summary>
     public static Enemy FindObject(int x, int y, int bank)
     {
         x %= 256;
@@ -825,6 +861,7 @@ public static class Editor
 
     public static bool RemoveObject(int x, int y, int bank)
     {
+        RoomViewer room = MainWindow.Room;
         x %= 256;
         y %= 256;
         int screen = Globals.SelectedScreenNr + 256 * bank;
@@ -840,13 +877,34 @@ public static class Editor
                 //Invalidating part where object is removed
                 int X = (Globals.SelectedScreenNr % 16) * 256;
                 int Y = (Globals.SelectedScreenNr / 16) * 256;
-                MainWindow.Room.Invalidate(new Rectangle(X + o.sX - 8, Y + o.sY - 8, 16, 16));
+                room.Invalidate(new Rectangle((X + o.sX - 8) * room.Zoom, (Y + o.sY - 8) * room.Zoom, room.TileSize, room.TileSize));
 
                 return true;
             }
             count++;
         }
         return false;
+    }
+
+    public static bool RemoveObject(Enemy enemy, int bank)
+    {
+        RoomViewer room = MainWindow.Room;
+        try
+        {
+            int screen = Globals.SelectedScreenNr + 256 * bank;
+            Globals.Objects[screen].Remove(enemy);
+
+            //Invalidating part where object is removed
+            int X = (Globals.SelectedScreenNr % 16) * 256;
+            int Y = (Globals.SelectedScreenNr / 16) * 256;
+            room.Invalidate(new Rectangle((X + enemy.sX - 8) * room.Zoom, (Y + enemy.sY - 8) * room.Zoom, room.TileSize, room.TileSize));
+
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
     #endregion
 

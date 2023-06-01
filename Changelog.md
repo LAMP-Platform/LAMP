@@ -17,10 +17,15 @@
  * Copy & Paste
    * Copy and paste the seleted tiles
    * Works between instances of LAMP
+ * More object alignments
+   * Shift - Tile center
+   * Alt - Tile Corner
+   * Shift & Alt - Tile center, edge and corner
  * Compilation Settings
 **Fixes:**
  * Controls all appear at once now when loading a project
  * Selected tiles in the room no longer continuously reselect
+ * Predefined tilesets now come with predefined collision values
 
 
 # Version B 3.1

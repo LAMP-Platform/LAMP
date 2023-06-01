@@ -51,6 +51,8 @@ public partial class MainWindow : Form
     //Main Editor vars
     public static bool EditingTiles { get; set; } = true;
     bool TilesetSelected { get; set; } = true;
+    bool MovedObject = false;
+    Point MoveStartPoint;
 
     //Graphics vars
     private Pointer gfxOffset;
@@ -78,6 +80,7 @@ public partial class MainWindow : Form
         toolbar_tileset.SetTransform(false, false, false, false);
 
         toolbar_room.SetTransform(false, false, false, false);
+        toolbar_room.SetTools(true, true, true, false);
 
         //Adding custom controls
         #region Tileset
@@ -153,10 +156,6 @@ public partial class MainWindow : Form
         btn_save_rom_image.Enabled = true;
         btn_open_transition_editor_image.Enabled = true;
         tool_strip_view.Enabled = true;
-        btn_tile_mode.Enabled = true;
-        btn_tile_mode.Checked = true;
-        btn_object_mode.Checked = false;
-        btn_object_mode.Enabled = true;
         btn_tileset_definitions.Enabled = true;
         btn_compile_ROM.Enabled = true;
         btn_project_settings.Enabled = true;
@@ -333,6 +332,86 @@ public partial class MainWindow : Form
         g.Dispose();
     }
 
+    private void FloodFill(Point StartPosition)
+    {
+        List<RoomTile> replaceTiles = new List<RoomTile>();
+
+        //get current tile
+        //current Screen
+        GameScreen current = Globals.Screens[Globals.SelectedArea][Editor.GetScreenNrFromXY(StartPosition.X, StartPosition.Y, Globals.SelectedArea)];
+        int tx = (StartPosition.X % 256) / 16;
+        int ty = (StartPosition.Y % 256) / 16;
+        int count = ty * 16 + tx;
+
+        int originalID = current.Data[count];
+
+        //Starting the FillSteps
+        FillStep(new Point(StartPosition.X, StartPosition.Y), originalID, replaceTiles);
+
+        //List should now have all the tiles to replace
+        //Writing data
+        count = 0;
+        List<int> updatedScreens = new List<int>();
+        foreach (RoomTile t in replaceTiles)
+        {
+            if (t.Unused) continue;
+            t.ReplaceTile(Editor.SelectedTiles[0]);
+            if (!updatedScreens.Contains(t.ScreenNr)) updatedScreens.Add(t.ScreenNr);
+            Editor.DrawScreen(Globals.SelectedArea, t.ScreenNr);
+            count++;
+        }
+
+        //redrawing updated screens
+        count = 0;
+        Graphics g = Graphics.FromImage(Globals.AreaBank);
+        foreach (int nr in Globals.Areas[Globals.SelectedArea].Screens)
+        {
+            //screen pos
+            int sy = count / 16;
+            int sx = count % 16;
+            sx *= 256;
+            sy *= 256;
+
+            if (!updatedScreens.Contains(nr))
+            {
+                count++;
+                continue;
+            }
+            GameScreen screen = Globals.Screens[Globals.SelectedArea][nr];
+            g.DrawImage(screen.Image, new Point(sx, sy));
+            Room.Invalidate(new Rectangle(sx * Room.Zoom, sy * Room.Zoom, 256 * Room.Zoom, 256 * Room.Zoom));
+            count++;
+        }
+        g.Dispose();
+    }
+
+    private void FillStep(Point Start, int originalID, List<RoomTile> tileList)
+    {
+        //get current ID
+        GameScreen current = Globals.Screens[Globals.SelectedArea][Editor.GetScreenNrFromXY(Start.X, Start.Y, Globals.SelectedArea)];
+        int tx = (Start.X % 256) / 16;
+        int ty = (Start.Y % 256) / 16;
+        int count = ty * 16 + tx;
+
+        int currentID = current.Data[count];
+
+        if (currentID != originalID) return;
+
+        //Add current tile
+        RoomTile t = new RoomTile();
+        t.ScreenNr = Editor.GetScreenNrFromXY(Start.X, Start.Y, Globals.SelectedArea);
+        t.Screen = current;
+        t.Area = Globals.SelectedArea;
+        t.Position = new Point(Start.X % 256, Start.Y % 256);
+        tileList.Add(t);
+
+        //Doing fill steps in all directions
+        FillStep(new Point(Start.X + 16, Start.Y), originalID, tileList);
+        FillStep(new Point(Start.X - 16, Start.Y), originalID, tileList);
+        FillStep(new Point(Start.X, Start.Y + 16), originalID, tileList);
+        FillStep(new Point(Start.X, Start.Y - 16), originalID, tileList);
+    }
+
     private void ToggleScreenOutlines()
     {
         Room.ShowScreenOutlines = !Room.ShowScreenOutlines;
@@ -364,15 +443,6 @@ public partial class MainWindow : Form
             Tileset.Invalidate();
         }
         TilesetSelected = TilesetFocused;
-    }
-
-    private void ToggleEditingMode()
-    {
-        EditingTiles = !EditingTiles;
-        btn_tile_mode.Checked = EditingTiles;
-        btn_object_mode.Checked = !EditingTiles;
-        if (EditingTiles) Room.ContextMenuStrip = null;
-        else Room.ContextMenuStrip = ctx_room_context_menu;
     }
 
     public void SwitchTilesetOffsetMode()
@@ -417,7 +487,7 @@ public partial class MainWindow : Form
     #region Tileset Events
     private void Tileset_MouseDown(object sender, MouseEventArgs e)
     {
-        if (e.Button != MouseButtons.Left) return;
+        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
         int tileWidth = 16 * Tileset.Zoom;
 
         ToggleSelectionFocus(true);
@@ -486,10 +556,8 @@ public partial class MainWindow : Form
     {
         Room.Focus();
 
-        //NEW CODE
-
         //The currently selected pixel
-        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom), 0) / Room.Zoom);
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom - 1), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom - 1), 0) / Room.Zoom);
 
         //The number of the tile selected
         Point tileNum = new Point(pixel.X / Room.PixelTileSize, pixel.Y / Room.PixelTileSize);
@@ -523,81 +591,36 @@ public partial class MainWindow : Form
                 break;
 
             case (LampTool.Fill): //fill everything in with one tile
+                FloodFill(tile);
                 break;
 
             case (LampTool.Move): //Move selected tiles, objects, edit screens and more
+
+                MovedObject = false;
+                heldObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
+
+                if (e.Button == MouseButtons.Right)
+                {
+                    ctx_btn_edit_object.Enabled = false;
+                    ctx_btn_remove_object.Enabled = false;
+                    if (heldObject == null) break;
+                    ctx_btn_edit_object.Enabled = true;
+                    ctx_btn_remove_object.Enabled = true;
+                }
+
+                if (heldObject == null) break;
+
+                //Accidental move prevention
+                MoveStartPoint = e.Location;
+
                 break;
         }
-
-        #region OLD CODE
-        /*
-        int tileSize = 16 * Room.Zoom;
-
-        int x = (e.X / tileSize) * tileSize; //tile position at moment of click
-        int y = (e.Y / tileSize) * tileSize; //
-        if (e.Button == MouseButtons.Left)
-        {
-            //Object editing mode
-            if (!EditingTiles && Room.ShowObjects)
-            {
-                heldObject = Editor.FindObject(e.X, e.Y, Globals.SelectedArea);
-                Editor.RemoveObject(e.X, e.Y, Globals.SelectedArea);
-                Room.HeldObject = new Rectangle(e.X - tileSize / 2, e.Y - tileSize / 2, tileSize - 1, tileSize - 1);
-                return;
-            }
-
-            //Tile editing mode
-            PlaceSelectedTiles();
-        }
-        if (e.Button == MouseButtons.Middle)
-        {
-            ToggleEditingMode();
-            Room.CursorRect = new Rectangle(x, y, tileSize - 1, tileSize - 1);
-            Room.Invalidate(Editor.UniteRect(Room.RedRect, Room.CursorRect));
-        }
-        if (e.Button == MouseButtons.Right)
-        {
-            //object mode
-            if (!EditingTiles)
-            {
-                RoomSelectedTile.X = x;
-                RoomSelectedTile.Y = y;
-                RoomSelectedCoordinate.X = e.X;
-                RoomSelectedCoordinate.Y = e.Y;
-
-                //Checking if object selected
-                if (Editor.FindObject(e.X, e.Y, Globals.SelectedArea) == null)
-                {
-                    ctx_btn_remove_object.Enabled = false;
-                    ctx_btn_edit_object.Enabled = false;
-                }
-                else
-                {
-                    ctx_btn_remove_object.Enabled = true;
-                    ctx_btn_edit_object.Enabled = true;
-                }
-
-                //returning because we dont want to select tiles
-                return;
-            }
-
-            //If not in object mode
-            ToggleSelectionFocus(false);
-            SelectionStart.X = x;
-            SelectionStart.Y = y;
-
-            Room.RedRect = new Rectangle(-1, 0, 0, 0); //This hides the red Rect
-            Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, tileSize - 1, tileSize - 1);
-        }
-        */
-        #endregion
     }
 
     private void Room_MouseMove(object sender, MouseEventArgs e)
     {
-        //NEW CODE
         //The currently selected pixel
-        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom), 0) / Room.Zoom);
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom - 1), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom - 1), 0) / Room.Zoom);
         RoomSelectedCoordinate = pixel;
 
         //The number of the tile selected
@@ -633,7 +656,7 @@ public partial class MainWindow : Form
                     Room.SelRect = new Rectangle(Math.Min(SelectionStart.X, tile.X), Math.Min(SelectionStart.Y, tile.Y), _width, _height);
 
                     lbl_main_selection_size.Text = $"Selected Area: {(_width) / Room.PixelTileSize} x {(_height) / Room.PixelTileSize}";
-                } 
+                }
                 else
                 {
                     Room.RedRect = new Rectangle(tile.X, tile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
@@ -647,7 +670,7 @@ public partial class MainWindow : Form
 
             case (LampTool.Select): //Selecting tiles directly from the room window
 
-                if (e.Button != MouseButtons.Left || RoomSelectedTile == tile) break;
+                if ((e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) || RoomSelectedTile == tile) break;
                 RoomSelectedTile = tile;
 
                 int width = Math.Abs((tile.X) - SelectionStart.X) + Room.PixelTileSize; //Width and Height of the Selection
@@ -664,24 +687,52 @@ public partial class MainWindow : Form
                 break;
 
             case (LampTool.Move): //Move selected tiles, objects, edit screens and more
+
+                if (RoomSelectedTile != tile) RoomSelectedTile = tile;
+
+                //Accidental movement prevention
+                if (MovedObject == false && heldObject != null)
+                {
+                    //Check if mouse got moved significantly
+                    Rectangle check = new Rectangle(MoveStartPoint.X - 2, MoveStartPoint.Y - 2, 4, 4);
+                    if (!check.Contains(e.Location))
+                    {
+                        //This code should only run once
+                        MovedObject = true;
+
+                        Editor.RemoveObject(heldObject, Globals.SelectedArea);
+                        Room.HeldObject = new Rectangle(e.X - Room.TileSize / 2, e.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
+                    }
+                }
+
+                if (heldObject != null && MovedObject == true)
+                {
+                    Point objectCoordinate = pixel;
+
+                    if ((ModifierKeys & Keys.Shift) != 0)
+                    {
+                        objectCoordinate.X = (pixel.X / 16) * 16 + 8;
+                        objectCoordinate.Y = (pixel.Y / 16) * 16 + 8;
+                    }
+                    if ((ModifierKeys & Keys.Alt) != 0)
+                    {
+                        objectCoordinate.X = ((pixel.X - 8) / 16) * 16 + 16;
+                        objectCoordinate.Y = ((pixel.Y - 8) / 16) * 16 + 16;
+                    }
+                    if (((ModifierKeys & Keys.Shift) != 0) && ((ModifierKeys & Keys.Alt) != 0))
+                    {
+                        objectCoordinate.X = (pixel.X / 8) * 8 + 8;
+                        objectCoordinate.Y = (pixel.Y / 8) * 8 + 8;
+                    }
+
+                    objectCoordinate.X *= Room.Zoom;
+                    objectCoordinate.Y *= Room.Zoom;
+
+                    Room.HeldObject = new Rectangle(objectCoordinate.X - Room.TileSize / 2, objectCoordinate.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
+                }
+
                 break;
         }
-
-
-        /*Moving selected object
-        if ((RoomSelectedCoordinate.X != e.X || RoomSelectedCoordinate.Y != e.Y) && !(e.X < 0 || e.Y < 0) && !(e.X > Room.BackgroundImage.Width || e.Y > Room.BackgroundImage.Height) && heldObject != null)
-        {
-            RoomSelectedCoordinate.X = e.X;
-            RoomSelectedCoordinate.Y = e.Y;
-
-            if ((ModifierKeys & Keys.Shift) != 0)
-            {
-                RoomSelectedCoordinate.X = (e.X / 16) * 16 + 8;
-                RoomSelectedCoordinate.Y = (e.Y / 16) * 16 + 8;
-            }
-
-            Room.HeldObject = new Rectangle(RoomSelectedCoordinate.X - 8, RoomSelectedCoordinate.Y - 8, 15, 15);
-        }*/
     }
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
@@ -696,19 +747,57 @@ public partial class MainWindow : Form
                 break;
         }
 
-        if (heldObject != null)
+        if (heldObject != null && MovedObject != false)
         {
-            heldObject.sX = (byte)(RoomSelectedCoordinate.X % 256);
-            heldObject.sY = (byte)(RoomSelectedCoordinate.Y % 256);
+            Point objectCoordinate = RoomSelectedCoordinate;
+            if ((ModifierKeys & Keys.Shift) != 0)
+            {
+                objectCoordinate.X = (RoomSelectedCoordinate.X / 16) * 16 + 8;
+                objectCoordinate.Y = (RoomSelectedCoordinate.Y / 16) * 16 + 8;
+            }
+            if ((ModifierKeys & Keys.Alt) != 0)
+            {
+                objectCoordinate.X = ((RoomSelectedCoordinate.X - 8) / 16) * 16 + 16;
+                objectCoordinate.Y = ((RoomSelectedCoordinate.Y - 8) / 16) * 16 + 16;
+            }
+            if (((ModifierKeys & Keys.Shift) != 0) && ((ModifierKeys & Keys.Alt) != 0))
+            {
+                objectCoordinate.X = (RoomSelectedCoordinate.X / 8) * 8 + 8;
+                objectCoordinate.Y = (RoomSelectedCoordinate.Y / 8) * 8 + 8;
+            }
+
+            heldObject.sX = (byte)(objectCoordinate.X % 256);
+            heldObject.sY = (byte)(objectCoordinate.Y % 256);
 
             Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
-            heldObject = null;
         }
+        MovedObject = false;
+        heldObject = null;
     }
 
     private void RoomDoubleClicked(object sender, MouseEventArgs e)
     {
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Room.BackgroundImage.Width * Room.Zoom - 1), 0) / Room.Zoom, Math.Max(Math.Min(e.Y, Room.BackgroundImage.Height * Room.Zoom - 1), 0) / Room.Zoom);
+
+        //The number of the tile selected
+        Point tileNum = new Point(pixel.X / Room.PixelTileSize, pixel.Y / Room.PixelTileSize);
+
+        //The room coordinates of the selected tile
+        Point tile = new Point(tileNum.X * Room.PixelTileSize, tileNum.Y * Room.PixelTileSize);
+
+        //Double clicking with Move tool
         if (Room.SelectedTool != LampTool.Move) return;
+
+        //Objects
+        Enemy clickedObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
+        if (clickedObject != null)
+        {
+            new ObjectSettings(clickedObject).Show();
+            return;
+        }
+
+        //Screen
         new ScreenSettings(Globals.SelectedArea, Globals.SelectedScreenNr, Current).Show();
     }
     #endregion
@@ -733,12 +822,23 @@ public partial class MainWindow : Form
             case (LampToolCommand.ZoomOut):
                 Room.Zoom = toolbar_room.ZoomLevel;
                 break;
+
+            case (LampToolCommand.Copy):
+                copyTiles();
+                break;
+
+            case (LampToolCommand.Paste):
+                pasteTiles();
+                break;
         }
     }
 
     private void toolbar_room_ToolSwitched(object sender, EventArgs e)
     {
         Room.SelectedTool = toolbar_room.SelectedTool;
+
+        Room.ContextMenuStrip = null;
+        if (toolbar_room.SelectedTool == LampTool.Move) Room.ContextMenuStrip = ctx_room_context_menu;
     }
     #endregion
 
@@ -778,12 +878,7 @@ public partial class MainWindow : Form
             case Keys.C:
                 if (e.Modifiers == Keys.Control)
                 {
-                    //copy currently selected tiles
-                    TileSelection sel = new TileSelection(Editor.SelectionWidth, Editor.SelectionHeight, Editor.SelectedTiles);
-
-                    DataObject data = new DataObject();
-                    data.SetData(typeof(TileSelection), sel);
-                    Clipboard.SetDataObject(data, true);
+                    copyTiles();
                 }
                 break;
 
@@ -791,28 +886,43 @@ public partial class MainWindow : Form
             case Keys.V:
                 if (e.Modifiers == Keys.Control)
                 {
-                    DataObject retrievedData = Clipboard.GetDataObject() as DataObject;
-
-                    if (retrievedData == null || !retrievedData.GetDataPresent(typeof(TileSelection))) return;
-
-                    TileSelection sel = retrievedData.GetData(typeof(TileSelection)) as TileSelection;
-                    Editor.SelectedTiles = sel.Tiles;
-                    Editor.SelectionHeight = sel.SelectionHeight;
-                    Editor.SelectionWidth = sel.SelectionWidth;
-                    RoomSelectedSize.Height = sel.SelectionHeight * Room.PixelTileSize;
-                    RoomSelectedSize.Width = sel.SelectionWidth * Room.PixelTileSize;
-
-                    Rectangle rect = Room.RedRect; //old Position of the rectangle
-                    Room.RedRect = new Rectangle(RoomSelectedTile.X, RoomSelectedTile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
-                    Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
-                    unirect.X -= 1;
-                    unirect.Y -= 1;
-                    unirect.Width += 2;
-                    unirect.Height += 2;
-                    Room.Invalidate(unirect);
+                    pasteTiles();
                 }
                 break;
         }
+    }
+
+    private void copyTiles()
+    {
+        //copy currently selected tiles
+        TileSelection sel = new TileSelection(Editor.SelectionWidth, Editor.SelectionHeight, Editor.SelectedTiles);
+
+        DataObject data = new DataObject();
+        data.SetData(typeof(TileSelection), sel);
+        Clipboard.SetDataObject(data, true);
+    }
+
+    private void pasteTiles()
+    {
+        DataObject retrievedData = Clipboard.GetDataObject() as DataObject;
+
+        if (retrievedData == null || !retrievedData.GetDataPresent(typeof(TileSelection))) return;
+
+        TileSelection sel = retrievedData.GetData(typeof(TileSelection)) as TileSelection;
+        Editor.SelectedTiles = sel.Tiles;
+        Editor.SelectionHeight = sel.SelectionHeight;
+        Editor.SelectionWidth = sel.SelectionWidth;
+        RoomSelectedSize.Height = sel.SelectionHeight * Room.PixelTileSize;
+        RoomSelectedSize.Width = sel.SelectionWidth * Room.PixelTileSize;
+
+        Rectangle rect = Room.RedRect; //old Position of the rectangle
+        Room.RedRect = new Rectangle(RoomSelectedTile.X, RoomSelectedTile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
+        Rectangle unirect = Editor.UniteRect(Room.RedRect, rect);
+        unirect.X -= 1;
+        unirect.Y -= 1;
+        unirect.Width += 2;
+        unirect.Height += 2;
+        Room.Invalidate(unirect);
     }
 
     private void btn_open_rom_Click(object sender, EventArgs e)
@@ -880,16 +990,6 @@ public partial class MainWindow : Form
     private void btn_screen_settings_Click(object sender, EventArgs e)
     {
         new ScreenSettings(0, 0, Current).Show();
-    }
-
-    private void btn_tile_mode_Click(object sender, EventArgs e)
-    {
-        ToggleEditingMode();
-    }
-
-    private void btn_object_mode_Click(object sender, EventArgs e)
-    {
-        ToggleEditingMode();
     }
 
     private void ctx_btn_screen_settings_Click(object sender, EventArgs e)

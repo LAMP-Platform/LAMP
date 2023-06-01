@@ -17,7 +17,7 @@ public class RoomViewer : Control
         set
         {
             base.BackgroundImage = value;
-            Size = base.BackgroundImage.Size;
+            Size = base.BackgroundImage.Size * zoom;
         }
     }
 
@@ -301,9 +301,9 @@ public class RoomViewer : Control
                 foreach (Enemy o in Globals.Objects[screen]) 
                 {
                     Point p = o.GetPosition(i);
-                    Rectangle rec = new Rectangle(p.X, p.Y, 15, 15);
+                    Rectangle rec = new Rectangle(p.X, p.Y, 16, 16);
                     ObjectPen.Width = 2 * zoom;
-                    e.Graphics.DrawEllipse(ObjectPen, RecOp.Multiply(rec, zoom));
+                    e.Graphics.DrawEllipse(ObjectPen, RecOp.Add(RecOp.Multiply(rec, zoom), -1));
                     //e.Graphics.DrawRectangle(ObjectPen, rec);
                     //TODO: Add option to switch been circle and rect
                 }

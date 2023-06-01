@@ -73,9 +73,6 @@ namespace LAMP
             btn_open_rom_image = new System.Windows.Forms.ToolStripButton();
             btn_save_rom_image = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            btn_tile_mode = new System.Windows.Forms.ToolStripButton();
-            btn_object_mode = new System.Windows.Forms.ToolStripButton();
-            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             btn_show_objects = new System.Windows.Forms.ToolStripButton();
             btn_show_scrolls = new System.Windows.Forms.ToolStripButton();
             toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -291,6 +288,7 @@ namespace LAMP
             btn_graphics_editor.Name = "btn_graphics_editor";
             btn_graphics_editor.Size = new System.Drawing.Size(159, 22);
             btn_graphics_editor.Text = "Graphics Editor";
+            btn_graphics_editor.Visible = false;
             btn_graphics_editor.Click += btn_graphics_editor_Click;
             // 
             // toolStripSeparator11
@@ -462,7 +460,7 @@ namespace LAMP
             // 
             tool_strip_image_buttons.BackColor = System.Drawing.SystemColors.ControlLightLight;
             tool_strip_image_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_open_rom_image, btn_save_rom_image, toolStripSeparator2, btn_tile_mode, btn_object_mode, toolStripSeparator3, btn_show_objects, btn_show_scrolls, toolStripSeparator9, btn_open_tweaks_editor_image, btn_open_transition_editor_image, btn_open_tileset_editor, btn_graphics_editor_image });
+            tool_strip_image_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_open_rom_image, btn_save_rom_image, toolStripSeparator2, btn_show_objects, btn_show_scrolls, toolStripSeparator9, btn_open_tweaks_editor_image, btn_open_transition_editor_image, btn_open_tileset_editor, btn_graphics_editor_image });
             tool_strip_image_buttons.Location = new System.Drawing.Point(0, 25);
             tool_strip_image_buttons.Name = "tool_strip_image_buttons";
             tool_strip_image_buttons.Size = new System.Drawing.Size(1218, 25);
@@ -496,34 +494,6 @@ namespace LAMP
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btn_tile_mode
-            // 
-            btn_tile_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_tile_mode.Enabled = false;
-            btn_tile_mode.Image = (System.Drawing.Image)resources.GetObject("btn_tile_mode.Image");
-            btn_tile_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_tile_mode.Name = "btn_tile_mode";
-            btn_tile_mode.Size = new System.Drawing.Size(23, 22);
-            btn_tile_mode.Text = "Tile editing mode";
-            btn_tile_mode.Click += btn_tile_mode_Click;
-            // 
-            // btn_object_mode
-            // 
-            btn_object_mode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            btn_object_mode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_object_mode.Enabled = false;
-            btn_object_mode.Image = (System.Drawing.Image)resources.GetObject("btn_object_mode.Image");
-            btn_object_mode.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_object_mode.Name = "btn_object_mode";
-            btn_object_mode.Size = new System.Drawing.Size(23, 22);
-            btn_object_mode.Text = "Object editing mode";
-            btn_object_mode.Click += btn_object_mode_Click;
-            // 
-            // toolStripSeparator3
-            // 
-            toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // btn_show_objects
             // 
@@ -597,6 +567,7 @@ namespace LAMP
             btn_graphics_editor_image.Size = new System.Drawing.Size(23, 22);
             btn_graphics_editor_image.Text = "Graphics Editor";
             btn_graphics_editor_image.ToolTipText = "Graphics Editor";
+            btn_graphics_editor_image.Visible = false;
             btn_graphics_editor_image.Click += btn_graphics_editor_Click;
             // 
             // sts_main_status_bar
@@ -668,7 +639,7 @@ namespace LAMP
             toolbar_tileset.Name = "toolbar_tileset";
             toolbar_tileset.onToolCommandTriggered = null;
             toolbar_tileset.onToolSwitched = null;
-            toolbar_tileset.SelectedTool = LAMP.LampTool.Select;
+            toolbar_tileset.SelectedTool = LampTool.Select;
             toolbar_tileset.Size = new System.Drawing.Size(262, 28);
             toolbar_tileset.TabIndex = 1;
             toolbar_tileset.ZoomLevel = 1;
@@ -704,7 +675,7 @@ namespace LAMP
             toolbar_room.Name = "toolbar_room";
             toolbar_room.onToolCommandTriggered = null;
             toolbar_room.onToolSwitched = null;
-            toolbar_room.SelectedTool = LAMP.LampTool.Pen;
+            toolbar_room.SelectedTool = LampTool.Pen;
             toolbar_room.Size = new System.Drawing.Size(907, 28);
             toolbar_room.TabIndex = 1;
             toolbar_room.ZoomLevel = 1;
@@ -784,6 +755,7 @@ namespace LAMP
             btnTest.TabIndex = 9;
             btnTest.Text = "Test Button";
             btnTest.UseVisualStyleBackColor = true;
+            btnTest.Visible = false;
             btnTest.Click += btnTest_Click;
             // 
             // pnl_main_window_view
@@ -934,9 +906,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton tool_strip_view;
         private System.Windows.Forms.ToolStripMenuItem btn_show_screen_outlines;
         private System.Windows.Forms.ToolStripMenuItem btn_screen_settings;
-        private System.Windows.Forms.ToolStripButton btn_tile_mode;
-        private System.Windows.Forms.ToolStripButton btn_object_mode;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ContextMenuStrip ctx_room_context_menu;
         private System.Windows.Forms.ToolStripMenuItem ctx_btn_screen_settings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
