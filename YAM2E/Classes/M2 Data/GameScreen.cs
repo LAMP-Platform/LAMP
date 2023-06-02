@@ -20,6 +20,8 @@ public class GameScreen
     }
 
     public byte[] Data { get; set; }
+
+    [JsonIgnore]
     public Bitmap Image
     {
         get => image;

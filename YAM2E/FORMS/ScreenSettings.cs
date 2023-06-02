@@ -2,6 +2,7 @@
 using LAMP.Classes;
 using System;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace LAMP.FORMS;
 
@@ -29,18 +30,12 @@ public partial class ScreenSettings : Form
         InitializeComponent();
 
         DisableApply();
-        for (int i = 0; i < 512; i++)
-        {
-            cbb_scse_transition_index.Items.Add(i.ToString("X3"));
-        }
-        for (int i = 0; i < 59; i++)
-        {
-            cbb_scse_screen_used.Items.Add(i.ToString("X2"));
-        }
-        for (int i = 0; i < 256; i++)
-        {
-            cbb_scse_screen.Items.Add(i.ToString("X2"));
-        }
+
+        //Setting data bindings
+        cbb_scse_transition_index.DataSource = Globals.ComboboxTransitionIndex;
+        cbb_scse_screen_used.DataSource = Globals.ComboboxScreensUsed;
+        cbb_scse_screen.DataSource = Globals.ComboboxScreens;
+
         cbb_scse_screen.SelectedIndex = ScreenIndex;
         cbb_scse_area_bank.SelectedIndex = AreaIndex;
         ParentWindow = Parent;
@@ -180,11 +175,12 @@ public partial class ScreenSettings : Form
         //updating screen
         int ScreenX = SelectedScreen % 16;
         int ScreenY = SelectedScreen / 16;
+        int zoom = MainWindow.Room.Zoom;
 
         Graphics g = Graphics.FromImage(MainWindow.Room.BackgroundImage);
         g.DrawImage(Globals.Screens[SelectedBank][cbb_scse_screen_used.SelectedIndex].Image, new Point(256 * ScreenX, 256 * ScreenY));
         g.Dispose();
-        MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX, 256 * ScreenY, 256, 256));
+        MainWindow.Room.Invalidate(new Rectangle(256 * ScreenX * zoom, 256 * ScreenY * zoom, 256 * zoom, 256 * zoom));
 
         //Done writing
         DisableApply();

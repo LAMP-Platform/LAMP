@@ -56,12 +56,12 @@ public class RoomViewer : Control
     private int zoom = 1;
 
     /// <summary>
-    /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>.
+    /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>. Affected by Zoom.
     /// </summary>
     public int TileSize => PixelTileSize * zoom;
 
     /// <summary>
-    /// The amount of pixels that a tile is made of.
+    /// The amount of pixels that a tile is made of. Constant.
     /// </summary>
     public int PixelTileSize { get; set; } = 16;
 
@@ -214,7 +214,7 @@ public class RoomViewer : Control
     /// <summary>
     /// Pen for the scroll outlines
     /// </summary>
-    private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 4)
+    private Pen BorderOutlinePen { get; set; } = new Pen(Globals.BorderColor, 20)
     {
         Alignment = PenAlignment.Inset
     };
@@ -266,10 +266,10 @@ public class RoomViewer : Control
         //scroll borders
         if (ShowScrollBorders)
         {
-            foreach ((Point, Point) l in Globals.ScrollBorders)
+            foreach (Rectangle r in Globals.ScrollBorders)
             {
-                e.Graphics.DrawLine(BorderOutlinePen, l.Item1.X * zoom, l.Item1.Y * zoom, l.Item2.X * zoom, l.Item2.Y * zoom);
-                //e.Graphics.DrawRectangle(BorderOutlinePen, RecOp.Multiply(r, zoom));
+                //e.Graphics.DrawLine(BorderOutlinePen, l.Item1.X * zoom, l.Item1.Y * zoom, l.Item2.X * zoom, l.Item2.Y * zoom);
+                e.Graphics.DrawRectangle(BorderOutlinePen, RecOp.Multiply(r, zoom));
             }
         }
 

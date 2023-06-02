@@ -1,5 +1,5 @@
 # Version B 4.0
-### Released: XX.XX.2023
+### Released: 02.06.2023
 **Changes:**
  * Main Window layout redesign
    * Room View and Data View resizeable
@@ -19,7 +19,7 @@
    * Works between instances of LAMP
  * More object alignments
    * Shift - Tile center
-   * Alt - Tile Corner
+   * Alt - Tile corner
    * Shift & Alt - Tile center, edge and corner
  * Compilation Settings
 **Fixes:**

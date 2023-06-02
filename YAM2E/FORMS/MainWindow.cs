@@ -13,6 +13,7 @@ using LAMP.Controls.Room;
 using System.Linq;
 using Microsoft.VisualBasic.Devices;
 using LAMP.Controls.Other;
+using System.Windows.Forms.VisualStyles;
 
 namespace LAMP;
 
@@ -70,6 +71,14 @@ public partial class MainWindow : Form
 
         //Check for new Version
         Editor.CheckForUpdate();
+
+        //Populating combobox values for screen settings
+        for (int i = 0; i < 512; i++)
+        {
+            Globals.ComboboxTransitionIndex.Add(i.ToString("X3"));
+            if (i < 59) Globals.ComboboxScreensUsed.Add(i.ToString("X2"));
+            if (i < 256) Globals.ComboboxScreens.Add(i.ToString("X2"));
+        }
 
         //Displaying recent files
         DisplayRecentFiles();
@@ -565,6 +574,13 @@ public partial class MainWindow : Form
         //The room coordinates of the selected tile
         Point tile = new Point(tileNum.X * Room.PixelTileSize, tileNum.Y * Room.PixelTileSize);
 
+        //Quick switch for tools
+        if (e.Button == MouseButtons.Middle)
+        {
+            if (toolbar_room.SelectedTool == LampTool.Pen) toolbar_room.SelectedTool = LampTool.Move;
+            else toolbar_room.SelectedTool = LampTool.Pen;
+        }
+
         switch (toolbar_room.SelectedTool)
         {
             case (LampTool.Pen): //Used for placing tiles
@@ -597,6 +613,7 @@ public partial class MainWindow : Form
             case (LampTool.Move): //Move selected tiles, objects, edit screens and more
 
                 MovedObject = false;
+                if (!Room.ShowObjects) break;
                 heldObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
 
                 if (e.Button == MouseButtons.Right)
@@ -690,6 +707,10 @@ public partial class MainWindow : Form
 
                 if (RoomSelectedTile != tile) RoomSelectedTile = tile;
 
+                //Tool should only work with left click
+                if (e.Button != MouseButtons.Left) break;
+
+                ///OBJECT MOVEMENT
                 //Accidental movement prevention
                 if (MovedObject == false && heldObject != null)
                 {
@@ -705,6 +726,7 @@ public partial class MainWindow : Form
                     }
                 }
 
+                //Moving the held object rectangle
                 if (heldObject != null && MovedObject == true)
                 {
                     Point objectCoordinate = pixel;
@@ -787,14 +809,37 @@ public partial class MainWindow : Form
         Point tile = new Point(tileNum.X * Room.PixelTileSize, tileNum.Y * Room.PixelTileSize);
 
         //Double clicking with Move tool
-        if (Room.SelectedTool != LampTool.Move) return;
+        if (Room.SelectedTool != LampTool.Move || e.Button != MouseButtons.Left) return;
 
+
+        ///QUICK EDITS
         //Objects
         Enemy clickedObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
-        if (clickedObject != null)
+        if (clickedObject != null && Room.ShowObjects == true)
         {
             new ObjectSettings(clickedObject).Show();
             return;
+        }
+
+        //Scrolls
+        //checking if edge is clicked
+        if (Room.ShowScrollBorders)
+        {
+            const int margin = 16;
+            Point check = new Point(pixel.X % 256, pixel.Y % 256);
+            byte val = Globals.Areas[Globals.SelectedArea].Scrolls[Globals.SelectedScreenNr];
+            if (new Rectangle(256 - margin, 0, margin, 256).Contains(check)) val = ByteOp.FlipBit(val, 0); //Right edge
+            else if (new Rectangle(0, 0, margin, 256).Contains(check)) val = ByteOp.FlipBit(val, 1); //Left edge
+            else if (new Rectangle(0, 0, 256, margin).Contains(check)) val = ByteOp.FlipBit(val, 2); //Top edge
+            else if (new Rectangle(0, 256 - margin, 256, margin).Contains(check)) val = ByteOp.FlipBit(val, 3); //Bottom edge
+            if (Globals.Areas[Globals.SelectedArea].Scrolls[Globals.SelectedScreenNr] != val) //This triggers if anything got changed
+            {
+                Globals.Areas[Globals.SelectedArea].Scrolls[Globals.SelectedScreenNr] = val;
+
+                Editor.GetScrollBorders();
+                Room.Invalidate(new Rectangle((e.X / (256 * Room.Zoom)) * 256 * Room.Zoom, (e.Y / (256 * Room.Zoom)) * 256 * Room.Zoom, 256 * Room.Zoom, 256 * Room.Zoom));
+                return;
+            }
         }
 
         //Screen
@@ -876,18 +921,22 @@ public partial class MainWindow : Form
 
             //Copying tiles
             case Keys.C:
-                if (e.Modifiers == Keys.Control)
-                {
-                    copyTiles();
-                }
+                if (e.Modifiers != Keys.Control) break;
+                copyTiles();
                 break;
 
             //Pasting tiles
             case Keys.V:
-                if (e.Modifiers == Keys.Control)
-                {
-                    pasteTiles();
-                }
+                if (e.Modifiers != Keys.Control) break;
+                pasteTiles();
+                break;
+
+            //Zooming
+            case Keys.Oemplus:
+                Room.Zoom = ++toolbar_room.ZoomLevel;
+                break;
+            case Keys.OemMinus:
+                Room.Zoom = --toolbar_room.ZoomLevel;
                 break;
         }
     }

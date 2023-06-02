@@ -8,7 +8,6 @@ namespace LAMP.Controls;
 
 public class TileViewer : Control
 {
-    //TODO: why override?
     public override Image BackgroundImage
     {
         get => base.BackgroundImage;

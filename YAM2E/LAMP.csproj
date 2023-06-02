@@ -10,6 +10,7 @@
     <ApplicationIcon>LAMP.ico</ApplicationIcon>
 	<PublishSingleFile>true</PublishSingleFile>
 	<DebugType>embedded</DebugType>
+	<Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

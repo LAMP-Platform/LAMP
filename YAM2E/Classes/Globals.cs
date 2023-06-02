@@ -92,8 +92,14 @@ internal static class Globals
     public static int SelectedScreenY = 0;
     public static int SelectedScreenNr = 0;
 
+    //Screen settings data
+    //Data sources for Comboboxes
+    public static List<string> ComboboxTransitionIndex = new List<string>();
+    public static List<string> ComboboxScreensUsed = new List<string>();
+    public static List<string> ComboboxScreens = new List<string>();
+
     //Border data
-    public static List<(Point, Point)> ScrollBorders = new List<(Point, Point)>();
+    public static List<Rectangle> ScrollBorders = new List<Rectangle>();
 
     //Transition Data
     public static bool ExpandAllOpcodes = false;

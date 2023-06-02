@@ -21,7 +21,7 @@ public static class Editor
     /// <summary>
     /// Current version being used
     /// </summary>
-    public const string Version = "LAMP Beta 3.1";
+    public const string Version = "LAMP Beta 4.0";
 
     /// <summary>
     /// The ROM as a byte array.
@@ -231,6 +231,7 @@ public static class Editor
         //New Project created
         MainWindow.Current.ProjectLoaded();
         AddRecentFile(Globals.ProjName);
+        SaveRecentFiles();
         UpdateTitlebar(Globals.ProjName);
     }
 
@@ -257,6 +258,11 @@ public static class Editor
         if (path != String.Empty) LoadProjectFromPath(path);
 
         //saving recent file lists
+        SaveRecentFiles();
+    }
+
+    private static void SaveRecentFiles()
+    {
         StringCollection recent = new StringCollection();
         recent.AddRange(Globals.recentFiles.ToArray());
         Properties.programsettings.Default.recentFiles = recent;
@@ -351,7 +357,7 @@ public static class Editor
         }
         catch(Exception ex)
         {
-            MessageBox.Show("Something went wrong while loading the project.\n"+ex.Message, "Error",
+            MessageBox.Show("Something went wrong while loading the project.\n\n"+ex.Message, "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
@@ -363,7 +369,7 @@ public static class Editor
     public static void AddRecentFile(string path)
     {
         //Add to recent files
-        if (!Globals.recentFiles.Contains(path)) Globals.recentFiles.Add(path);
+        if (!Globals.recentFiles.Contains(path)) Globals.recentFiles.Insert(0, path);
         else
         {
             //move to front
@@ -817,10 +823,10 @@ public static class Editor
 
                 const int t = 3; //thickness of the rectangle (Adjust pen size as well)
                                  //Checking if sides are blocked
-                if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new(new Point(256 * i + 254, 256 * j), new Point(256 * i + 255, 256 * j + 254))); //Right
-                if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j), new Point(256 * i, 256 * j + 254))); //Left
-                if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j), new Point(256 * i + 254, 256 * j))); //Up
-                if (ByteOp.IsBitSet(scroll, 3)) Globals.ScrollBorders.Add(new(new Point(256 * i, 256 * j + 254), new Point(256 * i + 255, 256 * j + 254))); //Down
+                if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new Rectangle(i * 256 + 256 - 2, j * 256, 2, 256)); //Right
+                if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new Rectangle(i * 256, j * 256, 2, 256)); //Left
+                if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new Rectangle(i * 256, j * 256, 256, 2)); //Up
+                if (ByteOp.IsBitSet(scroll, 3)) Globals.ScrollBorders.Add(new Rectangle(i * 256, j * 256 + 256 - 2, 256, 2)); //Down
             }
         }
     }
@@ -833,6 +839,11 @@ public static class Editor
     /// </summary>
     public static void AddObject(int x, int y, int bank)
     {
+        //Coordinates for invalidation
+        int xx = x * MainWindow.Room.Zoom;
+        int yy = y * MainWindow.Room.Zoom;
+
+        //Relative coordinates to the screen
         x %= 256;
         y %= 256;
         x += 8;
@@ -840,6 +851,9 @@ public static class Editor
         int screen = Globals.SelectedScreenNr + 256 * bank;
         Enemy o = new Enemy(0, 0, (byte)x, (byte)y);
         Globals.Objects[screen].Add(o);
+
+        //Redrawing that part
+        MainWindow.Room.Invalidate(new Rectangle(xx, yy, MainWindow.Room.TileSize, MainWindow.Room.TileSize));
     }
 
     /// <summary>
