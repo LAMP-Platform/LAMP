@@ -1,3 +1,10 @@
+# Version B 5.0
+### Released: XX.XX.2023
+**Changes:**
+**Fixes:** 
+ * TestROM: Missile values were capped at 0xFF
+ * TestROM: Wrong math on the energy value
+
 # Version B 4.0
 ### Released: 02.06.2023
 **Changes:**

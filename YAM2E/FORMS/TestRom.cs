@@ -51,7 +51,7 @@ public partial class TestRom : Form
         rdb_plasma.Checked = check == 4 ? true : false;
 
         //Misc
-        txb_energy.Text = Format.IntToString((save.EnergyTanksFilled * 100) + save.StartEnegery);
+        txb_energy.Text = Format.IntToString(Format.DecimalToBcd((Format.BcdToInt(save.EnergyTanksFilled) * 100) + Format.BcdToInt(save.StartEnegery))); //TODO: have to convert from BCD to hex first before doing math
         txb_max_missiles.Text = Format.IntToString(save.MaxMissiles);
         txb_missiles.Text = Format.IntToString(save.StartMissiles);
         txb_metroids.Text = Format.IntToString(save.MetroidCount);
@@ -148,19 +148,19 @@ public partial class TestRom : Form
 
     private void num_max_missiles_ValueChanged(object sender, EventArgs e)
     {
-        save.MaxMissiles = (byte)Format.StringToInt(txb_max_missiles.Text);
+        save.MaxMissiles = (ushort)Format.StringToInt(txb_max_missiles.Text);
     }
 
     private void num_missiles_ValueChanged(object sender, EventArgs e)
     {
-        save.StartMissiles = (byte)Format.StringToInt(txb_missiles.Text);
+        save.StartMissiles = (ushort)Format.StringToInt(txb_missiles.Text);
     }
 
     private void num_metroid_count_ValueChanged(object sender, EventArgs e)
     {
         int val = Format.StringToInt(txb_metroids.Text);
         save.MetroidCount = (byte)val;
-        save.RealMetroidCount = (byte)(Format.DecimalToBcd(Format.BcdToInt(val) + 0x8));
+        save.RealMetroidCount = (byte)Format.DecimalToBcd(Format.BcdToInt(val) + 0x8);
     }
 
     private void txb_music_TextChanged(object sender, EventArgs e)
