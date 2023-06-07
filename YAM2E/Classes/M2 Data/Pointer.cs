@@ -47,4 +47,9 @@ public class Pointer
         }
         return true;
     }
+
+    public static Pointer operator +(Pointer a, int b) 
+        => new Pointer (a.Offset + b);
+    public static Pointer operator +(Pointer a, Pointer b)
+        => new Pointer(a.Offset + b.Offset);
 }

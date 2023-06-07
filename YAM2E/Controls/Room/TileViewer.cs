@@ -13,6 +13,7 @@ public class TileViewer : Control
         get => base.BackgroundImage;
         set
         {
+            if (base.BackgroundImage != null) base.BackgroundImage.Dispose();
             base.BackgroundImage = value;
             if (BackgroundImage != null) Size = base.BackgroundImage.Size * zoom;
         }
@@ -36,10 +37,7 @@ public class TileViewer : Control
     /// The mutliplier by which everything gets zoomed
     /// </summary>
     public int Zoom { 
-        get
-        {
-            return zoom;
-        }
+        get => zoom;
         set
         {
             //setting rectangles

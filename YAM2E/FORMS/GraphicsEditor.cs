@@ -1,4 +1,5 @@
 ﻿using LAMP.Classes;
+using LAMP.Classes.M2_Data;
 using LAMP.Controls;
 using LAMP.Controls.Room;
 using LAMP.Utilities;
@@ -20,6 +21,7 @@ public partial class GraphicsEditor : Form
 {
     private TileViewer GraphicsSet = new TileViewer();
     private TileViewer MetatileSet = new TileViewer();
+    private GFX LoadedGFX;
 
     public GraphicsEditor(Tileset t)
     {
@@ -88,22 +90,19 @@ public partial class GraphicsEditor : Form
         if (GraphicsPointer == null)
         {
             Bitmap b = new(1, 1); //This clears the images
-            if (GraphicsSet.BackgroundImage != null) GraphicsSet.BackgroundImage.Dispose();
+            LoadedGFX = null;
             GraphicsSet.BackgroundImage = b;
-            if (MetatileSet.BackgroundImage != null) MetatileSet.BackgroundImage.Dispose();
             MetatileSet.BackgroundImage = b;
             return;
         }
 
+        LoadedGFX = new GFX(GraphicsPointer, GfxWidth, GfxHeight);
+
         //Graphics View
-        if (GraphicsSet.BackgroundImage != null) GraphicsSet.BackgroundImage.Dispose();
-        Bitmap GFXBitmap = new Bitmap(GfxWidth * 8, GfxHeight * 8);
-        Editor.DrawTile8Set(graphicsPointer.Offset, GFXBitmap, new Point(0, 0), GfxWidth, GfxHeight);
-        GraphicsSet.BackgroundImage = GFXBitmap;
+        GraphicsSet.BackgroundImage = LoadedGFX.Draw();
 
         //Metatile View
-        if (MetatileSet.BackgroundImage != null) MetatileSet.BackgroundImage.Dispose();
-        if (MetatilePointer != null) MetatileSet.BackgroundImage = Editor.DrawTileSet(GraphicsPointer, MetatilePointer, 16, 8, false);
+        if (MetatilePointer != null) MetatileSet.BackgroundImage = new Metatiles(LoadedGFX, MetatilePointer).Draw();
         else MetatileSet.BackgroundImage = new Bitmap(1, 1);
     }
 
@@ -128,6 +127,8 @@ public partial class GraphicsEditor : Form
     {
         GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
         MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
+        GfxWidth = (int)num_width.Value;
+        GfxHeight = (int)num_height.Value;
 
         SetTilesets();
     }

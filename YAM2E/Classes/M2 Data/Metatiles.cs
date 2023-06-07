@@ -8,18 +8,44 @@ using System.Threading.Tasks;
 namespace LAMP.Classes.M2_Data;
 
 /// <summary>
-/// The Metatiles Object Stores a GFX object and a table that arranges the tiles from the GFX
+/// The Metatiles Object Stores two GFX objects and a table that arranges the tiles from the GFX
 /// </summary>
 public class Metatiles
 {
     public Metatiles(GFX gfx, Pointer Offset)
     {
         TileGraphics = gfx;
+        this.Offset = Offset;
+
+        //Read the table
+        for (int i = 0; i < 512; i++)
+        {
+            Table[i] = Editor.ROM.Read8(Offset.Offset + i);
+        }
     }
 
-    private GFX TileGraphics { get; set; }
+    /// <summary>
+    /// Primary Graphics for the tiletable
+    /// </summary>
+    public GFX TileGraphics { get; set; }
+    /// <summary>
+    /// Secondary Graphics for the tiletable. These can be empty!
+    /// </summary>
+    public GFX SpriteGraphics { get; set; }
     private Pointer Offset { get; set; }
-    private byte[] Table = new byte[128];
+    private byte[] Table = new byte[512];
+
+    /// <summary>
+    /// returns the graphic used at the index in the table
+    /// </summary>
+    private Bitmap getTableGraphic(int index)
+    {
+        byte tableValue = Table[index];
+
+        //if the value is >= 128 it has to use the sprite graphics set
+        if (tableValue < TileGraphics.Tiles.Length && tableValue < 128) return TileGraphics.Tiles[tableValue].Draw();
+        else return Editor.DrawNumberAsTile(tableValue);
+    }
 
     public Bitmap Draw()
     {
@@ -27,21 +53,18 @@ public class Metatiles
         Graphics g = Graphics.FromImage(result);
 
         //Drawing the Metatiles
-        for (int i = 0; i < 16; i++)
+        for (int i = 0; i < 16; i++) //TODO: Convert to single loop. You are stupid. Why did you use a 2D loop
         {
-            for (int j = 0; j < 8; j++)
-            {
-                Bitmap tileTopLeft = TileGraphics.Tiles[Table[(i + 0) * 4 + j * 16]].Draw();
-                Bitmap tileTopRight = TileGraphics.Tiles[Table[(i + 1) * 4 + j * 16]].Draw();
-                Bitmap tileBottomLeft = TileGraphics.Tiles[Table[(i + 2) * 4 + j * 16]].Draw();
-                Bitmap tileBottomRight = TileGraphics.Tiles[Table[(i + 3) * 4 + j * 16]].Draw();
-                g.DrawImage(tileTopLeft, (i + 0) * 16, (j + 0 ) * 16);
-                g.DrawImage(tileTopRight, (i + 8) * 16, (j + 0) * 16);
-                g.DrawImage(tileBottomLeft, (i + 0) * 16, (j + 8) * 16);
-                g.DrawImage(tileBottomRight, (i + 8) * 16, (j + 8) * 16);
+            Bitmap tileTopLeft = getTableGraphic((i + 0) * 4 + j * 16);
+            Bitmap tileTopRight = getTableGraphic((i + 1) * 4 + j * 16);
+            Bitmap tileBottomLeft = getTableGraphic((i + 2) * 4 + j * 16);
+            Bitmap tileBottomRight = getTableGraphic((i + 3) * 4 + j * 16);
+            g.DrawImage(tileTopLeft, (i + 0) * 16, (j + 0 ) * 16);
+            g.DrawImage(tileTopRight, (i + 8) * 16, (j + 0) * 16);
+            g.DrawImage(tileBottomLeft, (i + 0) * 16, (j + 8) * 16);
+            g.DrawImage(tileBottomRight, (i + 8) * 16, (j + 8) * 16);
 
-                tileTopLeft.Dispose(); tileTopRight.Dispose(); tileBottomLeft.Dispose(); tileBottomRight.Dispose();
-            }
+            tileTopLeft.Dispose(); tileTopRight.Dispose(); tileBottomLeft.Dispose(); tileBottomRight.Dispose();
         }
 
         g.Dispose();

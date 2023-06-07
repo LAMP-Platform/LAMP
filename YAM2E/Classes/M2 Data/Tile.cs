@@ -20,7 +20,8 @@ public struct Tile
     public Tile() { }
 
     /// <summary>
-    /// Creates a new Tile with the data at the given offset
+    /// Creates a new Tile with the data at the given offset.
+    /// A tile is represented by 16 bytes
     /// </summary>
     public Tile(Pointer offset)
     {

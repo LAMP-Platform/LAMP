@@ -107,6 +107,7 @@
             num_height.Name = "num_height";
             num_height.Size = new System.Drawing.Size(92, 23);
             num_height.TabIndex = 7;
+            num_height.Value = new decimal(new int[] { 8, 0, 0, 0 });
             // 
             // txb_meta_offset
             // 
@@ -130,6 +131,7 @@
             num_width.Name = "num_width";
             num_width.Size = new System.Drawing.Size(92, 23);
             num_width.TabIndex = 6;
+            num_width.Value = new decimal(new int[] { 16, 0, 0, 0 });
             // 
             // txb_offset
             // 
@@ -195,7 +197,7 @@
             toolbar_graphics.Name = "toolbar_graphics";
             toolbar_graphics.onToolCommandTriggered = null;
             toolbar_graphics.onToolSwitched = null;
-            toolbar_graphics.SelectedTool = LAMP.LampTool.Pen;
+            toolbar_graphics.SelectedTool = LampTool.Pen;
             toolbar_graphics.Size = new System.Drawing.Size(532, 28);
             toolbar_graphics.TabIndex = 1;
             toolbar_graphics.ZoomLevel = 2;
@@ -231,7 +233,7 @@
             toolbar_metatiles.Name = "toolbar_metatiles";
             toolbar_metatiles.onToolCommandTriggered = null;
             toolbar_metatiles.onToolSwitched = null;
-            toolbar_metatiles.SelectedTool = LAMP.LampTool.Pen;
+            toolbar_metatiles.SelectedTool = LampTool.Pen;
             toolbar_metatiles.Size = new System.Drawing.Size(532, 28);
             toolbar_metatiles.TabIndex = 1;
             toolbar_metatiles.ZoomLevel = 1;

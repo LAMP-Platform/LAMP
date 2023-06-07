@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Drawing.Drawing2D;
 using LAMP.Controls;
+using LAMP.Properties;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -1067,6 +1068,27 @@ public static class Editor
             }
         }
         g.Dispose();
+    }
+
+    public static Bitmap DrawNumberAsTile(byte value) 
+    {
+        int lowdigit = value & 0xF;
+        int highdigit = (value & 0xF0) >> 4;
+
+        Bitmap result = new Bitmap(16, 16);
+        Image numbers = Resources.Numbers;
+        Graphics g = Graphics.FromImage(result);
+
+        //First digit
+        Rectangle digit = new Rectangle(highdigit * 7, 0, 7, 9);
+        g.DrawImage(numbers, 1, 3, digit, GraphicsUnit.Pixel);
+        //Second digit
+        digit = new Rectangle(lowdigit * 7, 0, 7, 9);
+        g.DrawImage(numbers, 8, 3, digit, GraphicsUnit.Pixel);
+
+        numbers.Dispose();
+        g.Dispose();
+        return result;
     }
     #endregion
 }
