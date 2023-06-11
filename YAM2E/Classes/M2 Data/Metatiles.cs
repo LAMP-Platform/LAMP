@@ -44,7 +44,8 @@ public class Metatiles
 
         //if the value is >= 128 it has to use the sprite graphics set
         if (tableValue < TileGraphics.Tiles.Length && tableValue < 128) return TileGraphics.Tiles[tableValue].Draw();
-        else return Editor.DrawNumberAsTile(tableValue);
+        else if (tableValue == 0xFF) return Editor.DrawColored8x8Tile(Color.Black);
+        else return Editor.DrawColored8x8Tile(Color.DarkRed);
     }
 
     public Bitmap Draw()
@@ -53,16 +54,19 @@ public class Metatiles
         Graphics g = Graphics.FromImage(result);
 
         //Drawing the Metatiles
-        for (int i = 0; i < 16; i++) //TODO: Convert to single loop. You are stupid. Why did you use a 2D loop
+        for (int i = 0; i < 128; i++) //TODO: Convert to single loop. You are stupid. Why did you use a 2D loop
         {
-            Bitmap tileTopLeft = getTableGraphic((i + 0) * 4 + j * 16);
-            Bitmap tileTopRight = getTableGraphic((i + 1) * 4 + j * 16);
-            Bitmap tileBottomLeft = getTableGraphic((i + 2) * 4 + j * 16);
-            Bitmap tileBottomRight = getTableGraphic((i + 3) * 4 + j * 16);
-            g.DrawImage(tileTopLeft, (i + 0) * 16, (j + 0 ) * 16);
-            g.DrawImage(tileTopRight, (i + 8) * 16, (j + 0) * 16);
-            g.DrawImage(tileBottomLeft, (i + 0) * 16, (j + 8) * 16);
-            g.DrawImage(tileBottomRight, (i + 8) * 16, (j + 8) * 16);
+            int x = i % 16;
+            int y = i / 16;
+
+            Bitmap tileTopLeft = getTableGraphic(i * 4 + 0);
+            Bitmap tileTopRight = getTableGraphic(i * 4 + 1);
+            Bitmap tileBottomLeft = getTableGraphic(i * 4 + 2);
+            Bitmap tileBottomRight = getTableGraphic(i * 4 + 3);
+            g.DrawImage(tileTopLeft, x * 16, y * 16);
+            g.DrawImage(tileTopRight, x * 16 + 8, y * 16);
+            g.DrawImage(tileBottomLeft, x * 16, y * 16 + 8);
+            g.DrawImage(tileBottomRight, x * 16 + 8, y * 16 + 8);
 
             tileTopLeft.Dispose(); tileTopRight.Dispose(); tileBottomLeft.Dispose(); tileBottomRight.Dispose();
         }

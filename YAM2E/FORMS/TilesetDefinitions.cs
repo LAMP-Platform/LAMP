@@ -79,6 +79,7 @@ public partial class TilesetDefinitions : Form
         lbl_tileset_gfx_offset.Enabled = true;
         cbb_tileset_id.Enabled = true;
         lbl_tileset_id.Enabled = true;
+        btn_edit.Enabled = true;
     }
     private void DisableComponents()
     {
@@ -97,6 +98,7 @@ public partial class TilesetDefinitions : Form
         lbl_tileset_gfx_offset.Enabled = false;
         cbb_tileset_id.Enabled = false;
         lbl_tileset_id.Enabled = false;
+        btn_edit.Enabled = false;
 
         cbb_tileset_id.Text = "";
         cbb_metatile_table.SelectedIndex = 0;
@@ -189,5 +191,10 @@ public partial class TilesetDefinitions : Form
         UpdateIdList();
         MainWindow.Current.SwitchTilesetOffsetMode();
         MainWindow.Current.LoadTilesetList();
+    }
+
+    private void btn_edit_Click(object sender, EventArgs e)
+    {
+        new GraphicsEditor(Globals.Tilesets[cbb_tileset_id.SelectedIndex]).Show();
     }
 }

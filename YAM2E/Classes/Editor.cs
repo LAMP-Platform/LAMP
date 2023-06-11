@@ -296,6 +296,18 @@ public static class Editor
             //Loading Data
             Globals.LoadedProject = JsonSerializer.Deserialize<Project>(json);
 
+            //Loading Project Specific ROM if existing
+            if (Globals.LoadedProject.ProjectSpecificROM != String.Empty)
+            {
+                if (LoadRomFromPath(Globals.LoadedProject.ProjectSpecificROM) != true)
+                {
+                    MessageBox.Show("The standard ROM will be loaded!\n", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    LoadRomFromPath(Globals.RomPath);
+                }
+            }
+
             ///METROID 2 DATA
             //Screens
             Globals.Screens = new();
@@ -933,6 +945,16 @@ public static class Editor
                 bpm.SetPixel(x + i, y + j, Globals.ColorBlack);
             }
         }
+    }
+
+    public static Bitmap DrawColored8x8Tile(Color c)
+    {
+        Bitmap result = new Bitmap(8, 8);
+        using (Graphics g = Graphics.FromImage(result))
+        {
+            g.Clear(c);
+        }
+        return result;
     }
 
     public static void DrawTile8(int offset, Bitmap bpm, int x, int y)

@@ -22,11 +22,16 @@ public partial class GraphicsEditor : Form
     private TileViewer GraphicsSet = new TileViewer();
     private TileViewer MetatileSet = new TileViewer();
     private GFX LoadedGFX;
+    private Metatiles LoadedMeta;
 
     public GraphicsEditor(Tileset t)
     {
         InitializeComponent();
         construct();
+        GraphicsPointer = t.GfxOffset;
+        MetatilePointer = Editor.GetMetaPointerFromTable(t.MetatileTable);
+        SetTilesets();
+        grp_data_selector.Enabled = false;
     }
 
     public GraphicsEditor(Pointer Graphics, Pointer Metatiles = null)
@@ -36,6 +41,7 @@ public partial class GraphicsEditor : Form
         GraphicsPointer = Graphics;
         MetatilePointer = Metatiles;
         SetTilesets();
+        grp_data_selector.Enabled = false;
     }
 
     public GraphicsEditor()
@@ -54,6 +60,9 @@ public partial class GraphicsEditor : Form
 
         //Adding the TileViewer for Metatiles
         flw_metatile_view.Controls.Add(MetatileSet);
+
+        //Setting zoom
+        GraphicsSet.Zoom = toolbar_graphics.ZoomLevel;
     }
 
     #region Fields
@@ -97,13 +106,23 @@ public partial class GraphicsEditor : Form
         }
 
         LoadedGFX = new GFX(GraphicsPointer, GfxWidth, GfxHeight);
+        txb_offset.Text = Format.PointerToString(GraphicsPointer);
 
         //Graphics View
         GraphicsSet.BackgroundImage = LoadedGFX.Draw();
 
         //Metatile View
-        if (MetatilePointer != null) MetatileSet.BackgroundImage = new Metatiles(LoadedGFX, MetatilePointer).Draw();
-        else MetatileSet.BackgroundImage = new Bitmap(1, 1);
+        if (MetatilePointer != null)
+        {
+            LoadedMeta = new Metatiles(LoadedGFX, MetatilePointer);
+            MetatileSet.BackgroundImage = LoadedMeta.Draw();
+            txb_meta_offset.Text = Format.PointerToString(metatilePointer);
+        }
+        else
+        {
+            LoadedMeta = null;
+            MetatileSet.BackgroundImage = new Bitmap(1, 1);
+        }
     }
 
     #region Graphics View
@@ -125,10 +144,21 @@ public partial class GraphicsEditor : Form
 
     private void btn_accept_Click(object sender, EventArgs e)
     {
+        //Checking if width * height will be out of bounds in ROM
+        int width = (int)num_width.Value;
+        int height = (int)num_height.Value;
+
+        if (width * height * 16 + Format.StringToPointer(txb_offset.Text).Offset >= Editor.ROM.Size) //16 because one tile is 16 bytes
+        {
+            MessageBox.Show("End of ROM reached!\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
         MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
-        GfxWidth = (int)num_width.Value;
-        GfxHeight = (int)num_height.Value;
+
+        GfxWidth = width;
+        GfxHeight = height;
 
         SetTilesets();
     }

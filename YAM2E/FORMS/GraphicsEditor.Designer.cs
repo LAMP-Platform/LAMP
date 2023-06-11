@@ -31,15 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicsEditor));
             status_strip = new System.Windows.Forms.StatusStrip();
             grp_data_selector = new System.Windows.Forms.GroupBox();
-            btn_accept = new System.Windows.Forms.Button();
-            num_height = new System.Windows.Forms.NumericUpDown();
-            txb_meta_offset = new System.Windows.Forms.TextBox();
-            lbl_meta_offset = new System.Windows.Forms.Label();
             num_width = new System.Windows.Forms.NumericUpDown();
+            lbl_times = new System.Windows.Forms.Label();
+            btn_accept = new System.Windows.Forms.Button();
+            txb_meta_offset = new System.Windows.Forms.TextBox();
+            num_height = new System.Windows.Forms.NumericUpDown();
+            lbl_meta_offset = new System.Windows.Forms.Label();
             txb_offset = new System.Windows.Forms.TextBox();
             lbl_offset = new System.Windows.Forms.Label();
-            lbl_width = new System.Windows.Forms.Label();
-            lbl_height = new System.Windows.Forms.Label();
             grp_graphics = new System.Windows.Forms.GroupBox();
             flw_graphics_view = new System.Windows.Forms.FlowLayoutPanel();
             toolbar_graphics = new Controls.Room.ToolBar();
@@ -50,8 +49,8 @@
             btn_apply = new System.Windows.Forms.Button();
             splitContainer2 = new System.Windows.Forms.SplitContainer();
             grp_data_selector.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
             grp_graphics.SuspendLayout();
             grp_metatiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -74,15 +73,14 @@
             // 
             // grp_data_selector
             // 
-            grp_data_selector.Controls.Add(btn_accept);
             grp_data_selector.Controls.Add(num_height);
+            grp_data_selector.Controls.Add(lbl_times);
+            grp_data_selector.Controls.Add(txb_offset);
+            grp_data_selector.Controls.Add(num_width);
+            grp_data_selector.Controls.Add(btn_accept);
+            grp_data_selector.Controls.Add(lbl_offset);
             grp_data_selector.Controls.Add(txb_meta_offset);
             grp_data_selector.Controls.Add(lbl_meta_offset);
-            grp_data_selector.Controls.Add(num_width);
-            grp_data_selector.Controls.Add(txb_offset);
-            grp_data_selector.Controls.Add(lbl_offset);
-            grp_data_selector.Controls.Add(lbl_width);
-            grp_data_selector.Controls.Add(lbl_height);
             grp_data_selector.Dock = System.Windows.Forms.DockStyle.Top;
             grp_data_selector.Location = new System.Drawing.Point(9, 6);
             grp_data_selector.Name = "grp_data_selector";
@@ -91,9 +89,29 @@
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
+            // num_width
+            // 
+            num_width.Hexadecimal = true;
+            num_width.Location = new System.Drawing.Point(70, 51);
+            num_width.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            num_width.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            num_width.Name = "num_width";
+            num_width.Size = new System.Drawing.Size(33, 23);
+            num_width.TabIndex = 6;
+            num_width.Value = new decimal(new int[] { 255, 0, 0, 0 });
+            // 
+            // lbl_times
+            // 
+            lbl_times.AutoSize = true;
+            lbl_times.Location = new System.Drawing.Point(109, 53);
+            lbl_times.Name = "lbl_times";
+            lbl_times.Size = new System.Drawing.Size(14, 15);
+            lbl_times.TabIndex = 2;
+            lbl_times.Text = "X";
+            // 
             // btn_accept
             // 
-            btn_accept.Location = new System.Drawing.Point(70, 138);
+            btn_accept.Location = new System.Drawing.Point(71, 109);
             btn_accept.Name = "btn_accept";
             btn_accept.Size = new System.Drawing.Size(92, 23);
             btn_accept.TabIndex = 8;
@@ -101,37 +119,32 @@
             btn_accept.UseVisualStyleBackColor = true;
             btn_accept.Click += btn_accept_Click;
             // 
-            // num_height
-            // 
-            num_height.Location = new System.Drawing.Point(70, 109);
-            num_height.Name = "num_height";
-            num_height.Size = new System.Drawing.Size(92, 23);
-            num_height.TabIndex = 7;
-            num_height.Value = new decimal(new int[] { 8, 0, 0, 0 });
-            // 
             // txb_meta_offset
             // 
-            txb_meta_offset.Location = new System.Drawing.Point(70, 51);
+            txb_meta_offset.Location = new System.Drawing.Point(71, 80);
             txb_meta_offset.Name = "txb_meta_offset";
             txb_meta_offset.Size = new System.Drawing.Size(92, 23);
             txb_meta_offset.TabIndex = 5;
             // 
+            // num_height
+            // 
+            num_height.Hexadecimal = true;
+            num_height.Location = new System.Drawing.Point(129, 51);
+            num_height.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            num_height.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            num_height.Name = "num_height";
+            num_height.Size = new System.Drawing.Size(33, 23);
+            num_height.TabIndex = 7;
+            num_height.Value = new decimal(new int[] { 8, 0, 0, 0 });
+            // 
             // lbl_meta_offset
             // 
             lbl_meta_offset.AutoSize = true;
-            lbl_meta_offset.Location = new System.Drawing.Point(6, 54);
+            lbl_meta_offset.Location = new System.Drawing.Point(6, 83);
             lbl_meta_offset.Name = "lbl_meta_offset";
             lbl_meta_offset.Size = new System.Drawing.Size(58, 15);
             lbl_meta_offset.TabIndex = 4;
             lbl_meta_offset.Text = "Metatiles:";
-            // 
-            // num_width
-            // 
-            num_width.Location = new System.Drawing.Point(70, 80);
-            num_width.Name = "num_width";
-            num_width.Size = new System.Drawing.Size(92, 23);
-            num_width.TabIndex = 6;
-            num_width.Value = new decimal(new int[] { 16, 0, 0, 0 });
             // 
             // txb_offset
             // 
@@ -148,24 +161,6 @@
             lbl_offset.Size = new System.Drawing.Size(42, 15);
             lbl_offset.TabIndex = 0;
             lbl_offset.Text = "Offset:";
-            // 
-            // lbl_width
-            // 
-            lbl_width.AutoSize = true;
-            lbl_width.Location = new System.Drawing.Point(6, 82);
-            lbl_width.Name = "lbl_width";
-            lbl_width.Size = new System.Drawing.Size(42, 15);
-            lbl_width.TabIndex = 2;
-            lbl_width.Text = "Width:";
-            // 
-            // lbl_height
-            // 
-            lbl_height.AutoSize = true;
-            lbl_height.Location = new System.Drawing.Point(6, 111);
-            lbl_height.Name = "lbl_height";
-            lbl_height.Size = new System.Drawing.Size(46, 15);
-            lbl_height.TabIndex = 3;
-            lbl_height.Text = "Height:";
             // 
             // grp_graphics
             // 
@@ -302,8 +297,8 @@
             Text = "Graphics Editor";
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_width).EndInit();
+            ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
             grp_graphics.ResumeLayout(false);
             grp_metatiles.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);
@@ -328,8 +323,7 @@
         private System.Windows.Forms.NumericUpDown num_width;
         private System.Windows.Forms.TextBox txb_meta_offset;
         private System.Windows.Forms.Label lbl_meta_offset;
-        private System.Windows.Forms.Label lbl_height;
-        private System.Windows.Forms.Label lbl_width;
+        private System.Windows.Forms.Label lbl_times;
         private System.Windows.Forms.GroupBox grp_graphics;
         private System.Windows.Forms.FlowLayoutPanel flw_graphics_view;
         private Controls.Room.ToolBar toolbar_graphics;
