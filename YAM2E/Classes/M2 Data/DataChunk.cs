@@ -24,10 +24,11 @@ public class DataChunk
     /// Creates a new DataChunk.
     /// If <paramref name="FillWithExisting"/> is set to true, the DataChunk will be generated with existing data read from a <see cref="Rom"/>.
     /// </summary>
-    public DataChunk(Pointer dataStart, int dataLength, bool FillWithExisting = true)
+    public DataChunk(Pointer dataStart, int dataLength, bool FillWithExisting = true, string dataType = "Data")
     {
         DataStart = dataStart;
         DataLength = dataLength;
+        DataType = dataType;
         //Filling data
         Data = new byte[dataLength];
         if (FillWithExisting)
@@ -52,7 +53,7 @@ public class DataChunk
     public Pointer DataStart { get; set; }
     public int DataLength { get; set; }
     public byte[] Data { get; set; }
-
+    public string DataType { get; set; } = "Data";
 
     //Methods
     /// <summary>

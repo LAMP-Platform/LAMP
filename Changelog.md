@@ -2,6 +2,8 @@
 ### Released: XX.XX.2023
 **Changes:**
  * Project specific base ROMs
+ * The project path on the recent files screen can now be opened in explorer
+ * Added a small value converter
 **Fixes:** 
  * TestROM: Missile values were capped at 0xFF
  * TestROM: Wrong math on the energy value

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Web;
 
 namespace LAMP.Classes;
 
@@ -9,6 +10,8 @@ public class Enemy
     public byte Type { get; set; }
     public byte sX { get; set; }
     public byte sY { get; set; }
+
+    public string LocationInfo = "";
 
     [JsonConstructor]
     public Enemy() { }
@@ -24,7 +27,7 @@ public class Enemy
     {
         //calculating actual position in the area
         int screenY = (int)(screen / 16);
-        int screenX = screen - screenY * 16;
+        int screenX = screen % 16;
 
         return new Point(screenX * 256 + sX - 8, screenY * 256 + sY - 8);
     }

@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -46,8 +48,9 @@ public partial class RecentFileDisplay : UserControl
         SetBackground(Color.FromArgb(0xFF, 0xf0, 0xf0, 0xf0));
     }
 
-    private void lbl_title_Click(object sender, EventArgs e)
+    private void lbl_title_Click(object sender, MouseEventArgs e)
     {
+        if (e.Button != MouseButtons.Left) return;
         Editor.OpenProjectAndLoad(lbl_path.Text);
     }
 
@@ -60,5 +63,11 @@ public partial class RecentFileDisplay : UserControl
         else Globals.pinnedFiles.Add(lbl_path.Text);
 
         ParentView.LoadRecentFileControls();
+    }
+
+    private void btn_open_path_Click(object sender, EventArgs e)
+    {
+        string path = Path.GetDirectoryName(lbl_path.Text);
+        Process.Start("explorer.exe", path);
     }
 }

@@ -1141,6 +1141,13 @@ public partial class MainWindow : Form
     {
         new GraphicsEditor().Show();
     }
+
+    private void btn_converter_Click(object sender, EventArgs e)
+    {
+        Converter cv = new Converter();
+        cv.TopLevel = true;
+        cv.Show();
+    }
     #endregion
 
     #endregion

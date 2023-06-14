@@ -88,7 +88,7 @@ public static class Format
 
 
     /// <summary>
-    /// Takes a string and interprets it as a hex intiger.
+    /// Takes a string and interprets it as a hex integer.
     /// Only allows a direct value.
     /// Does not care about pre- and suffixes.
     /// Returns 0 if it gets an invalid input
@@ -98,9 +98,7 @@ public static class Format
         if (input.Length == 0) return 0;
 
         //removing spaces and pre-/suffix
-        input = Regex.Replace(input, @"\s+", "");
-        input = input.Replace("0x", "").Replace("h", "").Replace("$", "");
-        input = input.Replace("ROM", ""); //Replacing ROM (could be copied from disassembly)
+        input = Regex.Replace(input, @"(\s+|0x|h|\$|ROM)", "");
 
         //Splitting at "splitters" to throw error at user for being a bad person
         string[] words = input.Split(',');
@@ -120,6 +118,27 @@ public static class Format
                 return val;
             }
             return 0;
+        }
+        catch
+        {
+            return 0;
+        }
+    }
+
+    /// <summary>
+    /// Takes a string and interprets it as an integer.
+    /// Returns 0 if it gets an invalid input
+    /// </summary>
+    public static int StringToDecimalInt(string input, int maxValue = 0)
+    {
+        if (input.Length == 0) return 0;
+
+        //removing spaces
+        input = Regex.Replace(input, @"\s+", "");
+
+        try
+        {
+            return int.Parse(input);
         }
         catch
         {
