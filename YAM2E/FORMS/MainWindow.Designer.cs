@@ -61,8 +61,6 @@ namespace LAMP
             btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            btn_zoom_in = new System.Windows.Forms.ToolStripMenuItem();
-            btn_zoom_out = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
             btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             btn_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +105,7 @@ namespace LAMP
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
+            btn_show_converter = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -242,14 +241,14 @@ namespace LAMP
             // btn_data_viewer
             // 
             btn_data_viewer.Name = "btn_data_viewer";
-            btn_data_viewer.Size = new System.Drawing.Size(180, 22);
+            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
             btn_data_viewer.Text = "Data Viewer";
             btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // btn_converter
             // 
             btn_converter.Name = "btn_converter";
-            btn_converter.Size = new System.Drawing.Size(180, 22);
+            btn_converter.Size = new System.Drawing.Size(136, 22);
             btn_converter.Text = "Converter";
             btn_converter.Click += btn_converter_Click;
             // 
@@ -322,7 +321,7 @@ namespace LAMP
             // 
             tool_strip_view.AutoToolTip = false;
             tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_view_show_objects, btn_show_scroll_bounds, btn_show_screen_outlines, btn_show_duplicate_outlines, toolStripSeparator8, btn_zoom_in, btn_zoom_out });
+            tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_view_show_objects, btn_show_scroll_bounds, btn_show_screen_outlines, btn_show_duplicate_outlines, toolStripSeparator8, btn_show_converter });
             tool_strip_view.Enabled = false;
             tool_strip_view.Image = (System.Drawing.Image)resources.GetObject("tool_strip_view.Image");
             tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -372,25 +371,6 @@ namespace LAMP
             // 
             toolStripSeparator8.Name = "toolStripSeparator8";
             toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
-            toolStripSeparator8.Visible = false;
-            // 
-            // btn_zoom_in
-            // 
-            btn_zoom_in.Name = "btn_zoom_in";
-            btn_zoom_in.ShortcutKeyDisplayString = "Ctrl +";
-            btn_zoom_in.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus;
-            btn_zoom_in.Size = new System.Drawing.Size(228, 22);
-            btn_zoom_in.Text = "Zoom +";
-            btn_zoom_in.Visible = false;
-            // 
-            // btn_zoom_out
-            // 
-            btn_zoom_out.Name = "btn_zoom_out";
-            btn_zoom_out.ShortcutKeyDisplayString = "Ctrl - ";
-            btn_zoom_out.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus;
-            btn_zoom_out.Size = new System.Drawing.Size(228, 22);
-            btn_zoom_out.Text = "Zoom -";
-            btn_zoom_out.Visible = false;
             // 
             // tool_strip_help
             // 
@@ -841,6 +821,13 @@ namespace LAMP
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
+            // btn_show_converter
+            // 
+            btn_show_converter.Name = "btn_show_converter";
+            btn_show_converter.Size = new System.Drawing.Size(228, 22);
+            btn_show_converter.Text = "Converter";
+            btn_show_converter.Click += btn_show_converter_Click;
+            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -940,8 +927,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_wiki;
         private System.Windows.Forms.ToolStripMenuItem btn_about;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripMenuItem btn_zoom_in;
-        private System.Windows.Forms.ToolStripMenuItem btn_zoom_out;
         private System.Windows.Forms.ToolStripMenuItem btn_save_editor;
         private System.Windows.Forms.ToolStripMenuItem btn_bug_report;
         private System.Windows.Forms.ToolStripButton btn_show_objects;
@@ -963,6 +948,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_graphics_editor;
         private System.Windows.Forms.ToolStripButton btn_graphics_editor_image;
         private System.Windows.Forms.ToolStripMenuItem btn_converter;
+        private System.Windows.Forms.ToolStripMenuItem btn_show_converter;
     }
 }
 

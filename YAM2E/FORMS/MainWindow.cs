@@ -28,6 +28,12 @@ public partial class MainWindow : Form
 
     private static RecentFiles Recent = new RecentFiles();
     private static Label TitleLabel = new Label();
+    private static Converter PermaConverter = new Converter()
+    {
+        TopLevel = false,
+        Dock = DockStyle.Top,
+        FormBorderStyle = FormBorderStyle.None
+    };
 
     /// <summary>
     /// Point where a selection started. Only for temporary storage,
@@ -90,6 +96,9 @@ public partial class MainWindow : Form
 
         toolbar_room.SetTransform(false, false, false, false);
         toolbar_room.SetTools(true, true, true, false);
+
+        //Adding Converter to Panel
+        pnl_tileset_resize.Panel2.Controls.Add(PermaConverter);
 
         //Adding custom controls
         #region Tileset
@@ -1147,6 +1156,13 @@ public partial class MainWindow : Form
         Converter cv = new Converter();
         cv.TopLevel = true;
         cv.Show();
+    }
+
+    private void btn_show_converter_Click(object sender, EventArgs e)
+    {
+        btn_show_converter.Checked = !btn_show_converter.Checked;
+        if (btn_show_converter.Checked) PermaConverter.Show();
+        else PermaConverter.Hide();
     }
     #endregion
 
