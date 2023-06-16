@@ -493,11 +493,14 @@ public partial class MainWindow : Form
 
         //populating the rest of data
         //Position
+        int posX = RoomSelectedTile.X;
+        int posY = RoomSelectedTile.Y - 16;
+
         s.MapBank = (byte)(cbb_area_bank.SelectedIndex); // +9 because the Game expects the actual bank and nost just an index
-        s.CamScreenX = s.SamusScreenX = (byte)(RoomSelectedTile.X / 256);
-        s.CamScreenY = s.SamusScreenY = (byte)(RoomSelectedTile.Y / 256);
-        s.CamX = s.SamusX = (byte)RoomSelectedTile.X;
-        s.CamY = s.SamusY = (byte)(RoomSelectedTile.Y - 16);
+        s.CamScreenX = s.SamusScreenX = (byte)(posX / 256);
+        s.CamScreenY = s.SamusScreenY = (byte)(posY / 256);
+        s.CamX = s.SamusX = (byte)posX;
+        s.CamY = s.SamusY = (byte)posY;
     }
 
     #region Main Window Events

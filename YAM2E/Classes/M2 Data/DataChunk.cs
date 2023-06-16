@@ -136,4 +136,15 @@ public class DataChunk
         DataChunk d = new DataChunk(new Pointer(dataStart), data);
         return (d);
     }
+
+    /// <summary>
+    /// Writes the DataChunk to the specified ROM
+    /// </summary>
+    public void Write(Rom rom)
+    {
+        for (int i = 0; i < DataLength; i++)
+        {
+            rom.Write8(DataStart + i, Data[i]);
+        }
+    }
 }

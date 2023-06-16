@@ -7,6 +7,7 @@
 **Fixes:** 
  * TestROM: Missile values were capped at 0xFF
  * TestROM: Wrong math on the energy value
+ * TestROM: Player sometimes spawns at the bottom of the screen
 
 # Version B 4.0
 ### Released: 02.06.2023

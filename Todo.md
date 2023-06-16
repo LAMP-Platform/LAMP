@@ -62,3 +62,23 @@ The benefit of this approach is that it does not move any data around but just o
 A shortcoming here is that the screen transition command for loading a table only uses a single byte,
 which means that the table index is the lower nybble and therefore only 16 sets can be reached.
 The transition interpretation would need to be adjusted to read a whole second byte to allow for the full range.
+We can change the game code to read 2 bytes per table load instead of 1 though. The second byte will then be
+the table index.
+
+Read second byte for Metatile table: `ROM0:2832 2A E5 E6 0F -> 23 2A E5 00`
+Read second byte for Collision table: `ROM0:2861 2A E5 E6 0F -> 23 2A E5 00`
+Read second byte for Solidity table: `ROM0:242F 2A E5 E6 0F -> 23 2A E5 00`
+
+The syntax for the metatile table is now `10 XX` where `XX` is the table index < $7F
+It is similar with the other tables.
+
+Due to the limits of 8 bit shifting, the highest possible index is now **only** $7F (127), which should be more than enough
+tilesets. However, with more code changes this limit could also be raised.
+Lastly, all transitions will have to be updated because the opcodes for graphics loading now use more bytes.
+
+To allow for an almost infinite amount of tilesets, we could either use the unused nybble to reference a source bank 
+or add yet another byte to allow for every bank to be reached.
+For the former idea it would probably make sense to have the bank value as a relative offset, since the banks $0-$F are already
+used up and this way each table type could have up to $F unique banks assigned.
+
+# Increasing the amount of total Areas usable
