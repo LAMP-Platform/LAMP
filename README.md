@@ -5,8 +5,8 @@
 
 LAMP is a feature-rich Metroid 2: Return of Samus editor. Made with .NET and Windows Forms.
 You **_need_** to install **.NET 6** (or higher) to run the program. If you don't have it installed it can be downloaded here:
-* [64bit/x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.408-windows-x64-installer)
-* [32bit/x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.408-windows-x86-installer)
+* [.NET 7 64bit/x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.7-windows-x64-installer)
+* [.NET 7 32bit/x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.7-windows-x86-installer)
 
 LAMP is split into a 32bit/x86 and 64bit/x64 version. This is due to the new zooming feature having huge performance issues on higher zooming levels on the x86 version.
 #
