@@ -4,10 +4,16 @@
  * Project specific base ROMs
  * The project path on the recent files screen can now be opened in explorer
  * Added a small value converter
+   * Can be docked to the Main Window
+ * LAMP now starts in fullscreen if closed in fullscreen
+ * Transitions can be names
+   * Shows up in screen settings as well
+ * Small Tileset Editor redesign
 **Fixes:** 
  * TestROM: Missile values were capped at 0xFF
  * TestROM: Wrong math on the energy value
  * TestROM: Player sometimes spawns at the bottom of the screen
+ * Tileset Editor: Combobox for Tileset is now sized to always fit the name
 
 # Version B 4.0
 ### Released: 02.06.2023

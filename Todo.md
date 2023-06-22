@@ -82,3 +82,40 @@ For the former idea it would probably make sense to have the bank value as a rel
 used up and this way each table type could have up to $F unique banks assigned.
 
 # Increasing the amount of total Areas usable
+*Todo*
+
+# Transition editor, opcode syntax edit
+Right now all the opcodes are hardcoded into LAMP. In the future, however, people might want to alter
+the data that the editor writes in order to comply with their custom code. Because of this I will
+try to implement an opcode "programming" language.
+
+Examples:
+* `(1)Select metatile table, ()Table ID`
+* `(4)Warp, ()Bank, ()Screen Y, ()Screen X`
+* `[90]If, []Metroids Alive <=, {}Goto Transition`
+
+Rules:
+Each line represents 1 Opcode.
+Opcodes are split into parts by commas.
+A part can consist of text and a data template.
+Possible data templates:
+* `()` - The next Nybble
+* `[]` - The next Byte
+* `{}` - The next Pointer (2 Bytes)
+Each part can only have 1 data template.
+Each part can have one string. (Before or after the data template, order does not matter)
+The first part in each opcode will be the title.
+Each part after the first one will be considered a parameter.
+The first data template will not be displayed.
+A data template may have a predefined value.
+A predefined value will not be displayed.
+A data template may not contain text.
+
+Alternative language
+
+Examples:
+* `Warp [0](4), to Bank [1], X [3], Y [2]`
+* `If [0;1](90), Metroids Alive <= [2], Goto Transition [3;4]`
+
+* [x;y] - Indicates that the value is for the Nybbles from x through y
+* (x) - Predefines a value for the last data template

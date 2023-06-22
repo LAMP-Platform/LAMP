@@ -32,6 +32,8 @@ namespace LAMP.FORMS
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TransitionsEditor));
             grp_tred_selection = new System.Windows.Forms.GroupBox();
+            txb_transition_name = new System.Windows.Forms.TextBox();
+            lbl_transition_name = new System.Windows.Forms.Label();
             chb_expand_all = new System.Windows.Forms.CheckBox();
             lbl_tred_transition_selection = new System.Windows.Forms.Label();
             cbb_tred_transition_selection = new System.Windows.Forms.ComboBox();
@@ -67,21 +69,40 @@ namespace LAMP.FORMS
             // 
             // grp_tred_selection
             // 
+            grp_tred_selection.Controls.Add(txb_transition_name);
+            grp_tred_selection.Controls.Add(lbl_transition_name);
             grp_tred_selection.Controls.Add(chb_expand_all);
             grp_tred_selection.Controls.Add(lbl_tred_transition_selection);
             grp_tred_selection.Controls.Add(cbb_tred_transition_selection);
             grp_tred_selection.Location = new System.Drawing.Point(13, 13);
             grp_tred_selection.Name = "grp_tred_selection";
-            grp_tred_selection.Size = new System.Drawing.Size(153, 78);
+            grp_tred_selection.Size = new System.Drawing.Size(153, 102);
             grp_tred_selection.TabIndex = 0;
             grp_tred_selection.TabStop = false;
             grp_tred_selection.Text = "Selection";
+            // 
+            // txb_transition_name
+            // 
+            txb_transition_name.Location = new System.Drawing.Point(73, 50);
+            txb_transition_name.Name = "txb_transition_name";
+            txb_transition_name.Size = new System.Drawing.Size(74, 23);
+            txb_transition_name.TabIndex = 4;
+            txb_transition_name.TextChanged += txb_transition_name_TextChanged;
+            // 
+            // lbl_transition_name
+            // 
+            lbl_transition_name.AutoSize = true;
+            lbl_transition_name.Location = new System.Drawing.Point(7, 53);
+            lbl_transition_name.Name = "lbl_transition_name";
+            lbl_transition_name.Size = new System.Drawing.Size(42, 15);
+            lbl_transition_name.TabIndex = 3;
+            lbl_transition_name.Text = "Name:";
             // 
             // chb_expand_all
             // 
             chb_expand_all.AutoSize = true;
             chb_expand_all.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            chb_expand_all.Location = new System.Drawing.Point(6, 51);
+            chb_expand_all.Location = new System.Drawing.Point(6, 79);
             chb_expand_all.Name = "chb_expand_all";
             chb_expand_all.Size = new System.Drawing.Size(82, 19);
             chb_expand_all.TabIndex = 2;
@@ -100,6 +121,7 @@ namespace LAMP.FORMS
             // 
             // cbb_tred_transition_selection
             // 
+            cbb_tred_transition_selection.DropDownWidth = 74;
             cbb_tred_transition_selection.FormattingEnabled = true;
             cbb_tred_transition_selection.Location = new System.Drawing.Point(73, 22);
             cbb_tred_transition_selection.Name = "cbb_tred_transition_selection";
@@ -137,7 +159,7 @@ namespace LAMP.FORMS
             grp_tred_edits.Controls.Add(btn_tred_transition_update);
             grp_tred_edits.Controls.Add(num_tred_value);
             grp_tred_edits.Controls.Add(lbl_tred_value);
-            grp_tred_edits.Location = new System.Drawing.Point(13, 97);
+            grp_tred_edits.Location = new System.Drawing.Point(13, 121);
             grp_tred_edits.Name = "grp_tred_edits";
             grp_tred_edits.Size = new System.Drawing.Size(153, 167);
             grp_tred_edits.TabIndex = 2;
@@ -239,7 +261,7 @@ namespace LAMP.FORMS
             sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length });
             sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             sts_tred_status_strip.Name = "sts_tred_status_strip";
-            sts_tred_status_strip.Size = new System.Drawing.Size(504, 22);
+            sts_tred_status_strip.Size = new System.Drawing.Size(862, 22);
             sts_tred_status_strip.TabIndex = 3;
             sts_tred_status_strip.Text = "statusStrip1";
             // 
@@ -282,7 +304,7 @@ namespace LAMP.FORMS
             // 
             grp_transition_warning.Controls.Add(txb_transition_info);
             grp_transition_warning.Controls.Add(btn_seperate_transition);
-            grp_transition_warning.Location = new System.Drawing.Point(13, 270);
+            grp_transition_warning.Location = new System.Drawing.Point(13, 294);
             grp_transition_warning.Name = "grp_transition_warning";
             grp_transition_warning.Size = new System.Drawing.Size(153, 217);
             grp_transition_warning.TabIndex = 6;
@@ -291,24 +313,25 @@ namespace LAMP.FORMS
             // 
             // gauTransitionLength
             // 
-            gauTransitionLength.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            gauTransitionLength.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             gauTransitionLength.BackColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            gauTransitionLength.Color = System.Drawing.Color.FromArgb(0, 192, 192);
             gauTransitionLength.Location = new System.Drawing.Point(13, 563);
             gauTransitionLength.Name = "gauTransitionLength";
-            gauTransitionLength.Size = new System.Drawing.Size(479, 10);
+            gauTransitionLength.Size = new System.Drawing.Size(837, 10);
             gauTransitionLength.TabIndex = 7;
+            gauTransitionLength.Value = 0D;
             // 
             // grpTransition
             // 
             grpTransition.BackColor = System.Drawing.SystemColors.Control;
             grpTransition.Controls.Add(pnlTransition);
-            grpTransition.Location = new System.Drawing.Point(546, 13);
+            grpTransition.Location = new System.Drawing.Point(498, 13);
             grpTransition.Name = "grpTransition";
             grpTransition.Size = new System.Drawing.Size(352, 544);
             grpTransition.TabIndex = 8;
             grpTransition.TabStop = false;
             grpTransition.Text = "Transition";
-            grpTransition.Visible = false;
             // 
             // pnlTransition
             // 
@@ -324,7 +347,7 @@ namespace LAMP.FORMS
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(504, 604);
+            ClientSize = new System.Drawing.Size(862, 604);
             Controls.Add(grpTransition);
             Controls.Add(gauTransitionLength);
             Controls.Add(grp_transition_warning);
@@ -378,5 +401,7 @@ namespace LAMP.FORMS
         private System.Windows.Forms.GroupBox grpTransition;
         private System.Windows.Forms.FlowLayoutPanel pnlTransition;
         private System.Windows.Forms.CheckBox chb_expand_all;
+        private System.Windows.Forms.TextBox txb_transition_name;
+        private System.Windows.Forms.Label lbl_transition_name;
     }
 }

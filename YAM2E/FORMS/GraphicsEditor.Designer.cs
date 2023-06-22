@@ -31,14 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicsEditor));
             status_strip = new System.Windows.Forms.StatusStrip();
             grp_data_selector = new System.Windows.Forms.GroupBox();
-            num_width = new System.Windows.Forms.NumericUpDown();
-            lbl_times = new System.Windows.Forms.Label();
-            btn_accept = new System.Windows.Forms.Button();
-            txb_meta_offset = new System.Windows.Forms.TextBox();
             num_height = new System.Windows.Forms.NumericUpDown();
-            lbl_meta_offset = new System.Windows.Forms.Label();
+            lbl_times = new System.Windows.Forms.Label();
             txb_offset = new System.Windows.Forms.TextBox();
+            num_width = new System.Windows.Forms.NumericUpDown();
+            btn_accept = new System.Windows.Forms.Button();
             lbl_offset = new System.Windows.Forms.Label();
+            txb_meta_offset = new System.Windows.Forms.TextBox();
+            lbl_meta_offset = new System.Windows.Forms.Label();
             grp_graphics = new System.Windows.Forms.GroupBox();
             flw_graphics_view = new System.Windows.Forms.FlowLayoutPanel();
             toolbar_graphics = new Controls.Room.ToolBar();
@@ -49,8 +49,8 @@
             btn_apply = new System.Windows.Forms.Button();
             splitContainer2 = new System.Windows.Forms.SplitContainer();
             grp_data_selector.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
             grp_graphics.SuspendLayout();
             grp_metatiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -89,43 +89,6 @@
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
-            // num_width
-            // 
-            num_width.Hexadecimal = true;
-            num_width.Location = new System.Drawing.Point(70, 51);
-            num_width.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
-            num_width.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            num_width.Name = "num_width";
-            num_width.Size = new System.Drawing.Size(33, 23);
-            num_width.TabIndex = 6;
-            num_width.Value = new decimal(new int[] { 255, 0, 0, 0 });
-            // 
-            // lbl_times
-            // 
-            lbl_times.AutoSize = true;
-            lbl_times.Location = new System.Drawing.Point(109, 53);
-            lbl_times.Name = "lbl_times";
-            lbl_times.Size = new System.Drawing.Size(14, 15);
-            lbl_times.TabIndex = 2;
-            lbl_times.Text = "X";
-            // 
-            // btn_accept
-            // 
-            btn_accept.Location = new System.Drawing.Point(71, 109);
-            btn_accept.Name = "btn_accept";
-            btn_accept.Size = new System.Drawing.Size(92, 23);
-            btn_accept.TabIndex = 8;
-            btn_accept.Text = "View";
-            btn_accept.UseVisualStyleBackColor = true;
-            btn_accept.Click += btn_accept_Click;
-            // 
-            // txb_meta_offset
-            // 
-            txb_meta_offset.Location = new System.Drawing.Point(71, 80);
-            txb_meta_offset.Name = "txb_meta_offset";
-            txb_meta_offset.Size = new System.Drawing.Size(92, 23);
-            txb_meta_offset.TabIndex = 5;
-            // 
             // num_height
             // 
             num_height.Hexadecimal = true;
@@ -137,14 +100,14 @@
             num_height.TabIndex = 7;
             num_height.Value = new decimal(new int[] { 8, 0, 0, 0 });
             // 
-            // lbl_meta_offset
+            // lbl_times
             // 
-            lbl_meta_offset.AutoSize = true;
-            lbl_meta_offset.Location = new System.Drawing.Point(6, 83);
-            lbl_meta_offset.Name = "lbl_meta_offset";
-            lbl_meta_offset.Size = new System.Drawing.Size(58, 15);
-            lbl_meta_offset.TabIndex = 4;
-            lbl_meta_offset.Text = "Metatiles:";
+            lbl_times.AutoSize = true;
+            lbl_times.Location = new System.Drawing.Point(109, 53);
+            lbl_times.Name = "lbl_times";
+            lbl_times.Size = new System.Drawing.Size(14, 15);
+            lbl_times.TabIndex = 2;
+            lbl_times.Text = "X";
             // 
             // txb_offset
             // 
@@ -152,6 +115,27 @@
             txb_offset.Name = "txb_offset";
             txb_offset.Size = new System.Drawing.Size(92, 23);
             txb_offset.TabIndex = 1;
+            // 
+            // num_width
+            // 
+            num_width.Hexadecimal = true;
+            num_width.Location = new System.Drawing.Point(70, 51);
+            num_width.Maximum = new decimal(new int[] { 255, 0, 0, 0 });
+            num_width.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            num_width.Name = "num_width";
+            num_width.Size = new System.Drawing.Size(33, 23);
+            num_width.TabIndex = 6;
+            num_width.Value = new decimal(new int[] { 16, 0, 0, 0 });
+            // 
+            // btn_accept
+            // 
+            btn_accept.Location = new System.Drawing.Point(71, 109);
+            btn_accept.Name = "btn_accept";
+            btn_accept.Size = new System.Drawing.Size(92, 23);
+            btn_accept.TabIndex = 8;
+            btn_accept.Text = "View";
+            btn_accept.UseVisualStyleBackColor = true;
+            btn_accept.Click += btn_accept_Click;
             // 
             // lbl_offset
             // 
@@ -161,6 +145,22 @@
             lbl_offset.Size = new System.Drawing.Size(42, 15);
             lbl_offset.TabIndex = 0;
             lbl_offset.Text = "Offset:";
+            // 
+            // txb_meta_offset
+            // 
+            txb_meta_offset.Location = new System.Drawing.Point(71, 80);
+            txb_meta_offset.Name = "txb_meta_offset";
+            txb_meta_offset.Size = new System.Drawing.Size(92, 23);
+            txb_meta_offset.TabIndex = 5;
+            // 
+            // lbl_meta_offset
+            // 
+            lbl_meta_offset.AutoSize = true;
+            lbl_meta_offset.Location = new System.Drawing.Point(6, 83);
+            lbl_meta_offset.Name = "lbl_meta_offset";
+            lbl_meta_offset.Size = new System.Drawing.Size(58, 15);
+            lbl_meta_offset.TabIndex = 4;
+            lbl_meta_offset.Text = "Metatiles:";
             // 
             // grp_graphics
             // 
@@ -263,6 +263,7 @@
             btn_apply.TabIndex = 2;
             btn_apply.Text = "Apply";
             btn_apply.UseVisualStyleBackColor = true;
+            btn_apply.Click += btn_apply_Click;
             // 
             // splitContainer2
             // 
@@ -297,8 +298,8 @@
             Text = "Graphics Editor";
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)num_width).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
+            ((System.ComponentModel.ISupportInitialize)num_width).EndInit();
             grp_graphics.ResumeLayout(false);
             grp_metatiles.ResumeLayout(false);
             splitContainer1.Panel1.ResumeLayout(false);

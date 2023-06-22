@@ -53,7 +53,6 @@ public partial class TilesetDefinitions : Form
         tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, MetatilePointer, 16, 8, false);
         Tileset.BackgroundImage = tilemap;
         grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
-        grp_tileset_data.Height = grp_tileset_preview.Size.Height;
     }
 
     private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
@@ -128,15 +127,16 @@ public partial class TilesetDefinitions : Form
         //Updating the combobox with all the tilesets
         cbb_tileset_id.Items.Clear();
         int width = cbb_tileset_id.Width;
-        foreach (Tileset t in Globals.Tilesets)
+        for (int i = 0; i < Globals.Tilesets.Count; i++)
         {
-            cbb_tileset_id.Items.Add("");
-            width = Math.Max(width, t.Name.Length * 7);
+            Tileset t = Globals.Tilesets[i];
+            string name = i.ToString("X");
+            if (t.Name != "") name = t.Name;
+            cbb_tileset_id.Items.Add(name);
         }
-        cbb_tileset_id.DropDownWidth = width;
         cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
         if (Globals.Tilesets.Count > 0) btn_save_tileset.Enabled = true;
-        UpdateNames();
+        ComboboxOp.AutoSize(cbb_tileset_id);
     }
 
     private void UpdateNames()
@@ -145,11 +145,12 @@ public partial class TilesetDefinitions : Form
         for (int i = 0; i < Globals.Tilesets.Count; i++)
         {
             Tileset t = Globals.Tilesets[i];
-            string name = i.ToString();
+            string name = i.ToString("X");
             if (t.Name != "") name = t.Name;
 
             cbb_tileset_id.Items[i] = name;
         }
+        ComboboxOp.AutoSize(cbb_tileset_id);
     }
 
     private void btn_save_tileset_Click(object sender, EventArgs e)

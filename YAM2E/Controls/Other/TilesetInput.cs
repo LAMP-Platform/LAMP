@@ -111,9 +111,8 @@ public partial class TilesetInput : UserControl
 
             //adding to selection
             cbb_tileset_id.Items.Add(name);
-            width = Math.Max(width, t.Name.Length * 7);
         }
-        cbb_tileset_id.DropDownWidth = width; //updating cbb width
+        ComboboxOp.AutoSize(cbb_tileset_id);
         cbb_tileset_id.SelectedIndex = Math.Min(cbb_tileset_id.Items.Count - 1, selected); //Setting last selected tileset
     }
 

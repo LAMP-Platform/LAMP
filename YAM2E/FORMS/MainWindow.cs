@@ -14,6 +14,7 @@ using System.Linq;
 using Microsoft.VisualBasic.Devices;
 using LAMP.Controls.Other;
 using System.Windows.Forms.VisualStyles;
+using System.Text.RegularExpressions;
 
 namespace LAMP;
 
@@ -74,6 +75,9 @@ public partial class MainWindow : Form
 
         Current = this;
         InitializeComponent();
+
+        //Set Fullscreen if closed in fullscreen
+        if (Properties.programsettings.Default.startInFullscreen) WindowState = FormWindowState.Maximized;
 
         //Check for new Version
         Editor.CheckForUpdate();
@@ -1167,11 +1171,22 @@ public partial class MainWindow : Form
         if (btn_show_converter.Checked) PermaConverter.Show();
         else PermaConverter.Hide();
     }
+
+    private void MainWindow_Resize(object sender, EventArgs e)
+    {
+        if (WindowState == FormWindowState.Maximized) Properties.programsettings.Default.startInFullscreen = true;
+        else Properties.programsettings.Default.startInFullscreen = false;
+        Properties.programsettings.Default.Save();
+    }
     #endregion
 
     #endregion
 
     private void btnTest_Click(object sender, EventArgs e)
     {
+        //Opcode language interpreter
+        string input = "If [0;4](90), Metroids, Alive <= [2], Goto Transition [3;4]";
+
+        byte index = OpcodeInterpreter.GetOpcodeIndex(input);
     }
 }

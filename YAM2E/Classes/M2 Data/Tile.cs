@@ -69,6 +69,17 @@ public struct Tile
         return result;
     }
 
+    public void SetPixel(int x, int y, int val)
+    {
+        val %= 4;
+
+        byte firstByte = Data[y * 2]; //Least significant byte
+        byte secondByte = Data[y * 2 + 1]; //Most significant byte
+
+        Data[y * 2] = ByteOp.SetBit(firstByte, 7 - x, val & 0b0001);
+        Data[y * 2 + 1] = ByteOp.SetBit(secondByte, 7 - x, val & 0b0010);
+    }
+
     public void Rotate90()
     {
 

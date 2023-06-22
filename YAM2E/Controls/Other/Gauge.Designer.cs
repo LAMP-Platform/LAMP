@@ -28,46 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlBackground = new System.Windows.Forms.Panel();
-            this.pnlBar = new System.Windows.Forms.Panel();
-            this.pnlBackground.SuspendLayout();
-            this.SuspendLayout();
+            pnlBackground = new System.Windows.Forms.Panel();
+            pnlBar = new System.Windows.Forms.Panel();
+            pnlBackground.SuspendLayout();
+            SuspendLayout();
             // 
             // pnlBackground
             // 
-            this.pnlBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlBackground.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.pnlBackground.Controls.Add(this.pnlBar);
-            this.pnlBackground.Location = new System.Drawing.Point(1, 1);
-            this.pnlBackground.Margin = new System.Windows.Forms.Padding(1);
-            this.pnlBackground.Name = "pnlBackground";
-            this.pnlBackground.Size = new System.Drawing.Size(369, 37);
-            this.pnlBackground.TabIndex = 0;
+            pnlBackground.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            pnlBackground.BackColor = System.Drawing.Color.FromArgb(230, 230, 230);
+            pnlBackground.Controls.Add(pnlBar);
+            pnlBackground.Location = new System.Drawing.Point(1, 1);
+            pnlBackground.Margin = new System.Windows.Forms.Padding(1);
+            pnlBackground.Name = "pnlBackground";
+            pnlBackground.Size = new System.Drawing.Size(369, 37);
+            pnlBackground.TabIndex = 0;
             // 
             // pnlBar
             // 
-            this.pnlBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.pnlBar.Location = new System.Drawing.Point(0, 0);
-            this.pnlBar.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlBar.Name = "pnlBar";
-            this.pnlBar.Size = new System.Drawing.Size(0, 37);
-            this.pnlBar.TabIndex = 0;
+            pnlBar.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            pnlBar.BackColor = System.Drawing.Color.FromArgb(0, 192, 192);
+            pnlBar.Location = new System.Drawing.Point(0, 0);
+            pnlBar.Margin = new System.Windows.Forms.Padding(0);
+            pnlBar.Name = "pnlBar";
+            pnlBar.Size = new System.Drawing.Size(0, 37);
+            pnlBar.TabIndex = 0;
             // 
             // Gauge
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(188)))), ((int)(((byte)(188)))), ((int)(((byte)(188)))));
-            this.Controls.Add(this.pnlBackground);
-            this.Name = "Gauge";
-            this.Size = new System.Drawing.Size(371, 39);
-            this.pnlBackground.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            BackColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            Controls.Add(pnlBackground);
+            Name = "Gauge";
+            Size = new System.Drawing.Size(371, 39);
+            SizeChanged += Gauge_SizeChanged;
+            pnlBackground.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion

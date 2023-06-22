@@ -20,6 +20,7 @@ public class GFX
     /// </summary>
     public GFX(Pointer offset, int width, int height)
     {
+        DataOffset = offset;
         Width = width; Height = height;
         Tiles = new Tile[TileAmount];
 
@@ -39,31 +40,54 @@ public class GFX
 
     public int Width { get; set; }
     public int Height { get; set; }
-    public int TileAmount => Width * Height; 
+    public int TileAmount => Width * Height;
+
+    /// <summary>
+    /// The last drawn representation of the GFX
+    /// </summary>
+    public Bitmap Image
+    {
+        get
+        {
+            return image;
+        }
+        set
+        {
+            if (image == value) return;
+            image?.Dispose();
+            image = value;
+        }
+    }
+    private Bitmap image;
+
+    private Pointer DataOffset { get; set; }
+    private byte[] TileData
+    {
+        get
+        {
+            List<byte> result = new List<byte>();
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                foreach(byte b in tiles[i].Data) result.Add(b);
+            }
+
+            return result.ToArray();
+        }
+    }
 
     /// <summary>
     /// Changes the Pixel of a tile at the <paramref name="x"/>, <paramref name="y"/> position of the GFX plane
     /// </summary>
     public void SetPixel(int x, int y, int value)
     {
-        //the value should be < 4
-        value %= 4;
-
         //figure out which tile should be modified
         int tileNr = (y / 8) * Width + (x / 8);
 
-        //grabbing the two bytes for the according row
-        int row = y % 8;
-        byte topByte = Tiles[tileNr].Data[row * 2];
-        byte lowByte = Tiles[tileNr].Data[row * 2 + 1];
+        //Telling that tile to modify the pixel
+        Tiles[tileNr].SetPixel(x % 8, y % 8, value);
 
-        //modifying the bytes
-        ByteOp.SetBit(topByte, x % 8, value & 0b0000_0001);
-        ByteOp.SetBit(lowByte, x % 8, value & 0b0000_0010);
-
-        //writing back the values
-        Tiles[tileNr].Data[row * 2] = topByte;
-        Tiles[tileNr].Data[row * 2 + 1] = lowByte;
+        //Update the modified Tile
+        Redraw(tileNr);
     }
     /// <summary>
     /// Changes the Pixel of a tile at the <see cref="Point"/> <paramref name="p"/> of the GFX plane.
@@ -92,10 +116,15 @@ public class GFX
     public int GetPixel(Point p) => GetPixel(p.X, p.Y);
 
     /// <summary>
+    /// Gets the index of the tile at the coordinates <paramref name="x"/>, <paramref name="y"/>.
+    /// </summary>
+    public int GetTileID(int x, int y) => (y / 8) * Width + (x / 8);
+
+    /// <summary>
     /// Draws the GFX map
     /// </summary>
     /// <returns></returns>
-    public Bitmap Draw()
+    public void Draw()
     {
         Bitmap result = new Bitmap(Width * 8, Height * 8);
         Graphics g = Graphics.FromImage(result);
@@ -117,6 +146,24 @@ public class GFX
 
         g.Dispose();
 
-        return result;
+        Image = result;
     }
+
+    public void Redraw(int tileNr)
+    {
+        if (tileNr >= Tiles.Length) { throw new Exception("Tile ID is not currently loaded"); }
+
+        Graphics g = Graphics.FromImage(Image);
+        int y = tileNr / Width * 8;
+        int x = tileNr % Width * 8;
+
+        Bitmap tile = Tiles[tileNr].Draw();
+        g.DrawImage(tile, x, y);
+
+        tile.Dispose();
+        g.Dispose();
+    }
+
+    public static explicit operator DataChunk(GFX gfx) 
+        => new DataChunk(gfx.DataOffset, gfx.TileData);
 }

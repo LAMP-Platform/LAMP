@@ -32,7 +32,13 @@ public partial class ScreenSettings : Form
         DisableApply();
 
         //Setting data bindings
-        cbb_scse_transition_index.DataSource = Globals.ComboboxTransitionIndex;
+        for (int i = 0; i < 512; i++)
+        {
+            Classes.M2_Data.Transition check = Globals.Transitions[i];
+            string name = check.Name != "" ? $" - {check.Name}" : "";
+            cbb_scse_transition_index.Items.Add(i.ToString("X3") + name);
+        }
+        ComboboxOp.AutoSize(cbb_scse_transition_index);
         cbb_scse_screen_used.DataSource = Globals.ComboboxScreensUsed;
         cbb_scse_screen.DataSource = Globals.ComboboxScreens;
 

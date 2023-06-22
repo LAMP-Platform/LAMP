@@ -820,6 +820,24 @@ public static class Editor
         }
     }
 
+    /// <summary>
+    /// Adds a new DataChunk to the Global List or combines <paramref name="chunk"/> 
+    /// with another chunk already existent in the List if they overlap
+    /// </summary>
+    public static void AddDataChunk(DataChunk chunk)
+    {
+        for (int i = 0; i < Globals.DataChunks.Count; i++)
+        {
+            DataChunk c = Globals.DataChunks[i];
+            if (c.Overlap(chunk))
+            {
+                Globals.DataChunks[i] = c.Merge(chunk);
+                return;
+            }
+        }
+        Globals.DataChunks.Add(chunk);
+    }
+
     #region Borders
     /// <summary>
     /// Goes through an entire area and adds border rectangles into a list
@@ -969,10 +987,10 @@ public static class Editor
 
             for (int j = 0; j < 8; j++) //looping through both bytes to generate the colours
             {
-                if (!ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorBlack);
-                if (ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorLightGray);
-                if (!ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorWhite);
-                if (ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorDarkGray);
+                if (!ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorBlack);       //0x0 = Black
+                if (ByteOp.IsBitSet(lowByte, 7 - j) && !ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorLightGray);    //0x2 = Light Gray
+                if (!ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorWhite);        //0x1 = White
+                if (ByteOp.IsBitSet(lowByte, 7 - j) && ByteOp.IsBitSet(topByte, 7 - j)) bpm.SetPixel(x + j, y + i, Globals.ColorDarkGray);      //0x3 = Dark Gray
             }
         }
     }

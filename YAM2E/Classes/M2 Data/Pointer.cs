@@ -52,6 +52,7 @@ public class Pointer
         => new Pointer (a.Offset + b);
     public static Pointer operator +(Pointer a, Pointer b)
         => new Pointer(a.Offset + b.Offset);
+
     public static implicit operator int(Pointer a) 
         => a.Offset;
 }

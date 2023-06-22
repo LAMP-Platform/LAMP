@@ -61,6 +61,7 @@ namespace LAMP
             btn_show_screen_outlines = new System.Windows.Forms.ToolStripMenuItem();
             btn_show_duplicate_outlines = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            btn_show_converter = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
             btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             btn_about = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,7 +106,6 @@ namespace LAMP
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
-            btn_show_converter = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -371,6 +371,13 @@ namespace LAMP
             // 
             toolStripSeparator8.Name = "toolStripSeparator8";
             toolStripSeparator8.Size = new System.Drawing.Size(225, 6);
+            // 
+            // btn_show_converter
+            // 
+            btn_show_converter.Name = "btn_show_converter";
+            btn_show_converter.Size = new System.Drawing.Size(228, 22);
+            btn_show_converter.Text = "Converter";
+            btn_show_converter.Click += btn_show_converter_Click;
             // 
             // tool_strip_help
             // 
@@ -741,7 +748,6 @@ namespace LAMP
             btnTest.TabIndex = 9;
             btnTest.Text = "Test Button";
             btnTest.UseVisualStyleBackColor = true;
-            btnTest.Visible = false;
             btnTest.Click += btnTest_Click;
             // 
             // pnl_main_window_view
@@ -821,13 +827,6 @@ namespace LAMP
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
-            // btn_show_converter
-            // 
-            btn_show_converter.Name = "btn_show_converter";
-            btn_show_converter.Size = new System.Drawing.Size(228, 22);
-            btn_show_converter.Text = "Converter";
-            btn_show_converter.Click += btn_show_converter_Click;
-            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -847,6 +846,7 @@ namespace LAMP
             DragDrop += window_file_drop;
             DragOver += window_drag_over;
             KeyDown += MainWindow_KeyDown;
+            Resize += MainWindow_Resize;
             tool_strip_main_buttons.ResumeLayout(false);
             tool_strip_main_buttons.PerformLayout();
             tool_strip_image_buttons.ResumeLayout(false);

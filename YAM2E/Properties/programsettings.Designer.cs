@@ -110,5 +110,17 @@ namespace LAMP.Properties {
                 this["compilerExclude"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool startInFullscreen {
+            get {
+                return ((bool)(this["startInFullscreen"]));
+            }
+            set {
+                this["startInFullscreen"] = value;
+            }
+        }
     }
 }

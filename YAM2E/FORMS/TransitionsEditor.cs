@@ -8,7 +8,8 @@ using System.Windows.Forms;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
 using LAMP.Controls.Other;
-using LAMP.Controls.Transitions;
+using LAMP.Controls;
+using LAMP.Utilities;
 
 namespace LAMP.FORMS;
 
@@ -21,11 +22,11 @@ public partial class TransitionsEditor : Form
     Transition LoadedTransition;
     public int TransitionLength { get; set; }
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
-    public List<TransitionOpcode> Opcodes = new List<TransitionOpcode>();
+    public List<TransitionOpcodeDisplay> Opcodes = new List<TransitionOpcodeDisplay>();
 
     //Held Opcode data
     //for moving the opcodes around
-    public TransitionOpcode HeldOpcode = null;
+    public TransitionOpcodeDisplay HeldOpcode = null;
 
     //Selected Transition Data
     TreeNode SelectedNode;
@@ -34,6 +35,7 @@ public partial class TransitionsEditor : Form
 
     bool preventSave = false; //When changing transitions it saves the old transition on the new one
                               //preventSave should be set after switching a transition to prevent this
+    bool preventReload = false; //Prevents the combobox from reloading the transition if a rename was done
 
     public TransitionsEditor(int TransitionIndex = 0)
     {
@@ -42,8 +44,11 @@ public partial class TransitionsEditor : Form
 
         for (int i = 0; i < Globals.Transitions.Count; i++)
         {
-            cbb_tred_transition_selection.Items.Add(i.ToString("X3"));
+            Transition check = Globals.Transitions[i];
+            string name = check.Name != "" ? $" - {check.Name}" : "";
+            cbb_tred_transition_selection.Items.Add(i.ToString("X3") + name);
         }
+        ComboboxOp.AutoSize(cbb_tred_transition_selection);
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
         cbb_tred_opcode_add.SelectedIndex = 0; //TODO: probably not needed after rewrite
         chb_expand_all.Checked = Globals.ExpandAllOpcodes;
@@ -74,7 +79,12 @@ public partial class TransitionsEditor : Form
 
     void ReadTransition()
     {
+        SuspendLayout();
         tre_tred_transition_tree.Nodes.Clear();
+
+        //Transition name
+        txb_transition_name.Text = LoadedTransition.Name;
+        preventReload = false;
 
         //generating new Tree
         NodeData.Clear();
@@ -89,8 +99,7 @@ public partial class TransitionsEditor : Form
             int length = GetOpcodeLength(LoadedTransition.Data[i]);
             List<Byte> data = LoadedTransition.Data.GetRange(i, length);
 
-            TransitionOpcode o = new TransitionOpcode(data, this);
-            if (Globals.ExpandAllOpcodes) o.Expand();
+            TransitionOpcodeDisplay o = new TransitionOpcodeDisplay();
             Opcodes.Add(o);
             pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
             i += length;
@@ -322,6 +331,7 @@ public partial class TransitionsEditor : Form
         tre_tred_transition_tree.ExpandAll();
         TransitionLength = LoadedTransition.Data.Count;
         UpdateTransitionLength();
+        ResumeLayout();
     }
 
     void ReloadTransition()
@@ -336,22 +346,6 @@ public partial class TransitionsEditor : Form
             MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }*/
-    }
-
-    public void MoveOpcode(int x, int y)
-    {
-        MessageBox.Show(y.ToString(), "Y",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        for (int i = 0; i < Opcodes.Count; i++)
-        {
-            TransitionOpcode o = (TransitionOpcode)pnlTransition.Controls[i];
-            TransitionOpcode o2 = (TransitionOpcode)pnlTransition.Controls[i + 1];
-            if (y > o.Location.Y && y < o2.Location.Y)
-            {
-                pnlTransition.Controls.SetChildIndex(HeldOpcode, i);
-                return;
-            }
-        }
     }
 
     void EnableEdit()
@@ -398,17 +392,8 @@ public partial class TransitionsEditor : Form
         LoadedTransition.Data.Clear();
 
         //Add all the data from all the Opcodes
-        foreach (TransitionOpcode o in pnlTransition.Controls)
+        foreach (TransitionOpcodeDisplay o in pnlTransition.Controls)
         {
-            foreach (TransitionOperand operand in o.Operands)
-            {
-                operand.SaveValue();
-            }
-
-            for (int i = 0; i < o.Data.Count; i++)
-            {
-                LoadedTransition.Data.Add(o.Data[i]);
-            }
         }
     }
 
@@ -450,8 +435,8 @@ public partial class TransitionsEditor : Form
 
     public void UpdateTransitionLength()
     {
-        lbl_tred_transition_length.Text = $"Transition Length: {TransitionLength} out of 64 bytes";
-        gauTransitionLength.ChangeValue((double)TransitionLength / (double)64);
+        lbl_tred_transition_length.Text = $"Transition Length: {Format.IntToString(TransitionLength)} out of {Format.IntToString(64)} bytes";
+        gauTransitionLength.Value = TransitionLength / 64d;
     }
 
     /// <summary>
@@ -551,6 +536,12 @@ public partial class TransitionsEditor : Form
 
     private void cbb_tred_transition_selection_SelectedIndexChanged(object sender, EventArgs e)
     {
+        if (preventReload)
+        {
+            preventReload = false;
+            return;
+        }
+
         ReloadTransition();
         DisableEdit();
     }
@@ -751,13 +742,20 @@ public partial class TransitionsEditor : Form
     private void chb_expand_all_CheckedChanged(object sender, EventArgs e)
     {
         Globals.ExpandAllOpcodes = chb_expand_all.Checked;
-        if (chb_expand_all.Checked == true)
-        {
-            foreach (TransitionOpcode o in Opcodes)
-            {
-                o.Expand();
-            }
-        }
     }
+
+    private void txb_transition_name_TextChanged(object sender, EventArgs e)
+    {
+        int index = cbb_tred_transition_selection.SelectedIndex;
+
+        LoadedTransition.Name = txb_transition_name.Text;
+        string name = LoadedTransition.Name != "" ? $" - {LoadedTransition.Name}" : "";
+
+        preventReload = true;
+        cbb_tred_transition_selection.Items[index] = index.ToString("X3") + name;
+
+        ComboboxOp.AutoSize(cbb_tred_transition_selection);
+    }
+
     #endregion
 }
