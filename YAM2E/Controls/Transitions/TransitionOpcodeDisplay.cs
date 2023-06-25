@@ -1,4 +1,5 @@
-﻿using LAMP.Controls;
+﻿using LAMP.Classes;
+using LAMP.Controls;
 using LAMP.FORMS;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,11 @@ namespace LAMP.Controls;
 
 public partial class TransitionOpcodeDisplay : UserControl
 {
-    public TransitionOpcodeDisplay()
-    {
+    public TransitionOpcodeDisplay(TransitionOpcode o)
+    { 
         InitializeComponent();
         pnl_parameters.BringToFront();
+        lbl_opcode_name.Text = o.Description[0];
     }
 
     public List<byte> Data { get; set; }

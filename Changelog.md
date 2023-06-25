@@ -10,6 +10,7 @@
    * Shows up in screen settings as well
  * Small Tileset Editor redesign
 **Fixes:** 
+ * TestROM: Tilesets with an index >= 10 cause an exception
  * TestROM: Missile values were capped at 0xFF
  * TestROM: Wrong math on the energy value
  * TestROM: Player sometimes spawns at the bottom of the screen

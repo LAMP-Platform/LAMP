@@ -34,58 +34,56 @@ namespace LAMP.FORMS
             grp_tred_selection = new System.Windows.Forms.GroupBox();
             txb_transition_name = new System.Windows.Forms.TextBox();
             lbl_transition_name = new System.Windows.Forms.Label();
-            chb_expand_all = new System.Windows.Forms.CheckBox();
             lbl_tred_transition_selection = new System.Windows.Forms.Label();
             cbb_tred_transition_selection = new System.Windows.Forms.ComboBox();
-            grp_tred_transition = new System.Windows.Forms.GroupBox();
-            tre_tred_transition_tree = new System.Windows.Forms.TreeView();
-            grp_tred_edits = new System.Windows.Forms.GroupBox();
-            cbb_tred_opcode_add = new System.Windows.Forms.ComboBox();
-            btn_tred_move_opcode_up = new System.Windows.Forms.Button();
-            btn_tred_move_opcode_down = new System.Windows.Forms.Button();
-            lbl_tred_opcodes = new System.Windows.Forms.Label();
-            btn_tred_add_opcode = new System.Windows.Forms.Button();
-            btn_tred_remove_opcode = new System.Windows.Forms.Button();
-            btn_tred_transition_update = new System.Windows.Forms.Button();
-            num_tred_value = new System.Windows.Forms.NumericUpDown();
-            lbl_tred_value = new System.Windows.Forms.Label();
             sts_tred_status_strip = new System.Windows.Forms.StatusStrip();
             lbl_tred_transition_length = new System.Windows.Forms.ToolStripStatusLabel();
             tlt_tred_warning = new System.Windows.Forms.ToolTip(components);
             txb_transition_info = new System.Windows.Forms.TextBox();
             btn_seperate_transition = new System.Windows.Forms.Button();
-            grp_transition_warning = new System.Windows.Forms.GroupBox();
-            gauTransitionLength = new Controls.Other.Gauge();
+            gau_transition_length = new Controls.Other.Gauge();
             grpTransition = new System.Windows.Forms.GroupBox();
-            pnlTransition = new System.Windows.Forms.FlowLayoutPanel();
+            pnlTransition = new System.Windows.Forms.Panel();
+            pnl_warning = new System.Windows.Forms.Panel();
+            txb_warning_header = new System.Windows.Forms.TextBox();
+            pnl_seperate_button_dock = new System.Windows.Forms.Panel();
+            splt_main = new System.Windows.Forms.SplitContainer();
+            grp_opcodes = new System.Windows.Forms.GroupBox();
+            txb_opcodes = new System.Windows.Forms.TextBox();
+            pnl_gauge = new System.Windows.Forms.Panel();
             grp_tred_selection.SuspendLayout();
-            grp_tred_transition.SuspendLayout();
-            grp_tred_edits.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)num_tred_value).BeginInit();
             sts_tred_status_strip.SuspendLayout();
-            grp_transition_warning.SuspendLayout();
             grpTransition.SuspendLayout();
+            pnl_warning.SuspendLayout();
+            pnl_seperate_button_dock.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splt_main).BeginInit();
+            splt_main.Panel1.SuspendLayout();
+            splt_main.Panel2.SuspendLayout();
+            splt_main.SuspendLayout();
+            grp_opcodes.SuspendLayout();
+            pnl_gauge.SuspendLayout();
             SuspendLayout();
             // 
             // grp_tred_selection
             // 
             grp_tred_selection.Controls.Add(txb_transition_name);
             grp_tred_selection.Controls.Add(lbl_transition_name);
-            grp_tred_selection.Controls.Add(chb_expand_all);
             grp_tred_selection.Controls.Add(lbl_tred_transition_selection);
             grp_tred_selection.Controls.Add(cbb_tred_transition_selection);
-            grp_tred_selection.Location = new System.Drawing.Point(13, 13);
+            grp_tred_selection.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_tred_selection.Location = new System.Drawing.Point(9, 3);
             grp_tred_selection.Name = "grp_tred_selection";
-            grp_tred_selection.Size = new System.Drawing.Size(153, 102);
+            grp_tred_selection.Size = new System.Drawing.Size(225, 89);
             grp_tred_selection.TabIndex = 0;
             grp_tred_selection.TabStop = false;
             grp_tred_selection.Text = "Selection";
             // 
             // txb_transition_name
             // 
+            txb_transition_name.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txb_transition_name.Location = new System.Drawing.Point(73, 50);
             txb_transition_name.Name = "txb_transition_name";
-            txb_transition_name.Size = new System.Drawing.Size(74, 23);
+            txb_transition_name.Size = new System.Drawing.Size(146, 23);
             txb_transition_name.TabIndex = 4;
             txb_transition_name.TextChanged += txb_transition_name_TextChanged;
             // 
@@ -98,18 +96,6 @@ namespace LAMP.FORMS
             lbl_transition_name.TabIndex = 3;
             lbl_transition_name.Text = "Name:";
             // 
-            // chb_expand_all
-            // 
-            chb_expand_all.AutoSize = true;
-            chb_expand_all.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            chb_expand_all.Location = new System.Drawing.Point(6, 79);
-            chb_expand_all.Name = "chb_expand_all";
-            chb_expand_all.Size = new System.Drawing.Size(82, 19);
-            chb_expand_all.TabIndex = 2;
-            chb_expand_all.Text = "Expand All";
-            chb_expand_all.UseVisualStyleBackColor = true;
-            chb_expand_all.CheckedChanged += chb_expand_all_CheckedChanged;
-            // 
             // lbl_tred_transition_selection
             // 
             lbl_tred_transition_selection.AutoSize = true;
@@ -121,147 +107,21 @@ namespace LAMP.FORMS
             // 
             // cbb_tred_transition_selection
             // 
+            cbb_tred_transition_selection.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cbb_tred_transition_selection.DropDownWidth = 74;
             cbb_tred_transition_selection.FormattingEnabled = true;
             cbb_tred_transition_selection.Location = new System.Drawing.Point(73, 22);
             cbb_tred_transition_selection.Name = "cbb_tred_transition_selection";
-            cbb_tred_transition_selection.Size = new System.Drawing.Size(74, 23);
+            cbb_tred_transition_selection.Size = new System.Drawing.Size(146, 23);
             cbb_tred_transition_selection.TabIndex = 0;
             cbb_tred_transition_selection.SelectedIndexChanged += cbb_tred_transition_selection_SelectedIndexChanged;
-            // 
-            // grp_tred_transition
-            // 
-            grp_tred_transition.Controls.Add(tre_tred_transition_tree);
-            grp_tred_transition.Location = new System.Drawing.Point(172, 13);
-            grp_tred_transition.Name = "grp_tred_transition";
-            grp_tred_transition.Size = new System.Drawing.Size(320, 544);
-            grp_tred_transition.TabIndex = 1;
-            grp_tred_transition.TabStop = false;
-            grp_tred_transition.Text = "Transition";
-            // 
-            // tre_tred_transition_tree
-            // 
-            tre_tred_transition_tree.Location = new System.Drawing.Point(7, 22);
-            tre_tred_transition_tree.Name = "tre_tred_transition_tree";
-            tre_tred_transition_tree.ShowPlusMinus = false;
-            tre_tred_transition_tree.Size = new System.Drawing.Size(307, 516);
-            tre_tred_transition_tree.TabIndex = 0;
-            tre_tred_transition_tree.AfterSelect += tre_tred_transition_tree_AfterSelect;
-            // 
-            // grp_tred_edits
-            // 
-            grp_tred_edits.Controls.Add(cbb_tred_opcode_add);
-            grp_tred_edits.Controls.Add(btn_tred_move_opcode_up);
-            grp_tred_edits.Controls.Add(btn_tred_move_opcode_down);
-            grp_tred_edits.Controls.Add(lbl_tred_opcodes);
-            grp_tred_edits.Controls.Add(btn_tred_add_opcode);
-            grp_tred_edits.Controls.Add(btn_tred_remove_opcode);
-            grp_tred_edits.Controls.Add(btn_tred_transition_update);
-            grp_tred_edits.Controls.Add(num_tred_value);
-            grp_tred_edits.Controls.Add(lbl_tred_value);
-            grp_tred_edits.Location = new System.Drawing.Point(13, 121);
-            grp_tred_edits.Name = "grp_tred_edits";
-            grp_tred_edits.Size = new System.Drawing.Size(153, 167);
-            grp_tred_edits.TabIndex = 2;
-            grp_tred_edits.TabStop = false;
-            grp_tred_edits.Text = "Edit";
-            // 
-            // cbb_tred_opcode_add
-            // 
-            cbb_tred_opcode_add.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cbb_tred_opcode_add.DropDownWidth = 240;
-            cbb_tred_opcode_add.FormattingEnabled = true;
-            cbb_tred_opcode_add.Items.AddRange(new object[] { "Save the bank and offset of a BG tileset", "Save the offset of a sprite tileset", "Copy data", "Select metatile table", "Select collision table", "Select solidity indeces", "Warp", "Retreat from Queen", "Change acid & spike damage", "Exit from Queen", "Enter Queen", "Conditional Transition", "Fadeout", "Load background graphics", "Load sprite graphics", "Change music", "Change special graphics", "END TRANSITION" });
-            cbb_tred_opcode_add.Location = new System.Drawing.Point(7, 108);
-            cbb_tred_opcode_add.Name = "cbb_tred_opcode_add";
-            cbb_tred_opcode_add.Size = new System.Drawing.Size(140, 23);
-            cbb_tred_opcode_add.TabIndex = 10;
-            // 
-            // btn_tred_move_opcode_up
-            // 
-            btn_tred_move_opcode_up.Image = (System.Drawing.Image)resources.GetObject("btn_tred_move_opcode_up.Image");
-            btn_tred_move_opcode_up.Location = new System.Drawing.Point(7, 137);
-            btn_tred_move_opcode_up.Name = "btn_tred_move_opcode_up";
-            btn_tred_move_opcode_up.Size = new System.Drawing.Size(27, 23);
-            btn_tred_move_opcode_up.TabIndex = 9;
-            btn_tred_move_opcode_up.UseVisualStyleBackColor = true;
-            btn_tred_move_opcode_up.Click += btn_tred_move_opcode_up_Click;
-            // 
-            // btn_tred_move_opcode_down
-            // 
-            btn_tred_move_opcode_down.Image = (System.Drawing.Image)resources.GetObject("btn_tred_move_opcode_down.Image");
-            btn_tred_move_opcode_down.Location = new System.Drawing.Point(40, 137);
-            btn_tred_move_opcode_down.Name = "btn_tred_move_opcode_down";
-            btn_tred_move_opcode_down.Size = new System.Drawing.Size(27, 23);
-            btn_tred_move_opcode_down.TabIndex = 8;
-            btn_tred_move_opcode_down.UseVisualStyleBackColor = true;
-            btn_tred_move_opcode_down.Click += btn_tred_move_opcode_down_Click;
-            // 
-            // lbl_tred_opcodes
-            // 
-            lbl_tred_opcodes.AutoSize = true;
-            lbl_tred_opcodes.Location = new System.Drawing.Point(6, 83);
-            lbl_tred_opcodes.Name = "lbl_tred_opcodes";
-            lbl_tred_opcodes.Size = new System.Drawing.Size(52, 15);
-            lbl_tred_opcodes.TabIndex = 7;
-            lbl_tred_opcodes.Text = "Opcode:";
-            // 
-            // btn_tred_add_opcode
-            // 
-            btn_tred_add_opcode.Image = (System.Drawing.Image)resources.GetObject("btn_tred_add_opcode.Image");
-            btn_tred_add_opcode.Location = new System.Drawing.Point(73, 79);
-            btn_tred_add_opcode.Name = "btn_tred_add_opcode";
-            btn_tred_add_opcode.Size = new System.Drawing.Size(75, 23);
-            btn_tred_add_opcode.TabIndex = 6;
-            btn_tred_add_opcode.UseVisualStyleBackColor = true;
-            btn_tred_add_opcode.Click += btn_tred_add_opcode_Click;
-            // 
-            // btn_tred_remove_opcode
-            // 
-            btn_tred_remove_opcode.Image = (System.Drawing.Image)resources.GetObject("btn_tred_remove_opcode.Image");
-            btn_tred_remove_opcode.Location = new System.Drawing.Point(73, 137);
-            btn_tred_remove_opcode.Name = "btn_tred_remove_opcode";
-            btn_tred_remove_opcode.Size = new System.Drawing.Size(74, 23);
-            btn_tred_remove_opcode.TabIndex = 5;
-            btn_tred_remove_opcode.UseVisualStyleBackColor = true;
-            btn_tred_remove_opcode.Click += btn_tred_remove_opcode_Click;
-            // 
-            // btn_tred_transition_update
-            // 
-            btn_tred_transition_update.Enabled = false;
-            btn_tred_transition_update.Location = new System.Drawing.Point(73, 50);
-            btn_tred_transition_update.Name = "btn_tred_transition_update";
-            btn_tred_transition_update.Size = new System.Drawing.Size(74, 23);
-            btn_tred_transition_update.TabIndex = 2;
-            btn_tred_transition_update.Text = "Change";
-            btn_tred_transition_update.UseVisualStyleBackColor = true;
-            btn_tred_transition_update.Click += btn_tred_transition_update_Click;
-            // 
-            // num_tred_value
-            // 
-            num_tred_value.Enabled = false;
-            num_tred_value.Hexadecimal = true;
-            num_tred_value.Location = new System.Drawing.Point(73, 21);
-            num_tred_value.Name = "num_tred_value";
-            num_tred_value.Size = new System.Drawing.Size(74, 23);
-            num_tred_value.TabIndex = 1;
-            // 
-            // lbl_tred_value
-            // 
-            lbl_tred_value.AutoSize = true;
-            lbl_tred_value.Enabled = false;
-            lbl_tred_value.Location = new System.Drawing.Point(7, 23);
-            lbl_tred_value.Name = "lbl_tred_value";
-            lbl_tred_value.Size = new System.Drawing.Size(38, 15);
-            lbl_tred_value.TabIndex = 0;
-            lbl_tred_value.Text = "Value:";
             // 
             // sts_tred_status_strip
             // 
             sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length });
             sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             sts_tred_status_strip.Name = "sts_tred_status_strip";
-            sts_tred_status_strip.Size = new System.Drawing.Size(862, 22);
+            sts_tred_status_strip.Size = new System.Drawing.Size(863, 22);
             sts_tred_status_strip.TabIndex = 3;
             sts_tred_status_strip.Text = "statusStrip1";
             // 
@@ -282,94 +142,180 @@ namespace LAMP.FORMS
             // txb_transition_info
             // 
             txb_transition_info.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            txb_transition_info.Location = new System.Drawing.Point(6, 20);
+            txb_transition_info.Dock = System.Windows.Forms.DockStyle.Fill;
+            txb_transition_info.Location = new System.Drawing.Point(3, 29);
             txb_transition_info.Multiline = true;
             txb_transition_info.Name = "txb_transition_info";
             txb_transition_info.ReadOnly = true;
-            txb_transition_info.Size = new System.Drawing.Size(141, 161);
+            txb_transition_info.Size = new System.Drawing.Size(219, 81);
             txb_transition_info.TabIndex = 4;
             txb_transition_info.TabStop = false;
+            txb_transition_info.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btn_seperate_transition
             // 
-            btn_seperate_transition.Location = new System.Drawing.Point(6, 187);
+            btn_seperate_transition.Dock = System.Windows.Forms.DockStyle.Fill;
+            btn_seperate_transition.Location = new System.Drawing.Point(40, 0);
             btn_seperate_transition.Name = "btn_seperate_transition";
-            btn_seperate_transition.Size = new System.Drawing.Size(140, 23);
+            btn_seperate_transition.Size = new System.Drawing.Size(139, 27);
             btn_seperate_transition.TabIndex = 5;
             btn_seperate_transition.Text = "Seperate Transitions";
             btn_seperate_transition.UseVisualStyleBackColor = true;
             btn_seperate_transition.Click += btn_seperate_transition_Click;
             // 
-            // grp_transition_warning
+            // gau_transition_length
             // 
-            grp_transition_warning.Controls.Add(txb_transition_info);
-            grp_transition_warning.Controls.Add(btn_seperate_transition);
-            grp_transition_warning.Location = new System.Drawing.Point(13, 294);
-            grp_transition_warning.Name = "grp_transition_warning";
-            grp_transition_warning.Size = new System.Drawing.Size(153, 217);
-            grp_transition_warning.TabIndex = 6;
-            grp_transition_warning.TabStop = false;
-            grp_transition_warning.Text = "Warning";
-            // 
-            // gauTransitionLength
-            // 
-            gauTransitionLength.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            gauTransitionLength.BackColor = System.Drawing.Color.FromArgb(188, 188, 188);
-            gauTransitionLength.Color = System.Drawing.Color.FromArgb(0, 192, 192);
-            gauTransitionLength.Location = new System.Drawing.Point(13, 563);
-            gauTransitionLength.Name = "gauTransitionLength";
-            gauTransitionLength.Size = new System.Drawing.Size(837, 10);
-            gauTransitionLength.TabIndex = 7;
-            gauTransitionLength.Value = 0D;
+            gau_transition_length.BackColor = System.Drawing.Color.FromArgb(188, 188, 188);
+            gau_transition_length.Color = System.Drawing.Color.FromArgb(0, 192, 192);
+            gau_transition_length.Dock = System.Windows.Forms.DockStyle.Fill;
+            gau_transition_length.Location = new System.Drawing.Point(9, 3);
+            gau_transition_length.Name = "gau_transition_length";
+            gau_transition_length.Size = new System.Drawing.Size(845, 9);
+            gau_transition_length.TabIndex = 7;
+            gau_transition_length.Value = 0D;
             // 
             // grpTransition
             // 
             grpTransition.BackColor = System.Drawing.SystemColors.Control;
             grpTransition.Controls.Add(pnlTransition);
-            grpTransition.Location = new System.Drawing.Point(498, 13);
+            grpTransition.Dock = System.Windows.Forms.DockStyle.Fill;
+            grpTransition.Location = new System.Drawing.Point(3, 3);
             grpTransition.Name = "grpTransition";
-            grpTransition.Size = new System.Drawing.Size(352, 544);
+            grpTransition.Size = new System.Drawing.Size(610, 561);
             grpTransition.TabIndex = 8;
             grpTransition.TabStop = false;
             grpTransition.Text = "Transition";
             // 
             // pnlTransition
             // 
-            pnlTransition.AutoScroll = true;
-            pnlTransition.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            pnlTransition.Location = new System.Drawing.Point(6, 22);
+            pnlTransition.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnlTransition.Location = new System.Drawing.Point(3, 19);
             pnlTransition.Name = "pnlTransition";
-            pnlTransition.Size = new System.Drawing.Size(340, 516);
+            pnlTransition.Padding = new System.Windows.Forms.Padding(6, 3, 6, 0);
+            pnlTransition.Size = new System.Drawing.Size(604, 539);
             pnlTransition.TabIndex = 0;
-            pnlTransition.WrapContents = false;
+            // 
+            // pnl_warning
+            // 
+            pnl_warning.Controls.Add(txb_transition_info);
+            pnl_warning.Controls.Add(txb_warning_header);
+            pnl_warning.Controls.Add(pnl_seperate_button_dock);
+            pnl_warning.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_warning.Location = new System.Drawing.Point(9, 421);
+            pnl_warning.Name = "pnl_warning";
+            pnl_warning.Padding = new System.Windows.Forms.Padding(3);
+            pnl_warning.Size = new System.Drawing.Size(225, 140);
+            pnl_warning.TabIndex = 7;
+            // 
+            // txb_warning_header
+            // 
+            txb_warning_header.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            txb_warning_header.Dock = System.Windows.Forms.DockStyle.Top;
+            txb_warning_header.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
+            txb_warning_header.ForeColor = System.Drawing.Color.Red;
+            txb_warning_header.Location = new System.Drawing.Point(3, 3);
+            txb_warning_header.Multiline = true;
+            txb_warning_header.Name = "txb_warning_header";
+            txb_warning_header.ReadOnly = true;
+            txb_warning_header.Size = new System.Drawing.Size(219, 26);
+            txb_warning_header.TabIndex = 5;
+            txb_warning_header.TabStop = false;
+            txb_warning_header.Text = "WARNING";
+            txb_warning_header.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // pnl_seperate_button_dock
+            // 
+            pnl_seperate_button_dock.Controls.Add(btn_seperate_transition);
+            pnl_seperate_button_dock.Dock = System.Windows.Forms.DockStyle.Bottom;
+            pnl_seperate_button_dock.Location = new System.Drawing.Point(3, 110);
+            pnl_seperate_button_dock.Name = "pnl_seperate_button_dock";
+            pnl_seperate_button_dock.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
+            pnl_seperate_button_dock.Size = new System.Drawing.Size(219, 27);
+            pnl_seperate_button_dock.TabIndex = 8;
+            // 
+            // splt_main
+            // 
+            splt_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            splt_main.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            splt_main.Location = new System.Drawing.Point(0, 0);
+            splt_main.Name = "splt_main";
+            // 
+            // splt_main.Panel1
+            // 
+            splt_main.Panel1.Controls.Add(pnl_warning);
+            splt_main.Panel1.Controls.Add(grp_opcodes);
+            splt_main.Panel1.Controls.Add(grp_tred_selection);
+            splt_main.Panel1.Padding = new System.Windows.Forms.Padding(9, 3, 3, 3);
+            // 
+            // splt_main.Panel2
+            // 
+            splt_main.Panel2.Controls.Add(grpTransition);
+            splt_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 9, 3);
+            splt_main.Size = new System.Drawing.Size(863, 567);
+            splt_main.SplitterDistance = 237;
+            splt_main.TabIndex = 9;
+            // 
+            // grp_opcodes
+            // 
+            grp_opcodes.Controls.Add(txb_opcodes);
+            grp_opcodes.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_opcodes.Location = new System.Drawing.Point(9, 92);
+            grp_opcodes.Name = "grp_opcodes";
+            grp_opcodes.Size = new System.Drawing.Size(225, 329);
+            grp_opcodes.TabIndex = 8;
+            grp_opcodes.TabStop = false;
+            grp_opcodes.Text = "Opcodes";
+            // 
+            // txb_opcodes
+            // 
+            txb_opcodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            txb_opcodes.Dock = System.Windows.Forms.DockStyle.Fill;
+            txb_opcodes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            txb_opcodes.Location = new System.Drawing.Point(3, 19);
+            txb_opcodes.Multiline = true;
+            txb_opcodes.Name = "txb_opcodes";
+            txb_opcodes.ReadOnly = true;
+            txb_opcodes.Size = new System.Drawing.Size(219, 307);
+            txb_opcodes.TabIndex = 5;
+            txb_opcodes.TabStop = false;
+            // 
+            // pnl_gauge
+            // 
+            pnl_gauge.Controls.Add(gau_transition_length);
+            pnl_gauge.Dock = System.Windows.Forms.DockStyle.Bottom;
+            pnl_gauge.Location = new System.Drawing.Point(0, 567);
+            pnl_gauge.Name = "pnl_gauge";
+            pnl_gauge.Padding = new System.Windows.Forms.Padding(9, 3, 9, 3);
+            pnl_gauge.Size = new System.Drawing.Size(863, 15);
+            pnl_gauge.TabIndex = 8;
             // 
             // TransitionsEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(862, 604);
-            Controls.Add(grpTransition);
-            Controls.Add(gauTransitionLength);
-            Controls.Add(grp_transition_warning);
+            ClientSize = new System.Drawing.Size(863, 604);
+            Controls.Add(splt_main);
+            Controls.Add(pnl_gauge);
             Controls.Add(sts_tred_status_strip);
-            Controls.Add(grp_tred_edits);
-            Controls.Add(grp_tred_transition);
-            Controls.Add(grp_tred_selection);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(520, 643);
             Name = "TransitionsEditor";
             Text = "Transitions Editor";
             grp_tred_selection.ResumeLayout(false);
             grp_tred_selection.PerformLayout();
-            grp_tred_transition.ResumeLayout(false);
-            grp_tred_edits.ResumeLayout(false);
-            grp_tred_edits.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)num_tred_value).EndInit();
             sts_tred_status_strip.ResumeLayout(false);
             sts_tred_status_strip.PerformLayout();
-            grp_transition_warning.ResumeLayout(false);
-            grp_transition_warning.PerformLayout();
             grpTransition.ResumeLayout(false);
+            pnl_warning.ResumeLayout(false);
+            pnl_warning.PerformLayout();
+            pnl_seperate_button_dock.ResumeLayout(false);
+            splt_main.Panel1.ResumeLayout(false);
+            splt_main.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splt_main).EndInit();
+            splt_main.ResumeLayout(false);
+            grp_opcodes.ResumeLayout(false);
+            grp_opcodes.PerformLayout();
+            pnl_gauge.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -379,29 +325,22 @@ namespace LAMP.FORMS
         private System.Windows.Forms.GroupBox grp_tred_selection;
         private System.Windows.Forms.Label lbl_tred_transition_selection;
         private System.Windows.Forms.ComboBox cbb_tred_transition_selection;
-        private System.Windows.Forms.GroupBox grp_tred_transition;
-        private System.Windows.Forms.TreeView tre_tred_transition_tree;
-        private System.Windows.Forms.GroupBox grp_tred_edits;
         private System.Windows.Forms.StatusStrip sts_tred_status_strip;
         private System.Windows.Forms.ToolStripStatusLabel lbl_tred_transition_length;
-        private System.Windows.Forms.NumericUpDown num_tred_value;
-        private System.Windows.Forms.Label lbl_tred_value;
-        private System.Windows.Forms.Button btn_tred_transition_update;
         private System.Windows.Forms.ToolTip tlt_tred_warning;
-        private System.Windows.Forms.Button btn_tred_add_opcode;
-        private System.Windows.Forms.Button btn_tred_remove_opcode;
-        private System.Windows.Forms.Label lbl_tred_opcodes;
-        private System.Windows.Forms.Button btn_tred_move_opcode_up;
-        private System.Windows.Forms.Button btn_tred_move_opcode_down;
-        private System.Windows.Forms.ComboBox cbb_tred_opcode_add;
         private System.Windows.Forms.TextBox txb_transition_info;
         private System.Windows.Forms.Button btn_seperate_transition;
-        private System.Windows.Forms.GroupBox grp_transition_warning;
-        private Controls.Other.Gauge gauTransitionLength;
+        private Controls.Other.Gauge gau_transition_length;
         private System.Windows.Forms.GroupBox grpTransition;
-        private System.Windows.Forms.FlowLayoutPanel pnlTransition;
-        private System.Windows.Forms.CheckBox chb_expand_all;
         private System.Windows.Forms.TextBox txb_transition_name;
         private System.Windows.Forms.Label lbl_transition_name;
+        private System.Windows.Forms.SplitContainer splt_main;
+        private System.Windows.Forms.Panel pnl_gauge;
+        private System.Windows.Forms.Panel pnlTransition;
+        private System.Windows.Forms.Panel pnl_warning;
+        private System.Windows.Forms.TextBox txb_warning_header;
+        private System.Windows.Forms.Panel pnl_seperate_button_dock;
+        private System.Windows.Forms.GroupBox grp_opcodes;
+        private System.Windows.Forms.TextBox txb_opcodes;
     }
 }

@@ -17,7 +17,9 @@ namespace LAMP.FORMS;
 
 public partial class TilesetDefinitions : Form
 {
-    public TileViewer Tileset = new TileViewer();
+    public TileViewer Tileset = new TileViewer()
+    {
+    };
     private Bitmap tilemap;
     private Pointer MetatilePointer;
 

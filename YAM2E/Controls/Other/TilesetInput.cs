@@ -87,7 +87,7 @@ public partial class TilesetInput : UserControl
     /// </summary>
     public void SetTileset(int TilesetIndex)
     {
-        cbb_metatile_table.SelectedIndex = TilesetIndex;
+        cbb_tileset_id.SelectedIndex = TilesetIndex;
     }
 
     /// <summary>
@@ -100,7 +100,6 @@ public partial class TilesetInput : UserControl
 
         //Adding entries
         cbb_tileset_id.Items.Clear();
-        int width = cbb_tileset_id.Width;
         for (int i = 0; i < Globals.Tilesets.Count; i++)
         {
             Tileset t = Globals.Tilesets[i];

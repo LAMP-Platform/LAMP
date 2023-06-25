@@ -72,7 +72,7 @@ namespace LAMP
             }
 
             if (nybbleCount == 0) return 0;
-            return (nybbleCount / 2) + 1;
+            return nybbleCount / 2 + nybbleCount % 2;   //calculates how many bytes get started through the nybbles
         }
 
         /// <summary>
@@ -84,8 +84,9 @@ namespace LAMP
             if (data.Length == 0 || data[0] == "") throw new Exception("No Opcode index has been defined");
 
             string indexstring = Regex.Match(data[0], @"\((.*?)\)").Value; //gets the prewritten data in the first line (...)
+            if (indexstring == "") throw new Exception("No Opcode index has been defined");
 
-            return (byte)Format.StringToInt(Regex.Match(indexstring, @"[0-9]+").Value);
+            return (byte)Format.StringToInt(Regex.Match(indexstring, @"[0-9]+|[A-F]+").Value);
         }
     }
 }

@@ -1184,9 +1184,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        //Opcode language interpreter
-        string input = "If [0;4](90), Metroids, Alive <= [2], Goto Transition [3;4]";
-
-        byte index = OpcodeInterpreter.GetOpcodeIndex(input);
+        TransitionOpcode test = new TransitionOpcode("Conditional Transition [0;1](90), if Metroids alive <= [2;3], goto Transition [4;7](F)");
     }
 }
