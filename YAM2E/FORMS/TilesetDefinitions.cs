@@ -12,6 +12,7 @@ using LAMP.Classes;
 using LAMP.Controls;
 using LAMP.Utilities;
 using System.Windows.Forms.Design;
+using LAMP.Classes.M2_Data;
 
 namespace LAMP.FORMS;
 
@@ -20,7 +21,6 @@ public partial class TilesetDefinitions : Form
     public TileViewer Tileset = new TileViewer()
     {
     };
-    private Bitmap tilemap;
     private Pointer MetatilePointer;
 
     public TilesetDefinitions()
@@ -51,9 +51,12 @@ public partial class TilesetDefinitions : Form
     private void UpdateTileset()
     {
         if (Globals.Tilesets.Count < 1) return;
-        if (tilemap != null) tilemap.Dispose();
-        tilemap = Editor.DrawTileSet(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, MetatilePointer, 16, 8, false);
-        Tileset.BackgroundImage = tilemap;
+        Tileset.BackgroundImage?.Dispose();
+
+        GFX gfx = new GFX(Globals.Tilesets[cbb_tileset_id.SelectedIndex].GfxOffset, 16, 8);
+        Metatiles meta = new Metatiles(gfx, MetatilePointer);
+
+        Tileset.BackgroundImage = meta.Draw();
         grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
 

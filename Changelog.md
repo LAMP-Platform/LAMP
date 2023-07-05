@@ -9,6 +9,7 @@
  * Transitions can be names
    * Shows up in screen settings as well
  * Small Tileset Editor redesign
+ * All tile displays now highlight tiles that LAMP can not display currently
 **Fixes:** 
  * TestROM: Tilesets with an index >= 10 cause an exception
  * TestROM: Missile values were capped at 0xFF
