@@ -202,9 +202,17 @@ public partial class MainWindow : Form
             gfx = selectedTileset.GfxOffset;
             meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
         }
-        Globals.Tileset.Dispose();
-        Globals.Tileset = Editor.DrawTileSet(gfx, meta, 16, 8, true);
-        Tileset.BackgroundImage = Globals.Tileset;
+        Tileset.BackgroundImage?.Dispose(); //Dispose existing tileset bitmap if existent
+        GFX tileGfx = new GFX(gfx, 16, 8);                  //Create GFX and metatile object for drawing
+        Metatiles metatiles = new Metatiles(tileGfx, meta); //
+        Tileset.BackgroundImage = metatiles.Draw();
+
+        //Update global metatile cache for map drawing
+        foreach (Bitmap b in Globals.Metatiles)
+        {
+            b?.Dispose();
+        }
+        Globals.Metatiles = metatiles.DrawMetatileList();
     }
 
     private void DisplayRecentFiles()

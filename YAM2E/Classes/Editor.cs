@@ -1010,13 +1010,13 @@ public static class Editor
 
     public static void DrawMetaTile(int gfxOffset, int metaOffset, Bitmap bpm, int x, int y)
     {
-        if (ROM.Data[metaOffset + 0] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 0], bpm, x, y);
+        if (ROM.Read8(metaOffset + 0) <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Read8(metaOffset + 0), bpm, x, y);
         else DrawBlack8(bpm, x, y);
-        if (ROM.Data[metaOffset + 1] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 1], bpm, x + 8, y);
+        if (ROM.Read8(metaOffset + 1) <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Read8(metaOffset + 1), bpm, x + 8, y);
         else DrawBlack8(bpm, x + 8, y);
-        if (ROM.Data[metaOffset + 2] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 2], bpm, x, y + 8);
+        if (ROM.Read8(metaOffset + 2) <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Read8(metaOffset + 2), bpm, x, y + 8);
         else DrawBlack8(bpm, x, y + 8);
-        if (ROM.Data[metaOffset + 3] <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Data[metaOffset + 3], bpm, x + 8, y + 8);
+        if (ROM.Read8(metaOffset + 3) <= 0x7F) DrawTile8(gfxOffset + 16 * ROM.Read8(metaOffset + 3), bpm, x + 8, y + 8);
         else DrawBlack8(bpm, x + 8, y + 8);
     }
 
@@ -1059,10 +1059,6 @@ public static class Editor
         }
 
         return tileset;
-    }
-
-    public static void UpdateTileList()
-    {
     }
 
     /// <summary>

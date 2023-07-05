@@ -40,6 +40,7 @@ public class Metatiles
     {
         get
         {
+            if (image == null) throw new Exception("The image has not been drawn yet. Run GFX.Draw() first!");
             return image;
         }
         set
@@ -67,31 +68,60 @@ public class Metatiles
         else return Editor.DrawColored8x8Tile(Color.DarkRed);
     }
 
-    public void Draw()
+    public Bitmap Draw()
     {
         Bitmap result = new Bitmap(256, 128);
         Graphics g = Graphics.FromImage(result);
 
         //Drawing the Metatiles
-        for (int i = 0; i < 128; i++) //TODO: Convert to single loop. You are stupid. Why did you use a 2D loop
+        for (int i = 0; i < 128; i++)
         {
             int x = i % 16 * 16;
             int y = i / 16 * 16;
 
-            Bitmap tileTopLeft = getTableGraphic(i * 4 + 0);
-            Bitmap tileTopRight = getTableGraphic(i * 4 + 1);
-            Bitmap tileBottomLeft = getTableGraphic(i * 4 + 2);
-            Bitmap tileBottomRight = getTableGraphic(i * 4 + 3);
-            g.DrawImage(tileTopLeft, x, y);
-            g.DrawImage(tileTopRight, x + 8, y);
-            g.DrawImage(tileBottomLeft, x, y + 8);
-            g.DrawImage(tileBottomRight, x + 8, y + 8);
+            Bitmap metatile = DrawMetatile(i * 4);
+            g.DrawImage(metatile, x, y);
 
-            tileTopLeft.Dispose(); tileTopRight.Dispose(); tileBottomLeft.Dispose(); tileBottomRight.Dispose();
+            metatile.Dispose();
         }
 
         g.Dispose();
         Image = result;
+        return result;
+    }
+
+    private Bitmap DrawMetatile(int index)
+    {
+        Bitmap result = new Bitmap(16, 16);
+        Graphics g = Graphics.FromImage(result);
+
+        Bitmap tileTopLeft = getTableGraphic(index ++);
+        Bitmap tileTopRight = getTableGraphic(index ++);
+        Bitmap tileBottomLeft = getTableGraphic(index ++);
+        Bitmap tileBottomRight = getTableGraphic(index ++);
+        g.DrawImage(tileTopLeft, 0, 0);
+        g.DrawImage(tileTopRight, 8, 0);
+        g.DrawImage(tileBottomLeft, 0, 8);
+        g.DrawImage(tileBottomRight, 8, 8);
+
+        tileTopLeft.Dispose(); tileTopRight.Dispose(); tileBottomLeft.Dispose(); tileBottomRight.Dispose(); g.Dispose();
+        return result;
+    }
+
+    /// <summary>
+    /// Creates a list of Bitmaps with each metatile as a single Bitmap
+    /// </summary>
+    /// <returns></returns>
+    public Bitmap[] DrawMetatileList()
+    {
+        Bitmap[] result = new Bitmap[128];
+
+        for (int i = 0; i < 128; i++)
+        {
+            result[i] = DrawMetatile(i * 4);
+        }
+
+        return result;
     }
 
     /// <summary>

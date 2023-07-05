@@ -77,12 +77,11 @@ internal static class Globals
 
     //Bitmap lists
     public static Bitmap[] Metatiles = new Bitmap[128];
-    public static Bitmap Tileset = new Bitmap(1, 1);
     public static Bitmap AreaBank = new Bitmap(1, 1);
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
-
+    
     //Tweak data
     public static List<Tweak> Tweaks = new List<Tweak>();
 

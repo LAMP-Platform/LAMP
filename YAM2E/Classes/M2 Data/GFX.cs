@@ -49,6 +49,7 @@ public class GFX
     {
         get
         {
+            if (image == null) throw new Exception("The image has not been drawn yet. Run GFX.Draw() first!");
             return image;
         }
         set
