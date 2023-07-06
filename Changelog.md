@@ -9,7 +9,8 @@
  * Transitions can be names
    * Shows up in screen settings as well
  * Small Tileset Editor redesign
- * All tile displays now highlight tiles that LAMP can not display currently
+ * All tile displays now highlight tiles that LAMP can not display currently  
+ 
 **Fixes:** 
  * TestROM: Tilesets with an index >= 10 cause an exception
  * TestROM: Missile values were capped at 0xFF
@@ -40,7 +41,8 @@
    * Shift - Tile center
    * Alt - Tile corner
    * Shift & Alt - Tile center, edge and corner
- * Compilation Settings
+ * Compilation Settings  
+
 **Fixes:**
  * Controls all appear at once now when loading a project
  * Selected tiles in the room no longer continuously reselect
@@ -48,7 +50,7 @@
 
 
 # Version B 3.1
-### Released: 01.04.2023
+### Released: 01.04.2023  
 **Fixes:**
  * TestROM now actually works with modified data
 
@@ -79,7 +81,8 @@
    * Prefix can be chosen
    * Display offsets as Bank:Offset or direct Offset
  * Scroll boundaries can be displayed
-   * F4 Hotkey
+   * F4 Hotkey  
+
 **Fixes:**
  * F5 Hotkey should now work all the time
  * Scroll bars reset when switching Area banks
