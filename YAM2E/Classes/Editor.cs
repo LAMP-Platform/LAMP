@@ -58,7 +58,7 @@ public static class Editor
         try
         {
             string latestVersion = await Program.httpClient.GetStringAsync("https://pastebin.com/6HPaBaZD");
-            if (latestVersion.Contains(Version))
+            if (!latestVersion.Contains(Version))
             {
                 //Extracting the update info from the site (Probably a super stupid way of doing things)
                 string first = "{UpdateInfo}";

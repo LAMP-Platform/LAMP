@@ -38,7 +38,7 @@
             pnl_header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btn_expand).BeginInit();
             pnl_footer.SuspendLayout();
-            SuspendLayout();
+            //SuspendLayout();
             // 
             // pnl_header
             // 
@@ -131,7 +131,7 @@
             pnl_header.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btn_expand).EndInit();
             pnl_footer.ResumeLayout(false);
-            ResumeLayout(false);
+            //ResumeLayout(false);
             PerformLayout();
         }
 

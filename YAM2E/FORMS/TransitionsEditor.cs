@@ -24,6 +24,18 @@ public partial class TransitionsEditor : Form
     Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
     public List<TransitionOpcodeDisplay> Opcodes = new List<TransitionOpcodeDisplay>();
 
+    int SelectedIndex
+    {
+        get => selectedIndex;
+        set
+        {
+            if (selectedIndex == value) return;
+            selectedIndex = value;
+            ReloadTransition();
+        }
+    }
+    int selectedIndex = -1; //This is set to 1 because initially it will be index 0 but the transition should still be loaded
+
     //Held Opcode data
     //for moving the opcodes around
     public TransitionOpcodeDisplay HeldOpcode = null;
@@ -69,7 +81,7 @@ public partial class TransitionsEditor : Form
 
             string newLine = Environment.NewLine;
             txb_transition_info.Text = $"This Transition shares it's data with" + newLine + newLine +
-                $"Transition {LoadedTransition.CopyOf.ToString("X3")}.";
+                $"Transition {LoadedTransition.CopyOf:X3}.";
             LoadedTransition = Globals.Transitions[LoadedTransition.CopyOf];
         }
         else
@@ -154,13 +166,7 @@ public partial class TransitionsEditor : Form
     #region Events
     private void cbb_tred_transition_selection_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (preventReload)
-        {
-            preventReload = false;
-            return;
-        }
-
-        ReloadTransition();
+        SelectedIndex = cbb_tred_transition_selection.SelectedIndex;
     }
 
     private void btn_seperate_transition_Click(object sender, EventArgs e)

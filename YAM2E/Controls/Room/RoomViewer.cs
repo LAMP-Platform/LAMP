@@ -9,7 +9,7 @@ using System;
 
 namespace LAMP.Controls;
 
-public class RoomViewer : Control
+public class RoomViewer : UserControl
 {
     public override Image BackgroundImage
     {
@@ -23,6 +23,7 @@ public class RoomViewer : Control
 
     public RoomViewer()
     {
+        AutoScroll = true;
         DoubleBuffered = true;
         SetStyle(ControlStyles.AllPaintingInWmPaint, true);
         SuspendLayout();
@@ -322,5 +323,19 @@ public class RoomViewer : Control
         pevent.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
         pevent.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
         base.OnPaintBackground(pevent);
+    }
+
+    protected override void OnMouseWheel(MouseEventArgs e)
+    {
+        if (this.VScroll && (Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+        {
+            this.VScroll = false;
+            base.OnMouseWheel(e);
+            this.VScroll = true;
+        }
+        else
+        {
+            base.OnMouseWheel(e);
+        }
     }
 }
