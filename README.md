@@ -3,27 +3,30 @@
 # LAMP ![](https://i.imgur.com/GU6OWbJ.png)
 **Level Arranging Metroid (2) Program**
 
-LAMP is a feature-rich Metroid 2: Return of Samus editor. Made with .NET and Windows Forms.
+LAMP is a feature-rich Metroid 2: Return of Samus editor. Made with .NET and Windows Forms.  
 You **_need_** to install **.NET 6** (or higher) to run the program. If you don't have it installed it can be downloaded here:
 * [.NET 7 64bit/x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.7-windows-x64-installer)
 * [.NET 7 32bit/x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-7.0.7-windows-x86-installer)
 
-LAMP is split into a 32bit/x86 and 64bit/x64 version. This is due to the new zooming feature having huge performance issues on higher zooming levels on the x86 version.
-#
-<details>
-  <summary>Current Features</summary>
-  
-  - Creation of project files
-  - Tileset view
-  - Tileset Editor and definitions
-  - Room and area view
-  - Duplicate screen view
-  - Tile editing
-  - Screen editing
-  - Transition editing
-  - Object editing
-  - ROM compilation
-</details>
+LAMP is split into a 32bit/x86 and 64bit/x64 version.  
+This is due to the zooming feature having huge performance issues on higher zooming levels on the x86 version.
 
+## Releases
+**The newest stable version of LAMP can always be found [here](https://github.com/ConConner/LAMP/releases)!**  
+Stable releases take a long time but add a lot of features and fix a lot of bugs.  
+If you want faster updates and quicker access to features, which might still be in development, download one of the development builds.  
+**Development builds can be found [here <- Don't exist yet]!**
+
+## Build instructions
+To build LAMP from source, open a CLI in your repository root and run:  
+
+**For x64**
+```
+dotnet publish -r win-x64 -c release
+```
+**For x86**
+```
+dotnet publish -r win-x86 -c release
+```
 #
 For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the [Development Discord](https://discord.gg/YT6M2rAqqS)!
