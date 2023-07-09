@@ -1,0 +1,40 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Publish Dev Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Publish 64
+      run: dotnet publish -r win-x64 -c release -o foo
+    - name: Upload Artifacts 64
+      uses: actions/upload-artifacts@v1.0.0
+      with:
+        name: LAMP-devbuild-x64
+        path: foo\LAMP.exe
+        
+    - name: Publish 86
+      run: dotnet publish -r win-x86 -c release -o foo
+    - name: Upload Artifacts 86
+      uses: actions/upload-artifacts@v1.0.0
+      with:
+        name: LAMP-devbuild-x86
+        path: foo\LAMP.exe
