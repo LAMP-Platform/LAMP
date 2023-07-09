@@ -14,6 +14,7 @@ using System.Collections.Specialized;
 using System.Drawing.Drawing2D;
 using LAMP.Controls;
 using LAMP.Properties;
+using System.Net.Http;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -52,13 +53,12 @@ public static class Editor
     /// <summary>
     /// Checks a PasteBin (probably not the best solution) for the newest version name and opens a window if not the same.
     /// </summary>
-    public static void CheckForUpdate()
+    public static async void CheckForUpdate()
     {
-        WebClient webClient = new WebClient();
         try
         {
-            string latestVersion = webClient.DownloadString("https://pastebin.com/6HPaBaZD");
-            if (!latestVersion.Contains(Version))
+            string latestVersion = await Program.httpClient.GetStringAsync("https://pastebin.com/6HPaBaZD");
+            if (latestVersion.Contains(Version))
             {
                 //Extracting the update info from the site (Probably a super stupid way of doing things)
                 string first = "{UpdateInfo}";
@@ -73,7 +73,6 @@ public static class Editor
         }
         catch
         {
-
         }
     }
 
@@ -855,8 +854,7 @@ public static class Editor
                 int nr = j * 16 + i;
                 byte scroll = Globals.Areas[Globals.SelectedArea].Scrolls[nr];
 
-                const int t = 3; //thickness of the rectangle (Adjust pen size as well)
-                                 //Checking if sides are blocked
+                //Checking if sides are blocked
                 if (ByteOp.IsBitSet(scroll, 0)) Globals.ScrollBorders.Add(new Rectangle(i * 256 + 256 - 2, j * 256, 2, 256)); //Right
                 if (ByteOp.IsBitSet(scroll, 1)) Globals.ScrollBorders.Add(new Rectangle(i * 256, j * 256, 2, 256)); //Left
                 if (ByteOp.IsBitSet(scroll, 2)) Globals.ScrollBorders.Add(new Rectangle(i * 256, j * 256, 256, 2)); //Up

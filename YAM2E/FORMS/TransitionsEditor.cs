@@ -28,10 +28,6 @@ public partial class TransitionsEditor : Form
     //for moving the opcodes around
     public TransitionOpcodeDisplay HeldOpcode = null;
 
-    //Warning Panel
-    Panel warningPanel;
-
-
     bool preventSave = false; //When changing transitions it saves the old transition on the new one
                               //preventSave should be set after switching a transition to prevent this
     bool preventReload = false; //Prevents the combobox from reloading the transition if a rename was done
