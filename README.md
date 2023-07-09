@@ -18,6 +18,22 @@ If you want faster updates and quicker access to features, which might still be 
 **Development builds can be found [here](https://github.com/ConConner/LAMP/actions)!**  
 The newest development version will be under the Artifacts section in one of the selected Actions.
 
+## Projects made with LAMP
+Even though LAMP is a fairly new program there are already some projects which are made with the help of LAMP.
+### [Distress Call](https://metroidconstruction.com/hack.php?id=737)
+A hack created by moehr. You have to explore a research satellite, which was attacked by the space pirates. Distress Call brings a lot of QOL improvements to the table
+like a built in map and beam switching.  
+
+<img src="https://i.imgur.com/bI8l4jC.png" alt="drawing" width="160"/> <img src="https://i.imgur.com/bAJrr1Z.png" alt="drawing" width="160"/> <img src="https://i.imgur.com/bJwlYXF.png" alt="drawing" width="160"/>
+
+### M2NES - Zebes Revisited
+A hack currently in development by LOO-E. Zebes is being carefully recreated in the engine of Metroid 2. There might even be some new content
+in the hack once it is finished.
+
+<img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734500047212595/Bendezium_Mines-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734499543883848/norfair-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734499808120842/tourian-0.png" alt="drawing" width="160"/>
+
+These projects show that everyone can easily pick up LAMP and make a promising hack of Metroid 2 with it!
+
 ## Build instructions
 To build LAMP from source, open a CLI in your repository root and run:  
 
