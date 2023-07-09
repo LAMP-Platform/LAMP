@@ -6,8 +6,18 @@ name: Publish Dev Build
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - 'Todo.md'
+      - 'Changelog.md'
+      - 'github/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'README.md'
+      - 'Todo.md'
+      - 'Changelog.md'
+      - 'github/**'
 
 jobs:
   build:
