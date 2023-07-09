@@ -12,11 +12,11 @@ LAMP is split into a 32bit/x86 and 64bit/x64 version.
 This is due to the zooming feature having huge performance issues on higher zooming levels on the x86 version.
 
 ## Releases
-**The newest stable version of LAMP can always be found [here](https://github.com/ConConner/LAMP/releases)!**  
-Stable releases take a long time but add a lot of features and fix a lot of bugs.  
-If you want faster updates and quicker access to features, which might still be in development, download one of the development builds.  
-**Development builds can be found [here](https://github.com/ConConner/LAMP/actions)!**  
-The newest development version will be under the Artifacts section in one of the selected Actions.
+* **[Stable](https://github.com/ConConner/LAMP/releases)**
+* **[Development](https://github.com/ConConner/LAMP/actions)**
+
+Stable releases take a longer time to release but add a lot of features, which are considered stable, and fix a lot of bugs.  
+If you want faster updates and quicker access to features, which might still be in development, download one of the development builds.
 
 ## Projects made with LAMP
 Even though LAMP is a fairly new program there are already some projects which are made with the help of LAMP.
@@ -30,7 +30,7 @@ like a built in map and beam switching.
 A hack currently in development by LOO-E. Zebes is being carefully recreated in the engine of Metroid 2. There might even be some new content
 in the hack once it is finished.
 
-<img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734500047212595/Bendezium_Mines-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734499543883848/norfair-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734499808120842/tourian-0.png" alt="drawing" width="160"/>
+<img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734500047212595/Bendezium_Mines-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127741751357087905/norfair-1.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127741750782459944/tourian-1.png" alt="drawing" width="160"/>
 
 These projects show that everyone can easily pick up LAMP and make a promising hack of Metroid 2 with it!
 
