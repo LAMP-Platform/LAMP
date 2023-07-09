@@ -1,94 +1,94 @@
 # Version B 5.0
 ### Released: XX.XX.2023
 **Changes:**
- * Project specific base ROMs
- * The project path on the recent files screen can now be opened in explorer
- * Added a small value converter
-   * Can be docked to the Main Window
- * LAMP now starts in fullscreen if closed in fullscreen
- * Transitions can be names
-   * Shows up in screen settings as well
- * Small Tileset Editor redesign
- * All tile displays now highlight tiles that LAMP can not display currently  
+* Project specific base ROMs
+* The project path on the recent files screen can now be opened in explorer
+* Added a small value converter
+  * Can be docked to the Main Window
+* LAMP now starts in fullscreen if closed in fullscreen
+* Transitions can be named
+  * Shows up in screen settings as well
+* Small Tileset Editor redesign
+* All tile displays now highlight tiles that LAMP can not display currently  
  
 **Fixes:** 
- * TestROM: Tilesets with an index >= 10 cause an exception
- * TestROM: Missile values were capped at 0xFF
- * TestROM: Wrong math on the energy value
- * TestROM: Player sometimes spawns at the bottom of the screen
- * Tileset Editor: Combobox for Tileset is now sized to always fit the name
+* TestROM: Tilesets with an index >= 10 cause an exception
+* TestROM: Missile values were capped at 0xFF
+* TestROM: Wrong math on the energy value
+* TestROM: Player sometimes spawns at the bottom of the screen
+* Tileset Editor: Combobox for Tileset is now sized to always fit the name
 
 # Version B 4.0
 ### Released: 02.06.2023
 **Changes:**
- * Main Window layout redesign
-   * Room View and Data View resizeable
-   * "View" tab removed
- * Slight Save Editor layout changes
- * Recent Files
- * Data Viewer
-   * Basic Hex Viewer of the ROM Data, practically useles
- * Header Buttons
-   * Show Objects
-   * Show Scrolls
- * Toolbar for every tile based display
- * Zooming
-   * Every tile based display can be zoomed
- * Copy & Paste
-   * Copy and paste the seleted tiles
-   * Works between instances of LAMP
- * More object alignments
-   * Shift - Tile center
-   * Alt - Tile corner
-   * Shift & Alt - Tile center, edge and corner
- * Compilation Settings  
+* Main Window layout redesign
+  * Room View and Data View resizeable
+  * "View" tab removed
+* Slight Save Editor layout changes
+* Recent Files
+* Data Viewer
+  * Basic Hex Viewer of the ROM Data, practically useles
+* Header Buttons
+  * Show Objects
+  * Show Scrolls
+* Toolbar for every tile based display
+* Zooming
+  * Every tile based display can be zoomed
+* Copy & Paste
+  * Copy and paste the seleted tiles
+  * Works between instances of LAMP
+* More object alignments
+  * Shift - Tile center
+  * Alt - Tile corner
+  * Shift & Alt - Tile center, edge and corner
+* Compilation Settings  
 
 **Fixes:**
- * Controls all appear at once now when loading a project
- * Selected tiles in the room no longer continuously reselect
- * Predefined tilesets now come with predefined collision values
+* Controls all appear at once now when loading a project
+* Selected tiles in the room no longer continuously reselect
+* Predefined tilesets now come with predefined collision values
 
 
 # Version B 3.1
 ### Released: 01.04.2023  
 **Fixes:**
- * TestROM now actually works with modified data
+* TestROM now actually works with modified data
 
 
 # Version B 3.0
 ### Released: 30.03.2023
 **Changes:**
- * Test ROM
-   * Game can now be tested from anywhere
- * Save File editing
-   * Initial Savegame can be changed
- * Help button
-   * Access to Wiki
-   * Report Bugs
- * Automatic Update Checking
+* Test ROM
+  * Game can now be tested from anywhere
+* Save File editing
+  * Initial Savegame can be changed
+* Help button
+  * Access to Wiki
+  * Report Bugs
+* Automatic Update Checking
 
 
 # Version B 2.0
 ### Released: 16.02.2023
 **Changes:**
- * Tileset Editor
-   * Tilesets can be predefined
-   * Tilesets can be used instead of direct offsets
-   * All standard Tilesets included by default
- * Added project settings
- * Added app settings
- * New offset interpretation
-   * Prefix can be chosen
-   * Display offsets as Bank:Offset or direct Offset
- * Scroll boundaries can be displayed
-   * F4 Hotkey  
+* Tileset Editor
+  * Tilesets can be predefined
+  * Tilesets can be used instead of direct offsets
+  * All standard Tilesets included by default
+* Added project settings
+* Added app settings
+* New offset interpretation
+  * Prefix can be chosen
+  * Display offsets as Bank:Offset or direct Offset
+* Scroll boundaries can be displayed
+  * F4 Hotkey  
 
 **Fixes:**
- * F5 Hotkey should now work all the time
- * Scroll bars reset when switching Area banks
+* F5 Hotkey should now work all the time
+* Scroll bars reset when switching Area banks
 
 
 # Version B 1.0
 ### Released: 24.08.2022
 **Changes:**
- * Initial Release
+* Initial Release

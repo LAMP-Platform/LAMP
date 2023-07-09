@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
+	<PublishSingleFile>true</PublishSingleFile>
+	<SelfContained>false</SelfContained>
     <RollForward>LatestMajor</RollForward>
     <UseWindowsForms>true</UseWindowsForms>
     <LangVersion>10</LangVersion>
@@ -10,7 +12,7 @@
     <ApplicationIcon>LAMP.ico</ApplicationIcon>
 	<PublishSingleFile>true</PublishSingleFile>
 	<DebugType>embedded</DebugType>
-	<Platforms>AnyCPU;x86</Platforms>
+	<Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

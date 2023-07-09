@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,14 @@ public partial class ProjectSettings : Form
     private void txb_rom_path_TextChanged(object sender, EventArgs e)
     {
         Globals.LoadedProject.ProjectSpecificROM = txb_rom_path.Text;
+
+        if (!File.Exists(Globals.LoadedProject.ProjectSpecificROM))
+        {
+            Editor.LoadRomFromPath(Globals.RomPath, true);
+            return;
+        }
+
+        Editor.LoadRomFromPath(Globals.LoadedProject.ProjectSpecificROM, true);
     }
 
     private void btn_select_rom_Click(object sender, EventArgs e)

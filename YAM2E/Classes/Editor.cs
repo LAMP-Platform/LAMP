@@ -254,7 +254,7 @@ public static class Editor
         //ROM
         if (LoadRomFromPath(Globals.RomPath) == false) return;
 
-        //Get the path to ROM
+        //Get the path to the Project
         if (path == "") path = ShowOpenDialog("Project file (*.m2)|*.m2");
         if (path != String.Empty) LoadProjectFromPath(path);
 
@@ -392,11 +392,13 @@ public static class Editor
     }
 
     /// <summary>
-    /// Loads a Metroid 2 ROM from the given path
+    /// Loads a Metroid 2 ROM from the given path.  
+    /// If <paramref name="silentFailure"/> is set to true, no error message will be displayed
     /// </summary>
     /// <param name="path">The path to the Metroid 2 ROM</param>
+    /// <param name="silentFailure">No error message will be displayed if ROM can't be loaded</param>
     /// <returns></returns>
-    public static bool LoadRomFromPath(string path)
+    public static bool LoadRomFromPath(string path, bool silentFailure = false)
     {
         try
         {
@@ -405,6 +407,7 @@ public static class Editor
         }
         catch
         {
+            if (silentFailure) return false;
             MessageBox.Show("File is not a Metroid II: Return of Samus ROM!\n", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;

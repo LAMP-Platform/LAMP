@@ -38,9 +38,9 @@ public partial class TransitionsEditor : Form
 
     public TransitionsEditor(int TransitionIndex = 0)
     {
-        warningPanel = pnl_warning;
         Current = this;
         InitializeComponent();
+        txb_warning_header.BackColor = DefaultBackColor;
 
         for (int i = 0; i < Globals.Transitions.Count; i++)
         {
@@ -69,7 +69,6 @@ public partial class TransitionsEditor : Form
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
             pnlTransition.Controls.Clear();
-            pnlTransition.Controls.Add(warningPanel);
             pnl_warning.Visible = true;
 
             string newLine = Environment.NewLine;
@@ -85,13 +84,12 @@ public partial class TransitionsEditor : Form
 
     void ReadTransition()
     {
-        SuspendLayout();
+        pnlTransition.SuspendLayout();
 
         //Transition name
         txb_transition_name.Text = LoadedTransition.Name;
         preventReload = false;
 
-        //generating new Tree
         pnlTransition.Controls.Clear();
         //try
         //{
@@ -118,21 +116,21 @@ public partial class TransitionsEditor : Form
         }*/
         TransitionLength = LoadedTransition.Data.Count;
         UpdateTransitionLength();
-        ResumeLayout();
+        pnlTransition.ResumeLayout();
     }
 
     void ReloadTransition()
     {
-        //try
-        //{
+        try
+        {
         LoadTransition(cbb_tred_transition_selection.SelectedIndex);
         ReadTransition();
-        //}
-        /*catch
+        }
+        catch(Exception ex)
         {
-            MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
+            MessageBox.Show($"An error has occured while loading the Transition.\n\n{ex}\n\nMaybe the data is corrupt?", "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }*/
+        }
     }
 
     public void SaveTransition()

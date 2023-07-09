@@ -1192,6 +1192,7 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        TransitionOpcode test = new TransitionOpcode("Conditional Transition [0;1](90), if Metroids alive <= [2;3], goto Transition [4;7](F)");
+        Room.BackgroundImage?.Dispose();
+        Room.BackgroundImage = new Bitmap(4096,4096);
     }
 }

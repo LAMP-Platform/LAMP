@@ -147,7 +147,7 @@ namespace LAMP.FORMS
             txb_transition_info.Multiline = true;
             txb_transition_info.Name = "txb_transition_info";
             txb_transition_info.ReadOnly = true;
-            txb_transition_info.Size = new System.Drawing.Size(219, 81);
+            txb_transition_info.Size = new System.Drawing.Size(219, 58);
             txb_transition_info.TabIndex = 4;
             txb_transition_info.TabStop = false;
             txb_transition_info.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -201,10 +201,10 @@ namespace LAMP.FORMS
             pnl_warning.Controls.Add(txb_warning_header);
             pnl_warning.Controls.Add(pnl_seperate_button_dock);
             pnl_warning.Dock = System.Windows.Forms.DockStyle.Top;
-            pnl_warning.Location = new System.Drawing.Point(9, 421);
+            pnl_warning.Location = new System.Drawing.Point(9, 441);
             pnl_warning.Name = "pnl_warning";
             pnl_warning.Padding = new System.Windows.Forms.Padding(3);
-            pnl_warning.Size = new System.Drawing.Size(225, 140);
+            pnl_warning.Size = new System.Drawing.Size(225, 117);
             pnl_warning.TabIndex = 7;
             // 
             // txb_warning_header
@@ -227,7 +227,7 @@ namespace LAMP.FORMS
             // 
             pnl_seperate_button_dock.Controls.Add(btn_seperate_transition);
             pnl_seperate_button_dock.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_seperate_button_dock.Location = new System.Drawing.Point(3, 110);
+            pnl_seperate_button_dock.Location = new System.Drawing.Point(3, 87);
             pnl_seperate_button_dock.Name = "pnl_seperate_button_dock";
             pnl_seperate_button_dock.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             pnl_seperate_button_dock.Size = new System.Drawing.Size(219, 27);
@@ -261,7 +261,7 @@ namespace LAMP.FORMS
             grp_opcodes.Dock = System.Windows.Forms.DockStyle.Top;
             grp_opcodes.Location = new System.Drawing.Point(9, 92);
             grp_opcodes.Name = "grp_opcodes";
-            grp_opcodes.Size = new System.Drawing.Size(225, 329);
+            grp_opcodes.Size = new System.Drawing.Size(225, 349);
             grp_opcodes.TabIndex = 8;
             grp_opcodes.TabStop = false;
             grp_opcodes.Text = "Opcodes";
@@ -275,7 +275,7 @@ namespace LAMP.FORMS
             txb_opcodes.Multiline = true;
             txb_opcodes.Name = "txb_opcodes";
             txb_opcodes.ReadOnly = true;
-            txb_opcodes.Size = new System.Drawing.Size(219, 307);
+            txb_opcodes.Size = new System.Drawing.Size(219, 327);
             txb_opcodes.TabIndex = 5;
             txb_opcodes.TabStop = false;
             // 

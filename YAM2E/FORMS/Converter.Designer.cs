@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Converter));
             grp_hex = new System.Windows.Forms.GroupBox();
             lbl_decimal = new System.Windows.Forms.Label();
             txb_hex_result = new System.Windows.Forms.TextBox();
@@ -102,6 +103,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(269, 96);
             Controls.Add(grp_hex);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(285, 135);
             Name = "Converter";
             Text = "Converter";
