@@ -15,7 +15,8 @@ This is due to the zooming feature having huge performance issues on higher zoom
 **The newest stable version of LAMP can always be found [here](https://github.com/ConConner/LAMP/releases)!**  
 Stable releases take a long time but add a lot of features and fix a lot of bugs.  
 If you want faster updates and quicker access to features, which might still be in development, download one of the development builds.  
-**Development builds can be found [here <- Don't exist yet]!**
+**Development builds can be found [here](https://github.com/ConConner/LAMP/actions)!**  
+The newest development version will be under the Artifacts section in one of the selected Actions.
 
 ## Build instructions
 To build LAMP from source, open a CLI in your repository root and run:  
