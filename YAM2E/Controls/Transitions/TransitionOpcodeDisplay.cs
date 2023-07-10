@@ -14,8 +14,6 @@ public partial class TransitionOpcodeDisplay : UserControl
         InitializeComponent();
         pnl_parameters.BringToFront();
         lbl_opcode_name.Text = o.Description[0];
-
-        if (o.)
     }
 
     public List<byte> Data { get; set; }
