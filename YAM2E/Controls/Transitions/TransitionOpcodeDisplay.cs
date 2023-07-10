@@ -14,6 +14,8 @@ public partial class TransitionOpcodeDisplay : UserControl
         InitializeComponent();
         pnl_parameters.BringToFront();
         lbl_opcode_name.Text = o.Description[0];
+
+        if (o.)
     }
 
     public List<byte> Data { get; set; }
@@ -27,4 +29,24 @@ public partial class TransitionOpcodeDisplay : UserControl
             pnl_parameters.Visible = value;
         }
     }
+
+    #region EVENTS
+    public EventHandler onParameterChanged { get; set; }
+    public event EventHandler ParameterChanged
+    {
+        add
+        {
+            onParameterChanged += value;
+        }
+        remove
+        {
+            onParameterChanged -= value;
+        }
+
+    }
+    public virtual void OnParameterChanged(EventArgs e)
+    {
+        onParameterChanged?.Invoke(this, e);
+    }
+    #endregion
 }

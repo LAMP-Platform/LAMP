@@ -188,6 +188,7 @@ namespace LAMP.FORMS
             // 
             // pnlTransition
             // 
+            pnlTransition.AutoScroll = true;
             pnlTransition.Dock = System.Windows.Forms.DockStyle.Fill;
             pnlTransition.Location = new System.Drawing.Point(3, 19);
             pnlTransition.Name = "pnlTransition";

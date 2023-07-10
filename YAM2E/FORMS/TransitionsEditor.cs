@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
 using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
-using LAMP.Controls.Other;
 using LAMP.Utilities;
 
 namespace LAMP.FORMS;
 
 public partial class TransitionsEditor : Form
 {
-    //Editor Vars
-    public TransitionsEditor Current;
+    //Transition Editor Fields
+    public int TransitionLength
+    {
+        get => transitionLength;
+        set
+        {
+            if (transitionLength == value) return;
+            transitionLength = value;
 
-    //Transition Data
-    Transition LoadedTransition;
-    public int TransitionLength { get; set; }
-    Dictionary<TreeNode, TreeNodeExtension> NodeData = new Dictionary<TreeNode, TreeNodeExtension>();
-    public List<TransitionOpcodeDisplay> Opcodes = new List<TransitionOpcodeDisplay>();
+            lbl_tred_transition_length.Text = $"Transition Length: {Format.IntToString(value)} out of {Format.IntToString(64)} bytes";
+            gau_transition_length.Value = value / 64d;
+        }
+    }
+    int transitionLength;
 
     int SelectedIndex
     {
@@ -31,22 +32,30 @@ public partial class TransitionsEditor : Form
         {
             if (selectedIndex == value) return;
             selectedIndex = value;
+
             ReloadTransition();
         }
     }
-    int selectedIndex = -1; //This is set to 1 because initially it will be index 0 but the transition should still be loaded
+    int selectedIndex = -1; //This is set to -1 because the index will initially be 0, therefore, we still want to trigger this once
 
-    //Held Opcode data
-    //for moving the opcodes around
-    public TransitionOpcodeDisplay HeldOpcode = null;
+    public List<TransitionOpcodeDisplay> Opcodes = new List<TransitionOpcodeDisplay>();
 
-    bool preventSave = false; //When changing transitions it saves the old transition on the new one
-                              //preventSave should be set after switching a transition to prevent this
-    bool preventReload = false; //Prevents the combobox from reloading the transition if a rename was done
+    Transition LoadedTransition
+    {
+        get => loadedTransition;
+        set
+        {
+            if (loadedTransition == value) return;
+            loadedTransition = value;
 
+            LoadTransition();
+        }
+    }
+    Transition loadedTransition;
+
+    //Constructor
     public TransitionsEditor(int TransitionIndex = 0)
     {
-        Current = this;
         InitializeComponent();
         txb_warning_header.BackColor = DefaultBackColor;
 
@@ -68,12 +77,8 @@ public partial class TransitionsEditor : Form
         txb_opcodes.Text = txt;
     }
 
-    void LoadTransition(int transition)
+    void LoadTransition()
     {
-        SaveTransition();
-        preventSave = true; //preventing copy of old transition
-
-        LoadedTransition = Globals.Transitions[transition];
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
             pnlTransition.Controls.Clear();
@@ -94,73 +99,62 @@ public partial class TransitionsEditor : Form
     {
         pnlTransition.SuspendLayout();
 
-        //Transition name
+        //Set Transition name
         txb_transition_name.Text = LoadedTransition.Name;
-        preventReload = false;
 
+        //Clear existing controls of prior transiition
         pnlTransition.Controls.Clear();
-        //try
-        //{
-        //NEW TRANSITION LOADING
+
         for (int i = 0; i < LoadedTransition.Data.Count;)
         {
+            //Finding the current opcode
+            TransitionOpcode currentOpcode = Globals.LoadedProject.TransitionOpcodes[0];
+            foreach (TransitionOpcode code in Globals.LoadedProject.TransitionOpcodes)
+            {
+                byte currentByte = LoadedTransition.Data[i]; //The opcode Index
+                if (code.OpcodeIndex < 0x10) currentByte = (byte)(currentByte >> 4); //We have to shift the byte so the index can overlap if its only 4 bits long
+                if (code.OpcodeIndex == currentByte)
+                {
+                    currentOpcode = code;
+                    break;
+                }
+            }
+
             //putting data for each opcode into lists
-            int length = 1;
+            int length = currentOpcode.OpcodeLength;
             List<Byte> data = LoadedTransition.Data.GetRange(i, length);
 
-            TransitionOpcodeDisplay o = new TransitionOpcodeDisplay(Globals.LoadedProject.TransitionOpcodes[0])
+            TransitionOpcodeDisplay o = new TransitionOpcodeDisplay(currentOpcode)
             {
                 Dock = DockStyle.Top
             };
             Opcodes.Add(o);
             pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
+            o.BringToFront();
             i += length;
         }
-        //}
-        /*catch
-        {
-            MessageBox.Show("An error has occured while loading the Transition.\nMaybe the data is corrupt?", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }*/
+
         TransitionLength = LoadedTransition.Data.Count;
-        UpdateTransitionLength();
         pnlTransition.ResumeLayout();
     }
 
     void ReloadTransition()
     {
-        try
-        {
-        LoadTransition(cbb_tred_transition_selection.SelectedIndex);
-        ReadTransition();
-        }
-        catch(Exception ex)
-        {
-            MessageBox.Show($"An error has occured while loading the Transition.\n\n{ex}\n\nMaybe the data is corrupt?", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        //try
+        //{
+            LoadedTransition = Globals.Transitions[SelectedIndex];
+            ReadTransition();
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show($"An error has occured while loading the Transition.\n\n{ex}\n\nMaybe the data is corrupt?", "Error",
+        //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
     }
 
     public void SaveTransition()
     {
-        if (LoadedTransition == null || preventSave)
-        {
-            preventSave = false;
-            return;
-        }
-
-        LoadedTransition.Data.Clear();
-
-        //Add all the data from all the Opcodes
-        foreach (TransitionOpcodeDisplay o in pnlTransition.Controls)
-        {
-        }
-    }
-
-    public void UpdateTransitionLength()
-    {
-        lbl_tred_transition_length.Text = $"Transition Length: {Format.IntToString(TransitionLength)} out of {Format.IntToString(64)} bytes";
-        gau_transition_length.Value = TransitionLength / 64d;
+        //TODO: Rewrite
     }
 
     #region Events
@@ -179,12 +173,12 @@ public partial class TransitionsEditor : Form
 
     private void txb_transition_name_TextChanged(object sender, EventArgs e)
     {
-        int index = cbb_tred_transition_selection.SelectedIndex;
+        int index = SelectedIndex;
+        if (LoadedTransition.Name == txb_transition_name.Text) return;
 
         LoadedTransition.Name = txb_transition_name.Text;
         string name = LoadedTransition.Name != "" ? $" - {LoadedTransition.Name}" : "";
 
-        preventReload = true;
         cbb_tred_transition_selection.Items[index] = index.ToString("X3") + name;
 
         ComboboxOp.AutoSize(cbb_tred_transition_selection);
