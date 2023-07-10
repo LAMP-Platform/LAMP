@@ -1,6 +1,7 @@
 # Version B 5.0
 ### Released: XX.XX.2023
 **Changes:**
+* Transition Editor rework
 * Project specific base ROMs
 * The project path on the recent files screen can now be opened in explorer
 * Added a small value converter

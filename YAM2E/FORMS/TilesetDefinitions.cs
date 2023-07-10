@@ -131,7 +131,6 @@ public partial class TilesetDefinitions : Form
 
         //Updating the combobox with all the tilesets
         cbb_tileset_id.Items.Clear();
-        int width = cbb_tileset_id.Width;
         for (int i = 0; i < Globals.Tilesets.Count; i++)
         {
             Tileset t = Globals.Tilesets[i];

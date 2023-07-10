@@ -47,8 +47,6 @@ public partial class TransitionsEditor : Form
         {
             if (loadedTransition == value) return;
             loadedTransition = value;
-
-            LoadTransition();
         }
     }
     Transition loadedTransition;
@@ -75,6 +73,21 @@ public partial class TransitionsEditor : Form
             txt += o.Description[0] + newLine;
         }
         txb_opcodes.Text = txt;
+
+        //Showing tileset list
+        if (!Globals.LoadedProject.useTilesets || Globals.Tilesets.Count == 0) return;
+        grp_tilesets.Visible = true;
+
+        //Updating the combobox with all the tilesets
+        for (int i = 0; i < Globals.Tilesets.Count; i++)
+        {
+            Tileset t = Globals.Tilesets[i];
+            string name = i.ToString("X");
+            if (t.Name != "") name = t.Name;
+            cbb_tileset_select.Items.Add(name);
+        }
+        cbb_tileset_select.SelectedIndex = Globals.Tilesets.Count - 1;
+        ComboboxOp.AutoSize(cbb_tileset_select);
     }
 
     void LoadTransition()
@@ -97,7 +110,7 @@ public partial class TransitionsEditor : Form
 
     void ReadTransition()
     {
-        pnlTransition.SuspendLayout();
+        pnlTransition.SuspendLayout(); //Suspend layout logic, because the code for opcodes has that removed
 
         //Set Transition name
         txb_transition_name.Text = LoadedTransition.Name;
@@ -107,12 +120,12 @@ public partial class TransitionsEditor : Form
 
         for (int i = 0; i < LoadedTransition.Data.Count;)
         {
-            //Finding the current opcode
-            TransitionOpcode currentOpcode = Globals.LoadedProject.TransitionOpcodes[0];
+            //Finding a matching opcode to the current byte
+            TransitionOpcode? currentOpcode = null; //making the opcode nullable because there might be a chance that an index is not found
             foreach (TransitionOpcode code in Globals.LoadedProject.TransitionOpcodes)
             {
-                byte currentByte = LoadedTransition.Data[i]; //The opcode Index
-                if (code.OpcodeIndex < 0x10) currentByte = (byte)(currentByte >> 4); //We have to shift the byte so the index can overlap if its only 4 bits long
+                byte currentByte = LoadedTransition.Data[i]; //The opcode Index to check for
+                if (code.OpcodeIndex < 0x10) currentByte = (byte)(currentByte >> 4); //An opcode index might only be on the first nybble, therefore, we have to shift the check byte to the right
                 if (code.OpcodeIndex == currentByte)
                 {
                     currentOpcode = code;
@@ -120,11 +133,19 @@ public partial class TransitionsEditor : Form
                 }
             }
 
+            //Checking if an opcode was found
+            if (currentOpcode == null)
+            {
+                //TODO: handle unassigned indices
+                continue;
+            }
+            TransitionOpcode correctOpcode = (TransitionOpcode)currentOpcode;
+
             //putting data for each opcode into lists
-            int length = currentOpcode.OpcodeLength;
+            int length = correctOpcode.OpcodeLength;
             List<Byte> data = LoadedTransition.Data.GetRange(i, length);
 
-            TransitionOpcodeDisplay o = new TransitionOpcodeDisplay(currentOpcode)
+            TransitionOpcodeDisplay o = new TransitionOpcodeDisplay(correctOpcode)
             {
                 Dock = DockStyle.Top
             };
@@ -134,16 +155,18 @@ public partial class TransitionsEditor : Form
             i += length;
         }
 
+        //Setting length display
         TransitionLength = LoadedTransition.Data.Count;
-        pnlTransition.ResumeLayout();
+        pnlTransition.ResumeLayout(); //Resume layout logic
     }
 
     void ReloadTransition()
     {
         //try
         //{
-            LoadedTransition = Globals.Transitions[SelectedIndex];
-            ReadTransition();
+        LoadedTransition = Globals.Transitions[SelectedIndex];
+        LoadTransition();
+        ReadTransition();
         //}
         //catch (Exception ex)
         //{

@@ -35,10 +35,14 @@
             pnl_parameters = new System.Windows.Forms.FlowLayoutPanel();
             pnl_footer = new System.Windows.Forms.Panel();
             btn_remove_opcode = new System.Windows.Forms.Button();
+            pnl_border = new System.Windows.Forms.Panel();
+            pnl_main = new System.Windows.Forms.Panel();
             pnl_header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btn_expand).BeginInit();
             pnl_footer.SuspendLayout();
-            //SuspendLayout();
+            pnl_border.SuspendLayout();
+            pnl_main.SuspendLayout();
+            SuspendLayout();
             // 
             // pnl_header
             // 
@@ -51,6 +55,9 @@
             pnl_header.Name = "pnl_header";
             pnl_header.Size = new System.Drawing.Size(248, 30);
             pnl_header.TabIndex = 0;
+            pnl_header.MouseClick += pnl_header_MouseClick;
+            pnl_header.MouseLeave += lbl_opcode_name_MouseLeave;
+            pnl_header.MouseMove += lbl_opcode_name_MouseMove;
             // 
             // Seperator
             // 
@@ -61,16 +68,20 @@
             Seperator.Name = "Seperator";
             Seperator.Size = new System.Drawing.Size(242, 1);
             Seperator.TabIndex = 2;
+            Seperator.Visible = false;
             // 
             // btn_expand
             // 
             btn_expand.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btn_expand.Image = Properties.Resources.CollapseArrow;
+            btn_expand.Image = Properties.Resources.ExpandArrow;
             btn_expand.Location = new System.Drawing.Point(222, 3);
             btn_expand.Name = "btn_expand";
             btn_expand.Size = new System.Drawing.Size(23, 23);
             btn_expand.TabIndex = 1;
             btn_expand.TabStop = false;
+            btn_expand.MouseClick += pnl_header_MouseClick;
+            btn_expand.MouseLeave += lbl_opcode_name_MouseLeave;
+            btn_expand.MouseMove += lbl_opcode_name_MouseMove;
             // 
             // lbl_opcode_name
             // 
@@ -81,6 +92,9 @@
             lbl_opcode_name.Size = new System.Drawing.Size(211, 21);
             lbl_opcode_name.TabIndex = 0;
             lbl_opcode_name.Text = "Name of Transition Opcode";
+            lbl_opcode_name.MouseClick += pnl_header_MouseClick;
+            lbl_opcode_name.MouseLeave += lbl_opcode_name_MouseLeave;
+            lbl_opcode_name.MouseMove += lbl_opcode_name_MouseMove;
             // 
             // pnl_parameters
             // 
@@ -91,8 +105,9 @@
             pnl_parameters.Location = new System.Drawing.Point(0, 30);
             pnl_parameters.Margin = new System.Windows.Forms.Padding(0);
             pnl_parameters.Name = "pnl_parameters";
-            pnl_parameters.Size = new System.Drawing.Size(248, 29);
+            pnl_parameters.Size = new System.Drawing.Size(248, 0);
             pnl_parameters.TabIndex = 1;
+            pnl_parameters.Visible = false;
             // 
             // pnl_footer
             // 
@@ -102,6 +117,7 @@
             pnl_footer.Name = "pnl_footer";
             pnl_footer.Size = new System.Drawing.Size(248, 29);
             pnl_footer.TabIndex = 2;
+            pnl_footer.Visible = false;
             // 
             // btn_remove_opcode
             // 
@@ -113,25 +129,50 @@
             btn_remove_opcode.TabIndex = 0;
             btn_remove_opcode.UseVisualStyleBackColor = true;
             // 
-            // TransitionOpcode
+            // pnl_border
+            // 
+            pnl_border.AutoSize = true;
+            pnl_border.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_border.Controls.Add(pnl_parameters);
+            pnl_border.Controls.Add(pnl_header);
+            pnl_border.Controls.Add(pnl_footer);
+            pnl_border.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_border.Location = new System.Drawing.Point(0, 0);
+            pnl_border.Name = "pnl_border";
+            pnl_border.Size = new System.Drawing.Size(250, 61);
+            pnl_border.TabIndex = 3;
+            // 
+            // pnl_main
+            // 
+            pnl_main.AutoSize = true;
+            pnl_main.Controls.Add(pnl_border);
+            pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_main.Location = new System.Drawing.Point(0, 0);
+            pnl_main.Name = "pnl_main";
+            pnl_main.Padding = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            pnl_main.Size = new System.Drawing.Size(250, 67);
+            pnl_main.TabIndex = 4;
+            // 
+            // TransitionOpcodeDisplay
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
             AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            Controls.Add(pnl_footer);
-            Controls.Add(pnl_parameters);
-            Controls.Add(pnl_header);
-            Margin = new System.Windows.Forms.Padding(0, 0, 0, 6);
+            Controls.Add(pnl_main);
+            Margin = new System.Windows.Forms.Padding(0);
             MinimumSize = new System.Drawing.Size(250, 30);
-            Name = "TransitionOpcode";
-            Size = new System.Drawing.Size(248, 59);
+            Name = "TransitionOpcodeDisplay";
+            Size = new System.Drawing.Size(250, 67);
             pnl_header.ResumeLayout(false);
             pnl_header.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btn_expand).EndInit();
             pnl_footer.ResumeLayout(false);
-            //ResumeLayout(false);
+            pnl_border.ResumeLayout(false);
+            pnl_border.PerformLayout();
+            pnl_main.ResumeLayout(false);
+            pnl_main.PerformLayout();
+            ResumeLayout(false);
             PerformLayout();
         }
 
@@ -144,5 +185,7 @@
         private System.Windows.Forms.Panel pnl_footer;
         private System.Windows.Forms.Button btn_remove_opcode;
         private Other.Seperator Seperator;
+        private System.Windows.Forms.Panel pnl_border;
+        private System.Windows.Forms.Panel pnl_main;
     }
 }

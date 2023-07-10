@@ -50,6 +50,9 @@ namespace LAMP.FORMS
             splt_main = new System.Windows.Forms.SplitContainer();
             grp_opcodes = new System.Windows.Forms.GroupBox();
             txb_opcodes = new System.Windows.Forms.TextBox();
+            grp_tilesets = new System.Windows.Forms.GroupBox();
+            btn_add_tileset = new System.Windows.Forms.Button();
+            cbb_tileset_select = new System.Windows.Forms.ComboBox();
             pnl_gauge = new System.Windows.Forms.Panel();
             grp_tred_selection.SuspendLayout();
             sts_tred_status_strip.SuspendLayout();
@@ -61,6 +64,7 @@ namespace LAMP.FORMS
             splt_main.Panel2.SuspendLayout();
             splt_main.SuspendLayout();
             grp_opcodes.SuspendLayout();
+            grp_tilesets.SuspendLayout();
             pnl_gauge.SuspendLayout();
             SuspendLayout();
             // 
@@ -147,7 +151,7 @@ namespace LAMP.FORMS
             txb_transition_info.Multiline = true;
             txb_transition_info.Name = "txb_transition_info";
             txb_transition_info.ReadOnly = true;
-            txb_transition_info.Size = new System.Drawing.Size(219, 58);
+            txb_transition_info.Size = new System.Drawing.Size(219, 55);
             txb_transition_info.TabIndex = 4;
             txb_transition_info.TabStop = false;
             txb_transition_info.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -201,11 +205,11 @@ namespace LAMP.FORMS
             pnl_warning.Controls.Add(txb_transition_info);
             pnl_warning.Controls.Add(txb_warning_header);
             pnl_warning.Controls.Add(pnl_seperate_button_dock);
-            pnl_warning.Dock = System.Windows.Forms.DockStyle.Top;
-            pnl_warning.Location = new System.Drawing.Point(9, 441);
+            pnl_warning.Dock = System.Windows.Forms.DockStyle.Bottom;
+            pnl_warning.Location = new System.Drawing.Point(9, 450);
             pnl_warning.Name = "pnl_warning";
             pnl_warning.Padding = new System.Windows.Forms.Padding(3);
-            pnl_warning.Size = new System.Drawing.Size(225, 117);
+            pnl_warning.Size = new System.Drawing.Size(225, 114);
             pnl_warning.TabIndex = 7;
             // 
             // txb_warning_header
@@ -228,7 +232,7 @@ namespace LAMP.FORMS
             // 
             pnl_seperate_button_dock.Controls.Add(btn_seperate_transition);
             pnl_seperate_button_dock.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_seperate_button_dock.Location = new System.Drawing.Point(3, 87);
+            pnl_seperate_button_dock.Location = new System.Drawing.Point(3, 84);
             pnl_seperate_button_dock.Name = "pnl_seperate_button_dock";
             pnl_seperate_button_dock.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             pnl_seperate_button_dock.Size = new System.Drawing.Size(219, 27);
@@ -243,9 +247,10 @@ namespace LAMP.FORMS
             // 
             // splt_main.Panel1
             // 
-            splt_main.Panel1.Controls.Add(pnl_warning);
             splt_main.Panel1.Controls.Add(grp_opcodes);
             splt_main.Panel1.Controls.Add(grp_tred_selection);
+            splt_main.Panel1.Controls.Add(grp_tilesets);
+            splt_main.Panel1.Controls.Add(pnl_warning);
             splt_main.Panel1.Padding = new System.Windows.Forms.Padding(9, 3, 3, 3);
             // 
             // splt_main.Panel2
@@ -259,10 +264,10 @@ namespace LAMP.FORMS
             // grp_opcodes
             // 
             grp_opcodes.Controls.Add(txb_opcodes);
-            grp_opcodes.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_opcodes.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_opcodes.Location = new System.Drawing.Point(9, 92);
             grp_opcodes.Name = "grp_opcodes";
-            grp_opcodes.Size = new System.Drawing.Size(225, 349);
+            grp_opcodes.Size = new System.Drawing.Size(225, 301);
             grp_opcodes.TabIndex = 8;
             grp_opcodes.TabStop = false;
             grp_opcodes.Text = "Opcodes";
@@ -276,9 +281,42 @@ namespace LAMP.FORMS
             txb_opcodes.Multiline = true;
             txb_opcodes.Name = "txb_opcodes";
             txb_opcodes.ReadOnly = true;
-            txb_opcodes.Size = new System.Drawing.Size(219, 327);
+            txb_opcodes.Size = new System.Drawing.Size(219, 279);
             txb_opcodes.TabIndex = 5;
             txb_opcodes.TabStop = false;
+            // 
+            // grp_tilesets
+            // 
+            grp_tilesets.Controls.Add(btn_add_tileset);
+            grp_tilesets.Controls.Add(cbb_tileset_select);
+            grp_tilesets.Dock = System.Windows.Forms.DockStyle.Bottom;
+            grp_tilesets.Location = new System.Drawing.Point(9, 393);
+            grp_tilesets.Name = "grp_tilesets";
+            grp_tilesets.Size = new System.Drawing.Size(225, 57);
+            grp_tilesets.TabIndex = 9;
+            grp_tilesets.TabStop = false;
+            grp_tilesets.Text = "Tileset";
+            grp_tilesets.Visible = false;
+            // 
+            // btn_add_tileset
+            // 
+            btn_add_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_add_tileset.Image = Properties.Resources.Add;
+            btn_add_tileset.Location = new System.Drawing.Point(196, 22);
+            btn_add_tileset.Name = "btn_add_tileset";
+            btn_add_tileset.Size = new System.Drawing.Size(23, 23);
+            btn_add_tileset.TabIndex = 1;
+            btn_add_tileset.UseVisualStyleBackColor = true;
+            // 
+            // cbb_tileset_select
+            // 
+            cbb_tileset_select.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            cbb_tileset_select.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_tileset_select.FormattingEnabled = true;
+            cbb_tileset_select.Location = new System.Drawing.Point(7, 22);
+            cbb_tileset_select.Name = "cbb_tileset_select";
+            cbb_tileset_select.Size = new System.Drawing.Size(183, 23);
+            cbb_tileset_select.TabIndex = 0;
             // 
             // pnl_gauge
             // 
@@ -316,6 +354,7 @@ namespace LAMP.FORMS
             splt_main.ResumeLayout(false);
             grp_opcodes.ResumeLayout(false);
             grp_opcodes.PerformLayout();
+            grp_tilesets.ResumeLayout(false);
             pnl_gauge.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -343,5 +382,8 @@ namespace LAMP.FORMS
         private System.Windows.Forms.Panel pnl_seperate_button_dock;
         private System.Windows.Forms.GroupBox grp_opcodes;
         private System.Windows.Forms.TextBox txb_opcodes;
+        private System.Windows.Forms.GroupBox grp_tilesets;
+        private System.Windows.Forms.Button btn_add_tileset;
+        private System.Windows.Forms.ComboBox cbb_tileset_select;
     }
 }

@@ -1192,7 +1192,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        Room.BackgroundImage?.Dispose();
-        Room.BackgroundImage = new Bitmap(4096,4096);
+        TransitionOpcode o = new TransitionOpcode("End Transition [0;1](FF), There are, no further, parameters");
     }
 }

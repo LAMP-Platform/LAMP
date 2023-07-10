@@ -88,5 +88,15 @@ namespace LAMP
 
             return (byte)Format.StringToInt(Regex.Match(indexstring, @"[0-9]+|[A-F]+").Value);
         }
+
+        /// <summary>
+        /// Returns if the opcode has any parameters which can be modified
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool HasParameters(string input)
+        {
+            return false;
+        }
     }
 }

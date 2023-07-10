@@ -50,16 +50,47 @@ namespace LAMP.Classes
             }
         }
 
+        /// <summary>
+        /// The full string that represents the opcode
+        /// </summary>
         public string OpcodeString { get; set; }
 
+        /// <summary>
+        /// The index that represents the opcode
+        /// </summary>
         public byte OpcodeIndex { get; set; }
 
+        /// <summary>
+        /// An array which stores the title of the transition and the description of each parameter
+        /// </summary>
         public string[] Description { get; set; }
 
+        /// <summary>
+        /// An array which stores the start nybble for each parameter. Set to null if the parameter does not have any modifyable data
+        /// </summary>
         public int?[] NybbleIndices { get; set; }
+
+        /// <summary>
+        /// An array which stores the length of each parameter in nybbles. Set to 1 if the parameter does not have any modifyable data
+        /// </summary>
         public int[] ParameterLength { get; set; }
+
+        /// <summary>
+        /// An array of the predefined value of a parameter. Set to null if a parameter does not have a predefined value
+        /// </summary>
         public int?[] PredefinedValue { get; set; }
 
+        /// <summary>
+        /// The number of bytes that make up the opcode
+        /// </summary>
         public int OpcodeLength { get; set; }
+
+        /// <summary>
+        /// Whether the opcode has more than 
+        /// </summary>
+        public bool isExpandable
+        {
+            get => Description.Length > 1;
+        }
     }
 }
