@@ -66,6 +66,8 @@ public partial class TransitionsEditor : Form
         ComboboxOp.AutoSize(cbb_tred_transition_selection);
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
 
+        //generating the opcode list
+        //TODO: needs a different system to allow opcode adding
         string txt = "";
         string newLine = Environment.NewLine;
         foreach (TransitionOpcode o in Globals.LoadedProject.TransitionOpcodes)
@@ -110,7 +112,7 @@ public partial class TransitionsEditor : Form
 
     void ReadTransition()
     {
-        pnlTransition.SuspendLayout(); //Suspend layout logic, because the code for opcodes has that removed
+        pnlTransition.SuspendLayout(); //Suspending the layout logic is required here because it is missing in the opcode display code
 
         //Set Transition name
         txb_transition_name.Text = LoadedTransition.Name;
@@ -118,6 +120,7 @@ public partial class TransitionsEditor : Form
         //Clear existing controls of prior transiition
         pnlTransition.Controls.Clear();
 
+        //Populatig transition
         for (int i = 0; i < LoadedTransition.Data.Count;)
         {
             //Finding a matching opcode to the current byte
@@ -147,7 +150,8 @@ public partial class TransitionsEditor : Form
 
             TransitionOpcodeDisplay o = new TransitionOpcodeDisplay(correctOpcode)
             {
-                Dock = DockStyle.Top
+                Dock = DockStyle.Top,
+                Data = data
             };
             Opcodes.Add(o);
             pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);

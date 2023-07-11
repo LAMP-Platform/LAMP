@@ -1,5 +1,6 @@
 ﻿using LAMP.Classes;
 using LAMP.Controls;
+using LAMP.Controls.Other;
 using LAMP.FORMS;
 using LAMP.Properties;
 using System;
@@ -15,18 +16,39 @@ public partial class TransitionOpcodeDisplay : UserControl
     TransitionOpcode opcode;
 
     public List<byte> Data { get; set; }
+    private List<OpcodeParameter> Parameters { get; set; } = new List<OpcodeParameter>();
 
+    /// <summary>
+    /// Whether the parameters are shown or not
+    /// </summary>
     public bool Expanded
     {
         get => pnl_parameters.Visible;
         set
         {
+            if (!opcode.isExpandable) return;
+
             pnl_parameters.Visible = value;
             pnl_footer.Visible = value;
             Seperator.Visible = value;
 
             if (Expanded) btn_expand.Image = Resources.CollapseArrow;
             else btn_expand.Image = Resources.ExpandArrow;
+
+            //generating the parameters if they dont exist
+            if (Parameters.Count == 0)
+            {
+                for (int i = 1; i < opcode.Description.Length; i++)
+                {
+                    string currentTitle = opcode.Description[i];
+                    OpcodeParameter parameter = new OpcodeParameter(currentTitle, opcode.NybbleIndices[i] != null);
+                    parameter.Dock = DockStyle.Top;
+                    parameter.Visible = true;
+                    pnl_parameters.Controls.Add(parameter);
+                    parameter.BringToFront();
+                    Parameters.Add(parameter);
+                }
+            }
         }
     }
     #endregion

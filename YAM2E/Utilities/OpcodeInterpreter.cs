@@ -86,7 +86,7 @@ namespace LAMP
             string indexstring = Regex.Match(data[0], @"\((.*?)\)").Value; //gets the prewritten data in the first line (...)
             if (indexstring == "") throw new Exception("No Opcode index has been defined");
 
-            return (byte)Format.StringToInt(Regex.Match(indexstring, @"[0-9]+|[A-F]+").Value);
+            return (byte)Format.StringToInt(Regex.Match(indexstring, @"([0-9]|[A-F])+").Value);
         }
 
         /// <summary>

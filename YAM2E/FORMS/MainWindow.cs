@@ -1192,6 +1192,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        TransitionOpcode o = new TransitionOpcode("End Transition [0;1](FF), There are, no further, parameters");
+        TransitionOpcode o = new TransitionOpcode("Load Object Graphics [0;1](B1), from Bank [2;3], at Offset [4;7]");
     }
 }
