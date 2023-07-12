@@ -35,7 +35,7 @@
             // lbl_title
             // 
             lbl_title.AutoSize = true;
-            lbl_title.Location = new System.Drawing.Point(4, 7);
+            lbl_title.Location = new System.Drawing.Point(13, 7);
             lbl_title.Name = "lbl_title";
             lbl_title.Size = new System.Drawing.Size(29, 15);
             lbl_title.TabIndex = 0;
@@ -44,9 +44,9 @@
             // txb_parameter
             // 
             txb_parameter.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            txb_parameter.Location = new System.Drawing.Point(120, 4);
+            txb_parameter.Location = new System.Drawing.Point(129, 4);
             txb_parameter.Name = "txb_parameter";
-            txb_parameter.Size = new System.Drawing.Size(63, 23);
+            txb_parameter.Size = new System.Drawing.Size(54, 23);
             txb_parameter.TabIndex = 1;
             // 
             // OpcodeParameter
@@ -56,7 +56,7 @@
             Controls.Add(txb_parameter);
             Controls.Add(lbl_title);
             Name = "OpcodeParameter";
-            Padding = new System.Windows.Forms.Padding(1);
+            Padding = new System.Windows.Forms.Padding(10, 1, 1, 1);
             Size = new System.Drawing.Size(187, 31);
             ResumeLayout(false);
             PerformLayout();

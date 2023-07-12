@@ -8,16 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LAMP.Controls.Other
-{
-    public partial class OpcodeParameter : UserControl
-    {
-        public OpcodeParameter(string title, bool isInput)
-        {
-            InitializeComponent();
+namespace LAMP.Controls.Other;
 
-            lbl_title.Text = title;
-            if (!isInput) txb_parameter.Dispose();
-        }
+public partial class OpcodeParameter : UserControl
+{
+    public OpcodeParameter(string title, bool isInput)
+    {
+        InitializeComponent();
+
+        lbl_title.Text = title;
+        if (!isInput) txb_parameter.Dispose();
+    }
+
+    public TextBox txb_Parameter
+    {
+        get => txb_parameter;
     }
 }

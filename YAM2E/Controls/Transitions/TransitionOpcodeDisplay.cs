@@ -3,6 +3,7 @@ using LAMP.Controls;
 using LAMP.Controls.Other;
 using LAMP.FORMS;
 using LAMP.Properties;
+using LAMP.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +14,9 @@ namespace LAMP.Controls;
 public partial class TransitionOpcodeDisplay : UserControl
 {
     #region FIELDS
-    TransitionOpcode opcode;
+    TransitionOpcode Opcode;
+
+    bool init = true;
 
     public List<byte> Data { get; set; }
     private List<OpcodeParameter> Parameters { get; set; } = new List<OpcodeParameter>();
@@ -26,7 +29,7 @@ public partial class TransitionOpcodeDisplay : UserControl
         get => pnl_parameters.Visible;
         set
         {
-            if (!opcode.isExpandable) return;
+            if (!Opcode.isExpandable) return;
 
             pnl_parameters.Visible = value;
             pnl_footer.Visible = value;
@@ -36,19 +39,7 @@ public partial class TransitionOpcodeDisplay : UserControl
             else btn_expand.Image = Resources.ExpandArrow;
 
             //generating the parameters if they dont exist
-            if (Parameters.Count == 0)
-            {
-                for (int i = 1; i < opcode.Description.Length; i++)
-                {
-                    string currentTitle = opcode.Description[i];
-                    OpcodeParameter parameter = new OpcodeParameter(currentTitle, opcode.NybbleIndices[i] != null);
-                    parameter.Dock = DockStyle.Top;
-                    parameter.Visible = true;
-                    pnl_parameters.Controls.Add(parameter);
-                    parameter.BringToFront();
-                    Parameters.Add(parameter);
-                }
-            }
+            if (Parameters.Count == 0) PopulateParameters();
         }
     }
     #endregion
@@ -58,7 +49,7 @@ public partial class TransitionOpcodeDisplay : UserControl
     {
         InitializeComponent();
         pnl_parameters.BringToFront();
-        opcode = o;
+        Opcode = o;
         lbl_opcode_name.Text = o.Description[0];
 
         btn_expand.Visible = o.isExpandable;
@@ -91,13 +82,53 @@ public partial class TransitionOpcodeDisplay : UserControl
     }
     #endregion
 
+    private void PopulateParameters()
+    {
+        for (int i = 1; i < Opcode.Description.Length; i++)
+        {
+            string currentTitle = Opcode.Description[i];
+            OpcodeParameter parameter = new OpcodeParameter(currentTitle, Opcode.NybbleIndices[i] != null);
+            parameter.Dock = DockStyle.Top;
+            parameter.Visible = true;
+            pnl_parameters.Controls.Add(parameter);
+            parameter.BringToFront();
+            Parameters.Add(parameter);
+
+            if (parameter.txb_Parameter == null) continue;
+
+            //Adding event
+            parameter.txb_Parameter.TextChanged += txb_parameter_TextChanged;
+
+            //Adding data
+            if (Opcode.NybbleIndices[i] == null) continue;
+
+            int dataStart = (int)Opcode.NybbleIndices[i];
+            int dataLength = Opcode.ParameterLength[i];
+
+            int value = 0;
+
+            for (int j = 0; j < dataLength; j++)
+            {
+                int writeHeadPosition = dataLength - 1 - j; //The data will be read per nybble 
+                value += ByteOp.GetNybble(Data, dataStart + j) << (4 * writeHeadPosition);
+            }
+
+            //switching the bytes if length is 4 nybbles
+            if (dataLength == 4) value = ByteOp.SwitchBytes(value);
+
+            parameter.txb_Parameter.Text = Format.IntToString(value);
+        }
+
+        init = false;
+    }
+
     #region Events
     /// <summary>
     /// Clicked somewhere on the header to expand
     /// </summary>
     private void pnl_header_MouseClick(object sender, MouseEventArgs e)
     {
-        if (!opcode.isExpandable) return;
+        if (!Opcode.isExpandable) return;
 
         //Opcode can be expandend
         Expanded = !Expanded;
@@ -108,13 +139,27 @@ public partial class TransitionOpcodeDisplay : UserControl
     /// </summary>
     private void lbl_opcode_name_MouseMove(object sender, MouseEventArgs e)
     {
-        if (!opcode.isExpandable) return;
+        if (!Opcode.isExpandable) return;
         pnl_header.BackColor = Color.FromArgb(0xFF, 0xd8, 0xd8, 0xd8);
     }
     private void lbl_opcode_name_MouseLeave(object sender, EventArgs e)
     {
-        if (!opcode.isExpandable) return;
+        if (!Opcode.isExpandable) return;
         pnl_header.BackColor = Color.FromArgb(0xFF, 0xf0, 0xf0, 0xf0);
+    }
+
+    public void txb_parameter_TextChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+        TextBox box = (TextBox)sender;
+
+        //Figuring out at which position the opcode is
+        for (int i = 0; i < Parameters.Count; i++)
+        {
+            if (Parameters[i].txb_Parameter != box) continue;
+            box.Text = i.ToString();
+            return;
+        }
     }
     #endregion
 }

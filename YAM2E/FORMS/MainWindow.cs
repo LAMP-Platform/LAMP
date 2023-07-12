@@ -1192,6 +1192,9 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        TransitionOpcode o = new TransitionOpcode("Load Object Graphics [0;1](B1), from Bank [2;3], at Offset [4;7]");
+        //TransitionOpcode o = new TransitionOpcode("Load Object Graphics [0;1](B1), from Bank [2;3], at Offset [4;7]");
+        List<byte> array = new() { 0xb1, 0x6F, 0x4C, 0xFF};
+        byte nybble = ByteOp.GetNybble(array, -3);
+        byte nybble2 = ByteOp.GetNybble(array, 4);
     }
 }
