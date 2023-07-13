@@ -17,6 +17,7 @@ public partial class TransitionOpcodeDisplay : UserControl
     TransitionOpcode Opcode;
 
     bool init = true;
+    bool appliedChange = false;
 
     public List<byte> Data { get; set; }
     private List<OpcodeParameter> Parameters { get; set; } = new List<OpcodeParameter>();
@@ -98,28 +99,33 @@ public partial class TransitionOpcodeDisplay : UserControl
 
             //Adding event
             parameter.txb_Parameter.TextChanged += txb_parameter_TextChanged;
+            parameter.txb_Parameter.Leave += txb_parameter_Leave;
 
             //Adding data
             if (Opcode.NybbleIndices[i] == null) continue;
 
-            int dataStart = (int)Opcode.NybbleIndices[i];
-            int dataLength = Opcode.ParameterLength[i];
-
-            int value = 0;
-
-            for (int j = 0; j < dataLength; j++)
-            {
-                int writeHeadPosition = dataLength - 1 - j; //The data will be read per nybble 
-                value += ByteOp.GetNybble(Data, dataStart + j) << (4 * writeHeadPosition);
-            }
-
-            //switching the bytes if length is 4 nybbles
-            if (dataLength == 4) value = ByteOp.SwitchBytes(value);
-
-            parameter.txb_Parameter.Text = Format.IntToString(value);
+            parameter.txb_Parameter.Text = Format.IntToString(getParameterValue(i));
         }
 
         init = false;
+    }
+    private int getParameterValue(int parameterIndex)
+    {
+        int dataStart = (int)Opcode.NybbleIndices[parameterIndex];
+        int dataLength = Opcode.ParameterLength[parameterIndex];
+
+        int value = 0;
+
+        for (int j = 0; j < dataLength; j++)
+        {
+            int writeHeadPosition = dataLength - 1 - j; //The data will be read per nybble 
+            value += ByteOp.GetNybble(Data, dataStart + j) << (4 * writeHeadPosition);
+        }
+
+        //switching the bytes if length is 4 nybbles
+        if (dataLength == 4) value = ByteOp.SwitchBytes(value);
+
+        return value;
     }
 
     #region Events
@@ -151,15 +157,53 @@ public partial class TransitionOpcodeDisplay : UserControl
     public void txb_parameter_TextChanged(object sender, EventArgs e)
     {
         if (init) return;
-        TextBox box = (TextBox)sender;
+        if (appliedChange)
+        {
+            appliedChange = false;
+            return;
+        }
 
-        //Figuring out at which position the opcode is
+        TextBox box = (TextBox)sender;
+        int boxindex = 0;
+
+        //Figuring out at which index the parameter is
         for (int i = 0; i < Parameters.Count; i++)
         {
             if (Parameters[i].txb_Parameter != box) continue;
-            box.Text = i.ToString();
-            return;
+            boxindex = i + 1; // +1 since the first index is for the opcode title
+            break;
         }
+
+        //Writing back that value
+        int dataStart = (int)Opcode.NybbleIndices[boxindex];
+        int dataLength = Opcode.ParameterLength[boxindex];
+        int value = Format.StringToInt(box.Text, (int)Math.Pow(16, dataLength) - 1);
+        if (dataLength == 4) value = ByteOp.SwitchBytes(value); //Switching if 2 bytes
+
+        //Writing the data to the array
+        for (int i = 0; i < dataLength; i++)
+        {
+            ByteOp.SetNybble(Data, dataStart + i, (byte)((value >> ((dataLength - 1 - i) * 4)) & 0xF));
+        }
+
+        OnParameterChanged(new EventArgs());
+    }
+
+    public void txb_parameter_Leave(object sender, EventArgs e)
+    {
+        TextBox box = (TextBox)sender;
+        int boxindex = 0;
+
+        //Figuring out at which index the parameter is
+        for (int i = 0; i < Parameters.Count; i++)
+        {
+            if (Parameters[i].txb_Parameter != box) continue;
+            boxindex = i + 1; // +1 since the first index is for the opcode title
+            break;
+        }
+
+        appliedChange = true;
+        box.Text = Format.IntToString(getParameterValue(boxindex));
     }
     #endregion
 }

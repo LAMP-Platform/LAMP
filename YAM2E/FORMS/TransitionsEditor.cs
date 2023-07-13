@@ -119,6 +119,7 @@ public partial class TransitionsEditor : Form
 
         //Clear existing controls of prior transiition
         pnlTransition.Controls.Clear();
+        Opcodes.Clear();
 
         //Populatig transition
         for (int i = 0; i < LoadedTransition.Data.Count;)
@@ -155,6 +156,7 @@ public partial class TransitionsEditor : Form
             };
             Opcodes.Add(o);
             pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
+            o.onParameterChanged += opcode_parameterChanged;
             o.BringToFront();
             i += length;
         }
@@ -179,9 +181,13 @@ public partial class TransitionsEditor : Form
         //}
     }
 
-    public void SaveTransition()
+    void SaveTransition()
     {
-        //TODO: Rewrite
+        LoadedTransition.Data.Clear();
+        foreach(TransitionOpcodeDisplay o in Opcodes)
+        {
+            foreach(byte b in o.Data) LoadedTransition.Data.Add(b);
+        }
     }
 
     #region Events
@@ -211,5 +217,7 @@ public partial class TransitionsEditor : Form
         ComboboxOp.AutoSize(cbb_tred_transition_selection);
     }
 
+    private void opcode_parameterChanged(object sender, EventArgs e)
+        => SaveTransition();
     #endregion
 }

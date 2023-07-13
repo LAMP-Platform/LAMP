@@ -339,7 +339,7 @@ namespace LAMP.FORMS
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MinimumSize = new System.Drawing.Size(520, 643);
             Name = "TransitionsEditor";
-            Text = "Transitions Editor";
+            Text = "Transition Editor";
             grp_tred_selection.ResumeLayout(false);
             grp_tred_selection.PerformLayout();
             sts_tred_status_strip.ResumeLayout(false);

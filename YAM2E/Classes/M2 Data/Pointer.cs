@@ -32,22 +32,6 @@ public class Pointer
     public int Bank { get; set; }
     public int bOffset { get; set; }
 
-    public bool Add(int amount) //returns true if added amount is still inside the bank
-    {
-        Offset += amount;
-
-        int bankNr = Offset / 0x4000;
-        int bOff = bankNr * 0x4000;
-        bOff = Offset - bOff + 0x4000;
-        bOffset = bOff;
-        if (bankNr != Bank)
-        {
-            Bank = bankNr;
-            return false;
-        }
-        return true;
-    }
-
     public static Pointer operator +(Pointer a, int b) 
         => new Pointer (a.Offset + b);
     public static Pointer operator +(Pointer a, Pointer b)

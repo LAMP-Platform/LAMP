@@ -95,8 +95,8 @@ public class Rom
         #endregion
 
         #region Objects
-        Pointer lastAdd = new Pointer(ObjectDataLists.Offset);
 
+        Pointer lastAdd = new Pointer(ObjectDataLists.Offset);
         if ((exceptions & CompilationItem.Objects) == 0)
         {
             for (int i = 0; i < 256 * 7; i++)
@@ -107,37 +107,39 @@ public class Rom
                     if (Globals.LoadedProject.OptimizeObjectData) Write16(ObjectPointerTable.Offset + 2 * i, (ushort)ObjectDataLists.bOffset); //Writing pointer to list
                     else
                     {
-                        lastAdd.Add(1);
+                        lastAdd += 1;
+                        Write16(ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset);
                         Write8(lastAdd.Offset, 0xFF);
                     }
                 }
                 else //Objects on screen
                 {
-                    lastAdd.Add(1);
+                    lastAdd += 1;
                     Write16(ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
                     foreach (Enemy o in Globals.Objects[i])
                     {
                         //Writing Object list consecutively
                         Write8(lastAdd.Offset, o.Number);
-                        lastAdd.Add(1);
+                        lastAdd += 1;
                         Write8(lastAdd.Offset, o.Type);
-                        lastAdd.Add(1);
+                        lastAdd += 1;
                         Write8(lastAdd.Offset, o.sX);
-                        lastAdd.Add(1);
+                        lastAdd += 1;
                         Write8(lastAdd.Offset, o.sY);
-                        lastAdd.Add(1);
+                        lastAdd += 1;
                     }
                     Write8(lastAdd.Offset, 0xFF);
                 }
             }
         }
+
         #endregion
 
         #region Transitions
         if ((exceptions & CompilationItem.Transitions) == 0)
         {
             lastAdd = new Pointer(TransitionDataLists.Offset);
-            lastAdd.Add(1);
+            lastAdd += 1;
             List<int> offsets = new List<int>(); //List saving written pointers for duplicate tansitions
             for (int i = 0; i < 0x200; i++)
             {
@@ -158,13 +160,13 @@ public class Rom
                     offsets.Add(lastAdd.bOffset);
                     //Writing transition
                     ReplaceBytes(lastAdd.Offset, t.Data);
-                    lastAdd.Add(t.Data.Count);
+                    lastAdd += t.Data.Count;
                 }
             }
         }
         #endregion
 
-        #region Save
+        #region Savedata
         if ((exceptions & CompilationItem.Save) == 0) Globals.InitialSaveGame.WriteToROM(this);
         #endregion
 

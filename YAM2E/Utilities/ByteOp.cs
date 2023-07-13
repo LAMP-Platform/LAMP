@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
 
 namespace LAMP;
 
@@ -44,5 +46,22 @@ public static class ByteOp
         byte least = (byte)(input & 0xFF);
         byte most = (byte)(input >> 8 & 0xFF);
         return least << 8 | most;
+    }
+
+    public static byte SetNybbleLR(byte b, int index, byte value)
+    {
+        //clear original nybble
+        byte mask = (byte)~(0xF0 >> (4 * index));
+        byte clearedByte = (byte)(b & mask);
+
+        //move data
+        value <<= (4 * (1 - index));
+        return (byte)(clearedByte | value);
+    }
+
+    public static void SetNybble(List<byte> b, int index, byte value)
+    {
+        int listIndex = index / 2;
+        b[listIndex] = SetNybbleLR(b[listIndex], index % 2, value);
     }
 }
