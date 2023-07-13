@@ -11,8 +11,10 @@
   * Shows up in screen settings as well
 * Small Tileset Editor redesign
 * All tile displays now highlight tiles that LAMP can not display currently  
+* Added error messages if too many objects exist
  
 **Fixes:** 
+* Objects: Empty screens might not be compiled as empty
 * TestROM: Tilesets with an index >= 10 cause an exception
 * TestROM: Missile values were capped at 0xFF
 * TestROM: Wrong math on the energy value

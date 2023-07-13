@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using LAMP.Classes.M2_Data;
 using System.Runtime.Intrinsics.Arm;
 using System.CodeDom;
+using System.Windows.Forms;
 
 namespace LAMP.Classes;
 
@@ -131,6 +132,7 @@ public class Rom
                     Write8(lastAdd.Offset, 0xFF);
                 }
             }
+            if (lastAdd >= ObjectDataEnd) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         #endregion

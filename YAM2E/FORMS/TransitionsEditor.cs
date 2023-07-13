@@ -168,17 +168,17 @@ public partial class TransitionsEditor : Form
 
     void ReloadTransition()
     {
-        //try
-        //{
+        try
+        {
         LoadedTransition = Globals.Transitions[SelectedIndex];
         LoadTransition();
         ReadTransition();
-        //}
-        //catch (Exception ex)
-        //{
-        //    MessageBox.Show($"An error has occured while loading the Transition.\n\n{ex}\n\nMaybe the data is corrupt?", "Error",
-        //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //}
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"An error has occured while loading the Transition.\n\n{ex}\n\nMaybe the data is corrupt?", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     void SaveTransition()
