@@ -13,10 +13,10 @@ This is due to the zooming feature having huge performance issues on higher zoom
 
 ## Releases
 * **[Stable](https://github.com/ConConner/LAMP/releases)**
-* **[Development](https://github.com/ConConner/LAMP/actions)**
+* **[Development](https://nightly.link/ConConner/LAMP/workflows/publish-dev-build/main/LAMP-devbuild-x64.zip)**
 
 Stable releases take a longer time to release but add a lot of features, which are considered stable, and fix a lot of bugs.  
-If you want faster updates and quicker access to features, which might still be in development, download one of the development builds.
+If you want faster updates and quicker access to features, which might still be in development, download the latest development builds.
 
 ## Projects made with LAMP
 Even though LAMP is a fairly new program there are already some projects which are made with the help of LAMP.
