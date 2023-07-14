@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.Classes.M2_Data;
 using LAMP.Controls;
+using LAMP.Controls.Transitions;
 using LAMP.Utilities;
 
 namespace LAMP.FORMS;
 
 public partial class TransitionsEditor : Form
 {
-    //Transition Editor Fields
     public int TransitionLength
     {
         get => transitionLength;
@@ -66,15 +68,7 @@ public partial class TransitionsEditor : Form
         ComboboxOp.AutoSize(cbb_tred_transition_selection);
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
 
-        //generating the opcode list
-        //TODO: needs a different system to allow opcode adding
-        string txt = "";
-        string newLine = Environment.NewLine;
-        foreach (TransitionOpcode o in Globals.LoadedProject.TransitionOpcodes)
-        {
-            txt += o.Description[0] + newLine;
-        }
-        txb_opcodes.Text = txt;
+        LoadOpcodeList();
 
         //Showing tileset list
         if (!Globals.LoadedProject.useTilesets || Globals.Tilesets.Count == 0) return;
@@ -92,11 +86,22 @@ public partial class TransitionsEditor : Form
         ComboboxOp.AutoSize(cbb_tileset_select);
     }
 
+    void LoadOpcodeList()
+    {
+        foreach (TransitionOpcode o in Globals.LoadedProject.TransitionOpcodes)
+        {
+            OpcodeTemplate temp = new OpcodeTemplate(o);
+            temp.Dock = DockStyle.Top;
+            temp.onAddOpcode += templateAddOpcode;
+            pnl_opcodes.Controls.Add(temp);
+            temp.BringToFront();
+        }
+    }
+
     void LoadTransition()
     {
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
-            pnlTransition.Controls.Clear();
             pnl_warning.Visible = true;
 
             string newLine = Environment.NewLine;
@@ -157,9 +162,16 @@ public partial class TransitionsEditor : Form
             Opcodes.Add(o);
             pnlTransition.Controls.Add(Opcodes[Opcodes.Count - 1]);
             o.onParameterChanged += opcode_parameterChanged;
+            o.onRemoveOpcode += removeOpcode;
+            o.onMoveOpcodeDown += moveOpcodeDown;
+            o.onMoveOpcodeUp += moveOpcodeUp;
             o.BringToFront();
+
             i += length;
         }
+
+        //Setting the arrows
+        SetAllMoveArrows();
 
         //Setting length display
         TransitionLength = LoadedTransition.Data.Count;
@@ -170,9 +182,9 @@ public partial class TransitionsEditor : Form
     {
         try
         {
-        LoadedTransition = Globals.Transitions[SelectedIndex];
-        LoadTransition();
-        ReadTransition();
+            LoadedTransition = Globals.Transitions[SelectedIndex];
+            LoadTransition();
+            ReadTransition();
         }
         catch (Exception ex)
         {
@@ -184,9 +196,21 @@ public partial class TransitionsEditor : Form
     void SaveTransition()
     {
         LoadedTransition.Data.Clear();
-        foreach(TransitionOpcodeDisplay o in Opcodes)
+        foreach (TransitionOpcodeDisplay o in Opcodes)
         {
-            foreach(byte b in o.Data) LoadedTransition.Data.Add(b);
+            foreach (byte b in o.Data) LoadedTransition.Data.Add(b);
+        }
+    }
+
+    void SetAllMoveArrows()
+    {
+        foreach (TransitionOpcodeDisplay o in Opcodes)
+        {
+            int index = pnlTransition.Controls.GetChildIndex(o);
+            o.MoveUpEnabled = true;
+            o.MoveDownEnabled = true;
+            if (index == Opcodes.Count - 1) o.MoveUpEnabled = false;
+            if (index == 0) o.MoveDownEnabled = false;
         }
     }
 
@@ -201,6 +225,41 @@ public partial class TransitionsEditor : Form
         Transition t = Globals.Transitions[cbb_tred_transition_selection.SelectedIndex];
         t.Data = new List<byte>(LoadedTransition.Data);
         t.CopyOf = -1;
+        ReloadTransition();
+    }
+
+    private void btn_remove_all_ButtonClick(object sender, EventArgs e)
+    {
+        if (MessageBox.Show("Are you sure you want to remove all opcodes from the transition?", "Remove all opcodes?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
+
+        Opcodes.Clear();
+        SaveTransition();
+        pnlTransition.Controls.Clear();
+        TransitionLength = 0;
+    }
+
+    private void btn_add_tileset_Click(object sender, EventArgs e)
+    {
+        //Adds the standard way of loading a new tileset
+        List<byte> tilesetData = new List<byte>();
+        Tileset t = Globals.Tilesets[cbb_tileset_select.SelectedIndex];
+
+        //Load Graphics Page
+        tilesetData.Add(0xB1);
+        tilesetData.Add((byte)t.GfxOffset.Bank);
+        tilesetData.Add((byte)(t.GfxOffset.bOffset & 0xFF));
+        tilesetData.Add((byte)(t.GfxOffset.bOffset >> 8));
+
+        //Load Tables
+        tilesetData.Add((byte)(0x10 | (t.MetatileTable & 0xF)));
+        tilesetData.Add((byte)(0x20 | (t.CollisionTable & 0xF)));
+        tilesetData.Add((byte)(0x30 | (t.SolidityTable & 0xF)));
+
+        if (LoadedTransition.Data.Count + tilesetData.Count > 0x40)
+        {
+            MessageBox.Show("There is not enough space left in the Transition to load this Tileset!", "Out of space", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
+        }
+        LoadedTransition.Data.InsertRange(0, tilesetData); //Inserting the data before the end.
         ReloadTransition();
     }
 
@@ -219,5 +278,68 @@ public partial class TransitionsEditor : Form
 
     private void opcode_parameterChanged(object sender, EventArgs e)
         => SaveTransition();
+
+    private void removeOpcode(object sender, EventArgs e)
+    {
+        TransitionOpcodeDisplay o = (TransitionOpcodeDisplay)sender;
+
+        Opcodes.Remove(o);
+        pnlTransition.Controls.Remove(o);
+        TransitionLength -= o.Length;
+        SaveTransition();
+        SetAllMoveArrows();
+    }
+
+    private void moveOpcodeUp(object sender, EventArgs e)
+    {
+        TransitionOpcodeDisplay o = (TransitionOpcodeDisplay)sender;
+
+        int index = pnlTransition.Controls.GetChildIndex(o);
+        pnlTransition.Controls.SetChildIndex(o, index + 1);
+        Opcodes.Switch(Opcodes.Count - 1 - index, Opcodes.Count - 2 - index);
+
+        SetAllMoveArrows();
+
+        SaveTransition();
+    }
+
+    private void moveOpcodeDown(object sender, EventArgs e)
+    {
+        TransitionOpcodeDisplay o = (TransitionOpcodeDisplay)sender;
+
+        o.MoveUpEnabled = true;
+        int index = pnlTransition.Controls.GetChildIndex(o);
+        pnlTransition.Controls.SetChildIndex(o, index - 1);
+        Opcodes.Switch(Opcodes.Count - 1 - index, Opcodes.Count - index);
+
+        SetAllMoveArrows();
+
+        SaveTransition();
+    }
+
+    private void templateAddOpcode(object sender, EventArgs e)
+    {
+        OpcodeTemplate o = (OpcodeTemplate)sender;
+
+        //Add the required data of the opcode
+        List<byte> data = new List<byte>();
+
+        byte index = o.opcode.OpcodeIndex;
+        if (index <= 0xF) index = (byte)(index << 4);
+        data.Add(index);
+
+        for (int i = 1; i < o.opcode.OpcodeLength; i++)
+        {
+            //TODO: add support for predefined values
+            data.Add(0x0);
+        }
+
+        if (LoadedTransition.Data.Count + data.Count > 0x40)
+        {
+            MessageBox.Show("There is not enough space left in the Transition to load this Tileset!", "Out of space", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
+        }
+        LoadedTransition.Data.InsertRange(0, data); //Inserting the data before the end.
+        ReloadTransition();
+    }
     #endregion
 }

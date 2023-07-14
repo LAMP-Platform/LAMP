@@ -33,6 +33,8 @@
             btn_expand = new System.Windows.Forms.PictureBox();
             lbl_opcode_name = new System.Windows.Forms.Label();
             pnl_footer = new System.Windows.Forms.Panel();
+            btn_move_down = new System.Windows.Forms.Button();
+            btn_move_up = new System.Windows.Forms.Button();
             btn_remove_opcode = new System.Windows.Forms.Button();
             pnl_border = new System.Windows.Forms.Panel();
             pnl_parameters = new System.Windows.Forms.Panel();
@@ -98,6 +100,8 @@
             // 
             // pnl_footer
             // 
+            pnl_footer.Controls.Add(btn_move_down);
+            pnl_footer.Controls.Add(btn_move_up);
             pnl_footer.Controls.Add(btn_remove_opcode);
             pnl_footer.Dock = System.Windows.Forms.DockStyle.Bottom;
             pnl_footer.Location = new System.Drawing.Point(0, 30);
@@ -105,6 +109,30 @@
             pnl_footer.Size = new System.Drawing.Size(248, 29);
             pnl_footer.TabIndex = 2;
             pnl_footer.Visible = false;
+            // 
+            // btn_move_down
+            // 
+            btn_move_down.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_move_down.Image = Properties.Resources.ArrowDown;
+            btn_move_down.Location = new System.Drawing.Point(196, 3);
+            btn_move_down.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            btn_move_down.Name = "btn_move_down";
+            btn_move_down.Size = new System.Drawing.Size(23, 23);
+            btn_move_down.TabIndex = 2;
+            btn_move_down.UseVisualStyleBackColor = true;
+            btn_move_down.Click += btn_move_down_Click;
+            // 
+            // btn_move_up
+            // 
+            btn_move_up.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_move_up.Image = Properties.Resources.ArrowUp;
+            btn_move_up.Location = new System.Drawing.Point(170, 3);
+            btn_move_up.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            btn_move_up.Name = "btn_move_up";
+            btn_move_up.Size = new System.Drawing.Size(23, 23);
+            btn_move_up.TabIndex = 1;
+            btn_move_up.UseVisualStyleBackColor = true;
+            btn_move_up.Click += btn_move_up_Click;
             // 
             // btn_remove_opcode
             // 
@@ -115,6 +143,7 @@
             btn_remove_opcode.Size = new System.Drawing.Size(23, 23);
             btn_remove_opcode.TabIndex = 0;
             btn_remove_opcode.UseVisualStyleBackColor = true;
+            btn_remove_opcode.Click += btn_remove_opcode_Click;
             // 
             // pnl_border
             // 
@@ -144,6 +173,7 @@
             // pnl_main
             // 
             pnl_main.AutoSize = true;
+            pnl_main.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             pnl_main.Controls.Add(pnl_border);
             pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_main.Location = new System.Drawing.Point(0, 0);
@@ -186,5 +216,7 @@
         private System.Windows.Forms.Panel pnl_border;
         private System.Windows.Forms.Panel pnl_main;
         private System.Windows.Forms.Panel pnl_parameters;
+        private System.Windows.Forms.Button btn_move_down;
+        private System.Windows.Forms.Button btn_move_up;
     }
 }

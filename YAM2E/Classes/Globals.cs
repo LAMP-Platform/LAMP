@@ -6,6 +6,7 @@ using System;
 using System.Windows.Forms;
 using System.Linq;
 using System.Security.Cryptography;
+using LAMP.Controls.Transitions;
 
 namespace LAMP;
 

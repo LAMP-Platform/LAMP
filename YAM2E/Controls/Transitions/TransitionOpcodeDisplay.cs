@@ -21,6 +21,27 @@ public partial class TransitionOpcodeDisplay : UserControl
 
     public List<byte> Data { get; set; }
     private List<OpcodeParameter> Parameters { get; set; } = new List<OpcodeParameter>();
+    public int Length
+    {
+        get => Opcode.OpcodeLength;
+    }
+
+    public bool MoveUpEnabled
+    {
+        get => btn_move_up.Enabled;
+        set
+        {
+            btn_move_up.Enabled = value;
+        }
+    }
+    public bool MoveDownEnabled
+    {
+        get => btn_move_down.Enabled;
+        set
+        {
+            btn_move_down.Enabled = value;
+        }
+    }
 
     /// <summary>
     /// Whether the parameters are shown or not
@@ -56,9 +77,14 @@ public partial class TransitionOpcodeDisplay : UserControl
         btn_expand.Visible = o.isExpandable;
         if (o.isExpandable) return;
 
-        //Move remove button to top header if no parameters exist
+        //Move the buttons to top header if no parameters exist
         pnl_header.Controls.Add(btn_remove_opcode);
+        pnl_header.Controls.Add(btn_move_down);
+        pnl_header.Controls.Add(btn_move_up);
         btn_remove_opcode.Location = btn_expand.Location;
+        btn_move_down.Location = new Point(btn_expand.Location.X - 26, btn_expand.Location.Y);
+        btn_move_up.Location = new Point(btn_move_down.Location.X - 26, btn_move_down.Location.Y);
+
         pnl_footer.Visible = false;
         Seperator.Visible = false;
     }
@@ -80,6 +106,45 @@ public partial class TransitionOpcodeDisplay : UserControl
     public virtual void OnParameterChanged(EventArgs e)
     {
         onParameterChanged?.Invoke(this, e);
+    }
+
+    public EventHandler onRemoveOpcode { get; set; }
+    public event EventHandler RemoveOpcode
+    {
+        add
+        {
+            onRemoveOpcode += value;
+        }
+        remove
+        {
+            onRemoveOpcode -= value;
+        }
+    }
+
+    public EventHandler onMoveOpcodeUp { get; set; }
+    public event EventHandler MoveOpcodeUp
+    {
+        add
+        {
+            onMoveOpcodeUp += value;
+        }
+        remove
+        {
+            onMoveOpcodeUp -= value;
+        }
+    }
+
+    public EventHandler onMoveOpcodeDown { get; set; }
+    public event EventHandler MoveOpcodeDown
+    {
+        add
+        {
+            onMoveOpcodeDown += value;
+        }
+        remove
+        {
+            onMoveOpcodeDown -= value;
+        }
     }
     #endregion
 
@@ -205,5 +270,11 @@ public partial class TransitionOpcodeDisplay : UserControl
         appliedChange = true;
         box.Text = Format.IntToString(getParameterValue(boxindex));
     }
+
+    private void btn_remove_opcode_Click(object sender, EventArgs e) => onRemoveOpcode?.Invoke(this, e);
+
+    private void btn_move_down_Click(object sender, EventArgs e) => onMoveOpcodeDown?.Invoke(this, e);
+
+    private void btn_move_up_Click(object sender, EventArgs e) => onMoveOpcodeUp?.Invoke(this, e);
     #endregion
 }

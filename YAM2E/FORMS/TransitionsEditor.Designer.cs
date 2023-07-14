@@ -38,6 +38,8 @@ namespace LAMP.FORMS
             cbb_tred_transition_selection = new System.Windows.Forms.ComboBox();
             sts_tred_status_strip = new System.Windows.Forms.StatusStrip();
             lbl_tred_transition_length = new System.Windows.Forms.ToolStripStatusLabel();
+            status_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_remove_all = new System.Windows.Forms.ToolStripSplitButton();
             tlt_tred_warning = new System.Windows.Forms.ToolTip(components);
             txb_transition_info = new System.Windows.Forms.TextBox();
             btn_seperate_transition = new System.Windows.Forms.Button();
@@ -49,7 +51,7 @@ namespace LAMP.FORMS
             pnl_seperate_button_dock = new System.Windows.Forms.Panel();
             splt_main = new System.Windows.Forms.SplitContainer();
             grp_opcodes = new System.Windows.Forms.GroupBox();
-            txb_opcodes = new System.Windows.Forms.TextBox();
+            pnl_opcodes = new System.Windows.Forms.Panel();
             grp_tilesets = new System.Windows.Forms.GroupBox();
             btn_add_tileset = new System.Windows.Forms.Button();
             cbb_tileset_select = new System.Windows.Forms.ComboBox();
@@ -122,7 +124,7 @@ namespace LAMP.FORMS
             // 
             // sts_tred_status_strip
             // 
-            sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length });
+            sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length, status_spring, btn_remove_all });
             sts_tred_status_strip.Location = new System.Drawing.Point(0, 582);
             sts_tred_status_strip.Name = "sts_tred_status_strip";
             sts_tred_status_strip.Size = new System.Drawing.Size(863, 22);
@@ -134,6 +136,24 @@ namespace LAMP.FORMS
             lbl_tred_transition_length.Name = "lbl_tred_transition_length";
             lbl_tred_transition_length.Size = new System.Drawing.Size(104, 17);
             lbl_tred_transition_length.Text = "Transition Length: ";
+            // 
+            // status_spring
+            // 
+            status_spring.Name = "status_spring";
+            status_spring.Size = new System.Drawing.Size(656, 17);
+            status_spring.Spring = true;
+            // 
+            // btn_remove_all
+            // 
+            btn_remove_all.DropDownButtonWidth = 0;
+            btn_remove_all.Image = Properties.Resources.Remove;
+            btn_remove_all.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_remove_all.Name = "btn_remove_all";
+            btn_remove_all.Size = new System.Drawing.Size(88, 20);
+            btn_remove_all.Text = "Remove All";
+            btn_remove_all.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_remove_all.ToolTipText = "Remove all opcodes at once";
+            btn_remove_all.ButtonClick += btn_remove_all_ButtonClick;
             // 
             // tlt_tred_warning
             // 
@@ -263,7 +283,7 @@ namespace LAMP.FORMS
             // 
             // grp_opcodes
             // 
-            grp_opcodes.Controls.Add(txb_opcodes);
+            grp_opcodes.Controls.Add(pnl_opcodes);
             grp_opcodes.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_opcodes.Location = new System.Drawing.Point(9, 92);
             grp_opcodes.Name = "grp_opcodes";
@@ -272,18 +292,15 @@ namespace LAMP.FORMS
             grp_opcodes.TabStop = false;
             grp_opcodes.Text = "Opcodes";
             // 
-            // txb_opcodes
+            // pnl_opcodes
             // 
-            txb_opcodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            txb_opcodes.Dock = System.Windows.Forms.DockStyle.Fill;
-            txb_opcodes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            txb_opcodes.Location = new System.Drawing.Point(3, 19);
-            txb_opcodes.Multiline = true;
-            txb_opcodes.Name = "txb_opcodes";
-            txb_opcodes.ReadOnly = true;
-            txb_opcodes.Size = new System.Drawing.Size(219, 279);
-            txb_opcodes.TabIndex = 5;
-            txb_opcodes.TabStop = false;
+            pnl_opcodes.AutoScroll = true;
+            pnl_opcodes.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_opcodes.Location = new System.Drawing.Point(3, 19);
+            pnl_opcodes.Name = "pnl_opcodes";
+            pnl_opcodes.Padding = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            pnl_opcodes.Size = new System.Drawing.Size(219, 279);
+            pnl_opcodes.TabIndex = 0;
             // 
             // grp_tilesets
             // 
@@ -307,6 +324,7 @@ namespace LAMP.FORMS
             btn_add_tileset.Size = new System.Drawing.Size(23, 23);
             btn_add_tileset.TabIndex = 1;
             btn_add_tileset.UseVisualStyleBackColor = true;
+            btn_add_tileset.Click += btn_add_tileset_Click;
             // 
             // cbb_tileset_select
             // 
@@ -353,7 +371,6 @@ namespace LAMP.FORMS
             ((System.ComponentModel.ISupportInitialize)splt_main).EndInit();
             splt_main.ResumeLayout(false);
             grp_opcodes.ResumeLayout(false);
-            grp_opcodes.PerformLayout();
             grp_tilesets.ResumeLayout(false);
             pnl_gauge.ResumeLayout(false);
             ResumeLayout(false);
@@ -381,9 +398,11 @@ namespace LAMP.FORMS
         private System.Windows.Forms.TextBox txb_warning_header;
         private System.Windows.Forms.Panel pnl_seperate_button_dock;
         private System.Windows.Forms.GroupBox grp_opcodes;
-        private System.Windows.Forms.TextBox txb_opcodes;
         private System.Windows.Forms.GroupBox grp_tilesets;
         private System.Windows.Forms.Button btn_add_tileset;
         private System.Windows.Forms.ComboBox cbb_tileset_select;
+        private System.Windows.Forms.ToolStripStatusLabel status_spring;
+        private System.Windows.Forms.ToolStripSplitButton btn_remove_all;
+        private System.Windows.Forms.Panel pnl_opcodes;
     }
 }
