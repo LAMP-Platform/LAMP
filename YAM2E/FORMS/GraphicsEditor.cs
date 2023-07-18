@@ -138,7 +138,7 @@ public partial class GraphicsEditor : Form
         Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
 
         if (LoadedGFX == null) return;
-       
+
         switch (toolbar_graphics.SelectedTool)
         {
             case LampTool.Pen:

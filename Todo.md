@@ -8,6 +8,7 @@
  * Clear screen / area data
  * better object displaying
  * Tweaks Editor
+ * Compile to IPS
 
 # Outside Editor things
  * write a more helpful readme.md
@@ -119,3 +120,18 @@ Examples:
 
 * [x;y] - Indicates that the value is for the Nybbles from x through y
 * (x) - Predefines a value for the last data template
+
+# Compiling straight to IPS
+Currently, LAMP only supports compilation to a ROM. However, for hack distribution this is not the most
+optimal file format. While it might not take a long time, it is still an slightly convoluted process to first
+compile a ROM and then use a third party tool to create a patch.
+
+Technically, LAMP can detect the difference between the changes in the data files and the base ROM used in LAMP.
+The only problem with this approach is that it is possible to use a different, non vanilla, M2 ROM as the base in LAMP.
+When a patch gets created through LAMP, this would lead to the patch only containing the changes from the data files and
+not any potential changes in the base ROM. Any resulting patched ROM would then be missing data. Obviously this could be
+avoided, if people stopped using different base ROMs, but this as well is not possible right now since a lot of the ASM
+patches are applied using the source code and LAMP is currently still lacking proper ways to edit many aspects surrounding
+graphics and collision.
+
+Due to all these complications, it is unlikely that an option to compile to a patch is worth the effort.

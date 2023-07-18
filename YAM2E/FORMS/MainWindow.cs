@@ -1053,7 +1053,7 @@ public partial class MainWindow : Form
 
     private void btn_open_transition_editor_image_Click(object sender, EventArgs e)
         => new TransitionsEditor().Show();
-    
+
     private void btn_show_screen_outlines_Click(object sender, EventArgs e)
     {
         ToggleScreenOutlines();
@@ -1192,6 +1192,8 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
+        List<int> ints = new List<int>();
+
         int val = Format.StringToInt("$a");
     }
 }

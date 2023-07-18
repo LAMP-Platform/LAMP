@@ -111,7 +111,7 @@ public partial class TilesetInput : UserControl
             //adding to selection
             cbb_tileset_id.Items.Add(name);
         }
-        ComboboxOp.AutoSize(cbb_tileset_id);
+        cbb_tileset_id.AutoSize();
         cbb_tileset_id.SelectedIndex = Math.Min(cbb_tileset_id.Items.Count - 1, selected); //Setting last selected tileset
     }
 

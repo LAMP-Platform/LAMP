@@ -28,7 +28,7 @@ public static class Editor
     /// <summary>
     /// The ROM as a byte array.
     /// </summary>
-    public static Rom ROM;
+    public static Rom ROM { get; set; }
 
     /// <summary>
     /// Pointers to level data banks.

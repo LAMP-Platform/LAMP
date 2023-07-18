@@ -18,9 +18,7 @@ namespace LAMP.FORMS;
 
 public partial class TilesetDefinitions : Form
 {
-    public TileViewer Tileset = new TileViewer()
-    {
-    };
+    public TileViewer Tileset = new TileViewer();
     private Pointer MetatilePointer;
 
     public TilesetDefinitions()
@@ -84,6 +82,8 @@ public partial class TilesetDefinitions : Form
         cbb_tileset_id.Enabled = true;
         lbl_tileset_id.Enabled = true;
         btn_edit.Enabled = true;
+        btn_edit_collision.Enabled = true;
+        btn_edit_solidity.Enabled = true;
     }
     private void DisableComponents()
     {
@@ -103,6 +103,8 @@ public partial class TilesetDefinitions : Form
         cbb_tileset_id.Enabled = false;
         lbl_tileset_id.Enabled = false;
         btn_edit.Enabled = false;
+        btn_edit_collision.Enabled = false;
+        btn_edit_solidity.Enabled = false;
 
         cbb_tileset_id.Text = "";
         cbb_metatile_table.SelectedIndex = 0;
@@ -140,7 +142,7 @@ public partial class TilesetDefinitions : Form
         }
         cbb_tileset_id.SelectedIndex = Globals.Tilesets.Count - 1;
         if (Globals.Tilesets.Count > 0) btn_save_tileset.Enabled = true;
-        ComboboxOp.AutoSize(cbb_tileset_id);
+        cbb_tileset_id.AutoSize();
     }
 
     private void UpdateNames()
@@ -154,7 +156,7 @@ public partial class TilesetDefinitions : Form
 
             cbb_tileset_id.Items[i] = name;
         }
-        ComboboxOp.AutoSize(cbb_tileset_id);
+        cbb_tileset_id.AutoSize();
     }
 
     private void btn_save_tileset_Click(object sender, EventArgs e)
@@ -201,5 +203,10 @@ public partial class TilesetDefinitions : Form
     private void btn_edit_Click(object sender, EventArgs e)
     {
         new GraphicsEditor(Globals.Tilesets[cbb_tileset_id.SelectedIndex]).Show();
+    }
+
+    private void btn_edit_solidity_Click(object sender, EventArgs e)
+    {
+        new SolidityEditor(cbb_solidity_table.SelectedIndex, Format.StringToPointer(txb_gfx_offset.Text)).Show();
     }
 }

@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TilesetDefinitions));
             grp_tileset_data = new System.Windows.Forms.GroupBox();
+            btn_edit_solidity = new System.Windows.Forms.Button();
+            btn_edit_collision = new System.Windows.Forms.Button();
             btn_edit = new System.Windows.Forms.Button();
             txb_gfx_offset = new System.Windows.Forms.TextBox();
             btn_remove_tileset = new System.Windows.Forms.Button();
@@ -62,6 +64,8 @@
             // 
             // grp_tileset_data
             // 
+            grp_tileset_data.Controls.Add(btn_edit_solidity);
+            grp_tileset_data.Controls.Add(btn_edit_collision);
             grp_tileset_data.Controls.Add(btn_edit);
             grp_tileset_data.Controls.Add(txb_gfx_offset);
             grp_tileset_data.Controls.Add(btn_remove_tileset);
@@ -85,8 +89,31 @@
             grp_tileset_data.TabStop = false;
             grp_tileset_data.Text = "Tileset Data";
             // 
+            // btn_edit_solidity
+            // 
+            btn_edit_solidity.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_edit_solidity.Image = Properties.Resources.PenOneSelected;
+            btn_edit_solidity.Location = new System.Drawing.Point(246, 161);
+            btn_edit_solidity.Name = "btn_edit_solidity";
+            btn_edit_solidity.Size = new System.Drawing.Size(23, 23);
+            btn_edit_solidity.TabIndex = 24;
+            btn_edit_solidity.UseVisualStyleBackColor = true;
+            btn_edit_solidity.Click += btn_edit_solidity_Click;
+            // 
+            // btn_edit_collision
+            // 
+            btn_edit_collision.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_edit_collision.Image = Properties.Resources.PenOneSelected;
+            btn_edit_collision.Location = new System.Drawing.Point(246, 132);
+            btn_edit_collision.Name = "btn_edit_collision";
+            btn_edit_collision.Size = new System.Drawing.Size(23, 23);
+            btn_edit_collision.TabIndex = 23;
+            btn_edit_collision.UseVisualStyleBackColor = true;
+            btn_edit_collision.Visible = false;
+            // 
             // btn_edit
             // 
+            btn_edit.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_edit.Image = Properties.Resources.PenOneSelected;
             btn_edit.Location = new System.Drawing.Point(246, 103);
             btn_edit.Name = "btn_edit";
@@ -97,6 +124,7 @@
             // 
             // txb_gfx_offset
             // 
+            txb_gfx_offset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txb_gfx_offset.Location = new System.Drawing.Point(103, 74);
             txb_gfx_offset.Name = "txb_gfx_offset";
             txb_gfx_offset.Size = new System.Drawing.Size(166, 23);
@@ -104,6 +132,7 @@
             // 
             // btn_remove_tileset
             // 
+            btn_remove_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_remove_tileset.Image = Properties.Resources.Remove;
             btn_remove_tileset.Location = new System.Drawing.Point(246, 16);
             btn_remove_tileset.Name = "btn_remove_tileset";
@@ -114,6 +143,7 @@
             // 
             // btn_add_tileset
             // 
+            btn_add_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_add_tileset.Image = Properties.Resources.Add;
             btn_add_tileset.Location = new System.Drawing.Point(217, 17);
             btn_add_tileset.Name = "btn_add_tileset";
@@ -124,6 +154,7 @@
             // 
             // cbb_solidity_table
             // 
+            cbb_solidity_table.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cbb_solidity_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_solidity_table.FormattingEnabled = true;
             cbb_solidity_table.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7" });
@@ -134,6 +165,7 @@
             // 
             // txb_tileset_name
             // 
+            txb_tileset_name.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txb_tileset_name.Location = new System.Drawing.Point(103, 45);
             txb_tileset_name.Name = "txb_tileset_name";
             txb_tileset_name.Size = new System.Drawing.Size(166, 23);
@@ -159,6 +191,7 @@
             // 
             // cbb_tileset_id
             // 
+            cbb_tileset_id.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cbb_tileset_id.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_tileset_id.FormattingEnabled = true;
             cbb_tileset_id.Location = new System.Drawing.Point(103, 16);
@@ -178,6 +211,7 @@
             // 
             // cbb_collision_table
             // 
+            cbb_collision_table.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cbb_collision_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_collision_table.FormattingEnabled = true;
             cbb_collision_table.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7" });
@@ -206,6 +240,7 @@
             // 
             // cbb_metatile_table
             // 
+            cbb_metatile_table.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             cbb_metatile_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_metatile_table.FormattingEnabled = true;
             cbb_metatile_table.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" });
@@ -229,7 +264,7 @@
             btn_save_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_save_tileset.Enabled = false;
             btn_save_tileset.Image = Properties.Resources.Save;
-            btn_save_tileset.Location = new System.Drawing.Point(223, 3);
+            btn_save_tileset.Location = new System.Drawing.Point(226, 3);
             btn_save_tileset.Name = "btn_save_tileset";
             btn_save_tileset.Size = new System.Drawing.Size(64, 23);
             btn_save_tileset.TabIndex = 19;
@@ -342,5 +377,7 @@
         private System.Windows.Forms.SplitContainer splt_main;
         private System.Windows.Forms.Panel pnl_tileset_preview;
         private System.Windows.Forms.Panel pnl_apply_button;
+        private System.Windows.Forms.Button btn_edit_solidity;
+        private System.Windows.Forms.Button btn_edit_collision;
     }
 }

@@ -151,14 +151,14 @@ namespace LAMP
             // btn_new_project
             // 
             btn_new_project.Name = "btn_new_project";
-            btn_new_project.Size = new System.Drawing.Size(150, 22);
+            btn_new_project.Size = new System.Drawing.Size(180, 22);
             btn_new_project.Text = "New Project";
             btn_new_project.Click += btn_new_project_Click;
             // 
             // btn_open_rom
             // 
             btn_open_rom.Name = "btn_open_rom";
-            btn_open_rom.Size = new System.Drawing.Size(150, 22);
+            btn_open_rom.Size = new System.Drawing.Size(180, 22);
             btn_open_rom.Text = "Open Project";
             btn_open_rom.Click += btn_open_rom_Click;
             // 
@@ -166,21 +166,21 @@ namespace LAMP
             // 
             btn_save_project.Enabled = false;
             btn_save_project.Name = "btn_save_project";
-            btn_save_project.Size = new System.Drawing.Size(150, 22);
+            btn_save_project.Size = new System.Drawing.Size(180, 22);
             btn_save_project.Text = "Save Project";
             btn_save_project.Click += btn_save_project_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             btn_create_backup.Enabled = false;
             btn_create_backup.Name = "btn_create_backup";
-            btn_create_backup.Size = new System.Drawing.Size(150, 22);
+            btn_create_backup.Size = new System.Drawing.Size(180, 22);
             btn_create_backup.Text = "Create Backup";
             btn_create_backup.Visible = false;
             btn_create_backup.Click += btn_create_backup_Click;
@@ -188,13 +188,13 @@ namespace LAMP
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // btn_compile_ROM
             // 
             btn_compile_ROM.Enabled = false;
             btn_compile_ROM.Name = "btn_compile_ROM";
-            btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
+            btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
             btn_compile_ROM.Text = "Compile ROM";
             btn_compile_ROM.Click += btn_compile_ROM_Click;
             // 

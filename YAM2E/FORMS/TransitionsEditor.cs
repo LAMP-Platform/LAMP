@@ -65,7 +65,7 @@ public partial class TransitionsEditor : Form
             string name = check.Name != "" ? $" - {check.Name}" : "";
             cbb_tred_transition_selection.Items.Add(i.ToString("X3") + name);
         }
-        ComboboxOp.AutoSize(cbb_tred_transition_selection);
+        cbb_tred_transition_selection.AutoSize();
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
 
         LoadOpcodeList();
@@ -83,7 +83,7 @@ public partial class TransitionsEditor : Form
             cbb_tileset_select.Items.Add(name);
         }
         cbb_tileset_select.SelectedIndex = Globals.Tilesets.Count - 1;
-        ComboboxOp.AutoSize(cbb_tileset_select);
+        cbb_tileset_select.AutoSize();
     }
 
     void LoadOpcodeList()
@@ -273,7 +273,7 @@ public partial class TransitionsEditor : Form
 
         cbb_tred_transition_selection.Items[index] = index.ToString("X3") + name;
 
-        ComboboxOp.AutoSize(cbb_tred_transition_selection);
+        cbb_tred_transition_selection.AutoSize();
     }
 
     private void opcode_parameterChanged(object sender, EventArgs e)

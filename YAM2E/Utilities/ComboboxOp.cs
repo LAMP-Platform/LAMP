@@ -11,7 +11,7 @@ namespace LAMP;
 
 public static class ComboboxOp
 {
-    public static void AutoSize(ComboBox comboBox)
+    public static void AutoSize(this ComboBox comboBox)
     {
         const int scrollPadding = 20; //The scroll bar takes up space!
 

@@ -38,7 +38,7 @@ public partial class ScreenSettings : Form
             string name = check.Name != "" ? $" - {check.Name}" : "";
             cbb_scse_transition_index.Items.Add(i.ToString("X3") + name);
         }
-        ComboboxOp.AutoSize(cbb_scse_transition_index);
+        cbb_scse_transition_index.AutoSize();
         cbb_scse_screen_used.DataSource = Globals.ComboboxScreensUsed;
         cbb_scse_screen.DataSource = Globals.ComboboxScreens;
 
