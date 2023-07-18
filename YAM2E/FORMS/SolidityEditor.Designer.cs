@@ -44,7 +44,7 @@
             lbl_table = new System.Windows.Forms.Label();
             grp_preview = new System.Windows.Forms.GroupBox();
             pnl_apply_button = new System.Windows.Forms.Panel();
-            button1 = new System.Windows.Forms.Button();
+            btn_apply = new System.Windows.Forms.Button();
             btn_save_tileset = new System.Windows.Forms.Button();
             Statusstrip = new System.Windows.Forms.StatusStrip();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
@@ -209,7 +209,7 @@
             // 
             // pnl_apply_button
             // 
-            pnl_apply_button.Controls.Add(button1);
+            pnl_apply_button.Controls.Add(btn_apply);
             pnl_apply_button.Controls.Add(btn_save_tileset);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
             pnl_apply_button.Location = new System.Drawing.Point(3, 174);
@@ -217,18 +217,18 @@
             pnl_apply_button.Size = new System.Drawing.Size(290, 29);
             pnl_apply_button.TabIndex = 1;
             // 
-            // button1
+            // btn_apply
             // 
-            button1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            button1.Enabled = false;
-            button1.Image = Properties.Resources.Save;
-            button1.Location = new System.Drawing.Point(226, 3);
-            button1.Name = "button1";
-            button1.Size = new System.Drawing.Size(64, 23);
-            button1.TabIndex = 20;
-            button1.Text = "Apply";
-            button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            button1.UseVisualStyleBackColor = true;
+            btn_apply.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_apply.Image = Properties.Resources.Save;
+            btn_apply.Location = new System.Drawing.Point(226, 3);
+            btn_apply.Name = "btn_apply";
+            btn_apply.Size = new System.Drawing.Size(64, 23);
+            btn_apply.TabIndex = 20;
+            btn_apply.Text = "Apply";
+            btn_apply.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_apply.UseVisualStyleBackColor = true;
+            btn_apply.Click += btn_apply_Click;
             // 
             // btn_save_tileset
             // 
@@ -289,7 +289,7 @@
         private System.Windows.Forms.Panel pnl_apply_button;
         private System.Windows.Forms.Button btn_save_tileset;
         private System.Windows.Forms.GroupBox grp_preview;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_apply;
         private System.Windows.Forms.GroupBox grp_graphics_overlay;
         private System.Windows.Forms.TextBox txb_offset;
         private System.Windows.Forms.Label lbl_offset;

@@ -18,7 +18,11 @@ namespace LAMP.FORMS;
 
 public partial class TilesetDefinitions : Form
 {
-    public TileViewer Tileset = new TileViewer();
+    public TileViewer Tileset = new TileViewer()
+    {
+        Location = new Point(3, 3),
+        BackColor = Globals.ColorBlack,
+    };
     private Pointer MetatilePointer;
 
     public TilesetDefinitions()
@@ -36,12 +40,15 @@ public partial class TilesetDefinitions : Form
             UpdateIdList();
         }
 
+        //Toolbar
+        Toolbar.SetTools(false, false, false, false);
+        Toolbar.SetTransform(false, false, false, false);
+        Toolbar.SetCopyPaste(false, false);
+        Toolbar.DisableZoomSeperator();
+
         //Adding Preview Tileset
-        Controls.Add(Tileset);
+        pnl_preview.Controls.Add(Tileset);
         Tileset.BringToFront();
-        grp_tileset_preview.Controls.Add(Tileset);
-        Tileset.Location = new Point(15, 20);
-        Tileset.BackColor = Globals.ColorBlack;
         Tileset.ResetSelection();
         UpdateTileset();
     }
@@ -208,5 +215,16 @@ public partial class TilesetDefinitions : Form
     private void btn_edit_solidity_Click(object sender, EventArgs e)
     {
         new SolidityEditor(cbb_solidity_table.SelectedIndex, Format.StringToPointer(txb_gfx_offset.Text)).Show();
+    }
+
+    private void Toolbar_ToolCommandTriggered(object sender, EventArgs e)
+    {
+        switch(Toolbar.TriggeredCommand)
+        {
+            case (LampToolCommand.ZoomIn):
+            case (LampToolCommand.ZoomOut):
+                Tileset.Zoom = Toolbar.ZoomLevel;
+                break;
+        }
     }
 }

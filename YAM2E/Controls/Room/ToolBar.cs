@@ -152,6 +152,11 @@ public partial class ToolBar : UserControl
         if (!(flipH || flipV || rotateL || rotateR)) sep_transform.Visible = false;
     }
 
+    public void DisableZoomSeperator()
+    {
+        sep_zoom.Visible = false;
+    }
+
     public void SetZoom(bool zoomIn, bool zoomOut)
     {
         btn_zoom_in.Visible = zoomIn;

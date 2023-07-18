@@ -50,10 +50,13 @@
             btn_save_tileset = new System.Windows.Forms.Button();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             grp_tileset_preview = new System.Windows.Forms.GroupBox();
+            pnl_preview = new System.Windows.Forms.Panel();
+            Toolbar = new Controls.Room.ToolBar();
             splt_main = new System.Windows.Forms.SplitContainer();
             pnl_tileset_preview = new System.Windows.Forms.Panel();
             pnl_apply_button = new System.Windows.Forms.Panel();
             grp_tileset_data.SuspendLayout();
+            grp_tileset_preview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splt_main).BeginInit();
             splt_main.Panel1.SuspendLayout();
             splt_main.Panel2.SuspendLayout();
@@ -84,7 +87,7 @@
             grp_tileset_data.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_tileset_data.Location = new System.Drawing.Point(6, 6);
             grp_tileset_data.Name = "grp_tileset_data";
-            grp_tileset_data.Size = new System.Drawing.Size(277, 192);
+            grp_tileset_data.Size = new System.Drawing.Size(277, 209);
             grp_tileset_data.TabIndex = 0;
             grp_tileset_data.TabStop = false;
             grp_tileset_data.Text = "Tileset Data";
@@ -264,7 +267,7 @@
             btn_save_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_save_tileset.Enabled = false;
             btn_save_tileset.Image = Properties.Resources.Save;
-            btn_save_tileset.Location = new System.Drawing.Point(226, 3);
+            btn_save_tileset.Location = new System.Drawing.Point(204, 3);
             btn_save_tileset.Name = "btn_save_tileset";
             btn_save_tileset.Size = new System.Drawing.Size(64, 23);
             btn_save_tileset.TabIndex = 19;
@@ -275,21 +278,46 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 204);
+            statusStrip1.Location = new System.Drawing.Point(0, 221);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(589, 22);
+            statusStrip1.Size = new System.Drawing.Size(567, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
             // grp_tileset_preview
             // 
+            grp_tileset_preview.Controls.Add(pnl_preview);
+            grp_tileset_preview.Controls.Add(Toolbar);
             grp_tileset_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_tileset_preview.Location = new System.Drawing.Point(0, 0);
             grp_tileset_preview.Name = "grp_tileset_preview";
-            grp_tileset_preview.Size = new System.Drawing.Size(290, 163);
+            grp_tileset_preview.Size = new System.Drawing.Size(268, 180);
             grp_tileset_preview.TabIndex = 2;
             grp_tileset_preview.TabStop = false;
             grp_tileset_preview.Text = "Preview";
+            // 
+            // pnl_preview
+            // 
+            pnl_preview.AutoScroll = true;
+            pnl_preview.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_preview.Location = new System.Drawing.Point(3, 43);
+            pnl_preview.Name = "pnl_preview";
+            pnl_preview.Size = new System.Drawing.Size(262, 134);
+            pnl_preview.TabIndex = 1;
+            // 
+            // Toolbar
+            // 
+            Toolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            Toolbar.Location = new System.Drawing.Point(3, 19);
+            Toolbar.MaxZoom = 10;
+            Toolbar.Name = "Toolbar";
+            Toolbar.onToolCommandTriggered = null;
+            Toolbar.onToolSwitched = null;
+            Toolbar.SelectedTool = LampTool.Pen;
+            Toolbar.Size = new System.Drawing.Size(262, 24);
+            Toolbar.TabIndex = 0;
+            Toolbar.ZoomLevel = 1;
+            Toolbar.ToolCommandTriggered += Toolbar_ToolCommandTriggered;
             // 
             // splt_main
             // 
@@ -308,7 +336,7 @@
             splt_main.Panel2.Controls.Add(pnl_tileset_preview);
             splt_main.Panel2.Controls.Add(pnl_apply_button);
             splt_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            splt_main.Size = new System.Drawing.Size(589, 204);
+            splt_main.Size = new System.Drawing.Size(567, 221);
             splt_main.SplitterDistance = 286;
             splt_main.TabIndex = 20;
             // 
@@ -318,31 +346,32 @@
             pnl_tileset_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_tileset_preview.Location = new System.Drawing.Point(3, 6);
             pnl_tileset_preview.Name = "pnl_tileset_preview";
-            pnl_tileset_preview.Size = new System.Drawing.Size(290, 163);
+            pnl_tileset_preview.Size = new System.Drawing.Size(268, 180);
             pnl_tileset_preview.TabIndex = 1;
             // 
             // pnl_apply_button
             // 
             pnl_apply_button.Controls.Add(btn_save_tileset);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_apply_button.Location = new System.Drawing.Point(3, 169);
+            pnl_apply_button.Location = new System.Drawing.Point(3, 186);
             pnl_apply_button.Name = "pnl_apply_button";
-            pnl_apply_button.Size = new System.Drawing.Size(290, 29);
+            pnl_apply_button.Size = new System.Drawing.Size(268, 29);
             pnl_apply_button.TabIndex = 0;
             // 
             // TilesetDefinitions
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(589, 226);
+            ClientSize = new System.Drawing.Size(567, 243);
             Controls.Add(splt_main);
             Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new System.Drawing.Size(605, 265);
+            MinimumSize = new System.Drawing.Size(583, 282);
             Name = "TilesetDefinitions";
             Text = "Tileset Editor";
             grp_tileset_data.ResumeLayout(false);
             grp_tileset_data.PerformLayout();
+            grp_tileset_preview.ResumeLayout(false);
             splt_main.Panel1.ResumeLayout(false);
             splt_main.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splt_main).EndInit();
@@ -379,5 +408,7 @@
         private System.Windows.Forms.Panel pnl_apply_button;
         private System.Windows.Forms.Button btn_edit_solidity;
         private System.Windows.Forms.Button btn_edit_collision;
+        private Controls.Room.ToolBar Toolbar;
+        private System.Windows.Forms.Panel pnl_preview;
     }
 }
