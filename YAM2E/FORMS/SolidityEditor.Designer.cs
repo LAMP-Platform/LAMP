@@ -43,6 +43,9 @@
             cbb_solidity_table = new System.Windows.Forms.ComboBox();
             lbl_table = new System.Windows.Forms.Label();
             grp_preview = new System.Windows.Forms.GroupBox();
+            pnl_preview = new System.Windows.Forms.Panel();
+            Tileset = new Controls.TileViewer();
+            toolbar = new Controls.Room.ToolBar();
             pnl_apply_button = new System.Windows.Forms.Panel();
             btn_apply = new System.Windows.Forms.Button();
             btn_save_tileset = new System.Windows.Forms.Button();
@@ -53,6 +56,8 @@
             pnl_main.SuspendLayout();
             grp_graphics_overlay.SuspendLayout();
             grp_solidity_data.SuspendLayout();
+            grp_preview.SuspendLayout();
+            pnl_preview.SuspendLayout();
             pnl_apply_button.SuspendLayout();
             SuspendLayout();
             // 
@@ -74,7 +79,7 @@
             pnl_main.Panel2.Controls.Add(grp_preview);
             pnl_main.Panel2.Controls.Add(pnl_apply_button);
             pnl_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            pnl_main.Size = new System.Drawing.Size(490, 209);
+            pnl_main.Size = new System.Drawing.Size(468, 221);
             pnl_main.SplitterDistance = 187;
             pnl_main.TabIndex = 0;
             // 
@@ -82,10 +87,10 @@
             // 
             grp_graphics_overlay.Controls.Add(txb_offset);
             grp_graphics_overlay.Controls.Add(lbl_offset);
-            grp_graphics_overlay.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_graphics_overlay.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_graphics_overlay.Location = new System.Drawing.Point(6, 148);
             grp_graphics_overlay.Name = "grp_graphics_overlay";
-            grp_graphics_overlay.Size = new System.Drawing.Size(178, 55);
+            grp_graphics_overlay.Size = new System.Drawing.Size(178, 67);
             grp_graphics_overlay.TabIndex = 1;
             grp_graphics_overlay.TabStop = false;
             grp_graphics_overlay.Text = "Graphic Overlay";
@@ -97,6 +102,7 @@
             txb_offset.Name = "txb_offset";
             txb_offset.Size = new System.Drawing.Size(118, 23);
             txb_offset.TabIndex = 26;
+            txb_offset.TextChanged += txb_offset_TextChanged;
             // 
             // lbl_offset
             // 
@@ -199,29 +205,70 @@
             // 
             // grp_preview
             // 
+            grp_preview.Controls.Add(pnl_preview);
+            grp_preview.Controls.Add(toolbar);
             grp_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_preview.Location = new System.Drawing.Point(3, 6);
             grp_preview.Name = "grp_preview";
-            grp_preview.Size = new System.Drawing.Size(290, 168);
+            grp_preview.Size = new System.Drawing.Size(268, 180);
             grp_preview.TabIndex = 2;
             grp_preview.TabStop = false;
             grp_preview.Text = "Preview";
+            // 
+            // pnl_preview
+            // 
+            pnl_preview.AutoScroll = true;
+            pnl_preview.Controls.Add(Tileset);
+            pnl_preview.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_preview.Location = new System.Drawing.Point(3, 43);
+            pnl_preview.Name = "pnl_preview";
+            pnl_preview.Size = new System.Drawing.Size(262, 134);
+            pnl_preview.TabIndex = 1;
+            // 
+            // Tileset
+            // 
+            Tileset.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
+            Tileset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            Tileset.Location = new System.Drawing.Point(3, 3);
+            Tileset.Name = "Tileset";
+            Tileset.PixelTileSize = 16;
+            Tileset.RedRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
+            Tileset.SelectedTool = LampTool.Select;
+            Tileset.SelRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
+            Tileset.Size = new System.Drawing.Size(139, 89);
+            Tileset.TabIndex = 0;
+            Tileset.Text = "tileViewer1";
+            Tileset.Zoom = 2;
+            // 
+            // toolbar
+            // 
+            toolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar.Location = new System.Drawing.Point(3, 19);
+            toolbar.MaxZoom = 10;
+            toolbar.Name = "toolbar";
+            toolbar.onToolCommandTriggered = null;
+            toolbar.onToolSwitched = null;
+            toolbar.SelectedTool = LampTool.Pen;
+            toolbar.Size = new System.Drawing.Size(262, 24);
+            toolbar.TabIndex = 0;
+            toolbar.ZoomLevel = 2;
+            toolbar.ToolCommandTriggered += toolbar_ToolCommandTriggered;
             // 
             // pnl_apply_button
             // 
             pnl_apply_button.Controls.Add(btn_apply);
             pnl_apply_button.Controls.Add(btn_save_tileset);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_apply_button.Location = new System.Drawing.Point(3, 174);
+            pnl_apply_button.Location = new System.Drawing.Point(3, 186);
             pnl_apply_button.Name = "pnl_apply_button";
-            pnl_apply_button.Size = new System.Drawing.Size(290, 29);
+            pnl_apply_button.Size = new System.Drawing.Size(268, 29);
             pnl_apply_button.TabIndex = 1;
             // 
             // btn_apply
             // 
             btn_apply.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_apply.Image = Properties.Resources.Save;
-            btn_apply.Location = new System.Drawing.Point(226, 3);
+            btn_apply.Location = new System.Drawing.Point(204, 3);
             btn_apply.Name = "btn_apply";
             btn_apply.Size = new System.Drawing.Size(64, 23);
             btn_apply.TabIndex = 20;
@@ -235,7 +282,7 @@
             btn_save_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_save_tileset.Enabled = false;
             btn_save_tileset.Image = Properties.Resources.Save;
-            btn_save_tileset.Location = new System.Drawing.Point(316, 3);
+            btn_save_tileset.Location = new System.Drawing.Point(294, 3);
             btn_save_tileset.Name = "btn_save_tileset";
             btn_save_tileset.Size = new System.Drawing.Size(64, 23);
             btn_save_tileset.TabIndex = 19;
@@ -245,9 +292,9 @@
             // 
             // Statusstrip
             // 
-            Statusstrip.Location = new System.Drawing.Point(0, 209);
+            Statusstrip.Location = new System.Drawing.Point(0, 221);
             Statusstrip.Name = "Statusstrip";
-            Statusstrip.Size = new System.Drawing.Size(490, 22);
+            Statusstrip.Size = new System.Drawing.Size(468, 22);
             Statusstrip.TabIndex = 1;
             Statusstrip.Text = "statusStrip1";
             // 
@@ -255,10 +302,11 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(490, 231);
+            ClientSize = new System.Drawing.Size(468, 243);
             Controls.Add(pnl_main);
             Controls.Add(Statusstrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new System.Drawing.Size(484, 282);
             Name = "SolidityEditor";
             Text = "Solidity Editor";
             pnl_main.Panel1.ResumeLayout(false);
@@ -269,6 +317,8 @@
             grp_graphics_overlay.PerformLayout();
             grp_solidity_data.ResumeLayout(false);
             grp_solidity_data.PerformLayout();
+            grp_preview.ResumeLayout(false);
+            pnl_preview.ResumeLayout(false);
             pnl_apply_button.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -294,5 +344,8 @@
         private System.Windows.Forms.TextBox txb_offset;
         private System.Windows.Forms.Label lbl_offset;
         private System.Windows.Forms.StatusStrip Statusstrip;
+        private Controls.Room.ToolBar toolbar;
+        private System.Windows.Forms.Panel pnl_preview;
+        private Controls.TileViewer Tileset;
     }
 }

@@ -19,6 +19,12 @@ public partial class SolidityEditor : Form
         gfxOverlay = gfxOffset;
         txb_offset.Text = Format.PointerToString(gfxOffset);
         cbb_solidity_table.SelectedIndex = index;
+
+        //Toolbar
+        toolbar.SetTools(false, false, false, false);
+        toolbar.SetTransform(false, false, false, false);
+        toolbar.SetCopyPaste(false, false);
+        toolbar.DisableZoomSeperator();
     }
 
     private void cbb_solidity_table_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,5 +49,29 @@ public partial class SolidityEditor : Form
         txb_samus.Text = Format.IntToString(samus);
         txb_objects.Text = Format.IntToString(objects);
         txb_projectiles.Text = Format.IntToString(projectiles);
+    }
+
+    private void txb_offset_TextChanged(object sender, EventArgs e)
+    {
+        if (txb_offset.Text == "")
+        {
+            Tileset.BackgroundImage = null;
+            return;
+        }
+        gfxOverlay = Format.StringToPointer(txb_offset.Text);
+        GFX TilesetGFX = new GFX(gfxOverlay, 16, 8);
+        TilesetGFX.Draw();
+        Tileset.BackgroundImage = TilesetGFX.Image;
+    }
+
+    private void toolbar_ToolCommandTriggered(object sender, EventArgs e)
+    {
+        switch (toolbar.TriggeredCommand)
+        {
+            case LampToolCommand.ZoomIn:
+            case LampToolCommand.ZoomOut:
+                Tileset.Zoom = toolbar.ZoomLevel;
+                break;
+        }
     }
 }
