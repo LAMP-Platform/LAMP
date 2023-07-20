@@ -2,7 +2,10 @@
 using LAMP.Classes.M2_Data;
 using LAMP.Utilities;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Drawing;
 using System.Drawing.Design;
+using System.Numerics;
 using System.Windows.Forms;
 
 namespace LAMP.FORMS;
@@ -12,6 +15,7 @@ public partial class SolidityEditor : Form
     Pointer gfxOverlay = null;
     Pointer tableStart = new Pointer(0x8, 0x7EFA);
     Pointer currentOffset = null;
+    int selectedIndex = 0;
 
     public SolidityEditor(int index = 0, Pointer gfxOffset = null)
     {
@@ -73,5 +77,31 @@ public partial class SolidityEditor : Form
                 Tileset.Zoom = toolbar.ZoomLevel;
                 break;
         }
+    }
+
+    private void Tileset_MouseMove(object sender, MouseEventArgs e)
+    {
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, Tileset.BackgroundImage.Width * Tileset.Zoom - 1), 0) / Tileset.Zoom, Math.Max(Math.Min(e.Y, Tileset.BackgroundImage.Height * Tileset.Zoom - 1), 0) / Tileset.Zoom);
+        Point tileNum = new Point(pixel.X / Tileset.PixelTileSize, pixel.Y / Tileset.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * Tileset.PixelTileSize, tileNum.Y * Tileset.PixelTileSize); //The room coordinates of the selected tile
+
+        Point selStart = new Point(tileNum.X * Tileset.TileSize, tileNum.Y * Tileset.TileSize);
+        Tileset.RedRect = new Rectangle(selStart.X, selStart.Y, Tileset.TileSize - 1, Tileset.TileSize - 1);
+        selectedIndex = tileNum.Y * 16 + tileNum.X;
+        lbl_tile_id.Text = $"Selected Index: {Format.IntToString(selectedIndex)}";
+    }
+
+    private void btn_set_samus_Click(object sender, EventArgs e) => txb_samus.Text = Format.IntToString(selectedIndex + 1);
+
+    private void btn_set_object_Click(object sender, EventArgs e) => txb_objects.Text = Format.IntToString(selectedIndex + 1);
+
+    private void btn_set_projectiles_Click(object sender, EventArgs e) => txb_projectiles.Text = Format.IntToString(selectedIndex + 1);
+
+    private void btn_set_all_Click(object sender, EventArgs e)
+    {
+        txb_samus.Text = Format.IntToString(selectedIndex + 1);
+        txb_objects.Text = Format.IntToString(selectedIndex + 1);
+        txb_projectiles.Text = Format.IntToString(selectedIndex + 1);
     }
 }

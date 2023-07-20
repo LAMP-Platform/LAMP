@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SolidityEditor));
             pnl_main = new System.Windows.Forms.SplitContainer();
             grp_graphics_overlay = new System.Windows.Forms.GroupBox();
@@ -50,6 +51,13 @@
             btn_apply = new System.Windows.Forms.Button();
             btn_save_tileset = new System.Windows.Forms.Button();
             Statusstrip = new System.Windows.Forms.StatusStrip();
+            lbl_tile_id = new System.Windows.Forms.ToolStripStatusLabel();
+            ctx_menu = new System.Windows.Forms.ContextMenuStrip(components);
+            lbl_tool_strip_name = new System.Windows.Forms.ToolStripTextBox();
+            btn_set_samus = new System.Windows.Forms.ToolStripMenuItem();
+            btn_set_object = new System.Windows.Forms.ToolStripMenuItem();
+            btn_set_projectiles = new System.Windows.Forms.ToolStripMenuItem();
+            btn_set_all = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
             pnl_main.Panel2.SuspendLayout();
@@ -59,6 +67,8 @@
             grp_preview.SuspendLayout();
             pnl_preview.SuspendLayout();
             pnl_apply_button.SuspendLayout();
+            Statusstrip.SuspendLayout();
+            ctx_menu.SuspendLayout();
             SuspendLayout();
             // 
             // pnl_main
@@ -79,7 +89,7 @@
             pnl_main.Panel2.Controls.Add(grp_preview);
             pnl_main.Panel2.Controls.Add(pnl_apply_button);
             pnl_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            pnl_main.Size = new System.Drawing.Size(468, 221);
+            pnl_main.Size = new System.Drawing.Size(468, 219);
             pnl_main.SplitterDistance = 187;
             pnl_main.TabIndex = 0;
             // 
@@ -90,7 +100,7 @@
             grp_graphics_overlay.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_graphics_overlay.Location = new System.Drawing.Point(6, 148);
             grp_graphics_overlay.Name = "grp_graphics_overlay";
-            grp_graphics_overlay.Size = new System.Drawing.Size(178, 67);
+            grp_graphics_overlay.Size = new System.Drawing.Size(178, 65);
             grp_graphics_overlay.TabIndex = 1;
             grp_graphics_overlay.TabStop = false;
             grp_graphics_overlay.Text = "Graphic Overlay";
@@ -210,7 +220,7 @@
             grp_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_preview.Location = new System.Drawing.Point(3, 6);
             grp_preview.Name = "grp_preview";
-            grp_preview.Size = new System.Drawing.Size(268, 180);
+            grp_preview.Size = new System.Drawing.Size(268, 178);
             grp_preview.TabIndex = 2;
             grp_preview.TabStop = false;
             grp_preview.Text = "Preview";
@@ -222,16 +232,17 @@
             pnl_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_preview.Location = new System.Drawing.Point(3, 43);
             pnl_preview.Name = "pnl_preview";
-            pnl_preview.Size = new System.Drawing.Size(262, 134);
+            pnl_preview.Size = new System.Drawing.Size(262, 132);
             pnl_preview.TabIndex = 1;
             // 
             // Tileset
             // 
             Tileset.BackColor = System.Drawing.Color.FromArgb(240, 240, 240);
             Tileset.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            Tileset.ContextMenuStrip = ctx_menu;
             Tileset.Location = new System.Drawing.Point(3, 3);
             Tileset.Name = "Tileset";
-            Tileset.PixelTileSize = 16;
+            Tileset.PixelTileSize = 8;
             Tileset.RedRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
             Tileset.SelectedTool = LampTool.Select;
             Tileset.SelRect = new System.Drawing.Rectangle(-1, -1, 0, 0);
@@ -239,6 +250,7 @@
             Tileset.TabIndex = 0;
             Tileset.Text = "tileViewer1";
             Tileset.Zoom = 2;
+            Tileset.MouseMove += Tileset_MouseMove;
             // 
             // toolbar
             // 
@@ -259,7 +271,7 @@
             pnl_apply_button.Controls.Add(btn_apply);
             pnl_apply_button.Controls.Add(btn_save_tileset);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_apply_button.Location = new System.Drawing.Point(3, 186);
+            pnl_apply_button.Location = new System.Drawing.Point(3, 184);
             pnl_apply_button.Name = "pnl_apply_button";
             pnl_apply_button.Size = new System.Drawing.Size(268, 29);
             pnl_apply_button.TabIndex = 1;
@@ -292,11 +304,65 @@
             // 
             // Statusstrip
             // 
-            Statusstrip.Location = new System.Drawing.Point(0, 221);
+            Statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tile_id });
+            Statusstrip.Location = new System.Drawing.Point(0, 219);
             Statusstrip.Name = "Statusstrip";
-            Statusstrip.Size = new System.Drawing.Size(468, 22);
+            Statusstrip.Size = new System.Drawing.Size(468, 24);
             Statusstrip.TabIndex = 1;
             Statusstrip.Text = "statusStrip1";
+            // 
+            // lbl_tile_id
+            // 
+            lbl_tile_id.AutoSize = false;
+            lbl_tile_id.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            lbl_tile_id.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            lbl_tile_id.Name = "lbl_tile_id";
+            lbl_tile_id.Size = new System.Drawing.Size(115, 19);
+            lbl_tile_id.Text = "Selected Index:";
+            lbl_tile_id.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // ctx_menu
+            // 
+            ctx_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tool_strip_name, btn_set_samus, btn_set_object, btn_set_projectiles, btn_set_all });
+            ctx_menu.Name = "ctx_menu";
+            ctx_menu.Size = new System.Drawing.Size(161, 110);
+            // 
+            // lbl_tool_strip_name
+            // 
+            lbl_tool_strip_name.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            lbl_tool_strip_name.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            lbl_tool_strip_name.Name = "lbl_tool_strip_name";
+            lbl_tool_strip_name.ReadOnly = true;
+            lbl_tool_strip_name.Size = new System.Drawing.Size(100, 16);
+            lbl_tool_strip_name.Text = "Set solidity for";
+            // 
+            // btn_set_samus
+            // 
+            btn_set_samus.Name = "btn_set_samus";
+            btn_set_samus.Size = new System.Drawing.Size(160, 22);
+            btn_set_samus.Text = "•  Samus";
+            btn_set_samus.Click += btn_set_samus_Click;
+            // 
+            // btn_set_object
+            // 
+            btn_set_object.Name = "btn_set_object";
+            btn_set_object.Size = new System.Drawing.Size(160, 22);
+            btn_set_object.Text = "•  Objects";
+            btn_set_object.Click += btn_set_object_Click;
+            // 
+            // btn_set_projectiles
+            // 
+            btn_set_projectiles.Name = "btn_set_projectiles";
+            btn_set_projectiles.Size = new System.Drawing.Size(160, 22);
+            btn_set_projectiles.Text = "•  Projectiles";
+            btn_set_projectiles.Click += btn_set_projectiles_Click;
+            // 
+            // btn_set_all
+            // 
+            btn_set_all.Name = "btn_set_all";
+            btn_set_all.Size = new System.Drawing.Size(160, 22);
+            btn_set_all.Text = "•  All";
+            btn_set_all.Click += btn_set_all_Click;
             // 
             // SolidityEditor
             // 
@@ -320,6 +386,10 @@
             grp_preview.ResumeLayout(false);
             pnl_preview.ResumeLayout(false);
             pnl_apply_button.ResumeLayout(false);
+            Statusstrip.ResumeLayout(false);
+            Statusstrip.PerformLayout();
+            ctx_menu.ResumeLayout(false);
+            ctx_menu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -347,5 +417,12 @@
         private Controls.Room.ToolBar toolbar;
         private System.Windows.Forms.Panel pnl_preview;
         private Controls.TileViewer Tileset;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_tile_id;
+        private System.Windows.Forms.ContextMenuStrip ctx_menu;
+        private System.Windows.Forms.ToolStripTextBox lbl_tool_strip_name;
+        private System.Windows.Forms.ToolStripMenuItem btn_set_samus;
+        private System.Windows.Forms.ToolStripMenuItem btn_set_object;
+        private System.Windows.Forms.ToolStripMenuItem btn_set_projectiles;
+        private System.Windows.Forms.ToolStripMenuItem btn_set_all;
     }
 }
