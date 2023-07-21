@@ -170,22 +170,12 @@ public partial class MainWindow : Form
         TitleLabel.Visible = false;
 
         //Enabling UI
+        foreach (ToolStripItem c in tool_strip_image_buttons.Items) c.Enabled = true;
+        foreach (ToolStripItem c in tool_strip_main_buttons.Items) c.Enabled = true;
+
         btn_save_project.Enabled = true;
-        btn_create_backup.Enabled = true;
-        tool_strip_editors.Enabled = true;
-        tool_strip_tools.Enabled = true;
-        btn_open_tweaks_editor_image.Enabled = true;
-        btn_save_rom_image.Enabled = true;
-        btn_open_transition_editor_image.Enabled = true;
-        tool_strip_view.Enabled = true;
-        btn_tileset_definitions.Enabled = true;
         btn_compile_ROM.Enabled = true;
         btn_project_settings.Enabled = true;
-        btn_open_tileset_editor.Enabled = true;
-        btn_show_objects.Enabled = true;
-        btn_show_scrolls.Enabled = true;
-        btn_show_objects.Checked = true;
-        btn_graphics_editor_image.Enabled = true;
 
         tool_strip_main_buttons.Visible = true;
         tool_strip_main_buttons.SendToBack();
@@ -197,7 +187,7 @@ public partial class MainWindow : Form
     {
         Pointer gfx = gfxOffset;
         Pointer meta = MetatilePointer;
-        if (Globals.LoadedProject != null && Globals.LoadedProject.useTilesets && selectedTileset != null)
+        if (Globals.LoadedProject != null && Globals.LoadedProject.useTilesets && selectedTileset != null && Globals.Tilesets.Count != 0)
         {
             gfx = selectedTileset.GfxOffset;
             meta = new Pointer(0x8, Editor.ROM.Read16(Editor.ROM.MetatilePointers.Offset + 2 * selectedTileset.MetatileTable));
@@ -1186,6 +1176,12 @@ public partial class MainWindow : Form
         else Properties.programsettings.Default.startInFullscreen = false;
         Properties.programsettings.Default.Save();
     }
+
+    private void btn_solidity_editor_Click(object sender, EventArgs e)
+        => new SolidityEditor().Show();
+
+    private void btn_open_solidity_editor_Click(object sender, EventArgs e)
+        => btn_solidity_editor_Click(sender, e);
     #endregion
 
     #endregion

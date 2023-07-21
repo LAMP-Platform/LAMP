@@ -46,18 +46,18 @@
             grp_preview = new System.Windows.Forms.GroupBox();
             pnl_preview = new System.Windows.Forms.Panel();
             Tileset = new Controls.TileViewer();
-            toolbar = new Controls.Room.ToolBar();
-            pnl_apply_button = new System.Windows.Forms.Panel();
-            btn_apply = new System.Windows.Forms.Button();
-            btn_save_tileset = new System.Windows.Forms.Button();
-            Statusstrip = new System.Windows.Forms.StatusStrip();
-            lbl_tile_id = new System.Windows.Forms.ToolStripStatusLabel();
             ctx_menu = new System.Windows.Forms.ContextMenuStrip(components);
             lbl_tool_strip_name = new System.Windows.Forms.ToolStripTextBox();
             btn_set_samus = new System.Windows.Forms.ToolStripMenuItem();
             btn_set_object = new System.Windows.Forms.ToolStripMenuItem();
             btn_set_projectiles = new System.Windows.Forms.ToolStripMenuItem();
             btn_set_all = new System.Windows.Forms.ToolStripMenuItem();
+            toolbar = new Controls.Room.ToolBar();
+            pnl_apply_button = new System.Windows.Forms.Panel();
+            btn_apply = new System.Windows.Forms.Button();
+            btn_save_tileset = new System.Windows.Forms.Button();
+            Statusstrip = new System.Windows.Forms.StatusStrip();
+            lbl_tile_id = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
             pnl_main.Panel2.SuspendLayout();
@@ -66,9 +66,9 @@
             grp_solidity_data.SuspendLayout();
             grp_preview.SuspendLayout();
             pnl_preview.SuspendLayout();
+            ctx_menu.SuspendLayout();
             pnl_apply_button.SuspendLayout();
             Statusstrip.SuspendLayout();
-            ctx_menu.SuspendLayout();
             SuspendLayout();
             // 
             // pnl_main
@@ -252,9 +252,53 @@
             Tileset.Zoom = 2;
             Tileset.MouseMove += Tileset_MouseMove;
             // 
+            // ctx_menu
+            // 
+            ctx_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tool_strip_name, btn_set_samus, btn_set_object, btn_set_projectiles, btn_set_all });
+            ctx_menu.Name = "ctx_menu";
+            ctx_menu.Size = new System.Drawing.Size(161, 110);
+            // 
+            // lbl_tool_strip_name
+            // 
+            lbl_tool_strip_name.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            lbl_tool_strip_name.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            lbl_tool_strip_name.Name = "lbl_tool_strip_name";
+            lbl_tool_strip_name.ReadOnly = true;
+            lbl_tool_strip_name.Size = new System.Drawing.Size(100, 16);
+            lbl_tool_strip_name.Text = "Set solidity for";
+            // 
+            // btn_set_samus
+            // 
+            btn_set_samus.Name = "btn_set_samus";
+            btn_set_samus.Size = new System.Drawing.Size(160, 22);
+            btn_set_samus.Text = "•  Samus";
+            btn_set_samus.Click += btn_set_samus_Click;
+            // 
+            // btn_set_object
+            // 
+            btn_set_object.Name = "btn_set_object";
+            btn_set_object.Size = new System.Drawing.Size(160, 22);
+            btn_set_object.Text = "•  Objects";
+            btn_set_object.Click += btn_set_object_Click;
+            // 
+            // btn_set_projectiles
+            // 
+            btn_set_projectiles.Name = "btn_set_projectiles";
+            btn_set_projectiles.Size = new System.Drawing.Size(160, 22);
+            btn_set_projectiles.Text = "•  Projectiles";
+            btn_set_projectiles.Click += btn_set_projectiles_Click;
+            // 
+            // btn_set_all
+            // 
+            btn_set_all.Name = "btn_set_all";
+            btn_set_all.Size = new System.Drawing.Size(160, 22);
+            btn_set_all.Text = "•  All";
+            btn_set_all.Click += btn_set_all_Click;
+            // 
             // toolbar
             // 
             toolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar.Enabled = false;
             toolbar.Location = new System.Drawing.Point(3, 19);
             toolbar.MaxZoom = 10;
             toolbar.Name = "toolbar";
@@ -321,49 +365,6 @@
             lbl_tile_id.Text = "Selected Index:";
             lbl_tile_id.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ctx_menu
-            // 
-            ctx_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tool_strip_name, btn_set_samus, btn_set_object, btn_set_projectiles, btn_set_all });
-            ctx_menu.Name = "ctx_menu";
-            ctx_menu.Size = new System.Drawing.Size(161, 110);
-            // 
-            // lbl_tool_strip_name
-            // 
-            lbl_tool_strip_name.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            lbl_tool_strip_name.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            lbl_tool_strip_name.Name = "lbl_tool_strip_name";
-            lbl_tool_strip_name.ReadOnly = true;
-            lbl_tool_strip_name.Size = new System.Drawing.Size(100, 16);
-            lbl_tool_strip_name.Text = "Set solidity for";
-            // 
-            // btn_set_samus
-            // 
-            btn_set_samus.Name = "btn_set_samus";
-            btn_set_samus.Size = new System.Drawing.Size(160, 22);
-            btn_set_samus.Text = "•  Samus";
-            btn_set_samus.Click += btn_set_samus_Click;
-            // 
-            // btn_set_object
-            // 
-            btn_set_object.Name = "btn_set_object";
-            btn_set_object.Size = new System.Drawing.Size(160, 22);
-            btn_set_object.Text = "•  Objects";
-            btn_set_object.Click += btn_set_object_Click;
-            // 
-            // btn_set_projectiles
-            // 
-            btn_set_projectiles.Name = "btn_set_projectiles";
-            btn_set_projectiles.Size = new System.Drawing.Size(160, 22);
-            btn_set_projectiles.Text = "•  Projectiles";
-            btn_set_projectiles.Click += btn_set_projectiles_Click;
-            // 
-            // btn_set_all
-            // 
-            btn_set_all.Name = "btn_set_all";
-            btn_set_all.Size = new System.Drawing.Size(160, 22);
-            btn_set_all.Text = "•  All";
-            btn_set_all.Click += btn_set_all_Click;
-            // 
             // SolidityEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -385,11 +386,11 @@
             grp_solidity_data.PerformLayout();
             grp_preview.ResumeLayout(false);
             pnl_preview.ResumeLayout(false);
+            ctx_menu.ResumeLayout(false);
+            ctx_menu.PerformLayout();
             pnl_apply_button.ResumeLayout(false);
             Statusstrip.ResumeLayout(false);
             Statusstrip.PerformLayout();
-            ctx_menu.ResumeLayout(false);
-            ctx_menu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }

@@ -45,7 +45,9 @@ public static class Format
                 if (words[1].Length == 0) offset = 0;
                 else offset = int.Parse(words[1], System.Globalization.NumberStyles.HexNumber);
 
-                return new(bank, offset);
+                Pointer result = new Pointer(bank, offset);
+                if (result < 0) return null;
+                return result;
             }
             else if (words.Length == 1)
             {
@@ -53,6 +55,7 @@ public static class Format
                 if (words[0].Length == 0) offset = 0;
                 else offset = int.Parse(words[0], System.Globalization.NumberStyles.HexNumber);
 
+                if (offset < 0) return null;
                 return new(offset);
             }
             return null;

@@ -91,6 +91,7 @@ public partial class TilesetDefinitions : Form
         btn_edit.Enabled = true;
         btn_edit_collision.Enabled = true;
         btn_edit_solidity.Enabled = true;
+        Toolbar.Enabled = true;
     }
     private void DisableComponents()
     {
@@ -112,6 +113,7 @@ public partial class TilesetDefinitions : Form
         btn_edit.Enabled = false;
         btn_edit_collision.Enabled = false;
         btn_edit_solidity.Enabled = false;
+        Toolbar.Enabled = false;
 
         cbb_tileset_id.Text = "";
         cbb_metatile_table.SelectedIndex = 0;

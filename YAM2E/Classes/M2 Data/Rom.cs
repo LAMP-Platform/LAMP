@@ -192,6 +192,7 @@ public class Rom
                 return c.Read8(offset);
             }
         }
+        if (offset >= Size) return 0;
         return Data[offset];
     }
 
@@ -232,7 +233,7 @@ public class Rom
     }
 
     /// <summary>
-    /// Writes 2 bytes at the given offset.
+    /// Writes a ushort at the given offset in little endian form.
     /// </summary>
     public void Write16(int offset, ushort val)
     {

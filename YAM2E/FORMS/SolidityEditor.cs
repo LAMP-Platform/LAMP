@@ -21,7 +21,7 @@ public partial class SolidityEditor : Form
     {
         InitializeComponent();
         gfxOverlay = gfxOffset;
-        txb_offset.Text = Format.PointerToString(gfxOffset);
+        if (gfxOffset != null) txb_offset.Text = Format.PointerToString(gfxOffset);
         cbb_solidity_table.SelectedIndex = index;
 
         //Toolbar
@@ -57,12 +57,15 @@ public partial class SolidityEditor : Form
 
     private void txb_offset_TextChanged(object sender, EventArgs e)
     {
-        if (txb_offset.Text == "")
+        gfxOverlay = Format.StringToPointer(txb_offset.Text);
+        if (gfxOverlay == null || txb_offset.Text == "")
         {
             Tileset.BackgroundImage = null;
+            toolbar.Enabled = false;
+            Tileset.ResetSelection();
             return;
         }
-        gfxOverlay = Format.StringToPointer(txb_offset.Text);
+        toolbar.Enabled = true;
         GFX TilesetGFX = new GFX(gfxOverlay, 16, 8);
         TilesetGFX.Draw();
         Tileset.BackgroundImage = TilesetGFX.Image;
@@ -81,6 +84,8 @@ public partial class SolidityEditor : Form
 
     private void Tileset_MouseMove(object sender, MouseEventArgs e)
     {
+        if (Tileset.BackgroundImage == null) return;
+
         //The currently selected pixel
         Point pixel = new Point(Math.Max(Math.Min(e.X, Tileset.BackgroundImage.Width * Tileset.Zoom - 1), 0) / Tileset.Zoom, Math.Max(Math.Min(e.Y, Tileset.BackgroundImage.Height * Tileset.Zoom - 1), 0) / Tileset.Zoom);
         Point tileNum = new Point(pixel.X / Tileset.PixelTileSize, pixel.Y / Tileset.PixelTileSize); //The number of the tile selected

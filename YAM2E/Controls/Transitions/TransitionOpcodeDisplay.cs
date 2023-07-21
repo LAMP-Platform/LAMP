@@ -222,11 +222,6 @@ public partial class TransitionOpcodeDisplay : UserControl
     public void txb_parameter_TextChanged(object sender, EventArgs e)
     {
         if (init) return;
-        if (appliedChange)
-        {
-            appliedChange = false;
-            return;
-        }
 
         TextBox box = (TextBox)sender;
         int boxindex = 0;
@@ -267,7 +262,6 @@ public partial class TransitionOpcodeDisplay : UserControl
             break;
         }
 
-        appliedChange = true;
         box.Text = Format.IntToString(getParameterValue(boxindex));
     }
 
