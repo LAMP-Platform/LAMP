@@ -42,8 +42,23 @@ public class Project
             new TransitionOpcode("Save BG Tileset source [0;1](01), Source Bank [2;3], Source Pointer [4;7], Destination Pointer [8;11], Length [12;15]"),
             new TransitionOpcode("Save Sprite Tileset source [0;1](02), Source Bank [2;3], Source Pointer [4;7], Destination Pointer [8;11], Length [12;15]"),
         };
-
-
         return result;
     }
+
+    //Pointers to every offset that LAMP will write to
+    public Dictionary<string, Pointer> WriteOffsets = new()
+    {
+        { "Areas", new Pointer(0x24000) },
+
+        { "ObjectPointerTable", new Pointer(0x3, 0x42E0) },
+        { "ObjectDataLists", new Pointer(0x3, 0x50E0) },
+        { "ObjectDataEnd", new Pointer(0x3, 0x6300) },
+
+        { "TransitionPointerTable", new Pointer(0x5, 0x42E5) },
+        { "TransitionDataLists", new Pointer(0x5, 0x46E5) },
+
+        { "MetatilePointers", new Pointer(0x8, 0x7F1A) },
+        { "CollisionPointers", new Pointer(0x8, 0x7EEA) },
+        { "SolidityIndices", new Pointer(0x8, 0x7EFA) },
+    };
 }

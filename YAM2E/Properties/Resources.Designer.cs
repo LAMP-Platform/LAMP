@@ -173,6 +173,16 @@ namespace LAMP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HelpTableOfContents {
+            get {
+                object obj = ResourceManager.GetObject("HelpTableOfContents", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Numbers {
             get {
                 object obj = ResourceManager.GetObject("Numbers", resourceCulture);
@@ -273,9 +283,9 @@ namespace LAMP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap solidity {
+        internal static System.Drawing.Bitmap StatusError {
             get {
-                object obj = ResourceManager.GetObject("solidity", resourceCulture);
+                object obj = ResourceManager.GetObject("StatusError", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

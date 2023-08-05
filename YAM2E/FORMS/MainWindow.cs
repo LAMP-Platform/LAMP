@@ -168,19 +168,14 @@ public partial class MainWindow : Form
         //Disabling recent files
         Recent.Visible = false;
         TitleLabel.Visible = false;
-
-        //Enabling UI
-        foreach (ToolStripItem c in tool_strip_image_buttons.Items) c.Enabled = true;
-        foreach (ToolStripItem c in tool_strip_main_buttons.Items) c.Enabled = true;
-
-        btn_save_project.Enabled = true;
-        btn_compile_ROM.Enabled = true;
-        btn_project_settings.Enabled = true;
-
         tool_strip_main_buttons.Visible = true;
         tool_strip_main_buttons.SendToBack();
         tool_strip_image_buttons.Visible = true;
         sts_main_status_bar.Visible = true;
+
+        //Enabling UI
+        foreach (ToolStripItem c in tool_strip_image_buttons.Items) c.Enabled = true;
+        foreach (ToolStripItem c in tool_strip_main_buttons.Items) c.Enabled = true;
     }
 
     private void UpdateTileset()
@@ -1188,8 +1183,5 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        List<int> ints = new List<int>();
-
-        int val = Format.StringToInt("$a");
     }
 }

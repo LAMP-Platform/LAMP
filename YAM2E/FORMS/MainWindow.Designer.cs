@@ -81,6 +81,7 @@ namespace LAMP
             btn_open_transition_editor_image = new System.Windows.Forms.ToolStripButton();
             btn_open_tileset_editor = new System.Windows.Forms.ToolStripButton();
             btn_graphics_editor_image = new System.Windows.Forms.ToolStripButton();
+            btn_open_solidity_editor = new System.Windows.Forms.ToolStripButton();
             sts_main_status_bar = new System.Windows.Forms.StatusStrip();
             lbl_main_selection_size = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
@@ -107,7 +108,6 @@ namespace LAMP
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
-            btn_open_solidity_editor = new System.Windows.Forms.ToolStripButton();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -166,7 +166,6 @@ namespace LAMP
             // 
             // btn_save_project
             // 
-            btn_save_project.Enabled = false;
             btn_save_project.Name = "btn_save_project";
             btn_save_project.Size = new System.Drawing.Size(150, 22);
             btn_save_project.Text = "Save Project";
@@ -180,7 +179,6 @@ namespace LAMP
             // 
             // btn_create_backup
             // 
-            btn_create_backup.Enabled = false;
             btn_create_backup.Name = "btn_create_backup";
             btn_create_backup.Size = new System.Drawing.Size(150, 22);
             btn_create_backup.Text = "Create Backup";
@@ -194,7 +192,6 @@ namespace LAMP
             // 
             // btn_compile_ROM
             // 
-            btn_compile_ROM.Enabled = false;
             btn_compile_ROM.Name = "btn_compile_ROM";
             btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
             btn_compile_ROM.Text = "Compile ROM";
@@ -221,7 +218,6 @@ namespace LAMP
             // 
             // btn_project_settings
             // 
-            btn_project_settings.Enabled = false;
             btn_project_settings.Name = "btn_project_settings";
             btn_project_settings.Size = new System.Drawing.Size(165, 22);
             btn_project_settings.Text = "Project Settings";
@@ -232,7 +228,6 @@ namespace LAMP
             tool_strip_tools.AutoToolTip = false;
             tool_strip_tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             tool_strip_tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_data_viewer, btn_converter });
-            tool_strip_tools.Enabled = false;
             tool_strip_tools.Image = (System.Drawing.Image)resources.GetObject("tool_strip_tools.Image");
             tool_strip_tools.ImageTransparentColor = System.Drawing.Color.Magenta;
             tool_strip_tools.Name = "tool_strip_tools";
@@ -243,14 +238,14 @@ namespace LAMP
             // btn_data_viewer
             // 
             btn_data_viewer.Name = "btn_data_viewer";
-            btn_data_viewer.Size = new System.Drawing.Size(180, 22);
+            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
             btn_data_viewer.Text = "Data Viewer";
             btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // btn_converter
             // 
             btn_converter.Name = "btn_converter";
-            btn_converter.Size = new System.Drawing.Size(180, 22);
+            btn_converter.Size = new System.Drawing.Size(136, 22);
             btn_converter.Text = "Converter";
             btn_converter.Click += btn_converter_Click;
             // 
@@ -259,7 +254,6 @@ namespace LAMP
             tool_strip_editors.AutoToolTip = false;
             tool_strip_editors.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             tool_strip_editors.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_screen_settings, btn_transition_editor, toolStripSeparator10, btn_tileset_definitions, btn_graphics_editor, btn_solidity_editor, toolStripSeparator11, btn_save_editor, btn_tweaks_editor });
-            tool_strip_editors.Enabled = false;
             tool_strip_editors.ImageTransparentColor = System.Drawing.Color.Magenta;
             tool_strip_editors.Name = "tool_strip_editors";
             tool_strip_editors.ShowDropDownArrow = false;
@@ -269,59 +263,59 @@ namespace LAMP
             // btn_screen_settings
             // 
             btn_screen_settings.Name = "btn_screen_settings";
-            btn_screen_settings.Size = new System.Drawing.Size(180, 22);
+            btn_screen_settings.Size = new System.Drawing.Size(159, 22);
             btn_screen_settings.Text = "Screen Settings";
             btn_screen_settings.Click += btn_screen_settings_Click;
             // 
             // btn_transition_editor
             // 
             btn_transition_editor.Name = "btn_transition_editor";
-            btn_transition_editor.Size = new System.Drawing.Size(180, 22);
+            btn_transition_editor.Size = new System.Drawing.Size(159, 22);
             btn_transition_editor.Text = "Transition Editor";
             btn_transition_editor.Click += btn_transition_editor_Click;
             // 
             // toolStripSeparator10
             // 
             toolStripSeparator10.Name = "toolStripSeparator10";
-            toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
             // 
             // btn_tileset_definitions
             // 
             btn_tileset_definitions.Name = "btn_tileset_definitions";
-            btn_tileset_definitions.Size = new System.Drawing.Size(180, 22);
+            btn_tileset_definitions.Size = new System.Drawing.Size(159, 22);
             btn_tileset_definitions.Text = "Tileset Editor";
             btn_tileset_definitions.Click += btn_tileset_definitions_Click;
             // 
             // btn_graphics_editor
             // 
             btn_graphics_editor.Name = "btn_graphics_editor";
-            btn_graphics_editor.Size = new System.Drawing.Size(180, 22);
+            btn_graphics_editor.Size = new System.Drawing.Size(159, 22);
             btn_graphics_editor.Text = "Graphics Editor";
             btn_graphics_editor.Click += btn_graphics_editor_Click;
             // 
             // btn_solidity_editor
             // 
             btn_solidity_editor.Name = "btn_solidity_editor";
-            btn_solidity_editor.Size = new System.Drawing.Size(180, 22);
+            btn_solidity_editor.Size = new System.Drawing.Size(159, 22);
             btn_solidity_editor.Text = "Solidity Editor";
             btn_solidity_editor.Click += btn_solidity_editor_Click;
             // 
             // toolStripSeparator11
             // 
             toolStripSeparator11.Name = "toolStripSeparator11";
-            toolStripSeparator11.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
             // 
             // btn_save_editor
             // 
             btn_save_editor.Name = "btn_save_editor";
-            btn_save_editor.Size = new System.Drawing.Size(180, 22);
+            btn_save_editor.Size = new System.Drawing.Size(159, 22);
             btn_save_editor.Text = "Save Editor";
             btn_save_editor.Click += btn_save_editor_Click;
             // 
             // btn_tweaks_editor
             // 
             btn_tweaks_editor.Name = "btn_tweaks_editor";
-            btn_tweaks_editor.Size = new System.Drawing.Size(180, 22);
+            btn_tweaks_editor.Size = new System.Drawing.Size(159, 22);
             btn_tweaks_editor.Text = "Tweaks Editor";
             btn_tweaks_editor.Visible = false;
             btn_tweaks_editor.Click += btn_tweaks_editor_Click;
@@ -331,7 +325,6 @@ namespace LAMP
             tool_strip_view.AutoToolTip = false;
             tool_strip_view.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             tool_strip_view.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_view_show_objects, btn_show_scroll_bounds, btn_show_screen_outlines, btn_show_duplicate_outlines, toolStripSeparator8, btn_show_converter });
-            tool_strip_view.Enabled = false;
             tool_strip_view.Image = (System.Drawing.Image)resources.GetObject("tool_strip_view.Image");
             tool_strip_view.ImageTransparentColor = System.Drawing.Color.Magenta;
             tool_strip_view.Name = "tool_strip_view";
@@ -402,23 +395,25 @@ namespace LAMP
             // 
             // btn_wiki
             // 
+            btn_wiki.Image = Properties.Resources.HelpTableOfContents;
             btn_wiki.Name = "btn_wiki";
-            btn_wiki.Size = new System.Drawing.Size(154, 22);
-            btn_wiki.Text = "View Wiki";
+            btn_wiki.Size = new System.Drawing.Size(142, 22);
+            btn_wiki.Text = "Wiki";
             btn_wiki.Click += btn_wiki_Click;
             // 
             // btn_about
             // 
             btn_about.Name = "btn_about";
-            btn_about.Size = new System.Drawing.Size(154, 22);
+            btn_about.Size = new System.Drawing.Size(142, 22);
             btn_about.Text = "About LAMP";
             btn_about.Visible = false;
             // 
             // btn_bug_report
             // 
+            btn_bug_report.Image = Properties.Resources.StatusError;
             btn_bug_report.Name = "btn_bug_report";
-            btn_bug_report.Size = new System.Drawing.Size(154, 22);
-            btn_bug_report.Text = "I found a bug!!!";
+            btn_bug_report.Size = new System.Drawing.Size(142, 22);
+            btn_bug_report.Text = "Report a Bug";
             btn_bug_report.Click += btn_bug_report_Click;
             // 
             // tls_input
@@ -484,7 +479,6 @@ namespace LAMP
             // btn_save_rom_image
             // 
             btn_save_rom_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_save_rom_image.Enabled = false;
             btn_save_rom_image.Image = (System.Drawing.Image)resources.GetObject("btn_save_rom_image.Image");
             btn_save_rom_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_save_rom_image.Name = "btn_save_rom_image";
@@ -501,7 +495,6 @@ namespace LAMP
             // btn_show_objects
             // 
             btn_show_objects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_show_objects.Enabled = false;
             btn_show_objects.Image = (System.Drawing.Image)resources.GetObject("btn_show_objects.Image");
             btn_show_objects.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_show_objects.Name = "btn_show_objects";
@@ -512,7 +505,6 @@ namespace LAMP
             // btn_show_scrolls
             // 
             btn_show_scrolls.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_show_scrolls.Enabled = false;
             btn_show_scrolls.Image = (System.Drawing.Image)resources.GetObject("btn_show_scrolls.Image");
             btn_show_scrolls.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_show_scrolls.Name = "btn_show_scrolls";
@@ -528,7 +520,6 @@ namespace LAMP
             // btn_open_tweaks_editor_image
             // 
             btn_open_tweaks_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_open_tweaks_editor_image.Enabled = false;
             btn_open_tweaks_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_tweaks_editor_image.Image");
             btn_open_tweaks_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
@@ -541,7 +532,6 @@ namespace LAMP
             // btn_open_transition_editor_image
             // 
             btn_open_transition_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_open_transition_editor_image.Enabled = false;
             btn_open_transition_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_open_transition_editor_image.Image");
             btn_open_transition_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_open_transition_editor_image.Name = "btn_open_transition_editor_image";
@@ -553,7 +543,6 @@ namespace LAMP
             // btn_open_tileset_editor
             // 
             btn_open_tileset_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_open_tileset_editor.Enabled = false;
             btn_open_tileset_editor.Image = (System.Drawing.Image)resources.GetObject("btn_open_tileset_editor.Image");
             btn_open_tileset_editor.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_open_tileset_editor.Name = "btn_open_tileset_editor";
@@ -564,7 +553,6 @@ namespace LAMP
             // btn_graphics_editor_image
             // 
             btn_graphics_editor_image.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_graphics_editor_image.Enabled = false;
             btn_graphics_editor_image.Image = (System.Drawing.Image)resources.GetObject("btn_graphics_editor_image.Image");
             btn_graphics_editor_image.ImageTransparentColor = System.Drawing.Color.Magenta;
             btn_graphics_editor_image.Name = "btn_graphics_editor_image";
@@ -572,6 +560,16 @@ namespace LAMP
             btn_graphics_editor_image.Text = "Graphics Editor";
             btn_graphics_editor_image.ToolTipText = "Graphics Editor";
             btn_graphics_editor_image.Click += btn_graphics_editor_Click;
+            // 
+            // btn_open_solidity_editor
+            // 
+            btn_open_solidity_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            btn_open_solidity_editor.Image = (System.Drawing.Image)resources.GetObject("btn_open_solidity_editor.Image");
+            btn_open_solidity_editor.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_open_solidity_editor.Name = "btn_open_solidity_editor";
+            btn_open_solidity_editor.Size = new System.Drawing.Size(23, 22);
+            btn_open_solidity_editor.Text = "Solidity Editor";
+            btn_open_solidity_editor.Click += btn_open_solidity_editor_Click;
             // 
             // sts_main_status_bar
             // 
@@ -837,17 +835,6 @@ namespace LAMP
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
             // 
-            // btn_open_solidity_editor
-            // 
-            btn_open_solidity_editor.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            btn_open_solidity_editor.Enabled = false;
-            btn_open_solidity_editor.Image = Properties.Resources.solidity;
-            btn_open_solidity_editor.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_open_solidity_editor.Name = "btn_open_solidity_editor";
-            btn_open_solidity_editor.Size = new System.Drawing.Size(23, 22);
-            btn_open_solidity_editor.Text = "Solidity Editor";
-            btn_open_solidity_editor.Click += btn_open_solidity_editor_Click;
-            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -863,7 +850,6 @@ namespace LAMP
             MinimumSize = new System.Drawing.Size(553, 810);
             Name = "MainWindow";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "LAMP";
             DragDrop += window_file_drop;
             DragOver += window_drag_over;
             KeyDown += MainWindow_KeyDown;

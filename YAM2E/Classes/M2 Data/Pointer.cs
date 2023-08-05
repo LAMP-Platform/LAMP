@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using LAMP.Utilities;
+using System.Text.Json.Serialization;
 
 namespace LAMP.Classes;
 
@@ -31,6 +32,11 @@ public class Pointer
     public int Offset { get; set; }
     public int Bank { get; set; }
     public int bOffset { get; set; }
+
+    public override string ToString()
+    {
+        return Format.PointerToString(this);
+    }
 
     public static Pointer operator +(Pointer a, int b) 
         => new Pointer (a.Offset + b);

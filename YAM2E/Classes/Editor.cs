@@ -117,7 +117,8 @@ public static class Editor
             Globals.Screens.Add(new List<GameScreen>());
             for (int i = 0; i < 59; i++)
             {
-                Pointer pointer = new Pointer(ROM.A_BANKS[area].Offset + 0x500 + 0x100 * i);
+                Pointer pointer = Rom.GetPointerForArea(area) + 0x500 + 0x100 * i;
+                //Pointer pointer = new Pointer(ROM.A_BANKS[area].Offset + 0x500 + 0x100 * i);
                 Globals.Screens[area].Add(new GameScreen(pointer));
             }
             SaveJsonObject(Globals.Screens[area], path + $"/Area_{area}.json");
@@ -131,7 +132,8 @@ public static class Editor
             Area a = new();
             for (int i = 0; i < 256; i++)
             {
-                Pointer offset = ROM.A_BANKS[area];
+                Pointer offset = Rom.GetPointerForArea(area);
+                //Pointer offset = ROM.A_BANKS[area];
 
                 //Screens used
                 int data = ROM.Read16(offset.Offset + 2*i);

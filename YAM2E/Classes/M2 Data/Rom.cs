@@ -59,7 +59,7 @@ public class Rom
             {
                 for (int i = 0; i < 59; i++)
                 {
-                    Pointer pointer = new Pointer(A_BANKS[area].Offset + 0x500 + 0x100 * i);
+                    Pointer pointer = GetPointerForArea(area + 0x500 + 0x100 * i);
                     ReplaceBytes(pointer.Offset, Globals.Screens[area][i].Data);
                 }
             }
@@ -283,11 +283,16 @@ public class Rom
         Buffer.BlockCopy(Data, offset, dstArray, 0, amount);
     }
 
+    public static Pointer GetPointerForArea(int area)
+    {
+        if (Globals.LoadedProject == null) return A_BANKS[area];
+        return Globals.LoadedProject.WriteOffsets["Areas"] + area * 0x4000;
+    }
     #endregion  
 
     ///CONSTANTS
     //Areas
-    public Pointer[] A_BANKS { get; } = { new Pointer(0x24000), new Pointer(0x28000), new Pointer(0x2C000), new Pointer(0x30000), new Pointer(0x34000), new Pointer(0x38000), new Pointer(0x3C000) };
+    public static Pointer[] A_BANKS { get; } = { new Pointer(0x24000), new Pointer(0x28000), new Pointer(0x2C000), new Pointer(0x30000), new Pointer(0x34000), new Pointer(0x38000), new Pointer(0x3C000) };
 
     //object data
     public Pointer ObjectPointerTable = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists
