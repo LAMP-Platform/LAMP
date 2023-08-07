@@ -5,9 +5,11 @@
 * Transition Editor rework
 * Transitions can be named
 * Tileset Editor redesign
+* Object settings are now part of the main window
+* Added button to automatically assign object number
 * Project specific base ROMs
 * The project path on the recent files screen can now be opened in explorer
-* Added a small value converter
+* Added a value converter tool
   * Can be docked to the Main Window
 * LAMP now starts in fullscreen if closed in fullscreen
 * All tile displays now highlight tiles that LAMP can not currently display  
@@ -16,10 +18,12 @@
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty
 * TestROM: Tilesets with an index >= 10 cause an exception
-* TestROM: Missile values were capped at 0xFF
+* TestROM: Missile values are capped at 0xFF
 * TestROM: Wrong math on the energy value
 * TestROM: Player sometimes spawns at the bottom of the screen
-* Tileset Editor: Combobox for Tileset is now sized to always fit the name
+* Room Editor: Zooming out with the hotkey enables the zoom out button even though it shouldnt
+* Room Editor: Zooming in with the hotkey can zoom past the limit
+* Tileset Editor: Combobox for Tileset is not properly sized to fit the names
 
 # Version B 4.0
 ### Released: 02.06.2023

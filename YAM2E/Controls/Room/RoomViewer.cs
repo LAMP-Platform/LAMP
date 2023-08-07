@@ -49,6 +49,7 @@ public class RoomViewer : UserControl
             //bad way of rescaling the rectangles, a proper way would be to only scale the rectangles once they get drawn :/
             selRect = RecOp.Multiply(RecOp.Divide(selRect, zoom), value);
             redRect = RecOp.Multiply(RecOp.Divide(redRect, zoom), value);
+            selectedObject = RecOp.Multiply(RecOp.Divide(selectedObject, zoom), value);
 
             zoom = Math.Max(value, 1);
             if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
@@ -190,10 +191,29 @@ public class RoomViewer : UserControl
     private Rectangle heldObject = new Rectangle(-1, -1, -1, -1);
     #endregion
 
+    /// <summary>
+    /// Rectangle for the currently 
+    /// </summary>
+    private Rectangle selectedObject;
+    public Rectangle SelectedObject
+    {
+        get => selectedObject;
+        set
+        {
+            if (selectedObject == value) return;
+
+            Rectangle old = selectedObject;
+            selectedObject = value;
+
+            Invalidate(Editor.UniteRect(selectedObject, old));
+        }
+    }
+
+
     #region Pens
     /// <summary>
-/// Pen for the selection rectangle
-/// </summary>
+    /// Pen for the selection rectangle
+    /// </summary>
     private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
 
     /// <summary>
@@ -238,6 +258,8 @@ public class RoomViewer : UserControl
     {
         Alignment = PenAlignment.Inset
     };
+
+    private Pen ObjectSelectionPen { get; set; } = new Pen(Globals.ObjectSelection, 1);
     #endregion
 
     public void ResetSelection()
@@ -290,6 +312,10 @@ public class RoomViewer : UserControl
         {
             e.Graphics.DrawEllipse(ObjectPen, heldObject);
         }
+
+        //Draw outline for selected object
+        e.Graphics.DrawRectangle(ObjectSelectionPen, selectedObject);
+        
 
         //Draw objects
         if (ShowObjects)

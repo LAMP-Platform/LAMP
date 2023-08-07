@@ -15,6 +15,8 @@ using Microsoft.VisualBasic.Devices;
 using LAMP.Controls.Other;
 using System.Windows.Forms.VisualStyles;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using System.CodeDom;
 
 namespace LAMP;
 
@@ -58,9 +60,29 @@ public partial class MainWindow : Form
 
     //Main Editor vars
     public static bool EditingTiles { get; set; } = true;
-    bool TilesetSelected { get; set; } = true;
     bool MovedObject = false;
     Point MoveStartPoint;
+
+    //Object Editor
+    private Enemy inspectorObject;
+    public Enemy InspectorObject
+    {
+        get => inspectorObject;
+        set
+        {
+            inspectorObject = value;
+            if (value == null)
+            {
+                grp_object_inspector.Visible = false;
+                return;
+            }
+            grp_object_inspector.Visible = true;
+            txb_obj_type.Text = Format.IntToString(value.Type);
+            txb_object_number.Text = Format.IntToString(value.Number);
+        }
+    }
+    int inspectorObjectScreen = 0;
+
 
     //Graphics vars
     private Pointer gfxOffset;
@@ -457,7 +479,6 @@ public partial class MainWindow : Form
             Tileset.ResetSelection();
             Tileset.Invalidate();
         }
-        TilesetSelected = TilesetFocused;
     }
 
     public void SwitchTilesetOffsetMode()
@@ -624,6 +645,15 @@ public partial class MainWindow : Form
                 MovedObject = false;
                 if (!Room.ShowObjects) break;
                 heldObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
+                InspectorObject = heldObject;
+                inspectorObjectScreen = Globals.SelectedScreenNr;
+
+                if (InspectorObject == null) Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
+                else
+                {
+                    Point objectLocation = InspectorObject.GetPosition(Globals.SelectedScreenNr);
+                    Room.SelectedObject = new Rectangle(objectLocation.X * Room.Zoom, objectLocation.Y * Room.Zoom, Room.TileSize - 1, Room.TileSize - 1);
+                }
 
                 if (e.Button == MouseButtons.Right)
                 {
@@ -730,7 +760,7 @@ public partial class MainWindow : Form
                         //This code should only run once
                         MovedObject = true;
 
-                        Editor.RemoveObject(heldObject, Globals.SelectedArea);
+                        Editor.RemoveObject(heldObject, Globals.SelectedArea, Globals.SelectedScreenNr);
                         Room.HeldObject = new Rectangle(e.X - Room.TileSize / 2, e.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
                     }
                 }
@@ -759,7 +789,8 @@ public partial class MainWindow : Form
                     objectCoordinate.X *= Room.Zoom;
                     objectCoordinate.Y *= Room.Zoom;
 
-                    Room.HeldObject = new Rectangle(objectCoordinate.X - Room.TileSize / 2, objectCoordinate.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
+                    Room.SelectedObject = Room.HeldObject = new Rectangle(objectCoordinate.X - Room.TileSize / 2, objectCoordinate.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
+                    inspectorObjectScreen = Globals.SelectedScreenNr;
                 }
 
                 break;
@@ -768,6 +799,8 @@ public partial class MainWindow : Form
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
+        Room.HeldObject = new Rectangle(-1, -1, 1, 1);
+
         switch (toolbar_room.SelectedTool)
         {
             case (LampTool.Pen):
@@ -826,7 +859,7 @@ public partial class MainWindow : Form
         Enemy clickedObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
         if (clickedObject != null && Room.ShowObjects == true)
         {
-            new ObjectSettings(clickedObject).Show();
+            //new ObjectSettings(clickedObject).Show();
             return;
         }
 
@@ -923,6 +956,14 @@ public partial class MainWindow : Form
 
             //Quick object delete
             case Keys.Delete:
+                if (InspectorObject != null)
+                {
+
+                    Editor.RemoveObject(InspectorObject, Globals.SelectedArea, inspectorObjectScreen);
+                    InspectorObject = null;
+                    Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
+                    break;
+                }
                 Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
                 break;
 
@@ -942,10 +983,12 @@ public partial class MainWindow : Form
 
             //Zooming
             case Keys.Oemplus:
-                Room.Zoom = ++toolbar_room.ZoomLevel;
+                toolbar_room.ZoomLevel++;
+                Room.Zoom = toolbar_room.ZoomLevel;
                 break;
             case Keys.OemMinus:
-                Room.Zoom = --toolbar_room.ZoomLevel;
+                toolbar_room.ZoomLevel--;
+                Room.Zoom = toolbar_room.ZoomLevel;
                 break;
         }
     }
@@ -1105,7 +1148,10 @@ public partial class MainWindow : Form
         => new ProgramSettings().ShowDialog();
 
     private void ctx_btn_remove_object_Click(object sender, EventArgs e)
-        => Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+    {
+        Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+        Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
+    }
 
     private void ctx_btn_edit_object_Click(object sender, EventArgs e)
         => new ObjectSettings(Editor.FindObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea)).Show();
@@ -1177,6 +1223,46 @@ public partial class MainWindow : Form
 
     private void btn_open_solidity_editor_Click(object sender, EventArgs e)
         => btn_solidity_editor_Click(sender, e);
+
+    private void txb_obj_type_TextChanged(object sender, EventArgs e)
+    {
+        InspectorObject.Type = (byte)Format.StringToInt(txb_obj_type.Text, 0xFF);
+    }
+
+    private void txb_object_number_TextChanged(object sender, EventArgs e)
+    {
+        InspectorObject.Number = (byte)Format.StringToInt(txb_object_number.Text, 0xFF);
+    }
+
+    private void btn_auto_number_Click(object sender, EventArgs e)
+    {
+        for (int i = 0x40; i < 0x80; i++)
+        {
+            bool match = false;
+
+            //loop through all screens
+            for (int screen = 0; screen < 256; screen++)
+            {
+                //loop through every object per screen
+                foreach (Enemy o in Globals.Objects[screen + 255 * Globals.SelectedArea])
+                {
+                    if (o == InspectorObject) continue;
+                    if (o.Number == i)
+                    {
+                        match = true;
+                        break;
+                    }
+                }
+                if (match == true) break;
+            }
+            if (match == true) continue;
+
+            //If code gets to this point, there is no object sharing the number
+            txb_object_number.Text = Format.IntToString(i);
+            return;
+        }
+        MessageBox.Show("There is no unusedn, non respawning Number left in this Bank!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
     #endregion
 
     #endregion

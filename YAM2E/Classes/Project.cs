@@ -50,12 +50,12 @@ public class Project
     {
         { "Areas", new Pointer(0x24000) },
 
-        { "ObjectPointerTable", new Pointer(0x3, 0x42E0) },
-        { "ObjectDataLists", new Pointer(0x3, 0x50E0) },
-        { "ObjectDataEnd", new Pointer(0x3, 0x6300) },
+        { "ObjectPointerTable", new Pointer(0x3, 0x42E0) }, //6 Tables of Pointers to object lists
+        { "ObjectDataLists", new Pointer(0x3, 0x50E0) }, //Lists of objects on screen, first entry should always be empty
+        { "ObjectDataEnd", new Pointer(0x3, 0x6300) }, //This is the first byte of new data that should not be overwritten!
 
-        { "TransitionPointerTable", new Pointer(0x5, 0x42E5) },
-        { "TransitionDataLists", new Pointer(0x5, 0x46E5) },
+        { "TransitionPointerTable", new Pointer(0x5, 0x42E5) }, //Table of 512 or 0x200 pointers to transition codes
+        { "TransitionDataLists", new Pointer(0x5, 0x46E5) }, //Table of <512 Transitions, first one should stay 0xFF
 
         { "MetatilePointers", new Pointer(0x8, 0x7F1A) },
         { "CollisionPointers", new Pointer(0x8, 0x7EEA) },

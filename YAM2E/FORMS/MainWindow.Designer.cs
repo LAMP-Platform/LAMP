@@ -106,8 +106,15 @@ namespace LAMP
             pnl_main_window_view = new System.Windows.Forms.SplitContainer();
             pnl_tileset = new System.Windows.Forms.Panel();
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
+            grp_object_inspector = new System.Windows.Forms.GroupBox();
+            btn_auto_number = new System.Windows.Forms.Button();
+            txb_object_number = new System.Windows.Forms.TextBox();
+            txb_obj_type = new System.Windows.Forms.TextBox();
+            lbl_obj_number = new System.Windows.Forms.Label();
+            lbl_obj_type = new System.Windows.Forms.Label();
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
+            Tooltip_info = new System.Windows.Forms.ToolTip(components);
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -123,6 +130,7 @@ namespace LAMP
             pnl_tileset_resize.Panel1.SuspendLayout();
             pnl_tileset_resize.Panel2.SuspendLayout();
             pnl_tileset_resize.SuspendLayout();
+            grp_object_inspector.SuspendLayout();
             pnl_data_selection.SuspendLayout();
             grp_data_selector.SuspendLayout();
             SuspendLayout();
@@ -429,7 +437,7 @@ namespace LAMP
             tls_input.Name = "tls_input";
             tls_input.onDataChanged = null;
             tls_input.SelectedTileset = null;
-            tls_input.Size = new System.Drawing.Size(152, 52);
+            tls_input.Size = new System.Drawing.Size(154, 52);
             tls_input.TabIndex = 5;
             tls_input.DataChanged += tls_input_OnDataChanged;
             // 
@@ -448,7 +456,7 @@ namespace LAMP
             cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_area_bank.FormattingEnabled = true;
             cbb_area_bank.Items.AddRange(new object[] { "9", "A", "B", "C", "D", "E", "F" });
-            cbb_area_bank.Location = new System.Drawing.Point(106, 22);
+            cbb_area_bank.Location = new System.Drawing.Point(108, 22);
             cbb_area_bank.Name = "cbb_area_bank";
             cbb_area_bank.Size = new System.Drawing.Size(55, 23);
             cbb_area_bank.TabIndex = 2;
@@ -804,11 +812,73 @@ namespace LAMP
             // 
             // pnl_tileset_resize.Panel2
             // 
+            pnl_tileset_resize.Panel2.Controls.Add(grp_object_inspector);
             pnl_tileset_resize.Panel2.Controls.Add(btnTest);
             pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
             pnl_tileset_resize.Size = new System.Drawing.Size(286, 570);
             pnl_tileset_resize.SplitterDistance = 193;
             pnl_tileset_resize.TabIndex = 5;
+            // 
+            // grp_object_inspector
+            // 
+            grp_object_inspector.Controls.Add(btn_auto_number);
+            grp_object_inspector.Controls.Add(txb_object_number);
+            grp_object_inspector.Controls.Add(txb_obj_type);
+            grp_object_inspector.Controls.Add(lbl_obj_number);
+            grp_object_inspector.Controls.Add(lbl_obj_type);
+            grp_object_inspector.Dock = System.Windows.Forms.DockStyle.Top;
+            grp_object_inspector.Location = new System.Drawing.Point(9, 6);
+            grp_object_inspector.Name = "grp_object_inspector";
+            grp_object_inspector.Size = new System.Drawing.Size(271, 88);
+            grp_object_inspector.TabIndex = 10;
+            grp_object_inspector.TabStop = false;
+            grp_object_inspector.Text = "Object Inspector";
+            grp_object_inspector.Visible = false;
+            // 
+            // btn_auto_number
+            // 
+            btn_auto_number.Location = new System.Drawing.Point(169, 50);
+            btn_auto_number.Name = "btn_auto_number";
+            btn_auto_number.Size = new System.Drawing.Size(41, 23);
+            btn_auto_number.TabIndex = 4;
+            btn_auto_number.Text = "Auto";
+            Tooltip_info.SetToolTip(btn_auto_number, "Automatically finds a non respawning object\r\nnumber, which is currently unused in the Bank.");
+            btn_auto_number.UseVisualStyleBackColor = true;
+            btn_auto_number.Click += btn_auto_number_Click;
+            // 
+            // txb_object_number
+            // 
+            txb_object_number.Location = new System.Drawing.Point(69, 50);
+            txb_object_number.Name = "txb_object_number";
+            txb_object_number.Size = new System.Drawing.Size(94, 23);
+            txb_object_number.TabIndex = 3;
+            txb_object_number.TextChanged += txb_object_number_TextChanged;
+            // 
+            // txb_obj_type
+            // 
+            txb_obj_type.Location = new System.Drawing.Point(69, 21);
+            txb_obj_type.Name = "txb_obj_type";
+            txb_obj_type.Size = new System.Drawing.Size(94, 23);
+            txb_obj_type.TabIndex = 2;
+            txb_obj_type.TextChanged += txb_obj_type_TextChanged;
+            // 
+            // lbl_obj_number
+            // 
+            lbl_obj_number.AutoSize = true;
+            lbl_obj_number.Location = new System.Drawing.Point(9, 53);
+            lbl_obj_number.Name = "lbl_obj_number";
+            lbl_obj_number.Size = new System.Drawing.Size(54, 15);
+            lbl_obj_number.TabIndex = 1;
+            lbl_obj_number.Text = "Number:";
+            // 
+            // lbl_obj_type
+            // 
+            lbl_obj_type.AutoSize = true;
+            lbl_obj_type.Location = new System.Drawing.Point(9, 24);
+            lbl_obj_type.Name = "lbl_obj_type";
+            lbl_obj_type.Size = new System.Drawing.Size(34, 15);
+            lbl_obj_type.TabIndex = 0;
+            lbl_obj_type.Text = "Type:";
             // 
             // pnl_data_selection
             // 
@@ -834,6 +904,14 @@ namespace LAMP
             grp_data_selector.TabIndex = 0;
             grp_data_selector.TabStop = false;
             grp_data_selector.Text = "Data Selector";
+            // 
+            // Tooltip_info
+            // 
+            Tooltip_info.AutomaticDelay = 0;
+            Tooltip_info.AutoPopDelay = 0;
+            Tooltip_info.InitialDelay = 100;
+            Tooltip_info.ReshowDelay = 200;
+            Tooltip_info.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // MainWindow
             // 
@@ -872,6 +950,8 @@ namespace LAMP
             pnl_tileset_resize.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pnl_tileset_resize).EndInit();
             pnl_tileset_resize.ResumeLayout(false);
+            grp_object_inspector.ResumeLayout(false);
+            grp_object_inspector.PerformLayout();
             pnl_data_selection.ResumeLayout(false);
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
@@ -958,6 +1038,13 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_show_converter;
         private System.Windows.Forms.ToolStripMenuItem btn_solidity_editor;
         private System.Windows.Forms.ToolStripButton btn_open_solidity_editor;
+        private System.Windows.Forms.GroupBox grp_object_inspector;
+        private System.Windows.Forms.Label lbl_obj_number;
+        private System.Windows.Forms.Label lbl_obj_type;
+        private System.Windows.Forms.TextBox txb_object_number;
+        private System.Windows.Forms.TextBox txb_obj_type;
+        private System.Windows.Forms.Button btn_auto_number;
+        private System.Windows.Forms.ToolTip Tooltip_info;
     }
 }
 

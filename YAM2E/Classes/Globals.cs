@@ -58,6 +58,11 @@ internal static class Globals
     /// The color used to mark objects
     /// </summary>
     public static Color ObjectColor = Color.FromArgb(255, 0x32, 0xCD, 0x32);
+
+    /// <summary>
+    /// The color used to show the selected object
+    /// </summary>
+    public static Color ObjectSelection = Color.Aqua;
     #endregion
 
     //Data dirs

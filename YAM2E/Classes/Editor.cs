@@ -81,6 +81,8 @@ public static class Editor
     /// </summary>
     public static void CreateNewProject()
     {
+        Globals.LoadedProject = null;
+
         //checking if a vanilla ROM exists
         if (!File.Exists(Globals.RomPath))
         {
@@ -934,12 +936,12 @@ public static class Editor
         return false;
     }
 
-    public static bool RemoveObject(Enemy enemy, int bank)
+    public static bool RemoveObject(Enemy enemy, int bank, int screen)
     {
         RoomViewer room = MainWindow.Room;
         try
         {
-            int screen = Globals.SelectedScreenNr + 256 * bank;
+            screen = screen + 256 * bank;
             Globals.Objects[screen].Remove(enemy);
 
             //Invalidating part where object is removed

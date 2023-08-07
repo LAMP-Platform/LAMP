@@ -100,7 +100,7 @@ public partial class ToolBar : UserControl
             btn_zoom_in.Enabled = true;
             btn_zoom_out.Enabled = true;
 
-            if (value == 1) btn_zoom_out.Enabled = false;
+            if (value <= 1) btn_zoom_out.Enabled = false;
             if (value >= MaxZoom) btn_zoom_in.Enabled = false;
             zoomLevel = Math.Max(1, Math.Min(MaxZoom, value));
         }

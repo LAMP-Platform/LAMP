@@ -59,7 +59,7 @@ public class Rom
             {
                 for (int i = 0; i < 59; i++)
                 {
-                    Pointer pointer = GetPointerForArea(area + 0x500 + 0x100 * i);
+                    Pointer pointer = GetPointerForArea(area) + 0x500 + 0x100 * i;
                     ReplaceBytes(pointer.Offset, Globals.Screens[area][i].Data);
                 }
             }
@@ -74,7 +74,7 @@ public class Rom
                 Area a = Globals.Areas[area];
                 for (int i = 0; i < 256; i++)
                 {
-                    Pointer offset = A_BANKS[area];
+                    Pointer offset = Rom.GetPointerForArea(area);
 
                     //Screens used
                     int data = a.Screens[i];
@@ -97,7 +97,7 @@ public class Rom
 
         #region Objects
 
-        Pointer lastAdd = new Pointer(ObjectDataLists.Offset);
+        Pointer lastAdd = GetOffsetFor("ObjectDataLists");
         if ((exceptions & CompilationItem.Objects) == 0)
         {
             for (int i = 0; i < 256 * 7; i++)
@@ -105,18 +105,18 @@ public class Rom
                 //Empty object list
                 if (Globals.Objects[i].Count == 0)
                 {
-                    if (Globals.LoadedProject.OptimizeObjectData) Write16(ObjectPointerTable.Offset + 2 * i, (ushort)ObjectDataLists.bOffset); //Writing pointer to list
+                    if (Globals.LoadedProject.OptimizeObjectData) Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)GetOffsetFor("ObjectDataLists").bOffset); //Writing pointer to list
                     else
                     {
                         lastAdd += 1;
-                        Write16(ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset);
+                        Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)lastAdd.bOffset);
                         Write8(lastAdd.Offset, 0xFF);
                     }
                 }
                 else //Objects on screen
                 {
                     lastAdd += 1;
-                    Write16(ObjectPointerTable.Offset + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
+                    Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
                     foreach (Enemy o in Globals.Objects[i])
                     {
                         //Writing Object list consecutively
@@ -132,7 +132,7 @@ public class Rom
                     Write8(lastAdd.Offset, 0xFF);
                 }
             }
-            if (lastAdd >= ObjectDataEnd) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (lastAdd >= GetOffsetFor("ObjectDataEnd")) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         #endregion
@@ -140,7 +140,7 @@ public class Rom
         #region Transitions
         if ((exceptions & CompilationItem.Transitions) == 0)
         {
-            lastAdd = new Pointer(TransitionDataLists.Offset);
+            lastAdd = GetOffsetFor("TransitionDataLists");
             lastAdd += 1;
             List<int> offsets = new List<int>(); //List saving written pointers for duplicate tansitions
             for (int i = 0; i < 0x200; i++)
@@ -148,17 +148,17 @@ public class Rom
                 Transition t = Globals.Transitions[i]; //Transition is empty / ends instantly
                 if (t.Data.Count == 1)
                 {
-                    Write16(TransitionPointerTable.Offset + (2 * i), (ushort)TransitionDataLists.bOffset); //Writing pointer to list
-                    offsets.Add(TransitionDataLists.bOffset);
+                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)GetOffsetFor("TransitionDataLists").bOffset); //Writing pointer to list
+                    offsets.Add(GetOffsetFor("TransitionDataLists").bOffset);
                 }
                 else if (t.CopyOf != -1) //Transition is a duplicate and the data is already written
                 {
-                    Write16(TransitionPointerTable.Offset + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
+                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
                     offsets.Add(offsets[t.CopyOf]);
                 }
                 else //Transition is used and unique
                 {
-                    Write16(TransitionPointerTable.Offset + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
+                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
                     offsets.Add(lastAdd.bOffset);
                     //Writing transition
                     ReplaceBytes(lastAdd.Offset, t.Data);
@@ -288,23 +288,22 @@ public class Rom
         if (Globals.LoadedProject == null) return A_BANKS[area];
         return Globals.LoadedProject.WriteOffsets["Areas"] + area * 0x4000;
     }
+
+    public static Pointer GetOffsetFor(string key) => Globals.LoadedProject.WriteOffsets[key];
     #endregion  
 
-    ///CONSTANTS
+    ///CONSTANTS used for Reading
     //Areas
     public static Pointer[] A_BANKS { get; } = { new Pointer(0x24000), new Pointer(0x28000), new Pointer(0x2C000), new Pointer(0x30000), new Pointer(0x34000), new Pointer(0x38000), new Pointer(0x3C000) };
 
     //object data
-    public Pointer ObjectPointerTable = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists
-    public Pointer ObjectDataLists = new Pointer(0x3, 0x50E0); //Lists of objects on screen, first entry should always be empty
-    public Pointer ObjectDataEnd = new Pointer(0x3, 0x6300); //This is the first byte of new data that should not be overwritten!
+    public Pointer ObjectPointerTable { get; } = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists
 
     //transition data
-    public Pointer TransitionPointerTable = new Pointer(0x5, 0x42E5); //Table of 512 or 0x200 pointers to transition codes
-    public Pointer TransitionDataLists = new Pointer(0x5, 0x46E5); //Table of <512 Transitions, first one should stay 0xFF
+    public Pointer TransitionPointerTable { get; } = new Pointer(0x5, 0x42E5); //Table of 512 or 0x200 pointers to transition codes
 
     //Graphics and Solidity
-    public Pointer MetatilePointers = new Pointer(0x8, 0x7F1A);
-    public Pointer CollisionPointers = new Pointer(0x8, 0x7EEA);
-    public Pointer SolidityIndices = new Pointer(0x8, 0x7EFA);
+    public Pointer MetatilePointers { get; } = new Pointer(0x8, 0x7F1A);
+    public Pointer CollisionPointers { get; } = new Pointer(0x8, 0x7EEA);
+    public Pointer SolidityIndices { get; } = new Pointer(0x8, 0x7EFA);
 }
