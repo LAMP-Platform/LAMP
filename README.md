@@ -45,5 +45,11 @@ dotnet publish -r win-x64 -c release
 ```
 dotnet publish -r win-x86 -c release
 ```
+## Other Projects
+
+* [M2RoS Disassembly](https://github.com/alex-west/M2RoS) - A full, commented and buildable disassembly of Metroid 2
+* [ROSE](https://github.com/liamnajor/ROSE) - Another Metroid 2 Editor. Web based but also very WIP.
+
 #
+
 For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the [Development Discord](https://discord.gg/YT6M2rAqqS)!
