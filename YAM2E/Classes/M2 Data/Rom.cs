@@ -96,7 +96,6 @@ public class Rom
         #endregion
 
         #region Objects
-
         Pointer lastAdd = GetOffsetFor("ObjectDataLists");
         if ((exceptions & CompilationItem.Objects) == 0)
         {
@@ -165,6 +164,7 @@ public class Rom
                     lastAdd += t.Data.Count;
                 }
             }
+            if (lastAdd >= GetOffsetFor("TransitionDataEnd")) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         #endregion
 

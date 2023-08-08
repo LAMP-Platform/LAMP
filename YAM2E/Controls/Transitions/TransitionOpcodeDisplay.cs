@@ -17,7 +17,6 @@ public partial class TransitionOpcodeDisplay : UserControl
     TransitionOpcode Opcode;
 
     bool init = true;
-    bool appliedChange = false;
 
     public List<byte> Data { get; set; }
     private List<OpcodeParameter> Parameters { get; set; } = new List<OpcodeParameter>();

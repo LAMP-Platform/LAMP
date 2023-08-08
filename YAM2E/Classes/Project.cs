@@ -46,7 +46,7 @@ public class Project
     }
 
     //Pointers to every offset that LAMP will write to
-    public Dictionary<string, Pointer> WriteOffsets = new()
+    public Dictionary<string, Pointer> WriteOffsets { get; set; } = new()
     {
         { "Areas", new Pointer(0x24000) },
 
@@ -56,6 +56,7 @@ public class Project
 
         { "TransitionPointerTable", new Pointer(0x5, 0x42E5) }, //Table of 512 or 0x200 pointers to transition codes
         { "TransitionDataLists", new Pointer(0x5, 0x46E5) }, //Table of <512 Transitions, first one should stay 0xFF
+        { "TransitionDataEnd", new Pointer(0x5, 0x55A3) }, //This is the first byte of new data that should not be overwritten!
 
         { "MetatilePointers", new Pointer(0x8, 0x7F1A) },
         { "CollisionPointers", new Pointer(0x8, 0x7EEA) },
