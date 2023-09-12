@@ -13,6 +13,7 @@
 * LAMP now starts in fullscreen if closed in fullscreen
 * All tile displays now highlight tiles that LAMP can not currently display  
 * Added error messages if too many objects or transitions exist
+* Removed redundant data from the project files
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty

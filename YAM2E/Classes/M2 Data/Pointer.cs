@@ -6,9 +6,9 @@ namespace LAMP.Classes;
 public class Pointer
 {
     [JsonConstructor]
-    public Pointer (int offset)
+    public Pointer (int Offset)
     {
-        Offset = offset;
+        this.Offset = Offset;
 
         //calculating bank and pointer
         int bankNr = Offset / 0x4000;
@@ -30,13 +30,12 @@ public class Pointer
     }
 
     public int Offset { get; set; }
+    [JsonIgnore]
     public int Bank { get; set; }
+    [JsonIgnore]
     public int bOffset { get; set; }
 
-    public override string ToString()
-    {
-        return Format.PointerToString(this);
-    }
+    public override string ToString() => Format.PointerToString(this);
 
     public static Pointer operator +(Pointer a, int b) 
         => new Pointer (a.Offset + b);

@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -10,15 +13,13 @@ namespace LAMP.Classes
 {
     public struct TransitionOpcode
     {
-        public TransitionOpcode(string opcode)
+        [JsonConstructor]
+        public TransitionOpcode(string OpcodeString)
         {
-            OpcodeString = opcode;
-            OpcodeIndex = OpcodeInterpreter.GetOpcodeIndex(opcode);
-            Description = OpcodeInterpreter.GetOpCodeDescription(opcode);
-            OpcodeLength = OpcodeInterpreter.GetOpcodeLength(opcode);
+            this.OpcodeString = OpcodeString;
 
             //get nybble data
-            string[] templates = OpcodeInterpreter.GetDataTemplates(opcode);
+            string[] templates = OpcodeInterpreter.GetDataTemplates(OpcodeString);
             NybbleIndices = new int?[templates.Length];
             ParameterLength = new int[templates.Length];
             PredefinedValue = new int?[templates.Length];
@@ -58,36 +59,43 @@ namespace LAMP.Classes
         /// <summary>
         /// The index that represents the opcode
         /// </summary>
-        public byte OpcodeIndex { get; set; }
+        [JsonIgnore]
+        public byte OpcodeIndex => OpcodeInterpreter.GetOpcodeIndex(OpcodeString);
 
         /// <summary>
         /// An array which stores the title of the transition and the description of each parameter
         /// </summary>
-        public string[] Description { get; set; }
+        [JsonIgnore]
+        public string[] Description => OpcodeInterpreter.GetOpCodeDescription(OpcodeString);
 
         /// <summary>
         /// An array which stores the start nybble for each parameter. Set to null if the parameter does not have any modifyable data
         /// </summary>
+        [JsonIgnore]
         public int?[] NybbleIndices { get; set; }
 
         /// <summary>
         /// An array which stores the length of each parameter in nybbles. Set to 1 if the parameter does not have any modifyable data
         /// </summary>
+        [JsonIgnore]
         public int[] ParameterLength { get; set; }
 
         /// <summary>
         /// An array of the predefined value of a parameter. Set to null if a parameter does not have a predefined value
         /// </summary>
+        [JsonIgnore]
         public int?[] PredefinedValue { get; set; }
 
         /// <summary>
         /// The number of bytes that make up the opcode
         /// </summary>
-        public int OpcodeLength { get; set; }
+        [JsonIgnore]
+        public int OpcodeLength => OpcodeInterpreter.GetOpcodeLength(OpcodeString);
 
         /// <summary>
         /// Whether the opcode has more than 
         /// </summary>
+        [JsonIgnore]
         public bool isExpandable
         {
             get => Description.Length > 1;

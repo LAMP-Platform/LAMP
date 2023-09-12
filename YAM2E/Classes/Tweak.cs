@@ -10,9 +10,7 @@ namespace LAMP.Classes;
 internal class Tweak
 {
     [JsonConstructor]
-    public Tweak()
-    {
-    }
+    public Tweak() {}
 
     public string Name { get; set; }
     public string Offset { get; set; }

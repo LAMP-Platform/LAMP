@@ -14,6 +14,7 @@ public class Project
     }
 
     public bool OptimizeObjectData { get; set; } = false;
+    public bool IncludeOptimizeObjectDataTweak { get; set; } = false;
     public bool useTilesets { get; set; } = true;
     public string ProjectSpecificROM { get; set; } = "";
 
