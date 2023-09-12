@@ -28,22 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            textBox1 = new System.Windows.Forms.TextBox();
+            SuspendLayout();
+            // 
+            // textBox1
+            // 
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox1.Location = new System.Drawing.Point(453, 508);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(184, 16);
+            textBox1.TabIndex = 0;
+            textBox1.Text = "AHHH\r\na";
             // 
             // Test_form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(805, 734);
-            this.Name = "Test_form";
-            this.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Text = "Test_form";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            BackColor = System.Drawing.SystemColors.Control;
+            ClientSize = new System.Drawing.Size(805, 734);
+            Controls.Add(textBox1);
+            Name = "Test_form";
+            RightToLeft = System.Windows.Forms.RightToLeft.No;
+            Text = "Test_form";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -35,43 +35,45 @@ public class Save
     /// </summary>
     public void WriteToROM(Rom r)
     {
+        Pointer dataStart = Rom.OffsetOf["SaveData"];
+
         //Samus' Position
-        r.Write8(0x4E64, SamusY);
-        r.Write8(0x4E65, SamusScreenY);
-        r.Write8(0x4E66, SamusX);
-        r.Write8(0x4E67, SamusScreenX);
+        r.Write8(dataStart, SamusY);
+        r.Write8(dataStart + 1, SamusScreenY);
+        r.Write8(dataStart + 2, SamusX);
+        r.Write8(dataStart + 3, SamusScreenX);
         //Camera Position
-        r.Write8(0x4E68, CamY);
-        r.Write8(0x4E69, CamScreenY);
-        r.Write8(0x4E6A, CamX);
-        r.Write8(0x4E6B, CamScreenX);
+        r.Write8(dataStart + 4, CamY);
+        r.Write8(dataStart + 5, CamScreenY);
+        r.Write8(dataStart + 6, CamX);
+        r.Write8(dataStart + 7, CamScreenX);
         //Tileset Definitions
-        r.Write16(0x4E6C, (ushort)SpriteGraphics.bOffset);
-        r.Write8(0x4E6E, (byte)TileGraphics.Bank);
-        r.Write16(0x4E6F, (ushort)TileGraphics.bOffset);
-        r.Write16(0x4E71, (ushort)MetatileData.bOffset);
-        r.Write16(0x4E73, (ushort)CollisionData.bOffset);
-        r.Write8(0x4E75, (byte)(MapBank + 0x9));
+        r.Write16(dataStart + 8, (ushort)SpriteGraphics.bOffset);
+        r.Write8(dataStart + 10, (byte)TileGraphics.Bank);
+        r.Write16(dataStart + 11, (ushort)TileGraphics.bOffset);
+        r.Write16(dataStart + 13, (ushort)MetatileData.bOffset);
+        r.Write16(dataStart + 15, (ushort)CollisionData.bOffset);
+        r.Write8(dataStart + 17, (byte)(MapBank + 0x9));
         //Solidity Indices
-        r.Write8(0x4E76, SamusSolidity);
-        r.Write8(0x4E77, EnemySolidity);
-        r.Write8(0x4E78, ProjectileSolidity);
+        r.Write8(dataStart + 18, SamusSolidity);
+        r.Write8(dataStart + 19, EnemySolidity);
+        r.Write8(dataStart + 20, ProjectileSolidity);
         //Equipment
-        r.Write8(0x4E79, Items);
-        r.Write8(0x4E7A, Beam);
-        r.Write8(0x4E7B, EnergyTanksAmount);
-        r.Write8(0x4E7C, StartEnegery);
-        r.Write8(0x4E7D, EnergyTanksFilled);
-        r.Write16(0x4E7E, MaxMissiles);
-        r.Write16(0x4E80, StartMissiles);
+        r.Write8(dataStart + 21, Items);
+        r.Write8(dataStart + 22, Beam);
+        r.Write8(dataStart + 23, EnergyTanksAmount);
+        r.Write8(dataStart + 24, StartEnegery);
+        r.Write8(dataStart + 25, EnergyTanksFilled);
+        r.Write16(dataStart + 26, MaxMissiles);
+        r.Write16(dataStart + 28, StartMissiles);
         //Misc.
-        r.Write8(0x4E83, AcidDamage);
-        r.Write8(0x4E84, SpikeDamage);
-        r.Write8(0x4E85, RealMetroidCount);
-        r.Write8(0x4E86, Music);
-        r.Write8(0x4E87, IGTMinutes);
-        r.Write8(0x4E88, IGTHours);
-        r.Write8(0x4E89, MetroidCount);
+        r.Write8(dataStart + 31, AcidDamage);
+        r.Write8(dataStart + 32, SpikeDamage);
+        r.Write8(dataStart + 33, RealMetroidCount);
+        r.Write8(dataStart + 34, Music);
+        r.Write8(dataStart + 35, IGTMinutes);
+        r.Write8(dataStart + 36, IGTHours);
+        r.Write8(dataStart + 37, MetroidCount);
     }
 
     /// <summary>

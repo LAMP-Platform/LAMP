@@ -19,16 +19,16 @@ namespace LAMP.FORMS
             this.TopLevel = false;
         }
 
-        private bool edited = false;
+        private bool _edited = false;
 
         private void txb_hex_input_TextChanged(object sender, EventArgs e)
         {
-            if (edited)
+            if (_edited)
             {
-                edited = false;
+                _edited = false;
                 return;
             }
-            edited = true;
+            _edited = true;
             txb_hex_result.Text = Format.StringToInt(txb_hex_input.Text).ToString();
             TextBox txb = (TextBox)sender;
             txb.SelectionStart = txb.Text.Length;
@@ -37,12 +37,12 @@ namespace LAMP.FORMS
 
         private void txb_hex_result_TextChanged(object sender, EventArgs e)
         {
-            if (edited)
+            if (_edited)
             {
-                edited = false;
+                _edited = false;
                 return;
             }
-            edited = true;
+            _edited = true;
             txb_hex_input.Text = Format.IntToString(Format.StringToDecimalInt(txb_hex_result.Text));
             TextBox txb = (TextBox)sender;
             txb.SelectionStart = txb.Text.Length;

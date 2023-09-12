@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 
 namespace LAMP.Classes;
 
@@ -46,7 +47,9 @@ public class Project
     }
 
     //Pointers to every offset that LAMP will write to
-    public Dictionary<string, Pointer> WriteOffsets { get; set; } = new()
+    public Dictionary<string, Pointer> WriteOffsets { get; set; } = new();
+
+    private static Dictionary<string, Pointer> CheckDictionary = new()
     {
         { "Areas", new Pointer(0x24000) },
 
@@ -61,5 +64,15 @@ public class Project
         { "MetatilePointers", new Pointer(0x8, 0x7F1A) },
         { "CollisionPointers", new Pointer(0x8, 0x7EEA) },
         { "SolidityIndices", new Pointer(0x8, 0x7EFA) },
+
+        { "SaveData", new Pointer(0x4E64) },
     };
+
+    /// <summary>
+    /// Checks if the offset dictionary is up to date with the <see cref="CheckDictionary"/>.
+    /// </summary>
+    public void CheckIfDictionaryUpToDate()
+    {
+        if (WriteOffsets.Count != CheckDictionary.Count) WriteOffsets = CheckDictionary;
+    }
 }

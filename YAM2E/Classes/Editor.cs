@@ -298,6 +298,7 @@ public static class Editor
 
             //Loading Data
             Globals.LoadedProject = JsonSerializer.Deserialize<Project>(json);
+            Globals.LoadedProject.CheckIfDictionaryUpToDate();
 
             //Loading Project Specific ROM if existing
             if (Globals.LoadedProject.ProjectSpecificROM != String.Empty)

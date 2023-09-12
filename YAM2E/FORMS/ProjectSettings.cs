@@ -1,4 +1,5 @@
 ﻿using LAMP.Classes;
+using LAMP.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,12 +15,71 @@ namespace LAMP.FORMS;
 
 public partial class ProjectSettings : Form
 {
+    bool construct;
+
     public ProjectSettings()
     {
+        construct = true;
+
         InitializeComponent();
         chb_rmv_mt_o_list.Checked = Globals.LoadedProject.OptimizeObjectData;
         rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
         txb_rom_path.Text = Globals.LoadedProject.ProjectSpecificROM;
+
+        LoadOffsets();
+        construct = false;
+    }
+
+    private void LoadOffsets()
+    {
+        foreach (KeyValuePair<string, Pointer> entry in Globals.LoadedProject.WriteOffsets)
+        {
+            //create new panel which will house a label and a text box
+            Panel Base = new Panel()
+            {
+                Dock = DockStyle.Top,
+                Padding = new Padding(0, 3, 3, 0),
+                Height = 35,
+            };
+
+            //Label
+            Label label = new Label()
+            {
+                Text = entry.Key,
+                Width = 149,
+                Location = new Point(0, 9),
+            };
+
+            //Text box input
+            TextBox Input = new TextBox()
+            {
+                Text = Format.PointerToString(entry.Value),
+                Location = new Point(150, 6),
+                Tag = entry.Key,
+                //Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+            };
+
+            Input.TextChanged += OffsetValueChanged;
+            Input.Leave += LeftOffsetTextbox;
+
+            Base.Controls.Add(label);
+            Base.Controls.Add(Input);
+            pnl_offsets.Controls.Add(Base);
+        }
+    }
+
+    public void OffsetValueChanged(object sender, EventArgs e)
+    {
+        if (construct) return;
+        TextBox b = sender as TextBox;
+        Globals.LoadedProject.WriteOffsets[b.Tag.ToString()] = Format.StringToPointer(b.Text);
+    }
+
+    public void LeftOffsetTextbox(object sender, EventArgs e)
+    {
+        if (construct) return;
+        TextBox b = sender as TextBox;
+        b.Text = Format.PointerToString(Globals.LoadedProject.WriteOffsets[b.Tag.ToString()]);
     }
 
     private void chb_rmv_mt_o_list_CheckedChanged(object sender, EventArgs e)

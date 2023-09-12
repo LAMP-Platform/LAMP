@@ -24,6 +24,8 @@ public class Rom
 
     public string Filepath;
 
+    public static Dictionary<string, Pointer> OffsetOf => Globals.LoadedProject.WriteOffsets;
+
     // constructor
     public Rom(string filename)
     {
@@ -96,7 +98,7 @@ public class Rom
         #endregion
 
         #region Objects
-        Pointer lastAdd = GetOffsetFor("ObjectDataLists");
+        Pointer lastAdd = OffsetOf["ObjectDataLists"];
         if ((exceptions & CompilationItem.Objects) == 0)
         {
             for (int i = 0; i < 256 * 7; i++)
@@ -104,18 +106,18 @@ public class Rom
                 //Empty object list
                 if (Globals.Objects[i].Count == 0)
                 {
-                    if (Globals.LoadedProject.OptimizeObjectData) Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)GetOffsetFor("ObjectDataLists").bOffset); //Writing pointer to list
+                    if (Globals.LoadedProject.OptimizeObjectData) Write16(OffsetOf["ObjectPointerTable"] + 2 * i, (ushort)OffsetOf["ObjectDataLists"].bOffset); //Writing pointer to list
                     else
                     {
                         lastAdd += 1;
-                        Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)lastAdd.bOffset);
+                        Write16(OffsetOf["ObjectPointerTable"] + 2 * i, (ushort)lastAdd.bOffset);
                         Write8(lastAdd.Offset, 0xFF);
                     }
                 }
                 else //Objects on screen
                 {
                     lastAdd += 1;
-                    Write16(GetOffsetFor("ObjectPointerTable") + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
+                    Write16(OffsetOf["ObjectPointerTable"] + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
                     foreach (Enemy o in Globals.Objects[i])
                     {
                         //Writing Object list consecutively
@@ -131,7 +133,7 @@ public class Rom
                     Write8(lastAdd.Offset, 0xFF);
                 }
             }
-            if (lastAdd >= GetOffsetFor("ObjectDataEnd")) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (lastAdd >= OffsetOf["ObjectDataEnd"]) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         #endregion
@@ -139,7 +141,7 @@ public class Rom
         #region Transitions
         if ((exceptions & CompilationItem.Transitions) == 0)
         {
-            lastAdd = GetOffsetFor("TransitionDataLists");
+            lastAdd = OffsetOf["TransitionDataLists"];
             lastAdd += 1;
             List<int> offsets = new List<int>(); //List saving written pointers for duplicate tansitions
             for (int i = 0; i < 0x200; i++)
@@ -147,24 +149,24 @@ public class Rom
                 Transition t = Globals.Transitions[i]; //Transition is empty / ends instantly
                 if (t.Data.Count == 1)
                 {
-                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)GetOffsetFor("TransitionDataLists").bOffset); //Writing pointer to list
-                    offsets.Add(GetOffsetFor("TransitionDataLists").bOffset);
+                    Write16(OffsetOf["TransitionPointerTable"] + (2 * i), (ushort)OffsetOf["TransitionDataLists"].bOffset); //Writing pointer to list
+                    offsets.Add(OffsetOf["TransitionDataLists"].bOffset);
                 }
                 else if (t.CopyOf != -1) //Transition is a duplicate and the data is already written
                 {
-                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
+                    Write16(OffsetOf["TransitionPointerTable"] + (2 * i), (ushort)offsets[t.CopyOf]); //Writing pointer to list
                     offsets.Add(offsets[t.CopyOf]);
                 }
                 else //Transition is used and unique
                 {
-                    Write16(GetOffsetFor("TransitionPointerTable") + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
+                    Write16(OffsetOf["TransitionPointerTable"] + (2 * i), (ushort)lastAdd.bOffset); //Writing pointer to list
                     offsets.Add(lastAdd.bOffset);
                     //Writing transition
                     ReplaceBytes(lastAdd.Offset, t.Data);
                     lastAdd += t.Data.Count;
                 }
             }
-            if (lastAdd >= GetOffsetFor("TransitionDataEnd")) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (lastAdd >= OffsetOf["TransitionDataEnd"]) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         #endregion
 
@@ -286,10 +288,8 @@ public class Rom
     public static Pointer GetPointerForArea(int area)
     {
         if (Globals.LoadedProject == null) return A_BANKS[area];
-        return Globals.LoadedProject.WriteOffsets["Areas"] + area * 0x4000;
+        return OffsetOf["Areas"] + area * 0x4000;
     }
-
-    public static Pointer GetOffsetFor(string key) => Globals.LoadedProject.WriteOffsets[key];
     #endregion  
 
     ///CONSTANTS used for Reading

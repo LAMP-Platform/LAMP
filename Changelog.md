@@ -10,10 +10,9 @@
 * Project specific base ROMs
 * The project path on the recent files screen can now be opened in explorer
 * Added a value converter tool
-  * Can be docked to the Main Window
 * LAMP now starts in fullscreen if closed in fullscreen
 * All tile displays now highlight tiles that LAMP can not currently display  
-* Added error messages if too many objects exist
+* Added error messages if too many objects or transitions exist
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty
