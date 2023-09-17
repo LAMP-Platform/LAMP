@@ -23,6 +23,7 @@ public partial class ProjectSettings : Form
 
         InitializeComponent();
         chb_rmv_mt_o_list.Checked = Globals.LoadedProject.OptimizeObjectData;
+        chb_fix_object_loading.Checked = Globals.LoadedProject.FixVerticalObjectLoading;
         rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
         txb_rom_path.Text = Globals.LoadedProject.ProjectSpecificROM;
 
@@ -122,5 +123,10 @@ public partial class ProjectSettings : Form
     {
         string path = Editor.ShowOpenDialog("Metroid 2: Return of Samus ROM (*.gb)|*.gb");
         if (path != String.Empty) txb_rom_path.Text = path;
+    }
+
+    private void chb_fix_object_loading_CheckedChanged(object sender, EventArgs e)
+    {
+        Globals.LoadedProject.FixVerticalObjectLoading = chb_fix_object_loading.Checked;
     }
 }

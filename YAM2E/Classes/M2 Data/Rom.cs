@@ -6,6 +6,7 @@ using LAMP.Classes.M2_Data;
 using System.Runtime.Intrinsics.Arm;
 using System.CodeDom;
 using System.Windows.Forms;
+using System.ComponentModel.Design;
 
 namespace LAMP.Classes;
 
@@ -134,6 +135,13 @@ public class Rom
                 }
             }
             if (lastAdd >= OffsetOf["ObjectDataEnd"]) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        //Object loading tweak
+        if (Globals.LoadedProject.FixVerticalObjectLoading)
+        {
+            ReplaceBytes(new Pointer(0xC135), new byte[] { 0xC3, 0xAD, 0x7D, 0x00, 0x00, 0x00, 0x00 });
+            ReplaceBytes(new Pointer(0xFDAD), new byte[] { 0xFA, 0x13, 0xC4, 0x4F, 0xFA, 0x15, 0xC4, 0xB9, 0xC8, 0x79, 0xCD, 0xC1, 0x42, 0xCD, 0xCF, 0x42, 0xC3, 0x3C, 0x41 });
         }
 
         #endregion

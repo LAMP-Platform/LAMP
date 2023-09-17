@@ -131,10 +131,11 @@ public partial class TransitionsEditor : Form
         {
             //Finding a matching opcode to the current byte
             TransitionOpcode? currentOpcode = null; //making the opcode nullable because there might be a chance that an index is not found
+
             foreach (TransitionOpcode code in Globals.LoadedProject.TransitionOpcodes)
             {
                 byte currentByte = LoadedTransition.Data[i]; //The opcode Index to check for
-                if (code.OpcodeIndex < 0x10) currentByte = (byte)(currentByte >> 4); //An opcode index might only be on the first nybble, therefore, we have to shift the check byte to the right
+                if (code.ParameterLength[0] == 1) currentByte = (byte)(currentByte >> 4); //An opcode index might only be on the first nybble, therefore, we have to shift the check byte to the right
                 if (code.OpcodeIndex == currentByte)
                 {
                     currentOpcode = code;
@@ -325,7 +326,7 @@ public partial class TransitionsEditor : Form
         List<byte> data = new List<byte>();
 
         byte index = o.opcode.OpcodeIndex;
-        if (index <= 0xF) index = (byte)(index << 4);
+        if (o.opcode.ParameterLength[0] == 1) index = (byte)(index << 4);
         data.Add(index);
 
         for (int i = 1; i < o.opcode.OpcodeLength; i++)

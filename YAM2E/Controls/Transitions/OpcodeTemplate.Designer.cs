@@ -57,7 +57,6 @@
             // lbl_opcode_title
             // 
             lbl_opcode_title.AutoSize = true;
-            lbl_opcode_title.Dock = System.Windows.Forms.DockStyle.Fill;
             lbl_opcode_title.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             lbl_opcode_title.Location = new System.Drawing.Point(1, 1);
             lbl_opcode_title.Name = "lbl_opcode_title";

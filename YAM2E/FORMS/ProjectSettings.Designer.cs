@@ -31,7 +31,9 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectSettings));
             grp_compiler = new System.Windows.Forms.GroupBox();
+            sep_writeOffsetsSeperator = new Controls.Other.Seperator();
             pnl_offsets = new System.Windows.Forms.Panel();
+            chb_fix_object_loading = new System.Windows.Forms.CheckBox();
             chb_rmv_mt_o_list = new System.Windows.Forms.CheckBox();
             tlt_info = new System.Windows.Forms.ToolTip(components);
             statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -43,7 +45,6 @@
             lbl_specific_rom_path = new System.Windows.Forms.Label();
             grp_project_specific_rom = new System.Windows.Forms.GroupBox();
             pnl_main = new System.Windows.Forms.Panel();
-            sep_writeOffsetsSeperator = new Controls.Other.Seperator();
             grp_compiler.SuspendLayout();
             grp_tileset_usage.SuspendLayout();
             grp_project_specific_rom.SuspendLayout();
@@ -54,24 +55,47 @@
             // 
             grp_compiler.Controls.Add(sep_writeOffsetsSeperator);
             grp_compiler.Controls.Add(pnl_offsets);
+            grp_compiler.Controls.Add(chb_fix_object_loading);
             grp_compiler.Controls.Add(chb_rmv_mt_o_list);
             grp_compiler.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_compiler.Location = new System.Drawing.Point(6, 152);
             grp_compiler.Name = "grp_compiler";
             grp_compiler.Padding = new System.Windows.Forms.Padding(6);
-            grp_compiler.Size = new System.Drawing.Size(423, 495);
+            grp_compiler.Size = new System.Drawing.Size(398, 366);
             grp_compiler.TabIndex = 0;
             grp_compiler.TabStop = false;
             grp_compiler.Text = "Compiling";
+            // 
+            // sep_writeOffsetsSeperator
+            // 
+            sep_writeOffsetsSeperator.BackColor = System.Drawing.SystemColors.ControlDark;
+            sep_writeOffsetsSeperator.Dock = System.Windows.Forms.DockStyle.Top;
+            sep_writeOffsetsSeperator.Location = new System.Drawing.Point(6, 60);
+            sep_writeOffsetsSeperator.MaximumSize = new System.Drawing.Size(0, 1);
+            sep_writeOffsetsSeperator.Name = "sep_writeOffsetsSeperator";
+            sep_writeOffsetsSeperator.Size = new System.Drawing.Size(386, 1);
+            sep_writeOffsetsSeperator.TabIndex = 2;
             // 
             // pnl_offsets
             // 
             pnl_offsets.AutoScroll = true;
             pnl_offsets.Dock = System.Windows.Forms.DockStyle.Fill;
-            pnl_offsets.Location = new System.Drawing.Point(6, 41);
+            pnl_offsets.Location = new System.Drawing.Point(6, 60);
             pnl_offsets.Name = "pnl_offsets";
-            pnl_offsets.Size = new System.Drawing.Size(411, 448);
+            pnl_offsets.Size = new System.Drawing.Size(386, 300);
             pnl_offsets.TabIndex = 1;
+            // 
+            // chb_fix_object_loading
+            // 
+            chb_fix_object_loading.AutoSize = true;
+            chb_fix_object_loading.Dock = System.Windows.Forms.DockStyle.Top;
+            chb_fix_object_loading.Location = new System.Drawing.Point(6, 41);
+            chb_fix_object_loading.Name = "chb_fix_object_loading";
+            chb_fix_object_loading.Size = new System.Drawing.Size(386, 19);
+            chb_fix_object_loading.TabIndex = 3;
+            chb_fix_object_loading.Text = "Fix vertical Object loading";
+            chb_fix_object_loading.UseVisualStyleBackColor = true;
+            chb_fix_object_loading.CheckedChanged += chb_fix_object_loading_CheckedChanged;
             // 
             // chb_rmv_mt_o_list
             // 
@@ -80,7 +104,7 @@
             chb_rmv_mt_o_list.Location = new System.Drawing.Point(6, 22);
             chb_rmv_mt_o_list.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             chb_rmv_mt_o_list.Name = "chb_rmv_mt_o_list";
-            chb_rmv_mt_o_list.Size = new System.Drawing.Size(411, 19);
+            chb_rmv_mt_o_list.Size = new System.Drawing.Size(386, 19);
             chb_rmv_mt_o_list.TabIndex = 0;
             chb_rmv_mt_o_list.Text = "Optimise Object Data";
             tlt_info.SetToolTip(chb_rmv_mt_o_list, "If the object data gets optimised, it is reccommended\r\nto use the HEX tweak that changes vertical object\r\nloading!");
@@ -97,9 +121,9 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 653);
+            statusStrip1.Location = new System.Drawing.Point(0, 524);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(435, 22);
+            statusStrip1.Size = new System.Drawing.Size(410, 22);
             statusStrip1.TabIndex = 1;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -110,7 +134,7 @@
             grp_tileset_usage.Dock = System.Windows.Forms.DockStyle.Top;
             grp_tileset_usage.Location = new System.Drawing.Point(6, 75);
             grp_tileset_usage.Name = "grp_tileset_usage";
-            grp_tileset_usage.Size = new System.Drawing.Size(423, 77);
+            grp_tileset_usage.Size = new System.Drawing.Size(398, 77);
             grp_tileset_usage.TabIndex = 2;
             grp_tileset_usage.TabStop = false;
             grp_tileset_usage.Text = "Tileset Usage";
@@ -144,7 +168,7 @@
             txb_rom_path.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txb_rom_path.Location = new System.Drawing.Point(6, 37);
             txb_rom_path.Name = "txb_rom_path";
-            txb_rom_path.Size = new System.Drawing.Size(382, 23);
+            txb_rom_path.Size = new System.Drawing.Size(357, 23);
             txb_rom_path.TabIndex = 4;
             txb_rom_path.TextChanged += txb_rom_path_TextChanged;
             // 
@@ -152,7 +176,7 @@
             // 
             btn_select_rom.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_select_rom.Image = (System.Drawing.Image)resources.GetObject("btn_select_rom.Image");
-            btn_select_rom.Location = new System.Drawing.Point(394, 37);
+            btn_select_rom.Location = new System.Drawing.Point(369, 37);
             btn_select_rom.Name = "btn_select_rom";
             btn_select_rom.Size = new System.Drawing.Size(23, 23);
             btn_select_rom.TabIndex = 5;
@@ -176,7 +200,7 @@
             grp_project_specific_rom.Dock = System.Windows.Forms.DockStyle.Top;
             grp_project_specific_rom.Location = new System.Drawing.Point(6, 3);
             grp_project_specific_rom.Name = "grp_project_specific_rom";
-            grp_project_specific_rom.Size = new System.Drawing.Size(423, 72);
+            grp_project_specific_rom.Size = new System.Drawing.Size(398, 72);
             grp_project_specific_rom.TabIndex = 6;
             grp_project_specific_rom.TabStop = false;
             grp_project_specific_rom.Text = "Project specific ROM";
@@ -190,24 +214,14 @@
             pnl_main.Location = new System.Drawing.Point(0, 0);
             pnl_main.Name = "pnl_main";
             pnl_main.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            pnl_main.Size = new System.Drawing.Size(435, 653);
+            pnl_main.Size = new System.Drawing.Size(410, 524);
             pnl_main.TabIndex = 7;
-            // 
-            // sep_writeOffsetsSeperator
-            // 
-            sep_writeOffsetsSeperator.BackColor = System.Drawing.SystemColors.ControlDark;
-            sep_writeOffsetsSeperator.Dock = System.Windows.Forms.DockStyle.Top;
-            sep_writeOffsetsSeperator.Location = new System.Drawing.Point(6, 41);
-            sep_writeOffsetsSeperator.MaximumSize = new System.Drawing.Size(0, 1);
-            sep_writeOffsetsSeperator.Name = "sep_writeOffsetsSeperator";
-            sep_writeOffsetsSeperator.Size = new System.Drawing.Size(411, 1);
-            sep_writeOffsetsSeperator.TabIndex = 2;
             // 
             // ProjectSettings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(435, 675);
+            ClientSize = new System.Drawing.Size(410, 546);
             Controls.Add(pnl_main);
             Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -241,5 +255,6 @@
         private System.Windows.Forms.Panel pnl_main;
         private System.Windows.Forms.Panel pnl_offsets;
         private Controls.Other.Seperator sep_writeOffsetsSeperator;
+        private System.Windows.Forms.CheckBox chb_fix_object_loading;
     }
 }

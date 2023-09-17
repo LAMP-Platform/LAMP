@@ -33,7 +33,7 @@ namespace LAMP.Classes
 
                 if (template != "")
                 {
-                    MatchCollection c = Regex.Matches(template, @"[0-9]+");
+                    MatchCollection c = Regex.Matches(Regex.Matches(template, @"\[(.*?)\]")[0].Value, @"[0-9]+");
                     ind = int.Parse(c[0].Value); //get the start nybble
                     if (c.Count > 1) //This means theres a range of nybbles
                     {
