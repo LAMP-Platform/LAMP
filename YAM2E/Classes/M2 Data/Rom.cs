@@ -103,6 +103,9 @@ public class Rom
         Pointer lastAdd = OffsetOf["ObjectDataLists"];
         if ((exceptions & CompilationItem.Objects) == 0)
         {
+            //if object data gets optimized there needs to be a single empty object list at the beginning
+            if (Globals.LoadedProject.OptimizeObjectData) Write8(OffsetOf["ObjectPointerTable"], 0xFF);
+
             for (int i = 0; i < 256 * 7; i++)
             {
                 //Empty object list
@@ -144,7 +147,6 @@ public class Rom
             ReplaceBytes(new Pointer(0xC135), new byte[] { 0xC3, 0xAD, 0x7D, 0x00, 0x00, 0x00, 0x00 });
             ReplaceBytes(new Pointer(0xFDAD), new byte[] { 0xFA, 0x13, 0xC4, 0x4F, 0xFA, 0x15, 0xC4, 0xB9, 0xC8, 0x79, 0xCD, 0xC1, 0x42, 0xCD, 0xCF, 0x42, 0xC3, 0x3C, 0x41 });
         }
-
         #endregion
 
         #region Transitions
@@ -181,11 +183,6 @@ public class Rom
 
         #region Savedata
         if ((exceptions & CompilationItem.Save) == 0) Globals.InitialSaveGame.WriteToROM(this);
-        #endregion
-
-        #region tests
-        //Write some random number in some arbitrary bank that doesnt exist
-        Write8(new Pointer(0x10, 0x4057), 0x69);
         #endregion
 
         SaveROMAsFile(filename);

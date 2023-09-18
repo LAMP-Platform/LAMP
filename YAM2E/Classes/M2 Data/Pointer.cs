@@ -44,4 +44,6 @@ public class Pointer
 
     public static implicit operator int(Pointer a) 
         => a.Offset;
+
+    public static implicit operator Pointer(int a) => new Pointer(a);
 }
