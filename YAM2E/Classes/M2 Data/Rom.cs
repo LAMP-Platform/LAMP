@@ -7,6 +7,7 @@ using System.Runtime.Intrinsics.Arm;
 using System.CodeDom;
 using System.Windows.Forms;
 using System.ComponentModel.Design;
+using System.Linq;
 
 namespace LAMP.Classes;
 
@@ -21,7 +22,7 @@ public class Rom
     /// <summary>
     /// Copy of the <see cref="Data"/>, which can be modified and saved with <see cref="SaveROMAsFile(string)"/>.
     /// </summary>
-    private byte[] DataCopy;
+    private List<byte> DataCopy;
 
     public string Filepath;
 
@@ -31,7 +32,7 @@ public class Rom
     public Rom(string filename)
     {
         Data = File.ReadAllBytes(filename);
-        DataCopy = (byte[])Data.Clone();
+        DataCopy = Data.ToList();
         Filepath = filename;
 
         // check title and code
@@ -50,7 +51,7 @@ public class Rom
     public void Compile(string filename)
     {
         //Fresh copy of the Data
-        DataCopy = (byte[])Data.Clone();
+        DataCopy = Data.ToList();
 
         //This holds the info on items that should not be compiled as per the users choice
         CompilationItem exceptions = Globals.CompilerExclude;
@@ -182,12 +183,17 @@ public class Rom
         if ((exceptions & CompilationItem.Save) == 0) Globals.InitialSaveGame.WriteToROM(this);
         #endregion
 
+        #region tests
+        //Write some random number in some arbitrary bank that doesnt exist
+        Write8(new Pointer(0x10, 0x4057), 0x69);
+        #endregion
+
         SaveROMAsFile(filename);
     }
 
     public void SaveROMAsFile(string filepath)
     {
-        File.WriteAllBytes(filepath, DataCopy);
+        File.WriteAllBytes(filepath, DataCopy.ToArray());
     }
 
     #region read/write
@@ -239,6 +245,7 @@ public class Rom
     /// </summary>
     public void Write8(int offset, byte val)
     {
+        IncreaseROMSize(offset + 1);
         DataCopy[offset] = val;
     }
 
@@ -247,6 +254,7 @@ public class Rom
     /// </summary>
     public void Write16(int offset, ushort val)
     {
+        IncreaseROMSize(offset + 2);
         DataCopy[offset] = (byte)val;
         DataCopy[offset + 1] = (byte)(val >> 8);
     }
@@ -254,25 +262,11 @@ public class Rom
     /// <summary>
     /// Writes the input array at the offset in ROM.
     /// </summary>
-    public void ReplaceBytes(int offset, byte[] values)
+    public void ReplaceBytes(int offset, IEnumerable<byte> values)
     {
-        Buffer.BlockCopy(values, 0, DataCopy, offset, values.Length);
-    }
-
-    /// <summary>
-    /// Writes the input list at the offset in ROM.
-    /// </summary>
-    public void ReplaceBytes(int offset, List<byte> values)
-    {
-        ReplaceBytes(offset, values.ToArray());
-    }
-
-    /// <summary>
-    /// Writes a range of the input array at the offset in ROM.
-    /// </summary>
-    public void ReplaceBytes(int offset, byte[] values, int start, int end)
-    {
-        Buffer.BlockCopy(values, start, DataCopy, offset, end - start);
+        IncreaseROMSize(offset + values.Count() + 1);
+        DataCopy.RemoveRange(offset, values.Count());
+        DataCopy.InsertRange(offset, values);
     }
 
     /// <summary>
@@ -281,7 +275,9 @@ public class Rom
     public void ReplaceBytes(int[] offsets, byte[] values)
     {
         for (int i = 0; i < values.Length; i++)
-            DataCopy[offsets[i]] = values[i];
+        {
+            Write8(offsets[i], values[i]);
+        }
     }
 
     /// <summary>
@@ -299,6 +295,19 @@ public class Rom
         return OffsetOf["Areas"] + area * 0x4000;
     }
     #endregion  
+
+    /// <summary>
+    /// Increases the size of the ROM up to the given pointer
+    /// </summary>
+    /// <param name="pointer"></param>
+    private bool IncreaseROMSize(int pointer)
+    {
+        if (pointer < DataCopy.Count) return false;
+
+        DataCopy.AddRange(Enumerable.Repeat<byte>(0x0, pointer - DataCopy.Count));
+
+        return true;
+    }
 
     ///CONSTANTS used for Reading
     //Areas

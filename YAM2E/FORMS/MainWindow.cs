@@ -1269,7 +1269,6 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        TransitionOpcode test = new TransitionOpcode("Save BG Tileset source [0;1](01), Source Bank [2;3], Source Pointer [4;7], Destination Pointer [8;11], Length [12;15]");
-        TransitionOpcode test2 = new TransitionOpcode("Save BG Tileset source [0](B), Source Bank [2;3], Source Pointer [4;7], Destination Pointer [8;11], Length [12;15]");
+        Editor.ROM.Write16(0x40000, 0x6988);
     }
 }
