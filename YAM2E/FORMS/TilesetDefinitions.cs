@@ -219,9 +219,14 @@ public partial class TilesetDefinitions : Form
         new SolidityEditor(cbb_solidity_table.SelectedIndex, Format.StringToPointer(txb_gfx_offset.Text)).Show();
     }
 
+    private void btn_edit_collision_Click(object sender, EventArgs e)
+    {
+        new CollisionEditor(cbb_collision_table.SelectedIndex, Format.StringToPointer(txb_gfx_offset.Text)).Show();
+    }
+
     private void Toolbar_ToolCommandTriggered(object sender, EventArgs e)
     {
-        switch(Toolbar.TriggeredCommand)
+        switch (Toolbar.TriggeredCommand)
         {
             case (LampToolCommand.ZoomIn):
             case (LampToolCommand.ZoomOut):

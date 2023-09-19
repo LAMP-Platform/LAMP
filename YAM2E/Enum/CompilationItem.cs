@@ -13,5 +13,6 @@ public enum CompilationItem
     Areas = 2,
     Objects = 4,
     Transitions = 8,
-    Save = 16
+    Save = 16,
+    DataChunk = 32,
 }

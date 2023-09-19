@@ -55,7 +55,6 @@
             toolbar = new Controls.Room.ToolBar();
             pnl_apply_button = new System.Windows.Forms.Panel();
             btn_apply = new System.Windows.Forms.Button();
-            btn_save_tileset = new System.Windows.Forms.Button();
             Statusstrip = new System.Windows.Forms.StatusStrip();
             lbl_tile_id = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
@@ -313,7 +312,6 @@
             // pnl_apply_button
             // 
             pnl_apply_button.Controls.Add(btn_apply);
-            pnl_apply_button.Controls.Add(btn_save_tileset);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
             pnl_apply_button.Location = new System.Drawing.Point(3, 184);
             pnl_apply_button.Name = "pnl_apply_button";
@@ -332,19 +330,6 @@
             btn_apply.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             btn_apply.UseVisualStyleBackColor = true;
             btn_apply.Click += btn_apply_Click;
-            // 
-            // btn_save_tileset
-            // 
-            btn_save_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btn_save_tileset.Enabled = false;
-            btn_save_tileset.Image = Properties.Resources.Save;
-            btn_save_tileset.Location = new System.Drawing.Point(294, 3);
-            btn_save_tileset.Name = "btn_save_tileset";
-            btn_save_tileset.Size = new System.Drawing.Size(64, 23);
-            btn_save_tileset.TabIndex = 19;
-            btn_save_tileset.Text = "Apply";
-            btn_save_tileset.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            btn_save_tileset.UseVisualStyleBackColor = true;
             // 
             // Statusstrip
             // 
@@ -408,7 +393,6 @@
         private System.Windows.Forms.TextBox txb_objects;
         private System.Windows.Forms.TextBox txb_projectiles;
         private System.Windows.Forms.Panel pnl_apply_button;
-        private System.Windows.Forms.Button btn_save_tileset;
         private System.Windows.Forms.GroupBox grp_preview;
         private System.Windows.Forms.Button btn_apply;
         private System.Windows.Forms.GroupBox grp_graphics_overlay;

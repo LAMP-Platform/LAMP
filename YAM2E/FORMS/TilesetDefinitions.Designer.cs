@@ -112,7 +112,7 @@
             btn_edit_collision.Size = new System.Drawing.Size(23, 23);
             btn_edit_collision.TabIndex = 23;
             btn_edit_collision.UseVisualStyleBackColor = true;
-            btn_edit_collision.Visible = false;
+            btn_edit_collision.Click += btn_edit_collision_Click;
             // 
             // btn_edit
             // 

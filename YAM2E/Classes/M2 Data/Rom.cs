@@ -185,6 +185,13 @@ public class Rom
         if ((exceptions & CompilationItem.Save) == 0) Globals.InitialSaveGame.WriteToROM(this);
         #endregion
 
+        #region DataChunks
+        if ((exceptions & CompilationItem.DataChunk) == 0)
+        {
+            foreach (DataChunk dc in Globals.DataChunks) dc.Write(this);
+        }
+        #endregion
+
         SaveROMAsFile(filename);
     }
 
@@ -280,10 +287,13 @@ public class Rom
     /// <summary>
     /// Reads amount bytes from the offset in the ROM and writes them to dstArray
     /// </summary>
-    //TODO: Wont work with datachunks
     public void ReadBytes(int offset, byte[] dstArray, int amount)
     {
         Buffer.BlockCopy(Data, offset, dstArray, 0, amount);
+        for (int i = 0; i < amount; i++)
+        {
+            dstArray[i] = Read8(offset + i);
+        }
     }
 
     public static Pointer GetPointerForArea(int area)

@@ -48,6 +48,7 @@
             chb_objects = new System.Windows.Forms.CheckBox();
             chb_areas = new System.Windows.Forms.CheckBox();
             chb_screens = new System.Windows.Forms.CheckBox();
+            chb_data_chunks = new System.Windows.Forms.CheckBox();
             grp_rom_settings.SuspendLayout();
             grp_hex_indicator.SuspendLayout();
             grp_offset_style.SuspendLayout();
@@ -189,7 +190,7 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 370);
+            statusStrip1.Location = new System.Drawing.Point(0, 393);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new System.Drawing.Size(376, 22);
             statusStrip1.TabIndex = 6;
@@ -197,6 +198,7 @@
             // 
             // grp_compilation
             // 
+            grp_compilation.Controls.Add(chb_data_chunks);
             grp_compilation.Controls.Add(chb_saves);
             grp_compilation.Controls.Add(chb_transitions);
             grp_compilation.Controls.Add(chb_objects);
@@ -204,7 +206,7 @@
             grp_compilation.Controls.Add(chb_screens);
             grp_compilation.Location = new System.Drawing.Point(12, 207);
             grp_compilation.Name = "grp_compilation";
-            grp_compilation.Size = new System.Drawing.Size(352, 150);
+            grp_compilation.Size = new System.Drawing.Size(352, 174);
             grp_compilation.TabIndex = 7;
             grp_compilation.TabStop = false;
             grp_compilation.Text = "Compilation";
@@ -279,11 +281,24 @@
             chb_screens.UseVisualStyleBackColor = true;
             chb_screens.CheckedChanged += chb_compilation_itemsCheckedChanged;
             // 
+            // chb_data_chunks
+            // 
+            chb_data_chunks.AutoSize = true;
+            chb_data_chunks.Checked = true;
+            chb_data_chunks.CheckState = System.Windows.Forms.CheckState.Checked;
+            chb_data_chunks.Location = new System.Drawing.Point(6, 147);
+            chb_data_chunks.Name = "chb_data_chunks";
+            chb_data_chunks.Size = new System.Drawing.Size(138, 19);
+            chb_data_chunks.TabIndex = 5;
+            chb_data_chunks.Tag = "DataChunk";
+            chb_data_chunks.Text = "Compile DataChunks";
+            chb_data_chunks.UseVisualStyleBackColor = true;
+            // 
             // ProgramSettings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(376, 392);
+            ClientSize = new System.Drawing.Size(376, 415);
             Controls.Add(grp_compilation);
             Controls.Add(statusStrip1);
             Controls.Add(grp_offset_style);
@@ -329,5 +344,6 @@
         private System.Windows.Forms.CheckBox chb_objects;
         private System.Windows.Forms.CheckBox chb_areas;
         private System.Windows.Forms.CheckBox chb_screens;
+        private System.Windows.Forms.CheckBox chb_data_chunks;
     }
 }

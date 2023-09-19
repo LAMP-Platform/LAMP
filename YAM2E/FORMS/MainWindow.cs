@@ -17,6 +17,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Text.RegularExpressions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.CodeDom;
+using System.ComponentModel.Design;
 
 namespace LAMP;
 
@@ -1269,6 +1270,5 @@ public partial class MainWindow : Form
 
     private void btnTest_Click(object sender, EventArgs e)
     {
-        Editor.ROM.Write16(0x40000, 0x6988);
     }
 }
