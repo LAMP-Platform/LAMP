@@ -123,6 +123,16 @@ namespace LAMP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CollisionEditor {
+            get {
+                object obj = ResourceManager.GetObject("CollisionEditor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Cursor {
             get {
                 object obj = ResourceManager.GetObject("Cursor", resourceCulture);

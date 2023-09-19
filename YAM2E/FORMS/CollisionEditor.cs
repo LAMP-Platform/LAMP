@@ -39,6 +39,12 @@ namespace LAMP.FORMS
             get => currentTileIndex;
             set
             {
+                if (Tileset.BackgroundImage == null)
+                {
+                    grp_collision.Visible = false;
+                    return;
+                }
+                grp_collision.Visible = true;
                 currentTileIndex = value;
 
                 updatingChecks = true;
@@ -66,6 +72,7 @@ namespace LAMP.FORMS
                 Tileset.BackgroundImage = null;
                 toolbar.Enabled = false;
                 Tileset.ResetSelection();
+                grp_collision.Visible = false;
                 return;
             }
             toolbar.Enabled = true;

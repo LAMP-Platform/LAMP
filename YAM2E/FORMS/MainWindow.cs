@@ -1264,6 +1264,9 @@ public partial class MainWindow : Form
         }
         MessageBox.Show("There is no unusedn, non respawning Number left in this Bank!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
+
+    private void btn_open_collision_editor_Click(object sender, EventArgs e)
+        => new CollisionEditor(0).Show();
     #endregion
 
     #endregion
