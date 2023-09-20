@@ -146,7 +146,7 @@ namespace LAMP.FORMS
 
         private void btn_apply_Click(object sender, EventArgs e)
         {
-            Editor.AddDataChunk(new DataChunk(currentOffset, Data));
+            Editor.AddDataChunk(new DataChunk(currentOffset, Data, "CollisionTable"));
         }
     }
 }

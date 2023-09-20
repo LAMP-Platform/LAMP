@@ -46,7 +46,7 @@ public partial class SolidityEditor : Form
         byte projectiles = (byte)Format.StringToInt(txb_projectiles.Text, 0x7F);
 
         //Saving the data
-        DataChunk dc = new DataChunk(currentOffset, new byte[] { samus, objects, projectiles, 0xFF });
+        DataChunk dc = new DataChunk(currentOffset, new byte[] { samus, objects, projectiles, 0xFF }, "Solidity");
         Editor.AddDataChunk(dc);
 
         //Changing txb text

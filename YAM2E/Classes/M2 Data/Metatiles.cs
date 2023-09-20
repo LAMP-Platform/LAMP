@@ -157,5 +157,5 @@ public class Metatiles
     }
 
     public static explicit operator DataChunk(Metatiles meta)
-        => new DataChunk(meta.Offset, meta.Table);
+        => new DataChunk(meta.Offset, meta.Table, "MetatileTable");
 }

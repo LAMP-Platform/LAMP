@@ -40,10 +40,11 @@ public class DataChunk
     /// <summary>
     /// Creates a new DataChunk with the data defined in <paramref name="data"/>.
     /// </summary>
-    public DataChunk(Pointer dataStart, byte[] data)
+    public DataChunk(Pointer dataStart, byte[] data, string dataType = "Data")
     {
         DataStart = dataStart;
         Data = data;
+        DataType = dataType;
 
         DataLength = Data.Length;
     }
@@ -133,7 +134,18 @@ public class DataChunk
         Buffer.BlockCopy(Data, 0, data, a1 - dataStart, DataLength); //DataChunk Data
         Buffer.BlockCopy(SecondChunk.Data, 0, data, b1 - dataStart, SecondChunk.DataLength); //SecondChunk Data
 
-        DataChunk d = new DataChunk(new Pointer(dataStart), data);
+        //Adjust the DataType string
+        //This combines all the unique types from the two chunks
+        var sb = new StringBuilder(DataType);
+        string[] types1 = DataType.Replace(" ", "").Split(",");
+        string[] types2 = SecondChunk.DataType.Replace(" ", "").Split(',');
+        foreach (string type in types2)
+        {
+            if (types1.Contains(type)) continue;
+            else sb.Append($", {type}");
+        }
+
+        DataChunk d = new DataChunk(new Pointer(dataStart), data, sb.ToString());
         return (d);
     }
 

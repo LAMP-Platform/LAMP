@@ -166,5 +166,5 @@ public class GFX
     }
 
     public static explicit operator DataChunk(GFX gfx) 
-        => new DataChunk(gfx.DataOffset, gfx.TileData);
+        => new DataChunk(gfx.DataOffset, gfx.TileData, "Graphics");
 }
