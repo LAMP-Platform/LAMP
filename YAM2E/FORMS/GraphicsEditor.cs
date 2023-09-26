@@ -50,7 +50,8 @@ public partial class GraphicsEditor : Form
     private void construct()
     {
         //Adding the TileViewer for Graphics
-        flw_graphics_view.Controls.Add(GraphicsSet);
+        pnl_graphics_view.Controls.Add(GraphicsSet);
+        GraphicsSet.Location = new Point(3, 3);
         GraphicsSet.MouseDown += new MouseEventHandler(GraphicsSetMouseDown);
         GraphicsSet.MouseMove += new MouseEventHandler(GraphicsSetMouseMove);
         GraphicsSet.MouseUp += new MouseEventHandler(GraphicsSetMouseUp);
@@ -76,7 +77,7 @@ public partial class GraphicsEditor : Form
     #region Fields
     //Data display fields
     private TileViewer GraphicsSet = new TileViewer() { PixelTileSize = 8 };
-    private TileViewer MetatileSet = new TileViewer();
+    private TileViewer MetatileSet = new TileViewer() { PixelTileSize = 8 };
     private GFX LoadedGFX;
     private Metatiles LoadedMeta;
     public int GfxWidth { get; set; } = 16;
@@ -107,6 +108,7 @@ public partial class GraphicsEditor : Form
     private int selectedColor = 3;
 
     //Metatile Editor
+    private int? selectedTileID = null;
     #endregion
 
     #region Methods
@@ -141,6 +143,10 @@ public partial class GraphicsEditor : Form
                 break;
 
             case LampTool.Move:
+
+                //selecting pressed tile
+                selectedTileID = tileNum.Y * GfxWidth + tileNum.X;
+
                 break;
         }
     }
@@ -182,9 +188,62 @@ public partial class GraphicsEditor : Form
     #endregion
 
     #region Metatile View
-    private void MetatileSetMouseDown(object sender, MouseEventArgs e) { }
+    private void MetatileSetMouseDown(object sender, MouseEventArgs e)
+    {
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
+        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
+
+        if (LoadedMeta == null) return;
+
+        switch (toolbar_metatiles.SelectedTool)
+        {
+            case LampTool.Pen:
+
+                //place down tile
+
+                break;
+        }
+    }
+
     private void MetatileSetMouseMove(object sender, MouseEventArgs e) { }
     private void MetatileSetMouseUp(object sender, MouseEventArgs e) { }
+    #endregion
+
+    #region Events
+    private void pnl_color_Click(object sender, EventArgs e)
+    {
+        string number = ((Panel)sender).Tag as string;
+        selectedColor = Convert.ToInt32(number);
+    }
+
+    private void btn_accept_Click(object sender, EventArgs e)
+    {
+        //Checking if width * height will be out of bounds in ROM
+        int width = (int)num_width.Value;
+        int height = (int)num_height.Value;
+
+        if (width * height * 16 + Format.StringToPointer(txb_offset.Text).Offset >= Editor.ROM.Size) //16 because one tile is 16 bytes
+        {
+            MessageBox.Show("End of ROM reached!\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
+        MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
+
+        GfxWidth = width;
+        GfxHeight = height;
+
+        SetTilesets();
+    }
+
+    private void btn_apply_Click(object sender, EventArgs e)
+    {
+        if (LoadedGFX != null) Editor.AddDataChunk((DataChunk)LoadedGFX);
+        if (LoadedMeta != null) Editor.AddDataChunk((DataChunk)LoadedMeta);
+    }
     #endregion
 
     private void SetTilesets()
@@ -219,26 +278,6 @@ public partial class GraphicsEditor : Form
             MetatileSet.BackgroundImage = new Bitmap(1, 1);
         }
     }
-    private void btn_accept_Click(object sender, EventArgs e)
-    {
-        //Checking if width * height will be out of bounds in ROM
-        int width = (int)num_width.Value;
-        int height = (int)num_height.Value;
-
-        if (width * height * 16 + Format.StringToPointer(txb_offset.Text).Offset >= Editor.ROM.Size) //16 because one tile is 16 bytes
-        {
-            MessageBox.Show("End of ROM reached!\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
-        MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
-
-        GfxWidth = width;
-        GfxHeight = height;
-
-        SetTilesets();
-    }
     /// <summary>
     /// Toolbar for the GFX Editor
     /// </summary>
@@ -264,11 +303,6 @@ public partial class GraphicsEditor : Form
                 MetatileSet.Zoom = toolbar_metatiles.ZoomLevel;
                 break;
         }
-    }
-    private void btn_apply_Click(object sender, EventArgs e)
-    {
-        if (LoadedGFX != null) Editor.AddDataChunk((DataChunk)LoadedGFX);
-        if (LoadedMeta != null) Editor.AddDataChunk((DataChunk)LoadedMeta);
     }
 
     #region IMPORT / EXPORT
@@ -331,6 +365,7 @@ public partial class GraphicsEditor : Form
 
         File.WriteAllBytes(path, (byte[])(DataChunk)LoadedMeta);
     }
+
     #endregion
     #endregion
 }

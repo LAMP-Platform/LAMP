@@ -47,7 +47,12 @@
             txb_meta_offset = new System.Windows.Forms.TextBox();
             lbl_meta_offset = new System.Windows.Forms.Label();
             grp_graphics = new System.Windows.Forms.GroupBox();
-            flw_graphics_view = new System.Windows.Forms.FlowLayoutPanel();
+            pnl_graphics_view = new System.Windows.Forms.Panel();
+            pnl_colors = new System.Windows.Forms.Panel();
+            pnl_black = new System.Windows.Forms.Panel();
+            pnl_white = new System.Windows.Forms.Panel();
+            panel_light_gray = new System.Windows.Forms.Panel();
+            pnl_dark_gray = new System.Windows.Forms.Panel();
             toolbar_graphics = new Controls.Room.ToolBar();
             grp_metatiles = new System.Windows.Forms.GroupBox();
             flw_metatile_view = new System.Windows.Forms.FlowLayoutPanel();
@@ -61,6 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
             grp_graphics.SuspendLayout();
+            pnl_colors.SuspendLayout();
             grp_metatiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
@@ -85,7 +91,7 @@
             // spring
             // 
             spring.Name = "spring";
-            spring.Size = new System.Drawing.Size(569, 17);
+            spring.Size = new System.Drawing.Size(600, 17);
             spring.Spring = true;
             // 
             // btn_import
@@ -127,14 +133,14 @@
             // btn_export_gfx
             // 
             btn_export_gfx.Name = "btn_export_gfx";
-            btn_export_gfx.Size = new System.Drawing.Size(180, 22);
+            btn_export_gfx.Size = new System.Drawing.Size(122, 22);
             btn_export_gfx.Text = "Graphics";
             btn_export_gfx.Click += btn_export_gfx_Click;
             // 
             // btn_export_meta
             // 
             btn_export_meta.Name = "btn_export_meta";
-            btn_export_meta.Size = new System.Drawing.Size(180, 22);
+            btn_export_meta.Size = new System.Drawing.Size(122, 22);
             btn_export_meta.Text = "Metatiles";
             btn_export_meta.Click += btn_export_meta_Click;
             // 
@@ -231,7 +237,8 @@
             // 
             // grp_graphics
             // 
-            grp_graphics.Controls.Add(flw_graphics_view);
+            grp_graphics.Controls.Add(pnl_graphics_view);
+            grp_graphics.Controls.Add(pnl_colors);
             grp_graphics.Controls.Add(toolbar_graphics);
             grp_graphics.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_graphics.Location = new System.Drawing.Point(3, 6);
@@ -242,14 +249,74 @@
             grp_graphics.TabStop = false;
             grp_graphics.Text = "Graphics";
             // 
-            // flw_graphics_view
+            // pnl_graphics_view
             // 
-            flw_graphics_view.AutoScroll = true;
-            flw_graphics_view.Dock = System.Windows.Forms.DockStyle.Fill;
-            flw_graphics_view.Location = new System.Drawing.Point(6, 47);
-            flw_graphics_view.Name = "flw_graphics_view";
-            flw_graphics_view.Size = new System.Drawing.Size(532, 204);
-            flw_graphics_view.TabIndex = 0;
+            pnl_graphics_view.AutoScroll = true;
+            pnl_graphics_view.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_graphics_view.Location = new System.Drawing.Point(6, 71);
+            pnl_graphics_view.Name = "pnl_graphics_view";
+            pnl_graphics_view.Size = new System.Drawing.Size(532, 180);
+            pnl_graphics_view.TabIndex = 2;
+            // 
+            // pnl_colors
+            // 
+            pnl_colors.Controls.Add(pnl_black);
+            pnl_colors.Controls.Add(pnl_white);
+            pnl_colors.Controls.Add(panel_light_gray);
+            pnl_colors.Controls.Add(pnl_dark_gray);
+            pnl_colors.Dock = System.Windows.Forms.DockStyle.Top;
+            pnl_colors.Location = new System.Drawing.Point(6, 47);
+            pnl_colors.Name = "pnl_colors";
+            pnl_colors.Size = new System.Drawing.Size(532, 24);
+            pnl_colors.TabIndex = 5;
+            // 
+            // pnl_black
+            // 
+            pnl_black.BackColor = System.Drawing.Color.Black;
+            pnl_black.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_black.Location = new System.Drawing.Point(3, 0);
+            pnl_black.Margin = new System.Windows.Forms.Padding(0);
+            pnl_black.Name = "pnl_black";
+            pnl_black.Size = new System.Drawing.Size(24, 24);
+            pnl_black.TabIndex = 2;
+            pnl_black.Tag = "0";
+            pnl_black.Click += pnl_color_Click;
+            // 
+            // pnl_white
+            // 
+            pnl_white.BackColor = System.Drawing.Color.FromArgb(239, 239, 239);
+            pnl_white.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_white.Location = new System.Drawing.Point(75, 0);
+            pnl_white.Margin = new System.Windows.Forms.Padding(0);
+            pnl_white.Name = "pnl_white";
+            pnl_white.Size = new System.Drawing.Size(24, 24);
+            pnl_white.TabIndex = 3;
+            pnl_white.Tag = "1";
+            pnl_white.Click += pnl_color_Click;
+            // 
+            // panel_light_gray
+            // 
+            panel_light_gray.BackColor = System.Drawing.Color.FromArgb(165, 165, 165);
+            panel_light_gray.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            panel_light_gray.Location = new System.Drawing.Point(51, 0);
+            panel_light_gray.Margin = new System.Windows.Forms.Padding(0);
+            panel_light_gray.Name = "panel_light_gray";
+            panel_light_gray.Size = new System.Drawing.Size(24, 24);
+            panel_light_gray.TabIndex = 4;
+            panel_light_gray.Tag = "2";
+            panel_light_gray.Click += pnl_color_Click;
+            // 
+            // pnl_dark_gray
+            // 
+            pnl_dark_gray.BackColor = System.Drawing.Color.FromArgb(107, 107, 107);
+            pnl_dark_gray.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            pnl_dark_gray.Location = new System.Drawing.Point(27, 0);
+            pnl_dark_gray.Margin = new System.Windows.Forms.Padding(0);
+            pnl_dark_gray.Name = "pnl_dark_gray";
+            pnl_dark_gray.Size = new System.Drawing.Size(24, 24);
+            pnl_dark_gray.TabIndex = 3;
+            pnl_dark_gray.Tag = "3";
+            pnl_dark_gray.Click += pnl_color_Click;
             // 
             // toolbar_graphics
             // 
@@ -381,6 +448,7 @@
             ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_width).EndInit();
             grp_graphics.ResumeLayout(false);
+            pnl_colors.ResumeLayout(false);
             grp_metatiles.ResumeLayout(false);
             pnl_main.Panel1.ResumeLayout(false);
             pnl_main.Panel2.ResumeLayout(false);
@@ -407,7 +475,6 @@
         private System.Windows.Forms.Label lbl_meta_offset;
         private System.Windows.Forms.Label lbl_times;
         private System.Windows.Forms.GroupBox grp_graphics;
-        private System.Windows.Forms.FlowLayoutPanel flw_graphics_view;
         private Controls.Room.ToolBar toolbar_graphics;
         private System.Windows.Forms.GroupBox grp_metatiles;
         private System.Windows.Forms.FlowLayoutPanel flw_metatile_view;
@@ -424,5 +491,11 @@
         private System.Windows.Forms.ToolStripMenuItem btn_import_meta;
         private System.Windows.Forms.ToolStripMenuItem btn_export_gfx;
         private System.Windows.Forms.ToolStripMenuItem btn_export_meta;
+        private System.Windows.Forms.Panel pnl_graphics_view;
+        private System.Windows.Forms.Panel pnl_black;
+        private System.Windows.Forms.Panel pnl_dark_gray;
+        private System.Windows.Forms.Panel pnl_white;
+        private System.Windows.Forms.Panel panel_light_gray;
+        private System.Windows.Forms.Panel pnl_colors;
     }
 }

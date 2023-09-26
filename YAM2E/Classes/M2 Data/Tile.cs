@@ -76,8 +76,8 @@ public struct Tile
         byte firstByte = Data[y * 2]; //Least significant byte
         byte secondByte = Data[y * 2 + 1]; //Most significant byte
 
-        Data[y * 2] = ByteOp.SetBit(firstByte, 7 - x, val & 0b0001);
-        Data[y * 2 + 1] = ByteOp.SetBit(secondByte, 7 - x, val & 0b0010);
+        Data[y * 2] = ByteOp.SetBit(firstByte, 7 - x, (val & 0b0001) == 0 ? 0 : 1);
+        Data[y * 2 + 1] = ByteOp.SetBit(secondByte, 7 - x, (val & 0b0010) == 0 ? 0 : 1);
     }
 
     public void Rotate90()
