@@ -289,7 +289,6 @@ public class Rom
     /// </summary>
     public void ReadBytes(int offset, byte[] dstArray, int amount)
     {
-        Buffer.BlockCopy(Data, offset, dstArray, 0, amount);
         for (int i = 0; i < amount; i++)
         {
             dstArray[i] = Read8(offset + i);

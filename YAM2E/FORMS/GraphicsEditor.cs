@@ -20,6 +20,7 @@ namespace LAMP.FORMS;
 
 public partial class GraphicsEditor : Form
 {
+    #region Constructor
     public GraphicsEditor(Tileset t)
     {
         InitializeComponent();
@@ -27,7 +28,7 @@ public partial class GraphicsEditor : Form
         GraphicsPointer = t.GfxOffset;
         MetatilePointer = Editor.GetMetaPointerFromTable(t.MetatileTable);
         SetTilesets();
-        grp_data_selector.Enabled = false;
+        HideDataControl();
     }
 
     public GraphicsEditor(Pointer Graphics, Pointer Metatiles = null)
@@ -37,7 +38,7 @@ public partial class GraphicsEditor : Form
         GraphicsPointer = Graphics;
         MetatilePointer = Metatiles;
         SetTilesets();
-        grp_data_selector.Enabled = false;
+        HideDataControl();
     }
 
     public GraphicsEditor()
@@ -64,12 +65,24 @@ public partial class GraphicsEditor : Form
         GraphicsSet.Zoom = toolbar_graphics.ZoomLevel;
     }
 
+    private void HideDataControl()
+    {
+        pnl_main.Panel1Collapsed = true;
+        pnl_main.Panel1.Hide();
+        pnl_main.IsSplitterFixed = true;
+    }
+    #endregion
+
     #region Fields
+    //Data display fields
     private TileViewer GraphicsSet = new TileViewer() { PixelTileSize = 8 };
     private TileViewer MetatileSet = new TileViewer();
     private GFX LoadedGFX;
     private Metatiles LoadedMeta;
+    public int GfxWidth { get; set; } = 16;
+    public int GfxHeight { get; set; } = 8;
 
+    //Pointers
     public Pointer GraphicsPointer
     {
         get => graphicsPointer;
@@ -90,12 +103,89 @@ public partial class GraphicsEditor : Form
     }
     private Pointer metatilePointer;
 
-    public int GfxWidth { get; set; } = 16;
-    public int GfxHeight { get; set; } = 8;
+    //Graphics Editor
+    private int selectedColor = 3;
 
+    //Metatile Editor
     #endregion
 
     #region Methods
+
+    #region Graphics View
+    private void GraphicsSetMouseDown(object sender, MouseEventArgs e)
+    {
+        //NOTE to self: if I ever remake LAMP this should probably be moved in the tile display controls and passed as EventArgs.
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
+        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
+
+        if (LoadedGFX == null) return;
+
+        switch (toolbar_graphics.SelectedTool)
+        {
+            case LampTool.Pen:
+
+                //place down pixel
+                LoadedGFX?.SetPixel(pixel, selectedColor);
+                int changedTile = LoadedGFX.GetTileID(pixel.X, pixel.Y);
+
+                //invalidate the the drawn pixel
+                GraphicsSet.Invalidate(RecOp.Multiply(new Rectangle(pixel.X, pixel.Y, 1, 1), GraphicsSet.Zoom));
+
+                //update metatiles
+                if (LoadedMeta == null) return;
+                List<Rectangle> MetaInvalid = LoadedMeta.RedrawTile(changedTile);
+                foreach (Rectangle r in MetaInvalid) MetatileSet.Invalidate(RecOp.Multiply(r, MetatileSet.Zoom));
+
+                break;
+
+            case LampTool.Move:
+                break;
+        }
+    }
+    private void GraphicsSetMouseMove(object sender, MouseEventArgs e)
+    {
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
+        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
+
+        //General Mouse moving Code here:
+
+        //Click moving code here:
+        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
+
+        switch (toolbar_graphics.SelectedTool)
+        {
+            case LampTool.Pen:
+
+                //Place down pixel
+                LoadedGFX?.SetPixel(pixel, selectedColor);
+                int changedTile = LoadedGFX.GetTileID(pixel.X, pixel.Y);
+
+                //invalidate the drawn pixel
+                GraphicsSet.Invalidate(RecOp.Multiply(new Rectangle(pixel.X, pixel.Y, 1, 1), GraphicsSet.Zoom));
+
+                //update metatiles
+                if (LoadedMeta == null) return;
+                List<Rectangle> MetaInvalid = LoadedMeta.RedrawTile(changedTile);
+                foreach (Rectangle r in MetaInvalid) MetatileSet.Invalidate(RecOp.Multiply(r, MetatileSet.Zoom));
+
+                break;
+        }
+    }
+    private void GraphicsSetMouseUp(object sender, MouseEventArgs e)
+    {
+
+    }
+    #endregion
+
+    #region Metatile View
+    private void MetatileSetMouseDown(object sender, MouseEventArgs e) { }
+    private void MetatileSetMouseMove(object sender, MouseEventArgs e) { }
+    private void MetatileSetMouseUp(object sender, MouseEventArgs e) { }
+    #endregion
 
     private void SetTilesets()
     {
@@ -129,67 +219,6 @@ public partial class GraphicsEditor : Form
             MetatileSet.BackgroundImage = new Bitmap(1, 1);
         }
     }
-
-    #region Graphics View
-    private void GraphicsSetMouseDown(object sender, MouseEventArgs e)
-    {
-        //The currently selected pixel
-        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
-        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
-        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
-
-        if (LoadedGFX == null) return;
-
-        switch (toolbar_graphics.SelectedTool)
-        {
-            case LampTool.Pen:
-
-                //place down pixel
-                LoadedGFX.SetPixel(pixel, 3);
-                int changedTile = LoadedGFX.GetTileID(pixel.X, pixel.Y);
-
-                //update metatiles
-                List<Rectangle> MetaInvalid = LoadedMeta.RedrawTile(changedTile);
-
-                //invalidate the the drawn pixel
-                GraphicsSet.Invalidate(RecOp.Multiply(new Rectangle(pixel.X, pixel.Y, 1, 1), GraphicsSet.Zoom));
-                foreach (Rectangle r in MetaInvalid) MetatileSet.Invalidate(RecOp.Multiply(r, MetatileSet.Zoom));
-
-                break;
-
-            case LampTool.Move:
-                break;
-        }
-    }
-    private void GraphicsSetMouseMove(object sender, MouseEventArgs e)
-    {
-        //The currently selected pixel
-        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
-        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
-        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
-
-        //General Mouse moving Code here:
-
-        //Click moving code here:
-        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
-        LoadedGFX?.SetPixel(pixel, 3);
-        GraphicsSet.Invalidate(RecOp.Multiply(new Rectangle(pixel.X, pixel.Y, 1, 1), GraphicsSet.Zoom));
-    }
-    private void GraphicsSetMouseUp(object sender, MouseEventArgs e)
-    {
-
-    }
-    #endregion
-
-    #region Metatile View
-    private void MetatileSetMouseDown(object sender, MouseEventArgs e) { }
-    private void MetatileSetMouseMove(object sender, MouseEventArgs e) { }
-    private void MetatileSetMouseUp(object sender, MouseEventArgs e) { }
-
-    #endregion
-
-    #endregion
-
     private void btn_accept_Click(object sender, EventArgs e)
     {
         //Checking if width * height will be out of bounds in ROM
@@ -210,7 +239,6 @@ public partial class GraphicsEditor : Form
 
         SetTilesets();
     }
-
     /// <summary>
     /// Toolbar for the GFX Editor
     /// </summary>
@@ -224,7 +252,6 @@ public partial class GraphicsEditor : Form
                 break;
         }
     }
-
     /// <summary>
     /// Toolbar for the Metatile Editor
     /// </summary>
@@ -238,7 +265,6 @@ public partial class GraphicsEditor : Form
                 break;
         }
     }
-
     private void btn_apply_Click(object sender, EventArgs e)
     {
         if (LoadedGFX != null) Editor.AddDataChunk((DataChunk)LoadedGFX);
@@ -305,5 +331,6 @@ public partial class GraphicsEditor : Form
 
         File.WriteAllBytes(path, (byte[])(DataChunk)LoadedMeta);
     }
+    #endregion
     #endregion
 }

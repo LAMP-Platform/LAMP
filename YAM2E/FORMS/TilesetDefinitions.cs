@@ -13,6 +13,7 @@ using LAMP.Controls;
 using LAMP.Utilities;
 using System.Windows.Forms.Design;
 using LAMP.Classes.M2_Data;
+using System.Text.Json;
 
 namespace LAMP.FORMS;
 
@@ -62,7 +63,7 @@ public partial class TilesetDefinitions : Form
         Metatiles meta = new Metatiles(gfx, MetatilePointer);
 
         Tileset.BackgroundImage = meta.Draw();
-        grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
+        //grp_tileset_preview.Size = new Size(Tileset.BackgroundImage.Width + 30, Tileset.BackgroundImage.Height + 35);
     }
 
     private void cbb_metatile_table_SelectedIndexChanged(object sender, EventArgs e)
@@ -233,5 +234,46 @@ public partial class TilesetDefinitions : Form
                 Tileset.Zoom = Toolbar.ZoomLevel;
                 break;
         }
+    }
+
+    private void btn_import_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowOpenDialog("LAMP Tileset (*ltf)|*.ltf");
+        if (!File.Exists(path)) return;
+
+        btn_save_tileset_Click(null, null);
+
+        Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
+        ExportTileset r = JsonSerializer.Deserialize<ExportTileset>(File.ReadAllText(path));
+
+        //Writing data chunks for everything
+        txb_tileset_name.Text = r.Name;
+        Editor.AddDataChunk(new DataChunk(t.GfxOffset, r.Graphics));
+        Editor.AddDataChunk(new DataChunk(Editor.GetMetaPointerFromTable(t.MetatileTable), r.MetatileTable));
+        Editor.AddDataChunk(new DataChunk(Editor.GetCollisionPointerFromTable(t.CollisionTable), r.CollisionTable));
+        Editor.AddDataChunk(new DataChunk(Editor.GetSolidityPointerFromTable(t.SolidityTable), r.SolidityTable));
+
+        btn_save_tileset_Click(null, null); //Saving again to update the preview and to update the name
+    }
+
+    private void btn_export_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowSaveDialog("LAMP Tileset (*.ltf)|*.ltf");
+        if (path == string.Empty) return;
+
+        btn_save_tileset_Click(null, null);
+
+        Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
+        ExportTileset r = new ExportTileset();
+
+        //Reading all the Data
+        r.Name = t.Name;
+        Editor.ROM.ReadBytes(t.GfxOffset, r.Graphics, 2048);
+        Editor.ROM.ReadBytes(Editor.GetMetaPointerFromTable(t.MetatileTable), r.MetatileTable, 512);
+        Editor.ROM.ReadBytes(Editor.GetCollisionPointerFromTable(t.CollisionTable), r.CollisionTable, 256);
+        Editor.ROM.ReadBytes(Editor.GetSolidityPointerFromTable(t.SolidityTable), r.CollisionTable, 4);
+
+        //Saving the data
+        Editor.SaveJsonObject(r, path);
     }
 }

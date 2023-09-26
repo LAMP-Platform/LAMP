@@ -621,6 +621,14 @@ public static class Editor
     }
 
     /// <summary>
+    /// Returns the Pointer for the selected Solidity Table
+    /// </summary>
+    public static Pointer GetSolidityPointerFromTable(int index)
+    {
+        return new Pointer(0x8, ROM.SolidityIndices + 4 * index);
+    }
+
+    /// <summary>
     /// Returns an Array of Solidity Indices in the order Samus, Enemy, Projectile
     /// </summary>
     public static byte[] GetSolidityIndices(int index)

@@ -55,7 +55,11 @@
             splt_main = new System.Windows.Forms.SplitContainer();
             pnl_tileset_preview = new System.Windows.Forms.Panel();
             pnl_apply_button = new System.Windows.Forms.Panel();
+            lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
             grp_tileset_data.SuspendLayout();
+            statusStrip1.SuspendLayout();
             grp_tileset_preview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splt_main).BeginInit();
             splt_main.Panel1.SuspendLayout();
@@ -278,6 +282,7 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_spring, btn_import, btn_export });
             statusStrip1.Location = new System.Drawing.Point(0, 221);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new System.Drawing.Size(567, 22);
@@ -358,6 +363,34 @@
             pnl_apply_button.Size = new System.Drawing.Size(268, 29);
             pnl_apply_button.TabIndex = 0;
             // 
+            // lbl_spring
+            // 
+            lbl_spring.Name = "lbl_spring";
+            lbl_spring.Size = new System.Drawing.Size(397, 17);
+            lbl_spring.Spring = true;
+            // 
+            // btn_import
+            // 
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 20);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_import.Click += btn_import_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 20);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_export.Click += btn_export_Click;
+            // 
             // TilesetDefinitions
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -371,6 +404,8 @@
             Text = "Tileset Editor";
             grp_tileset_data.ResumeLayout(false);
             grp_tileset_data.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             grp_tileset_preview.ResumeLayout(false);
             splt_main.Panel1.ResumeLayout(false);
             splt_main.Panel2.ResumeLayout(false);
@@ -410,5 +445,8 @@
         private System.Windows.Forms.Button btn_edit_collision;
         private Controls.Room.ToolBar Toolbar;
         private System.Windows.Forms.Panel pnl_preview;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
+        private System.Windows.Forms.ToolStripDropDownButton btn_import;
+        private System.Windows.Forms.ToolStripDropDownButton btn_export;
     }
 }
