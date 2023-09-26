@@ -30,6 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GraphicsEditor));
             status_strip = new System.Windows.Forms.StatusStrip();
+            spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_import_gfx = new System.Windows.Forms.ToolStripMenuItem();
+            btn_import_meta = new System.Windows.Forms.ToolStripMenuItem();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_export_gfx = new System.Windows.Forms.ToolStripMenuItem();
+            btn_export_meta = new System.Windows.Forms.ToolStripMenuItem();
             grp_data_selector = new System.Windows.Forms.GroupBox();
             num_height = new System.Windows.Forms.NumericUpDown();
             lbl_times = new System.Windows.Forms.Label();
@@ -49,6 +56,7 @@
             pnl_gfx_view = new System.Windows.Forms.SplitContainer();
             pnl_apply = new System.Windows.Forms.Panel();
             btn_apply = new System.Windows.Forms.Button();
+            status_strip.SuspendLayout();
             grp_data_selector.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_width).BeginInit();
@@ -67,11 +75,68 @@
             // 
             // status_strip
             // 
+            status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { spring, btn_import, btn_export });
             status_strip.Location = new System.Drawing.Point(0, 565);
             status_strip.Name = "status_strip";
             status_strip.Size = new System.Drawing.Size(739, 22);
             status_strip.TabIndex = 0;
             status_strip.Text = "statusStrip1";
+            // 
+            // spring
+            // 
+            spring.Name = "spring";
+            spring.Size = new System.Drawing.Size(569, 17);
+            spring.Spring = true;
+            // 
+            // btn_import
+            // 
+            btn_import.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_import_gfx, btn_import_meta });
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 20);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // btn_import_gfx
+            // 
+            btn_import_gfx.Name = "btn_import_gfx";
+            btn_import_gfx.Size = new System.Drawing.Size(122, 22);
+            btn_import_gfx.Text = "Graphics";
+            btn_import_gfx.Click += btn_import_gfx_Click;
+            // 
+            // btn_import_meta
+            // 
+            btn_import_meta.Name = "btn_import_meta";
+            btn_import_meta.Size = new System.Drawing.Size(122, 22);
+            btn_import_meta.Text = "Metatiles";
+            btn_import_meta.Click += btn_import_meta_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_export_gfx, btn_export_meta });
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 20);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // btn_export_gfx
+            // 
+            btn_export_gfx.Name = "btn_export_gfx";
+            btn_export_gfx.Size = new System.Drawing.Size(180, 22);
+            btn_export_gfx.Text = "Graphics";
+            btn_export_gfx.Click += btn_export_gfx_Click;
+            // 
+            // btn_export_meta
+            // 
+            btn_export_meta.Name = "btn_export_meta";
+            btn_export_meta.Size = new System.Drawing.Size(180, 22);
+            btn_export_meta.Text = "Metatiles";
+            btn_export_meta.Click += btn_export_meta_Click;
             // 
             // grp_data_selector
             // 
@@ -309,6 +374,8 @@
             MinimumSize = new System.Drawing.Size(530, 500);
             Name = "GraphicsEditor";
             Text = "Graphics Editor";
+            status_strip.ResumeLayout(false);
+            status_strip.PerformLayout();
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)num_height).EndInit();
@@ -350,5 +417,12 @@
         private System.Windows.Forms.Button btn_accept;
         private System.Windows.Forms.Button btn_apply;
         private System.Windows.Forms.Panel pnl_apply;
+        private System.Windows.Forms.ToolStripStatusLabel spring;
+        private System.Windows.Forms.ToolStripDropDownButton btn_import;
+        private System.Windows.Forms.ToolStripDropDownButton btn_export;
+        private System.Windows.Forms.ToolStripMenuItem btn_import_gfx;
+        private System.Windows.Forms.ToolStripMenuItem btn_import_meta;
+        private System.Windows.Forms.ToolStripMenuItem btn_export_gfx;
+        private System.Windows.Forms.ToolStripMenuItem btn_export_meta;
     }
 }

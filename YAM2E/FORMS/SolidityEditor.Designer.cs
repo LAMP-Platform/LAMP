@@ -57,6 +57,9 @@
             btn_apply = new System.Windows.Forms.Button();
             Statusstrip = new System.Windows.Forms.StatusStrip();
             lbl_tile_id = new System.Windows.Forms.ToolStripStatusLabel();
+            lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
             pnl_main.Panel2.SuspendLayout();
@@ -333,7 +336,7 @@
             // 
             // Statusstrip
             // 
-            Statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tile_id });
+            Statusstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tile_id, lbl_spring, btn_import, btn_export });
             Statusstrip.Location = new System.Drawing.Point(0, 219);
             Statusstrip.Name = "Statusstrip";
             Statusstrip.Size = new System.Drawing.Size(468, 24);
@@ -349,6 +352,34 @@
             lbl_tile_id.Size = new System.Drawing.Size(115, 19);
             lbl_tile_id.Text = "Selected Index:";
             lbl_tile_id.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lbl_spring
+            // 
+            lbl_spring.Name = "lbl_spring";
+            lbl_spring.Size = new System.Drawing.Size(183, 19);
+            lbl_spring.Spring = true;
+            // 
+            // btn_import
+            // 
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 22);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_import.Click += btn_import_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 22);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_export.Click += btn_export_Click;
             // 
             // SolidityEditor
             // 
@@ -409,5 +440,8 @@
         private System.Windows.Forms.ToolStripMenuItem btn_set_object;
         private System.Windows.Forms.ToolStripMenuItem btn_set_projectiles;
         private System.Windows.Forms.ToolStripMenuItem btn_set_all;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
+        private System.Windows.Forms.ToolStripDropDownButton btn_import;
+        private System.Windows.Forms.ToolStripDropDownButton btn_export;
     }
 }

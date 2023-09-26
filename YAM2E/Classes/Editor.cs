@@ -31,24 +31,19 @@ public static class Editor
     public static Rom ROM { get; set; }
 
     /// <summary>
-    /// Pointers to level data banks.
-    /// </summary>
-    public static int[] A_BANKS = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 }; //pointers to level data banks
-
-    /// <summary>
     /// The width of the tile selection in tiles.
     /// </summary>
-    public static int SelectionWidth = 0;
+    public static int SelectionWidth { get; set; } = 0;
 
     /// <summary>
     /// The height of the tile selection in tiles.
     /// </summary>
-    public static int SelectionHeight = 0;
+    public static int SelectionHeight { get; set; } = 0;
 
     /// <summary>
     /// The contents of the tile selection.
     /// </summary>
-    public static byte[] SelectedTiles;
+    public static byte[] SelectedTiles { get; set; }
 
     /// <summary>
     /// Checks a PasteBin (probably not the best solution) for the newest version name and opens a window if not the same.

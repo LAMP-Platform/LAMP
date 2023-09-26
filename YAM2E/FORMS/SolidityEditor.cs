@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Design;
+using System.IO;
 using System.Numerics;
 using System.Windows.Forms;
 
@@ -108,5 +109,42 @@ public partial class SolidityEditor : Form
         txb_samus.Text = Format.IntToString(selectedIndex + 1);
         txb_objects.Text = Format.IntToString(selectedIndex + 1);
         txb_projectiles.Text = Format.IntToString(selectedIndex + 1);
+    }
+
+    private void btn_import_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowOpenDialog("Binary File (*.*)|*.*");
+        if (!File.Exists(path)) return;
+
+        //Reading data from file
+        byte[] data = File.ReadAllBytes(path);
+
+        //Checking if file is valid
+        //Size
+        if (data.Length > 4)
+        {
+            MessageBox.Show("Data is too long", "Error", MessageBoxButtons.OK);
+            return;
+        }
+        if (data.Length < 4)
+        {
+            MessageBox.Show("Data is too short", "Error", MessageBoxButtons.OK);
+            return;
+        }
+
+
+        Editor.AddDataChunk(new DataChunk(currentOffset, data, "Solidity"));
+        cbb_solidity_table_SelectedIndexChanged(null, null);
+    }
+
+    private void btn_export_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+
+        byte samus = (byte)Format.StringToInt(txb_samus.Text, 0x7F);
+        byte objects = (byte)Format.StringToInt(txb_objects.Text, 0x7F);
+        byte projectiles = (byte)Format.StringToInt(txb_projectiles.Text, 0x7F);
+
+        File.WriteAllBytes(path, new byte[] {samus, objects, projectiles, 0xFF});
     }
 }

@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using LAMP.Classes;
 using LAMP.Classes.M2_Data;
 using System.Threading.Tasks;
+using System.CodeDom;
 
 namespace LAMP.Classes.M2_Data;
 
@@ -159,4 +160,6 @@ public class DataChunk
             rom.Write8(DataStart + i, Data[i]);
         }
     }
+
+    public static explicit operator byte[](DataChunk d) => d.Data;
 }

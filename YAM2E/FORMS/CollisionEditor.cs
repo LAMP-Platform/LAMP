@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,6 +148,38 @@ namespace LAMP.FORMS
         private void btn_apply_Click(object sender, EventArgs e)
         {
             Editor.AddDataChunk(new DataChunk(currentOffset, Data, "CollisionTable"));
+        }
+
+        private void btn_import_Click(object sender, EventArgs e)
+        {
+            string path = Editor.ShowOpenDialog("Binary File (*.*)|*.*");
+            if (!File.Exists(path)) return;
+
+            //Reading data from file
+            byte[] data = File.ReadAllBytes(path);
+
+            //Checking if file is valid
+            //Size
+            if (data.Length > 256)
+            {
+                MessageBox.Show("Data is too long", "Error", MessageBoxButtons.OK);
+                return;
+            }
+            if (data.Length < 256)
+            {
+                MessageBox.Show("Data is too short", "Error", MessageBoxButtons.OK);
+                return;
+            }
+
+            Editor.AddDataChunk(new DataChunk(currentOffset, data, "CollisionTable"));
+            cbb_collision_table_SelectedIndexChanged(null, null);
+        }
+
+        private void btn_export_Click(object sender, EventArgs e)
+        {
+            string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+
+            File.WriteAllBytes(path, Data);
         }
     }
 }

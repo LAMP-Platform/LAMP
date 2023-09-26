@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
@@ -243,4 +244,66 @@ public partial class GraphicsEditor : Form
         if (LoadedGFX != null) Editor.AddDataChunk((DataChunk)LoadedGFX);
         if (LoadedMeta != null) Editor.AddDataChunk((DataChunk)LoadedMeta);
     }
+
+    #region IMPORT / EXPORT
+    private void btn_import_gfx_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowOpenDialog("Character Graphics (*.chr)|*.chr|Binary File (*.*)|*.*");
+        if (!File.Exists(path)) return;
+
+        //Reading data from file
+        byte[] data = File.ReadAllBytes(path);
+
+        //Checking if file is valid
+        //Size
+        if (data.Length > 2048)
+        {
+            MessageBox.Show("Graphics data is too long", "Error", MessageBoxButtons.OK);
+            return;
+        }
+
+
+        Editor.AddDataChunk(new DataChunk(GraphicsPointer, data, "Graphics"));
+        SetTilesets();
+    }
+
+    private void btn_import_meta_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowOpenDialog("Binary File (*.*)|*.*");
+        if (!File.Exists(path)) return;
+
+        //Reading data from file
+        byte[] data = File.ReadAllBytes(path);
+
+        //Checking if file is valid
+        //Size
+        if (data.Length > 512)
+        {
+            MessageBox.Show("Metatile data is too long", "Error", MessageBoxButtons.OK);
+            return;
+        }
+        if (data.Length < 512)
+        {
+            MessageBox.Show("Metatile data is too short", "Error", MessageBoxButtons.OK);
+            return;
+        }
+
+        Editor.AddDataChunk(new DataChunk(MetatilePointer, data, "MetatileTable"));
+        SetTilesets();
+    }
+
+    private void btn_export_gfx_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowSaveDialog("Character Graphics (*.chr)|*.chr");
+
+        File.WriteAllBytes(path, (byte[])(DataChunk)LoadedGFX);
+    }
+
+    private void btn_export_meta_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+
+        File.WriteAllBytes(path, (byte[])(DataChunk)LoadedMeta);
+    }
+    #endregion
 }

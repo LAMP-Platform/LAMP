@@ -1,18 +1,20 @@
 # Version B 5.0
 ### Released: XX.XX.2023
 **Changes:**
-* Added Solidity Editor
 * Transition Editor rework
 * Transitions can be named
+* Added error messages if too many objects or transitions exist
 * Tileset Editor redesign
+* Added Graphics & Metatile Editor
+* Added Solidity Editor
+* Added Collision Editor
 * Object settings are now part of the main window
 * Added button to automatically assign object number
 * Project specific base ROMs
 * The project path on the recent files screen can now be opened in explorer
 * Added a value converter tool
 * LAMP now starts in fullscreen if closed in fullscreen
-* All tile displays now highlight tiles that LAMP can not currently display  
-* Added error messages if too many objects or transitions exist
+* Tile displays now highlight tiles that can not currently be displayed by LAMP  
 * Removed redundant data from the project files
  
 **Fixes:** 

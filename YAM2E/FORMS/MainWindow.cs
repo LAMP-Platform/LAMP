@@ -146,6 +146,12 @@ public partial class MainWindow : Form
         #endregion
 
         ResumeLayout();
+
+        //Hide the test button if building for release
+        #if DEBUG
+        return;
+        #endif
+        btnTest.Dispose();
     }
     #endregion
 

@@ -50,6 +50,10 @@
             toolbar = new Controls.Room.ToolBar();
             pnl_apply_button = new System.Windows.Forms.Panel();
             btn_apply = new System.Windows.Forms.Button();
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            lbl_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
             pnl_main.Panel2.SuspendLayout();
@@ -59,6 +63,7 @@
             grp_preview.SuspendLayout();
             pnl_preview.SuspendLayout();
             pnl_apply_button.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // pnl_main
@@ -79,7 +84,7 @@
             pnl_main.Panel2.Controls.Add(grp_preview);
             pnl_main.Panel2.Controls.Add(pnl_apply_button);
             pnl_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 6, 6, 6);
-            pnl_main.Size = new System.Drawing.Size(473, 321);
+            pnl_main.Size = new System.Drawing.Size(473, 319);
             pnl_main.SplitterDistance = 190;
             pnl_main.TabIndex = 0;
             // 
@@ -96,7 +101,7 @@
             grp_collision.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_collision.Location = new System.Drawing.Point(6, 90);
             grp_collision.Name = "grp_collision";
-            grp_collision.Size = new System.Drawing.Size(181, 225);
+            grp_collision.Size = new System.Drawing.Size(181, 223);
             grp_collision.TabIndex = 29;
             grp_collision.TabStop = false;
             grp_collision.Text = "Collision";
@@ -249,7 +254,7 @@
             grp_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_preview.Location = new System.Drawing.Point(3, 6);
             grp_preview.Name = "grp_preview";
-            grp_preview.Size = new System.Drawing.Size(270, 280);
+            grp_preview.Size = new System.Drawing.Size(270, 278);
             grp_preview.TabIndex = 0;
             grp_preview.TabStop = false;
             grp_preview.Text = "Preview";
@@ -260,7 +265,7 @@
             pnl_preview.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_preview.Location = new System.Drawing.Point(3, 43);
             pnl_preview.Name = "pnl_preview";
-            pnl_preview.Size = new System.Drawing.Size(264, 234);
+            pnl_preview.Size = new System.Drawing.Size(264, 232);
             pnl_preview.TabIndex = 1;
             // 
             // Tileset
@@ -298,7 +303,7 @@
             // 
             pnl_apply_button.Controls.Add(btn_apply);
             pnl_apply_button.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_apply_button.Location = new System.Drawing.Point(3, 286);
+            pnl_apply_button.Location = new System.Drawing.Point(3, 284);
             pnl_apply_button.Name = "pnl_apply_button";
             pnl_apply_button.Size = new System.Drawing.Size(270, 29);
             pnl_apply_button.TabIndex = 2;
@@ -316,12 +321,50 @@
             btn_apply.UseVisualStyleBackColor = true;
             btn_apply.Click += btn_apply_Click;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_spring, btn_import, btn_export });
+            statusStrip1.Location = new System.Drawing.Point(0, 319);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new System.Drawing.Size(473, 22);
+            statusStrip1.TabIndex = 1;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // lbl_spring
+            // 
+            lbl_spring.Name = "lbl_spring";
+            lbl_spring.Size = new System.Drawing.Size(303, 17);
+            lbl_spring.Spring = true;
+            // 
+            // btn_import
+            // 
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 20);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_import.Click += btn_import_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 20);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_export.Click += btn_export_Click;
+            // 
             // CollisionEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(473, 321);
+            ClientSize = new System.Drawing.Size(473, 341);
             Controls.Add(pnl_main);
+            Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "CollisionEditor";
             Text = "Collision Editor";
@@ -336,7 +379,10 @@
             grp_preview.ResumeLayout(false);
             pnl_preview.ResumeLayout(false);
             pnl_apply_button.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -362,5 +408,9 @@
         private System.Windows.Forms.CheckBox chb_spike;
         private System.Windows.Forms.CheckBox chb_pass_through_ceiling;
         private System.Windows.Forms.CheckBox chb_pass_through_bottom;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel lbl_spring;
+        private System.Windows.Forms.ToolStripDropDownButton btn_import;
+        private System.Windows.Forms.ToolStripDropDownButton btn_export;
     }
 }
