@@ -234,16 +234,6 @@ public class Rom
         return Encoding.ASCII.GetString(text);
     }
 
-    public string GetRawDataString(int offset, int length)
-    {
-        StringBuilder rawData = new StringBuilder();
-        for (int i = 0; i < length; i++)
-        {
-            rawData.Append(Read8(offset + i).ToString("X2")).Append(' ');
-        }
-        return rawData.ToString();
-    }
-
     /// <summary>
     /// Writes 1 byte at the given offset.
     /// </summary>

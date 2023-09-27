@@ -142,10 +142,11 @@ public partial class GraphicsEditor : Form
 
                 break;
 
-            case LampTool.Move:
+            case LampTool.Select:
 
                 //selecting pressed tile
                 selectedTileID = tileNum.Y * GfxWidth + tileNum.X;
+                GraphicsSet.SelRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
 
                 break;
         }
@@ -159,12 +160,15 @@ public partial class GraphicsEditor : Form
 
         //General Mouse moving Code here:
 
-        //Click moving code here:
-        if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
 
         switch (toolbar_graphics.SelectedTool)
         {
             case LampTool.Pen:
+
+                GraphicsSet.RedRect = new Rectangle(-1, -1, 1, 1);
+
+                //Continue only if clicking
+                if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
 
                 //Place down pixel
                 LoadedGFX?.SetPixel(pixel, selectedColor);
@@ -179,6 +183,12 @@ public partial class GraphicsEditor : Form
                 foreach (Rectangle r in MetaInvalid) MetatileSet.Invalidate(RecOp.Multiply(r, MetatileSet.Zoom));
 
                 break;
+
+            case LampTool.Select:
+
+                GraphicsSet.RedRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+
+                break;
         }
     }
     private void GraphicsSetMouseUp(object sender, MouseEventArgs e)
@@ -191,9 +201,9 @@ public partial class GraphicsEditor : Form
     private void MetatileSetMouseDown(object sender, MouseEventArgs e)
     {
         //The currently selected pixel
-        Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
-        Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
-        Point tile = new Point(tileNum.X * GraphicsSet.PixelTileSize, tileNum.Y * GraphicsSet.PixelTileSize); //The room coordinates of the selected tile
+        Point pixel = new Point(Math.Max(Math.Min(e.X, MetatileSet.BackgroundImage.Width * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom, Math.Max(Math.Min(e.Y, MetatileSet.BackgroundImage.Height * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom);
+        Point tileNum = new Point(pixel.X / MetatileSet.PixelTileSize, pixel.Y / MetatileSet.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * MetatileSet.PixelTileSize, tileNum.Y * MetatileSet.PixelTileSize); //The room coordinates of the selected tile
 
         if (LoadedMeta == null) return;
 
@@ -201,13 +211,38 @@ public partial class GraphicsEditor : Form
         {
             case LampTool.Pen:
 
+                if (selectedTileID == null) return;
+
                 //place down tile
+                if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)selectedTileID);
+                else if (e.Button == MouseButtons.Right) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, 0xFF);
+                else if (e.Button == MouseButtons.Middle) selectedTileID = LoadedMeta.GetMetaTile(tileNum.X, tileNum.Y);
+
+                //invalidate
+                MetatileSet.Invalidate();
 
                 break;
         }
     }
+    private void MetatileSetMouseMove(object sender, MouseEventArgs e) 
+    {
+        //The currently selected pixel
+        Point pixel = new Point(Math.Max(Math.Min(e.X, MetatileSet.BackgroundImage.Width * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom, Math.Max(Math.Min(e.Y, MetatileSet.BackgroundImage.Height * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom);
+        Point tileNum = new Point(pixel.X / MetatileSet.PixelTileSize, pixel.Y / MetatileSet.PixelTileSize); //The number of the tile selected
+        Point tile = new Point(tileNum.X * MetatileSet.PixelTileSize, tileNum.Y * MetatileSet.PixelTileSize); //The room coordinates of the selected tile
 
-    private void MetatileSetMouseMove(object sender, MouseEventArgs e) { }
+        if (LoadedMeta == null) return;
+
+        switch (toolbar_metatiles.SelectedTool)
+        {
+            case LampTool.Pen:
+
+                if (selectedTileID == null) return;
+                else MetatileSet.RedRect = new Rectangle(tileNum.X * MetatileSet.TileSize, tileNum.Y * MetatileSet.TileSize, MetatileSet.TileSize - 1, MetatileSet.TileSize - 1);
+
+                break;
+        }
+    }
     private void MetatileSetMouseUp(object sender, MouseEventArgs e) { }
     #endregion
 
