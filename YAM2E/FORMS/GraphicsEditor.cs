@@ -259,12 +259,6 @@ public partial class GraphicsEditor : Form
         int width = (int)num_width.Value;
         int height = (int)num_height.Value;
 
-        if (width * height * 16 + Format.StringToPointer(txb_offset.Text).Offset >= Editor.ROM.Size) //16 because one tile is 16 bytes
-        {
-            MessageBox.Show("End of ROM reached!\n", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
         GraphicsPointer = txb_offset.Text == "" ? null : Format.StringToPointer(txb_offset.Text);
         MetatilePointer = txb_meta_offset.Text == "" ? null : Format.StringToPointer(txb_meta_offset.Text);
 

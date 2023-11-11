@@ -28,874 +28,857 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestRom));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.grp_testROM = new System.Windows.Forms.GroupBox();
-            this.btn_set_savegame = new System.Windows.Forms.Button();
-            this.btn_test = new System.Windows.Forms.Button();
-            this.grp_position = new System.Windows.Forms.GroupBox();
-            this.grp_cam = new System.Windows.Forms.GroupBox();
-            this.txb_cam_y = new System.Windows.Forms.TextBox();
-            this.txb_cam_x = new System.Windows.Forms.TextBox();
-            this.txb_cam_screen_y = new System.Windows.Forms.TextBox();
-            this.lbl_cam_y = new System.Windows.Forms.Label();
-            this.lbl_cam_x = new System.Windows.Forms.Label();
-            this.txb_cam_screen_x = new System.Windows.Forms.TextBox();
-            this.lbl_cam_screen_x = new System.Windows.Forms.Label();
-            this.lbl_cam_screen_y = new System.Windows.Forms.Label();
-            this.grp_samus = new System.Windows.Forms.GroupBox();
-            this.txb_sam_y = new System.Windows.Forms.TextBox();
-            this.txb_sam_x = new System.Windows.Forms.TextBox();
-            this.txb_sam_screen_y = new System.Windows.Forms.TextBox();
-            this.lbl_samus_y = new System.Windows.Forms.Label();
-            this.lbl_samus_x = new System.Windows.Forms.Label();
-            this.txb_sam_screen_x = new System.Windows.Forms.TextBox();
-            this.lbl_samus_screen_x = new System.Windows.Forms.Label();
-            this.lbl_samus_screen_y = new System.Windows.Forms.Label();
-            this.grp_level_data = new System.Windows.Forms.GroupBox();
-            this.grp_graphics = new System.Windows.Forms.GroupBox();
-            this.tls_tileset_input = new LAMP.Controls.Other.TilesetInput();
-            this.lbl_sprite_graphics = new System.Windows.Forms.Label();
-            this.txb_sprite_graphics = new System.Windows.Forms.TextBox();
-            this.grp_misc = new System.Windows.Forms.GroupBox();
-            this.txb_spike_damage = new System.Windows.Forms.TextBox();
-            this.lbl_spike_damage = new System.Windows.Forms.Label();
-            this.txb_acid_damage = new System.Windows.Forms.TextBox();
-            this.lbl_acid_damage = new System.Windows.Forms.Label();
-            this.lbl_area = new System.Windows.Forms.Label();
-            this.cbb_area_bank = new System.Windows.Forms.ComboBox();
-            this.grp_more_data = new System.Windows.Forms.GroupBox();
-            this.cbb_collision_table = new System.Windows.Forms.ComboBox();
-            this.lbl_collision_table = new System.Windows.Forms.Label();
-            this.cbb_solidity = new System.Windows.Forms.ComboBox();
-            this.lbl_solidity_table = new System.Windows.Forms.Label();
-            this.grp_misc_data = new System.Windows.Forms.GroupBox();
-            this.txb_metroids = new System.Windows.Forms.TextBox();
-            this.txb_missiles = new System.Windows.Forms.TextBox();
-            this.txb_max_missiles = new System.Windows.Forms.TextBox();
-            this.txb_energy = new System.Windows.Forms.TextBox();
-            this.txb_music = new System.Windows.Forms.TextBox();
-            this.lbl_music = new System.Windows.Forms.Label();
-            this.lbl_metroid_count = new System.Windows.Forms.Label();
-            this.lbl_missiles = new System.Windows.Forms.Label();
-            this.lbl_max_missiles = new System.Windows.Forms.Label();
-            this.lbl_energy = new System.Windows.Forms.Label();
-            this.grp_beams = new System.Windows.Forms.GroupBox();
-            this.rdb_power = new System.Windows.Forms.RadioButton();
-            this.rdb_plasma = new System.Windows.Forms.RadioButton();
-            this.rdb_spazer = new System.Windows.Forms.RadioButton();
-            this.rdb_wave = new System.Windows.Forms.RadioButton();
-            this.rdb_ice = new System.Windows.Forms.RadioButton();
-            this.grp_items = new System.Windows.Forms.GroupBox();
-            this.chb_screw = new System.Windows.Forms.CheckBox();
-            this.chb_space_jump = new System.Windows.Forms.CheckBox();
-            this.chb_varia = new System.Windows.Forms.CheckBox();
-            this.chb_spring = new System.Windows.Forms.CheckBox();
-            this.chb_hijump = new System.Windows.Forms.CheckBox();
-            this.chb_spider = new System.Windows.Forms.CheckBox();
-            this.chb_bombs = new System.Windows.Forms.CheckBox();
-            this.tlt_bank_tip = new System.Windows.Forms.ToolTip(this.components);
-            this.panel1.SuspendLayout();
-            this.grp_testROM.SuspendLayout();
-            this.grp_position.SuspendLayout();
-            this.grp_cam.SuspendLayout();
-            this.grp_samus.SuspendLayout();
-            this.grp_level_data.SuspendLayout();
-            this.grp_graphics.SuspendLayout();
-            this.grp_misc.SuspendLayout();
-            this.grp_more_data.SuspendLayout();
-            this.grp_misc_data.SuspendLayout();
-            this.grp_beams.SuspendLayout();
-            this.grp_items.SuspendLayout();
-            this.SuspendLayout();
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            panel1 = new System.Windows.Forms.Panel();
+            grp_testROM = new System.Windows.Forms.GroupBox();
+            btn_set_savegame = new System.Windows.Forms.Button();
+            btn_test = new System.Windows.Forms.Button();
+            grp_position = new System.Windows.Forms.GroupBox();
+            grp_cam = new System.Windows.Forms.GroupBox();
+            txb_cam_y = new System.Windows.Forms.TextBox();
+            txb_cam_x = new System.Windows.Forms.TextBox();
+            txb_cam_screen_y = new System.Windows.Forms.TextBox();
+            lbl_cam_y = new System.Windows.Forms.Label();
+            lbl_cam_x = new System.Windows.Forms.Label();
+            txb_cam_screen_x = new System.Windows.Forms.TextBox();
+            lbl_cam_screen_x = new System.Windows.Forms.Label();
+            lbl_cam_screen_y = new System.Windows.Forms.Label();
+            grp_samus = new System.Windows.Forms.GroupBox();
+            txb_sam_y = new System.Windows.Forms.TextBox();
+            txb_sam_x = new System.Windows.Forms.TextBox();
+            txb_sam_screen_y = new System.Windows.Forms.TextBox();
+            lbl_samus_y = new System.Windows.Forms.Label();
+            lbl_samus_x = new System.Windows.Forms.Label();
+            txb_sam_screen_x = new System.Windows.Forms.TextBox();
+            lbl_samus_screen_x = new System.Windows.Forms.Label();
+            lbl_samus_screen_y = new System.Windows.Forms.Label();
+            grp_level_data = new System.Windows.Forms.GroupBox();
+            grp_graphics = new System.Windows.Forms.GroupBox();
+            tls_tileset_input = new Controls.Other.TilesetInput();
+            lbl_sprite_graphics = new System.Windows.Forms.Label();
+            txb_sprite_graphics = new System.Windows.Forms.TextBox();
+            grp_misc = new System.Windows.Forms.GroupBox();
+            txb_spike_damage = new System.Windows.Forms.TextBox();
+            lbl_spike_damage = new System.Windows.Forms.Label();
+            txb_acid_damage = new System.Windows.Forms.TextBox();
+            lbl_acid_damage = new System.Windows.Forms.Label();
+            lbl_area = new System.Windows.Forms.Label();
+            cbb_area_bank = new System.Windows.Forms.ComboBox();
+            grp_more_data = new System.Windows.Forms.GroupBox();
+            cbb_collision_table = new System.Windows.Forms.ComboBox();
+            lbl_collision_table = new System.Windows.Forms.Label();
+            cbb_solidity = new System.Windows.Forms.ComboBox();
+            lbl_solidity_table = new System.Windows.Forms.Label();
+            grp_misc_data = new System.Windows.Forms.GroupBox();
+            txb_metroids = new System.Windows.Forms.TextBox();
+            txb_missiles = new System.Windows.Forms.TextBox();
+            txb_max_missiles = new System.Windows.Forms.TextBox();
+            txb_energy = new System.Windows.Forms.TextBox();
+            txb_music = new System.Windows.Forms.TextBox();
+            lbl_music = new System.Windows.Forms.Label();
+            lbl_metroid_count = new System.Windows.Forms.Label();
+            lbl_missiles = new System.Windows.Forms.Label();
+            lbl_max_missiles = new System.Windows.Forms.Label();
+            lbl_energy = new System.Windows.Forms.Label();
+            grp_beams = new System.Windows.Forms.GroupBox();
+            rdb_power = new System.Windows.Forms.RadioButton();
+            rdb_plasma = new System.Windows.Forms.RadioButton();
+            rdb_spazer = new System.Windows.Forms.RadioButton();
+            rdb_wave = new System.Windows.Forms.RadioButton();
+            rdb_ice = new System.Windows.Forms.RadioButton();
+            grp_items = new System.Windows.Forms.GroupBox();
+            chb_screw = new System.Windows.Forms.CheckBox();
+            chb_space_jump = new System.Windows.Forms.CheckBox();
+            chb_varia = new System.Windows.Forms.CheckBox();
+            chb_spring = new System.Windows.Forms.CheckBox();
+            chb_hijump = new System.Windows.Forms.CheckBox();
+            chb_spider = new System.Windows.Forms.CheckBox();
+            chb_bombs = new System.Windows.Forms.CheckBox();
+            tlt_bank_tip = new System.Windows.Forms.ToolTip(components);
+            chb_debug_menu = new System.Windows.Forms.CheckBox();
+            panel1.SuspendLayout();
+            grp_testROM.SuspendLayout();
+            grp_position.SuspendLayout();
+            grp_cam.SuspendLayout();
+            grp_samus.SuspendLayout();
+            grp_level_data.SuspendLayout();
+            grp_graphics.SuspendLayout();
+            grp_misc.SuspendLayout();
+            grp_more_data.SuspendLayout();
+            grp_misc_data.SuspendLayout();
+            grp_beams.SuspendLayout();
+            grp_items.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 395);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(661, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            statusStrip1.Location = new System.Drawing.Point(0, 395);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new System.Drawing.Size(661, 22);
+            statusStrip1.TabIndex = 0;
+            statusStrip1.Text = "statusStrip1";
             // 
             // panel1
             // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.grp_testROM);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(661, 395);
-            this.panel1.TabIndex = 7;
+            panel1.AutoScroll = true;
+            panel1.Controls.Add(grp_testROM);
+            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel1.Location = new System.Drawing.Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(661, 395);
+            panel1.TabIndex = 7;
             // 
             // grp_testROM
             // 
-            this.grp_testROM.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.grp_testROM.Controls.Add(this.btn_set_savegame);
-            this.grp_testROM.Controls.Add(this.btn_test);
-            this.grp_testROM.Controls.Add(this.grp_position);
-            this.grp_testROM.Controls.Add(this.grp_level_data);
-            this.grp_testROM.Controls.Add(this.grp_misc_data);
-            this.grp_testROM.Controls.Add(this.grp_beams);
-            this.grp_testROM.Controls.Add(this.grp_items);
-            this.grp_testROM.Location = new System.Drawing.Point(12, 12);
-            this.grp_testROM.Name = "grp_testROM";
-            this.grp_testROM.Size = new System.Drawing.Size(637, 371);
-            this.grp_testROM.TabIndex = 7;
-            this.grp_testROM.TabStop = false;
-            this.grp_testROM.Text = "Test ROM";
+            grp_testROM.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            grp_testROM.Controls.Add(chb_debug_menu);
+            grp_testROM.Controls.Add(btn_set_savegame);
+            grp_testROM.Controls.Add(btn_test);
+            grp_testROM.Controls.Add(grp_position);
+            grp_testROM.Controls.Add(grp_level_data);
+            grp_testROM.Controls.Add(grp_misc_data);
+            grp_testROM.Controls.Add(grp_beams);
+            grp_testROM.Controls.Add(grp_items);
+            grp_testROM.Location = new System.Drawing.Point(12, 12);
+            grp_testROM.Name = "grp_testROM";
+            grp_testROM.Size = new System.Drawing.Size(637, 371);
+            grp_testROM.TabIndex = 7;
+            grp_testROM.TabStop = false;
+            grp_testROM.Text = "Test ROM";
             // 
             // btn_set_savegame
             // 
-            this.btn_set_savegame.Location = new System.Drawing.Point(540, 312);
-            this.btn_set_savegame.Name = "btn_set_savegame";
-            this.btn_set_savegame.Size = new System.Drawing.Size(89, 23);
-            this.btn_set_savegame.TabIndex = 7;
-            this.btn_set_savegame.Text = "Set as start";
-            this.tlt_bank_tip.SetToolTip(this.btn_set_savegame, "This will save the current values onto\r\nthe initial save file!");
-            this.btn_set_savegame.UseVisualStyleBackColor = true;
-            this.btn_set_savegame.Click += new System.EventHandler(this.btn_set_savegame_Click);
+            btn_set_savegame.Location = new System.Drawing.Point(540, 312);
+            btn_set_savegame.Name = "btn_set_savegame";
+            btn_set_savegame.Size = new System.Drawing.Size(89, 23);
+            btn_set_savegame.TabIndex = 7;
+            btn_set_savegame.Text = "Set as start";
+            tlt_bank_tip.SetToolTip(btn_set_savegame, "This will save the current values onto\r\nthe initial save file!");
+            btn_set_savegame.UseVisualStyleBackColor = true;
+            btn_set_savegame.Click += btn_set_savegame_Click;
             // 
             // btn_test
             // 
-            this.btn_test.Location = new System.Drawing.Point(540, 341);
-            this.btn_test.Name = "btn_test";
-            this.btn_test.Size = new System.Drawing.Size(89, 23);
-            this.btn_test.TabIndex = 6;
-            this.btn_test.Text = "Test ROM";
-            this.btn_test.UseVisualStyleBackColor = true;
-            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
+            btn_test.Location = new System.Drawing.Point(540, 341);
+            btn_test.Name = "btn_test";
+            btn_test.Size = new System.Drawing.Size(89, 23);
+            btn_test.TabIndex = 6;
+            btn_test.Text = "Test ROM";
+            btn_test.UseVisualStyleBackColor = true;
+            btn_test.Click += btn_test_Click;
             // 
             // grp_position
             // 
-            this.grp_position.Controls.Add(this.grp_cam);
-            this.grp_position.Controls.Add(this.grp_samus);
-            this.grp_position.Location = new System.Drawing.Point(382, 22);
-            this.grp_position.Name = "grp_position";
-            this.grp_position.Size = new System.Drawing.Size(247, 199);
-            this.grp_position.TabIndex = 0;
-            this.grp_position.TabStop = false;
-            this.grp_position.Text = "Position";
+            grp_position.Controls.Add(grp_cam);
+            grp_position.Controls.Add(grp_samus);
+            grp_position.Location = new System.Drawing.Point(382, 22);
+            grp_position.Name = "grp_position";
+            grp_position.Size = new System.Drawing.Size(247, 199);
+            grp_position.TabIndex = 0;
+            grp_position.TabStop = false;
+            grp_position.Text = "Position";
             // 
             // grp_cam
             // 
-            this.grp_cam.Controls.Add(this.txb_cam_y);
-            this.grp_cam.Controls.Add(this.txb_cam_x);
-            this.grp_cam.Controls.Add(this.txb_cam_screen_y);
-            this.grp_cam.Controls.Add(this.lbl_cam_y);
-            this.grp_cam.Controls.Add(this.lbl_cam_x);
-            this.grp_cam.Controls.Add(this.txb_cam_screen_x);
-            this.grp_cam.Controls.Add(this.lbl_cam_screen_x);
-            this.grp_cam.Controls.Add(this.lbl_cam_screen_y);
-            this.grp_cam.Location = new System.Drawing.Point(126, 22);
-            this.grp_cam.Name = "grp_cam";
-            this.grp_cam.Size = new System.Drawing.Size(114, 171);
-            this.grp_cam.TabIndex = 8;
-            this.grp_cam.TabStop = false;
-            this.grp_cam.Text = "Camera";
+            grp_cam.Controls.Add(txb_cam_y);
+            grp_cam.Controls.Add(txb_cam_x);
+            grp_cam.Controls.Add(txb_cam_screen_y);
+            grp_cam.Controls.Add(lbl_cam_y);
+            grp_cam.Controls.Add(lbl_cam_x);
+            grp_cam.Controls.Add(txb_cam_screen_x);
+            grp_cam.Controls.Add(lbl_cam_screen_x);
+            grp_cam.Controls.Add(lbl_cam_screen_y);
+            grp_cam.Location = new System.Drawing.Point(126, 22);
+            grp_cam.Name = "grp_cam";
+            grp_cam.Size = new System.Drawing.Size(114, 171);
+            grp_cam.TabIndex = 8;
+            grp_cam.TabStop = false;
+            grp_cam.Text = "Camera";
             // 
             // txb_cam_y
             // 
-            this.txb_cam_y.Location = new System.Drawing.Point(67, 112);
-            this.txb_cam_y.Name = "txb_cam_y";
-            this.txb_cam_y.Size = new System.Drawing.Size(40, 23);
-            this.txb_cam_y.TabIndex = 7;
-            this.txb_cam_y.TextChanged += new System.EventHandler(this.txb_cam_y_TextChanged);
-            this.txb_cam_y.Leave += new System.EventHandler(this.txb_leave);
+            txb_cam_y.Location = new System.Drawing.Point(67, 112);
+            txb_cam_y.Name = "txb_cam_y";
+            txb_cam_y.Size = new System.Drawing.Size(40, 23);
+            txb_cam_y.TabIndex = 7;
+            txb_cam_y.TextChanged += txb_cam_y_TextChanged;
+            txb_cam_y.Leave += txb_leave;
             // 
             // txb_cam_x
             // 
-            this.txb_cam_x.Location = new System.Drawing.Point(67, 83);
-            this.txb_cam_x.Name = "txb_cam_x";
-            this.txb_cam_x.Size = new System.Drawing.Size(40, 23);
-            this.txb_cam_x.TabIndex = 6;
-            this.txb_cam_x.TextChanged += new System.EventHandler(this.txb_cam_x_TextChanged);
-            this.txb_cam_x.Leave += new System.EventHandler(this.txb_leave);
+            txb_cam_x.Location = new System.Drawing.Point(67, 83);
+            txb_cam_x.Name = "txb_cam_x";
+            txb_cam_x.Size = new System.Drawing.Size(40, 23);
+            txb_cam_x.TabIndex = 6;
+            txb_cam_x.TextChanged += txb_cam_x_TextChanged;
+            txb_cam_x.Leave += txb_leave;
             // 
             // txb_cam_screen_y
             // 
-            this.txb_cam_screen_y.Location = new System.Drawing.Point(67, 54);
-            this.txb_cam_screen_y.Name = "txb_cam_screen_y";
-            this.txb_cam_screen_y.Size = new System.Drawing.Size(40, 23);
-            this.txb_cam_screen_y.TabIndex = 5;
-            this.txb_cam_screen_y.TextChanged += new System.EventHandler(this.txb_cam_screen_y_TextChanged);
-            this.txb_cam_screen_y.Leave += new System.EventHandler(this.txb_leave);
+            txb_cam_screen_y.Location = new System.Drawing.Point(67, 54);
+            txb_cam_screen_y.Name = "txb_cam_screen_y";
+            txb_cam_screen_y.Size = new System.Drawing.Size(40, 23);
+            txb_cam_screen_y.TabIndex = 5;
+            txb_cam_screen_y.TextChanged += txb_cam_screen_y_TextChanged;
+            txb_cam_screen_y.Leave += txb_leave;
             // 
             // lbl_cam_y
             // 
-            this.lbl_cam_y.AutoSize = true;
-            this.lbl_cam_y.Location = new System.Drawing.Point(6, 115);
-            this.lbl_cam_y.Name = "lbl_cam_y";
-            this.lbl_cam_y.Size = new System.Drawing.Size(17, 15);
-            this.lbl_cam_y.TabIndex = 3;
-            this.lbl_cam_y.Text = "Y:";
+            lbl_cam_y.AutoSize = true;
+            lbl_cam_y.Location = new System.Drawing.Point(6, 115);
+            lbl_cam_y.Name = "lbl_cam_y";
+            lbl_cam_y.Size = new System.Drawing.Size(17, 15);
+            lbl_cam_y.TabIndex = 3;
+            lbl_cam_y.Text = "Y:";
             // 
             // lbl_cam_x
             // 
-            this.lbl_cam_x.AutoSize = true;
-            this.lbl_cam_x.Location = new System.Drawing.Point(6, 86);
-            this.lbl_cam_x.Name = "lbl_cam_x";
-            this.lbl_cam_x.Size = new System.Drawing.Size(17, 15);
-            this.lbl_cam_x.TabIndex = 2;
-            this.lbl_cam_x.Text = "X:";
+            lbl_cam_x.AutoSize = true;
+            lbl_cam_x.Location = new System.Drawing.Point(6, 86);
+            lbl_cam_x.Name = "lbl_cam_x";
+            lbl_cam_x.Size = new System.Drawing.Size(17, 15);
+            lbl_cam_x.TabIndex = 2;
+            lbl_cam_x.Text = "X:";
             // 
             // txb_cam_screen_x
             // 
-            this.txb_cam_screen_x.Location = new System.Drawing.Point(67, 25);
-            this.txb_cam_screen_x.Name = "txb_cam_screen_x";
-            this.txb_cam_screen_x.Size = new System.Drawing.Size(40, 23);
-            this.txb_cam_screen_x.TabIndex = 4;
-            this.txb_cam_screen_x.TextChanged += new System.EventHandler(this.txb_cam_screen_x_TextChanged);
-            this.txb_cam_screen_x.Leave += new System.EventHandler(this.txb_leave);
+            txb_cam_screen_x.Location = new System.Drawing.Point(67, 25);
+            txb_cam_screen_x.Name = "txb_cam_screen_x";
+            txb_cam_screen_x.Size = new System.Drawing.Size(40, 23);
+            txb_cam_screen_x.TabIndex = 4;
+            txb_cam_screen_x.TextChanged += txb_cam_screen_x_TextChanged;
+            txb_cam_screen_x.Leave += txb_leave;
             // 
             // lbl_cam_screen_x
             // 
-            this.lbl_cam_screen_x.AutoSize = true;
-            this.lbl_cam_screen_x.Location = new System.Drawing.Point(6, 28);
-            this.lbl_cam_screen_x.Name = "lbl_cam_screen_x";
-            this.lbl_cam_screen_x.Size = new System.Drawing.Size(55, 15);
-            this.lbl_cam_screen_x.TabIndex = 0;
-            this.lbl_cam_screen_x.Text = "Screen X:";
+            lbl_cam_screen_x.AutoSize = true;
+            lbl_cam_screen_x.Location = new System.Drawing.Point(6, 28);
+            lbl_cam_screen_x.Name = "lbl_cam_screen_x";
+            lbl_cam_screen_x.Size = new System.Drawing.Size(55, 15);
+            lbl_cam_screen_x.TabIndex = 0;
+            lbl_cam_screen_x.Text = "Screen X:";
             // 
             // lbl_cam_screen_y
             // 
-            this.lbl_cam_screen_y.AutoSize = true;
-            this.lbl_cam_screen_y.Location = new System.Drawing.Point(6, 57);
-            this.lbl_cam_screen_y.Name = "lbl_cam_screen_y";
-            this.lbl_cam_screen_y.Size = new System.Drawing.Size(55, 15);
-            this.lbl_cam_screen_y.TabIndex = 1;
-            this.lbl_cam_screen_y.Text = "Screen Y:";
+            lbl_cam_screen_y.AutoSize = true;
+            lbl_cam_screen_y.Location = new System.Drawing.Point(6, 57);
+            lbl_cam_screen_y.Name = "lbl_cam_screen_y";
+            lbl_cam_screen_y.Size = new System.Drawing.Size(55, 15);
+            lbl_cam_screen_y.TabIndex = 1;
+            lbl_cam_screen_y.Text = "Screen Y:";
             // 
             // grp_samus
             // 
-            this.grp_samus.Controls.Add(this.txb_sam_y);
-            this.grp_samus.Controls.Add(this.txb_sam_x);
-            this.grp_samus.Controls.Add(this.txb_sam_screen_y);
-            this.grp_samus.Controls.Add(this.lbl_samus_y);
-            this.grp_samus.Controls.Add(this.lbl_samus_x);
-            this.grp_samus.Controls.Add(this.txb_sam_screen_x);
-            this.grp_samus.Controls.Add(this.lbl_samus_screen_x);
-            this.grp_samus.Controls.Add(this.lbl_samus_screen_y);
-            this.grp_samus.Location = new System.Drawing.Point(6, 22);
-            this.grp_samus.Name = "grp_samus";
-            this.grp_samus.Size = new System.Drawing.Size(114, 169);
-            this.grp_samus.TabIndex = 0;
-            this.grp_samus.TabStop = false;
-            this.grp_samus.Text = "Samus";
+            grp_samus.Controls.Add(txb_sam_y);
+            grp_samus.Controls.Add(txb_sam_x);
+            grp_samus.Controls.Add(txb_sam_screen_y);
+            grp_samus.Controls.Add(lbl_samus_y);
+            grp_samus.Controls.Add(lbl_samus_x);
+            grp_samus.Controls.Add(txb_sam_screen_x);
+            grp_samus.Controls.Add(lbl_samus_screen_x);
+            grp_samus.Controls.Add(lbl_samus_screen_y);
+            grp_samus.Location = new System.Drawing.Point(6, 22);
+            grp_samus.Name = "grp_samus";
+            grp_samus.Size = new System.Drawing.Size(114, 169);
+            grp_samus.TabIndex = 0;
+            grp_samus.TabStop = false;
+            grp_samus.Text = "Samus";
             // 
             // txb_sam_y
             // 
-            this.txb_sam_y.Location = new System.Drawing.Point(67, 112);
-            this.txb_sam_y.Name = "txb_sam_y";
-            this.txb_sam_y.Size = new System.Drawing.Size(40, 23);
-            this.txb_sam_y.TabIndex = 7;
-            this.txb_sam_y.TextChanged += new System.EventHandler(this.txb_sam_y_TextChanged);
-            this.txb_sam_y.Leave += new System.EventHandler(this.txb_leave);
+            txb_sam_y.Location = new System.Drawing.Point(67, 112);
+            txb_sam_y.Name = "txb_sam_y";
+            txb_sam_y.Size = new System.Drawing.Size(40, 23);
+            txb_sam_y.TabIndex = 7;
+            txb_sam_y.TextChanged += txb_sam_y_TextChanged;
+            txb_sam_y.Leave += txb_leave;
             // 
             // txb_sam_x
             // 
-            this.txb_sam_x.Location = new System.Drawing.Point(67, 83);
-            this.txb_sam_x.Name = "txb_sam_x";
-            this.txb_sam_x.Size = new System.Drawing.Size(40, 23);
-            this.txb_sam_x.TabIndex = 6;
-            this.txb_sam_x.TextChanged += new System.EventHandler(this.txb_sam_x_TextChanged);
-            this.txb_sam_x.Leave += new System.EventHandler(this.txb_leave);
+            txb_sam_x.Location = new System.Drawing.Point(67, 83);
+            txb_sam_x.Name = "txb_sam_x";
+            txb_sam_x.Size = new System.Drawing.Size(40, 23);
+            txb_sam_x.TabIndex = 6;
+            txb_sam_x.TextChanged += txb_sam_x_TextChanged;
+            txb_sam_x.Leave += txb_leave;
             // 
             // txb_sam_screen_y
             // 
-            this.txb_sam_screen_y.Location = new System.Drawing.Point(67, 54);
-            this.txb_sam_screen_y.Name = "txb_sam_screen_y";
-            this.txb_sam_screen_y.Size = new System.Drawing.Size(40, 23);
-            this.txb_sam_screen_y.TabIndex = 5;
-            this.txb_sam_screen_y.TextChanged += new System.EventHandler(this.txb_sam_screen_y_TextChanged);
-            this.txb_sam_screen_y.Leave += new System.EventHandler(this.txb_leave);
+            txb_sam_screen_y.Location = new System.Drawing.Point(67, 54);
+            txb_sam_screen_y.Name = "txb_sam_screen_y";
+            txb_sam_screen_y.Size = new System.Drawing.Size(40, 23);
+            txb_sam_screen_y.TabIndex = 5;
+            txb_sam_screen_y.TextChanged += txb_sam_screen_y_TextChanged;
+            txb_sam_screen_y.Leave += txb_leave;
             // 
             // lbl_samus_y
             // 
-            this.lbl_samus_y.AutoSize = true;
-            this.lbl_samus_y.Location = new System.Drawing.Point(6, 115);
-            this.lbl_samus_y.Name = "lbl_samus_y";
-            this.lbl_samus_y.Size = new System.Drawing.Size(17, 15);
-            this.lbl_samus_y.TabIndex = 3;
-            this.lbl_samus_y.Text = "Y:";
+            lbl_samus_y.AutoSize = true;
+            lbl_samus_y.Location = new System.Drawing.Point(6, 115);
+            lbl_samus_y.Name = "lbl_samus_y";
+            lbl_samus_y.Size = new System.Drawing.Size(17, 15);
+            lbl_samus_y.TabIndex = 3;
+            lbl_samus_y.Text = "Y:";
             // 
             // lbl_samus_x
             // 
-            this.lbl_samus_x.AutoSize = true;
-            this.lbl_samus_x.Location = new System.Drawing.Point(6, 86);
-            this.lbl_samus_x.Name = "lbl_samus_x";
-            this.lbl_samus_x.Size = new System.Drawing.Size(17, 15);
-            this.lbl_samus_x.TabIndex = 2;
-            this.lbl_samus_x.Text = "X:";
+            lbl_samus_x.AutoSize = true;
+            lbl_samus_x.Location = new System.Drawing.Point(6, 86);
+            lbl_samus_x.Name = "lbl_samus_x";
+            lbl_samus_x.Size = new System.Drawing.Size(17, 15);
+            lbl_samus_x.TabIndex = 2;
+            lbl_samus_x.Text = "X:";
             // 
             // txb_sam_screen_x
             // 
-            this.txb_sam_screen_x.Location = new System.Drawing.Point(67, 25);
-            this.txb_sam_screen_x.Name = "txb_sam_screen_x";
-            this.txb_sam_screen_x.Size = new System.Drawing.Size(40, 23);
-            this.txb_sam_screen_x.TabIndex = 4;
-            this.txb_sam_screen_x.TextChanged += new System.EventHandler(this.txb_sam_screen_x_TextChanged);
-            this.txb_sam_screen_x.Leave += new System.EventHandler(this.txb_leave);
+            txb_sam_screen_x.Location = new System.Drawing.Point(67, 25);
+            txb_sam_screen_x.Name = "txb_sam_screen_x";
+            txb_sam_screen_x.Size = new System.Drawing.Size(40, 23);
+            txb_sam_screen_x.TabIndex = 4;
+            txb_sam_screen_x.TextChanged += txb_sam_screen_x_TextChanged;
+            txb_sam_screen_x.Leave += txb_leave;
             // 
             // lbl_samus_screen_x
             // 
-            this.lbl_samus_screen_x.AutoSize = true;
-            this.lbl_samus_screen_x.Location = new System.Drawing.Point(6, 28);
-            this.lbl_samus_screen_x.Name = "lbl_samus_screen_x";
-            this.lbl_samus_screen_x.Size = new System.Drawing.Size(55, 15);
-            this.lbl_samus_screen_x.TabIndex = 0;
-            this.lbl_samus_screen_x.Text = "Screen X:";
+            lbl_samus_screen_x.AutoSize = true;
+            lbl_samus_screen_x.Location = new System.Drawing.Point(6, 28);
+            lbl_samus_screen_x.Name = "lbl_samus_screen_x";
+            lbl_samus_screen_x.Size = new System.Drawing.Size(55, 15);
+            lbl_samus_screen_x.TabIndex = 0;
+            lbl_samus_screen_x.Text = "Screen X:";
             // 
             // lbl_samus_screen_y
             // 
-            this.lbl_samus_screen_y.AutoSize = true;
-            this.lbl_samus_screen_y.Location = new System.Drawing.Point(6, 57);
-            this.lbl_samus_screen_y.Name = "lbl_samus_screen_y";
-            this.lbl_samus_screen_y.Size = new System.Drawing.Size(55, 15);
-            this.lbl_samus_screen_y.TabIndex = 1;
-            this.lbl_samus_screen_y.Text = "Screen Y:";
+            lbl_samus_screen_y.AutoSize = true;
+            lbl_samus_screen_y.Location = new System.Drawing.Point(6, 57);
+            lbl_samus_screen_y.Name = "lbl_samus_screen_y";
+            lbl_samus_screen_y.Size = new System.Drawing.Size(55, 15);
+            lbl_samus_screen_y.TabIndex = 1;
+            lbl_samus_screen_y.Text = "Screen Y:";
             // 
             // grp_level_data
             // 
-            this.grp_level_data.Controls.Add(this.grp_graphics);
-            this.grp_level_data.Controls.Add(this.grp_misc);
-            this.grp_level_data.Controls.Add(this.grp_more_data);
-            this.grp_level_data.Location = new System.Drawing.Point(6, 227);
-            this.grp_level_data.Name = "grp_level_data";
-            this.grp_level_data.Size = new System.Drawing.Size(528, 137);
-            this.grp_level_data.TabIndex = 5;
-            this.grp_level_data.TabStop = false;
-            this.grp_level_data.Text = "Advanced";
+            grp_level_data.Controls.Add(grp_graphics);
+            grp_level_data.Controls.Add(grp_misc);
+            grp_level_data.Controls.Add(grp_more_data);
+            grp_level_data.Location = new System.Drawing.Point(6, 227);
+            grp_level_data.Name = "grp_level_data";
+            grp_level_data.Size = new System.Drawing.Size(528, 137);
+            grp_level_data.TabIndex = 5;
+            grp_level_data.TabStop = false;
+            grp_level_data.Text = "Advanced";
             // 
             // grp_graphics
             // 
-            this.grp_graphics.Controls.Add(this.tls_tileset_input);
-            this.grp_graphics.Controls.Add(this.lbl_sprite_graphics);
-            this.grp_graphics.Controls.Add(this.txb_sprite_graphics);
-            this.grp_graphics.Location = new System.Drawing.Point(6, 22);
-            this.grp_graphics.Name = "grp_graphics";
-            this.grp_graphics.Size = new System.Drawing.Size(198, 109);
-            this.grp_graphics.TabIndex = 9;
-            this.grp_graphics.TabStop = false;
-            this.grp_graphics.Text = "Graphics";
+            grp_graphics.Controls.Add(tls_tileset_input);
+            grp_graphics.Controls.Add(lbl_sprite_graphics);
+            grp_graphics.Controls.Add(txb_sprite_graphics);
+            grp_graphics.Location = new System.Drawing.Point(6, 22);
+            grp_graphics.Name = "grp_graphics";
+            grp_graphics.Size = new System.Drawing.Size(198, 109);
+            grp_graphics.TabIndex = 9;
+            grp_graphics.TabStop = false;
+            grp_graphics.Text = "Graphics";
             // 
             // tls_tileset_input
             // 
-            this.tls_tileset_input.AutoSize = true;
-            this.tls_tileset_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tls_tileset_input.BackColor = System.Drawing.SystemColors.Control;
-            this.tls_tileset_input.ForceOffsets = false;
-            this.tls_tileset_input.GraphicsOffset = null;
-            this.tls_tileset_input.Location = new System.Drawing.Point(6, 50);
-            this.tls_tileset_input.Margin = new System.Windows.Forms.Padding(0);
-            this.tls_tileset_input.MetatilePointer = null;
-            this.tls_tileset_input.MetatileTable = 0;
-            this.tls_tileset_input.Name = "tls_tileset_input";
-            this.tls_tileset_input.onDataChanged = null;
-            this.tls_tileset_input.SelectedTileset = null;
-            this.tls_tileset_input.Size = new System.Drawing.Size(186, 52);
-            this.tls_tileset_input.TabIndex = 4;
-            this.tls_tileset_input.DataChanged += new System.EventHandler(this.tls_tileset_input_DataChanged);
+            tls_tileset_input.AutoSize = true;
+            tls_tileset_input.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tls_tileset_input.BackColor = System.Drawing.SystemColors.Control;
+            tls_tileset_input.ForceOffsets = false;
+            tls_tileset_input.GraphicsOffset = null;
+            tls_tileset_input.Location = new System.Drawing.Point(6, 50);
+            tls_tileset_input.Margin = new System.Windows.Forms.Padding(0);
+            tls_tileset_input.MetatilePointer = null;
+            tls_tileset_input.MetatileTable = 0;
+            tls_tileset_input.Name = "tls_tileset_input";
+            tls_tileset_input.onDataChanged = null;
+            tls_tileset_input.SelectedTileset = null;
+            tls_tileset_input.Size = new System.Drawing.Size(186, 52);
+            tls_tileset_input.TabIndex = 4;
+            tls_tileset_input.DataChanged += tls_tileset_input_DataChanged;
             // 
             // lbl_sprite_graphics
             // 
-            this.lbl_sprite_graphics.AutoSize = true;
-            this.lbl_sprite_graphics.Location = new System.Drawing.Point(6, 24);
-            this.lbl_sprite_graphics.Name = "lbl_sprite_graphics";
-            this.lbl_sprite_graphics.Size = new System.Drawing.Size(124, 15);
-            this.lbl_sprite_graphics.TabIndex = 0;
-            this.lbl_sprite_graphics.Text = "Sprite Graphics Offset:";
-            this.tlt_bank_tip.SetToolTip(this.lbl_sprite_graphics, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
-        "ffset in Bank 6!");
+            lbl_sprite_graphics.AutoSize = true;
+            lbl_sprite_graphics.Location = new System.Drawing.Point(6, 24);
+            lbl_sprite_graphics.Name = "lbl_sprite_graphics";
+            lbl_sprite_graphics.Size = new System.Drawing.Size(124, 15);
+            lbl_sprite_graphics.TabIndex = 0;
+            lbl_sprite_graphics.Text = "Sprite Graphics Offset:";
+            tlt_bank_tip.SetToolTip(lbl_sprite_graphics, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative offset in Bank 6!");
             // 
             // txb_sprite_graphics
             // 
-            this.txb_sprite_graphics.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txb_sprite_graphics.Location = new System.Drawing.Point(137, 21);
-            this.txb_sprite_graphics.Name = "txb_sprite_graphics";
-            this.txb_sprite_graphics.Size = new System.Drawing.Size(55, 23);
-            this.txb_sprite_graphics.TabIndex = 1;
-            this.txb_sprite_graphics.Text = "0x7420";
-            this.tlt_bank_tip.SetToolTip(this.txb_sprite_graphics, "Sprite Graphics will always be loaded from Bank 8!\r\n");
-            this.txb_sprite_graphics.TextChanged += new System.EventHandler(this.txb_sprite_graphics_TextChanged);
-            this.txb_sprite_graphics.Leave += new System.EventHandler(this.txb_leave);
+            txb_sprite_graphics.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            txb_sprite_graphics.Location = new System.Drawing.Point(137, 21);
+            txb_sprite_graphics.Name = "txb_sprite_graphics";
+            txb_sprite_graphics.Size = new System.Drawing.Size(55, 23);
+            txb_sprite_graphics.TabIndex = 1;
+            txb_sprite_graphics.Text = "0x7420";
+            tlt_bank_tip.SetToolTip(txb_sprite_graphics, "Sprite Graphics will always be loaded from Bank 8!\r\n");
+            txb_sprite_graphics.TextChanged += txb_sprite_graphics_TextChanged;
+            txb_sprite_graphics.Leave += txb_leave;
             // 
             // grp_misc
             // 
-            this.grp_misc.Controls.Add(this.txb_spike_damage);
-            this.grp_misc.Controls.Add(this.lbl_spike_damage);
-            this.grp_misc.Controls.Add(this.txb_acid_damage);
-            this.grp_misc.Controls.Add(this.lbl_acid_damage);
-            this.grp_misc.Controls.Add(this.lbl_area);
-            this.grp_misc.Controls.Add(this.cbb_area_bank);
-            this.grp_misc.Location = new System.Drawing.Point(375, 22);
-            this.grp_misc.Name = "grp_misc";
-            this.grp_misc.Size = new System.Drawing.Size(147, 109);
-            this.grp_misc.TabIndex = 8;
-            this.grp_misc.TabStop = false;
-            this.grp_misc.Text = "Miscellaneous";
+            grp_misc.Controls.Add(txb_spike_damage);
+            grp_misc.Controls.Add(lbl_spike_damage);
+            grp_misc.Controls.Add(txb_acid_damage);
+            grp_misc.Controls.Add(lbl_acid_damage);
+            grp_misc.Controls.Add(lbl_area);
+            grp_misc.Controls.Add(cbb_area_bank);
+            grp_misc.Location = new System.Drawing.Point(375, 22);
+            grp_misc.Name = "grp_misc";
+            grp_misc.Size = new System.Drawing.Size(147, 109);
+            grp_misc.TabIndex = 8;
+            grp_misc.TabStop = false;
+            grp_misc.Text = "Miscellaneous";
             // 
             // txb_spike_damage
             // 
-            this.txb_spike_damage.Location = new System.Drawing.Point(98, 74);
-            this.txb_spike_damage.Name = "txb_spike_damage";
-            this.txb_spike_damage.Size = new System.Drawing.Size(42, 23);
-            this.txb_spike_damage.TabIndex = 10;
-            this.txb_spike_damage.TextChanged += new System.EventHandler(this.txb_spike_damage_TextChanged);
-            this.txb_spike_damage.Leave += new System.EventHandler(this.txb_leave);
+            txb_spike_damage.Location = new System.Drawing.Point(98, 74);
+            txb_spike_damage.Name = "txb_spike_damage";
+            txb_spike_damage.Size = new System.Drawing.Size(42, 23);
+            txb_spike_damage.TabIndex = 10;
+            txb_spike_damage.TextChanged += txb_spike_damage_TextChanged;
+            txb_spike_damage.Leave += txb_leave;
             // 
             // lbl_spike_damage
             // 
-            this.lbl_spike_damage.AutoSize = true;
-            this.lbl_spike_damage.Location = new System.Drawing.Point(7, 77);
-            this.lbl_spike_damage.Name = "lbl_spike_damage";
-            this.lbl_spike_damage.Size = new System.Drawing.Size(84, 15);
-            this.lbl_spike_damage.TabIndex = 9;
-            this.lbl_spike_damage.Text = "Spike damage:";
+            lbl_spike_damage.AutoSize = true;
+            lbl_spike_damage.Location = new System.Drawing.Point(7, 77);
+            lbl_spike_damage.Name = "lbl_spike_damage";
+            lbl_spike_damage.Size = new System.Drawing.Size(84, 15);
+            lbl_spike_damage.TabIndex = 9;
+            lbl_spike_damage.Text = "Spike damage:";
             // 
             // txb_acid_damage
             // 
-            this.txb_acid_damage.Location = new System.Drawing.Point(98, 45);
-            this.txb_acid_damage.Name = "txb_acid_damage";
-            this.txb_acid_damage.Size = new System.Drawing.Size(42, 23);
-            this.txb_acid_damage.TabIndex = 8;
-            this.txb_acid_damage.TextChanged += new System.EventHandler(this.txb_acid_damage_TextChanged);
-            this.txb_acid_damage.Leave += new System.EventHandler(this.txb_leave);
+            txb_acid_damage.Location = new System.Drawing.Point(98, 45);
+            txb_acid_damage.Name = "txb_acid_damage";
+            txb_acid_damage.Size = new System.Drawing.Size(42, 23);
+            txb_acid_damage.TabIndex = 8;
+            txb_acid_damage.TextChanged += txb_acid_damage_TextChanged;
+            txb_acid_damage.Leave += txb_leave;
             // 
             // lbl_acid_damage
             // 
-            this.lbl_acid_damage.AutoSize = true;
-            this.lbl_acid_damage.Location = new System.Drawing.Point(6, 48);
-            this.lbl_acid_damage.Name = "lbl_acid_damage";
-            this.lbl_acid_damage.Size = new System.Drawing.Size(80, 15);
-            this.lbl_acid_damage.TabIndex = 7;
-            this.lbl_acid_damage.Text = "Acid damage:";
+            lbl_acid_damage.AutoSize = true;
+            lbl_acid_damage.Location = new System.Drawing.Point(6, 48);
+            lbl_acid_damage.Name = "lbl_acid_damage";
+            lbl_acid_damage.Size = new System.Drawing.Size(80, 15);
+            lbl_acid_damage.TabIndex = 7;
+            lbl_acid_damage.Text = "Acid damage:";
             // 
             // lbl_area
             // 
-            this.lbl_area.AutoSize = true;
-            this.lbl_area.Location = new System.Drawing.Point(6, 19);
-            this.lbl_area.Name = "lbl_area";
-            this.lbl_area.Size = new System.Drawing.Size(34, 15);
-            this.lbl_area.TabIndex = 5;
-            this.lbl_area.Text = "Area:";
+            lbl_area.AutoSize = true;
+            lbl_area.Location = new System.Drawing.Point(6, 19);
+            lbl_area.Name = "lbl_area";
+            lbl_area.Size = new System.Drawing.Size(34, 15);
+            lbl_area.TabIndex = 5;
+            lbl_area.Text = "Area:";
             // 
             // cbb_area_bank
             // 
-            this.cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbb_area_bank.FormattingEnabled = true;
-            this.cbb_area_bank.Items.AddRange(new object[] {
-            "9",
-            "A",
-            "B",
-            "C",
-            "D",
-            "E",
-            "F"});
-            this.cbb_area_bank.Location = new System.Drawing.Point(98, 16);
-            this.cbb_area_bank.Name = "cbb_area_bank";
-            this.cbb_area_bank.Size = new System.Drawing.Size(42, 23);
-            this.cbb_area_bank.TabIndex = 6;
-            this.cbb_area_bank.SelectedIndexChanged += new System.EventHandler(this.cbb_area_bank_SelectedIndexChanged);
+            cbb_area_bank.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_area_bank.FormattingEnabled = true;
+            cbb_area_bank.Items.AddRange(new object[] { "9", "A", "B", "C", "D", "E", "F" });
+            cbb_area_bank.Location = new System.Drawing.Point(98, 16);
+            cbb_area_bank.Name = "cbb_area_bank";
+            cbb_area_bank.Size = new System.Drawing.Size(42, 23);
+            cbb_area_bank.TabIndex = 6;
+            cbb_area_bank.SelectedIndexChanged += cbb_area_bank_SelectedIndexChanged;
             // 
             // grp_more_data
             // 
-            this.grp_more_data.Controls.Add(this.cbb_collision_table);
-            this.grp_more_data.Controls.Add(this.lbl_collision_table);
-            this.grp_more_data.Controls.Add(this.cbb_solidity);
-            this.grp_more_data.Controls.Add(this.lbl_solidity_table);
-            this.grp_more_data.Location = new System.Drawing.Point(210, 22);
-            this.grp_more_data.Name = "grp_more_data";
-            this.grp_more_data.Size = new System.Drawing.Size(159, 109);
-            this.grp_more_data.TabIndex = 7;
-            this.grp_more_data.TabStop = false;
-            this.grp_more_data.Text = "Collision and Sprites";
+            grp_more_data.Controls.Add(cbb_collision_table);
+            grp_more_data.Controls.Add(lbl_collision_table);
+            grp_more_data.Controls.Add(cbb_solidity);
+            grp_more_data.Controls.Add(lbl_solidity_table);
+            grp_more_data.Location = new System.Drawing.Point(210, 22);
+            grp_more_data.Name = "grp_more_data";
+            grp_more_data.Size = new System.Drawing.Size(159, 109);
+            grp_more_data.TabIndex = 7;
+            grp_more_data.TabStop = false;
+            grp_more_data.Text = "Collision and Sprites";
             // 
             // cbb_collision_table
             // 
-            this.cbb_collision_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbb_collision_table.FormattingEnabled = true;
-            this.cbb_collision_table.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7"});
-            this.cbb_collision_table.Location = new System.Drawing.Point(101, 21);
-            this.cbb_collision_table.Name = "cbb_collision_table";
-            this.cbb_collision_table.Size = new System.Drawing.Size(49, 23);
-            this.cbb_collision_table.TabIndex = 9;
-            this.cbb_collision_table.SelectedIndexChanged += new System.EventHandler(this.cbb_collision_table_SelectedIndexChanged);
+            cbb_collision_table.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_collision_table.FormattingEnabled = true;
+            cbb_collision_table.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7" });
+            cbb_collision_table.Location = new System.Drawing.Point(101, 21);
+            cbb_collision_table.Name = "cbb_collision_table";
+            cbb_collision_table.Size = new System.Drawing.Size(49, 23);
+            cbb_collision_table.TabIndex = 9;
+            cbb_collision_table.SelectedIndexChanged += cbb_collision_table_SelectedIndexChanged;
             // 
             // lbl_collision_table
             // 
-            this.lbl_collision_table.AutoSize = true;
-            this.lbl_collision_table.Location = new System.Drawing.Point(6, 24);
-            this.lbl_collision_table.Name = "lbl_collision_table";
-            this.lbl_collision_table.Size = new System.Drawing.Size(86, 15);
-            this.lbl_collision_table.TabIndex = 8;
-            this.lbl_collision_table.Text = "Collision Table:";
-            this.tlt_bank_tip.SetToolTip(this.lbl_collision_table, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
-        "ffset in Bank 6!");
+            lbl_collision_table.AutoSize = true;
+            lbl_collision_table.Location = new System.Drawing.Point(6, 24);
+            lbl_collision_table.Name = "lbl_collision_table";
+            lbl_collision_table.Size = new System.Drawing.Size(86, 15);
+            lbl_collision_table.TabIndex = 8;
+            lbl_collision_table.Text = "Collision Table:";
+            tlt_bank_tip.SetToolTip(lbl_collision_table, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative offset in Bank 6!");
             // 
             // cbb_solidity
             // 
-            this.cbb_solidity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbb_solidity.FormattingEnabled = true;
-            this.cbb_solidity.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7"});
-            this.cbb_solidity.Location = new System.Drawing.Point(101, 50);
-            this.cbb_solidity.Name = "cbb_solidity";
-            this.cbb_solidity.Size = new System.Drawing.Size(49, 23);
-            this.cbb_solidity.TabIndex = 7;
-            this.cbb_solidity.SelectedIndexChanged += new System.EventHandler(this.cbb_solidity_SelectedIndexChanged);
+            cbb_solidity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            cbb_solidity.FormattingEnabled = true;
+            cbb_solidity.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7" });
+            cbb_solidity.Location = new System.Drawing.Point(101, 50);
+            cbb_solidity.Name = "cbb_solidity";
+            cbb_solidity.Size = new System.Drawing.Size(49, 23);
+            cbb_solidity.TabIndex = 7;
+            cbb_solidity.SelectedIndexChanged += cbb_solidity_SelectedIndexChanged;
             // 
             // lbl_solidity_table
             // 
-            this.lbl_solidity_table.AutoSize = true;
-            this.lbl_solidity_table.Location = new System.Drawing.Point(6, 53);
-            this.lbl_solidity_table.Name = "lbl_solidity_table";
-            this.lbl_solidity_table.Size = new System.Drawing.Size(89, 15);
-            this.lbl_solidity_table.TabIndex = 2;
-            this.lbl_solidity_table.Text = "Solidity Indices:";
-            this.tlt_bank_tip.SetToolTip(this.lbl_solidity_table, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative o" +
-        "ffset in Bank 6!");
+            lbl_solidity_table.AutoSize = true;
+            lbl_solidity_table.Location = new System.Drawing.Point(6, 53);
+            lbl_solidity_table.Name = "lbl_solidity_table";
+            lbl_solidity_table.Size = new System.Drawing.Size(89, 15);
+            lbl_solidity_table.TabIndex = 2;
+            lbl_solidity_table.Text = "Solidity Indices:";
+            tlt_bank_tip.SetToolTip(lbl_solidity_table, "Sprite graphics will always get loaded from Bank 6.\r\nThe offset is the relative offset in Bank 6!");
             // 
             // grp_misc_data
             // 
-            this.grp_misc_data.Controls.Add(this.txb_metroids);
-            this.grp_misc_data.Controls.Add(this.txb_missiles);
-            this.grp_misc_data.Controls.Add(this.txb_max_missiles);
-            this.grp_misc_data.Controls.Add(this.txb_energy);
-            this.grp_misc_data.Controls.Add(this.txb_music);
-            this.grp_misc_data.Controls.Add(this.lbl_music);
-            this.grp_misc_data.Controls.Add(this.lbl_metroid_count);
-            this.grp_misc_data.Controls.Add(this.lbl_missiles);
-            this.grp_misc_data.Controls.Add(this.lbl_max_missiles);
-            this.grp_misc_data.Controls.Add(this.lbl_energy);
-            this.grp_misc_data.Location = new System.Drawing.Point(234, 22);
-            this.grp_misc_data.Name = "grp_misc_data";
-            this.grp_misc_data.Size = new System.Drawing.Size(141, 199);
-            this.grp_misc_data.TabIndex = 2;
-            this.grp_misc_data.TabStop = false;
-            this.grp_misc_data.Text = "Miscellaneous";
+            grp_misc_data.Controls.Add(txb_metroids);
+            grp_misc_data.Controls.Add(txb_missiles);
+            grp_misc_data.Controls.Add(txb_max_missiles);
+            grp_misc_data.Controls.Add(txb_energy);
+            grp_misc_data.Controls.Add(txb_music);
+            grp_misc_data.Controls.Add(lbl_music);
+            grp_misc_data.Controls.Add(lbl_metroid_count);
+            grp_misc_data.Controls.Add(lbl_missiles);
+            grp_misc_data.Controls.Add(lbl_max_missiles);
+            grp_misc_data.Controls.Add(lbl_energy);
+            grp_misc_data.Location = new System.Drawing.Point(234, 22);
+            grp_misc_data.Name = "grp_misc_data";
+            grp_misc_data.Size = new System.Drawing.Size(141, 199);
+            grp_misc_data.TabIndex = 2;
+            grp_misc_data.TabStop = false;
+            grp_misc_data.Text = "Miscellaneous";
             // 
             // txb_metroids
             // 
-            this.txb_metroids.Location = new System.Drawing.Point(92, 107);
-            this.txb_metroids.Name = "txb_metroids";
-            this.txb_metroids.Size = new System.Drawing.Size(40, 23);
-            this.txb_metroids.TabIndex = 15;
-            this.tlt_bank_tip.SetToolTip(this.txb_metroids, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 0x10=10.");
-            this.txb_metroids.TextChanged += new System.EventHandler(this.num_metroid_count_ValueChanged);
-            this.txb_metroids.Leave += new System.EventHandler(this.txb_leave);
+            txb_metroids.Location = new System.Drawing.Point(92, 107);
+            txb_metroids.Name = "txb_metroids";
+            txb_metroids.Size = new System.Drawing.Size(40, 23);
+            txb_metroids.TabIndex = 15;
+            tlt_bank_tip.SetToolTip(txb_metroids, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F dont have a \r\nproper value and 0x10=10.");
+            txb_metroids.TextChanged += num_metroid_count_ValueChanged;
+            txb_metroids.Leave += txb_leave;
             // 
             // txb_missiles
             // 
-            this.txb_missiles.Location = new System.Drawing.Point(92, 78);
-            this.txb_missiles.Name = "txb_missiles";
-            this.txb_missiles.Size = new System.Drawing.Size(40, 23);
-            this.txb_missiles.TabIndex = 14;
-            this.tlt_bank_tip.SetToolTip(this.txb_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 0x10=10.\r\n");
-            this.txb_missiles.TextChanged += new System.EventHandler(this.num_missiles_ValueChanged);
-            this.txb_missiles.Leave += new System.EventHandler(this.txb_leave);
+            txb_missiles.Location = new System.Drawing.Point(92, 78);
+            txb_missiles.Name = "txb_missiles";
+            txb_missiles.Size = new System.Drawing.Size(40, 23);
+            txb_missiles.TabIndex = 14;
+            tlt_bank_tip.SetToolTip(txb_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F dont have a \r\nproper value and 0x10=10.\r\n");
+            txb_missiles.TextChanged += num_missiles_ValueChanged;
+            txb_missiles.Leave += txb_leave;
             // 
             // txb_max_missiles
             // 
-            this.txb_max_missiles.Location = new System.Drawing.Point(92, 49);
-            this.txb_max_missiles.Name = "txb_max_missiles";
-            this.txb_max_missiles.Size = new System.Drawing.Size(40, 23);
-            this.txb_max_missiles.TabIndex = 13;
-            this.tlt_bank_tip.SetToolTip(this.txb_max_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 0x10=10.\r\n");
-            this.txb_max_missiles.TextChanged += new System.EventHandler(this.num_max_missiles_ValueChanged);
-            this.txb_max_missiles.Leave += new System.EventHandler(this.txb_leave);
+            txb_max_missiles.Location = new System.Drawing.Point(92, 49);
+            txb_max_missiles.Name = "txb_max_missiles";
+            txb_max_missiles.Size = new System.Drawing.Size(40, 23);
+            txb_max_missiles.TabIndex = 13;
+            tlt_bank_tip.SetToolTip(txb_max_missiles, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F dont have a \r\nproper value and 0x10=10.\r\n");
+            txb_max_missiles.TextChanged += num_max_missiles_ValueChanged;
+            txb_max_missiles.Leave += txb_leave;
             // 
             // txb_energy
             // 
-            this.txb_energy.Location = new System.Drawing.Point(92, 20);
-            this.txb_energy.Name = "txb_energy";
-            this.txb_energy.Size = new System.Drawing.Size(40, 23);
-            this.txb_energy.TabIndex = 12;
-            this.tlt_bank_tip.SetToolTip(this.txb_energy, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F don" +
-        "t have a \r\nproper value and 0x10=10.\r\n");
-            this.txb_energy.TextChanged += new System.EventHandler(this.num_energy_ValueChanged);
-            this.txb_energy.Leave += new System.EventHandler(this.txb_leave);
+            txb_energy.Location = new System.Drawing.Point(92, 20);
+            txb_energy.Name = "txb_energy";
+            txb_energy.Size = new System.Drawing.Size(40, 23);
+            txb_energy.TabIndex = 12;
+            tlt_bank_tip.SetToolTip(txb_energy, "These values are BCD (Binary Coded Decimal). \r\nThis Means that the values A-F dont have a \r\nproper value and 0x10=10.\r\n");
+            txb_energy.TextChanged += num_energy_ValueChanged;
+            txb_energy.Leave += txb_leave;
             // 
             // txb_music
             // 
-            this.txb_music.Location = new System.Drawing.Point(92, 136);
-            this.txb_music.Name = "txb_music";
-            this.txb_music.Size = new System.Drawing.Size(40, 23);
-            this.txb_music.TabIndex = 8;
-            this.txb_music.TextChanged += new System.EventHandler(this.txb_music_TextChanged);
-            this.txb_music.Leave += new System.EventHandler(this.txb_leave);
+            txb_music.Location = new System.Drawing.Point(92, 136);
+            txb_music.Name = "txb_music";
+            txb_music.Size = new System.Drawing.Size(40, 23);
+            txb_music.TabIndex = 8;
+            txb_music.TextChanged += txb_music_TextChanged;
+            txb_music.Leave += txb_leave;
             // 
             // lbl_music
             // 
-            this.lbl_music.AutoSize = true;
-            this.lbl_music.Location = new System.Drawing.Point(6, 137);
-            this.lbl_music.Name = "lbl_music";
-            this.lbl_music.Size = new System.Drawing.Size(42, 15);
-            this.lbl_music.TabIndex = 7;
-            this.lbl_music.Text = "Music:";
+            lbl_music.AutoSize = true;
+            lbl_music.Location = new System.Drawing.Point(6, 137);
+            lbl_music.Name = "lbl_music";
+            lbl_music.Size = new System.Drawing.Size(42, 15);
+            lbl_music.TabIndex = 7;
+            lbl_music.Text = "Music:";
             // 
             // lbl_metroid_count
             // 
-            this.lbl_metroid_count.AutoSize = true;
-            this.lbl_metroid_count.Location = new System.Drawing.Point(6, 110);
-            this.lbl_metroid_count.Name = "lbl_metroid_count";
-            this.lbl_metroid_count.Size = new System.Drawing.Size(57, 15);
-            this.lbl_metroid_count.TabIndex = 11;
-            this.lbl_metroid_count.Text = "Metroids:";
+            lbl_metroid_count.AutoSize = true;
+            lbl_metroid_count.Location = new System.Drawing.Point(6, 110);
+            lbl_metroid_count.Name = "lbl_metroid_count";
+            lbl_metroid_count.Size = new System.Drawing.Size(57, 15);
+            lbl_metroid_count.TabIndex = 11;
+            lbl_metroid_count.Text = "Metroids:";
             // 
             // lbl_missiles
             // 
-            this.lbl_missiles.AutoSize = true;
-            this.lbl_missiles.Location = new System.Drawing.Point(6, 81);
-            this.lbl_missiles.Name = "lbl_missiles";
-            this.lbl_missiles.Size = new System.Drawing.Size(51, 15);
-            this.lbl_missiles.TabIndex = 5;
-            this.lbl_missiles.Text = "Missiles:";
+            lbl_missiles.AutoSize = true;
+            lbl_missiles.Location = new System.Drawing.Point(6, 81);
+            lbl_missiles.Name = "lbl_missiles";
+            lbl_missiles.Size = new System.Drawing.Size(51, 15);
+            lbl_missiles.TabIndex = 5;
+            lbl_missiles.Text = "Missiles:";
             // 
             // lbl_max_missiles
             // 
-            this.lbl_max_missiles.AutoSize = true;
-            this.lbl_max_missiles.Location = new System.Drawing.Point(6, 52);
-            this.lbl_max_missiles.Name = "lbl_max_missiles";
-            this.lbl_max_missiles.Size = new System.Drawing.Size(80, 15);
-            this.lbl_max_missiles.TabIndex = 3;
-            this.lbl_max_missiles.Text = "Max. Missiles:";
+            lbl_max_missiles.AutoSize = true;
+            lbl_max_missiles.Location = new System.Drawing.Point(6, 52);
+            lbl_max_missiles.Name = "lbl_max_missiles";
+            lbl_max_missiles.Size = new System.Drawing.Size(80, 15);
+            lbl_max_missiles.TabIndex = 3;
+            lbl_max_missiles.Text = "Max. Missiles:";
             // 
             // lbl_energy
             // 
-            this.lbl_energy.AutoSize = true;
-            this.lbl_energy.Location = new System.Drawing.Point(6, 23);
-            this.lbl_energy.Name = "lbl_energy";
-            this.lbl_energy.Size = new System.Drawing.Size(46, 15);
-            this.lbl_energy.TabIndex = 1;
-            this.lbl_energy.Text = "Energy:";
+            lbl_energy.AutoSize = true;
+            lbl_energy.Location = new System.Drawing.Point(6, 23);
+            lbl_energy.Name = "lbl_energy";
+            lbl_energy.Size = new System.Drawing.Size(46, 15);
+            lbl_energy.TabIndex = 1;
+            lbl_energy.Text = "Energy:";
             // 
             // grp_beams
             // 
-            this.grp_beams.Controls.Add(this.rdb_power);
-            this.grp_beams.Controls.Add(this.rdb_plasma);
-            this.grp_beams.Controls.Add(this.rdb_spazer);
-            this.grp_beams.Controls.Add(this.rdb_wave);
-            this.grp_beams.Controls.Add(this.rdb_ice);
-            this.grp_beams.Location = new System.Drawing.Point(120, 22);
-            this.grp_beams.Name = "grp_beams";
-            this.grp_beams.Size = new System.Drawing.Size(108, 199);
-            this.grp_beams.TabIndex = 1;
-            this.grp_beams.TabStop = false;
-            this.grp_beams.Text = "Beams";
+            grp_beams.Controls.Add(rdb_power);
+            grp_beams.Controls.Add(rdb_plasma);
+            grp_beams.Controls.Add(rdb_spazer);
+            grp_beams.Controls.Add(rdb_wave);
+            grp_beams.Controls.Add(rdb_ice);
+            grp_beams.Location = new System.Drawing.Point(120, 22);
+            grp_beams.Name = "grp_beams";
+            grp_beams.Size = new System.Drawing.Size(108, 199);
+            grp_beams.TabIndex = 1;
+            grp_beams.TabStop = false;
+            grp_beams.Text = "Beams";
             // 
             // rdb_power
             // 
-            this.rdb_power.AutoSize = true;
-            this.rdb_power.Checked = true;
-            this.rdb_power.Location = new System.Drawing.Point(6, 21);
-            this.rdb_power.Name = "rdb_power";
-            this.rdb_power.Size = new System.Drawing.Size(91, 19);
-            this.rdb_power.TabIndex = 4;
-            this.rdb_power.TabStop = true;
-            this.rdb_power.Text = "Power Beam";
-            this.rdb_power.UseVisualStyleBackColor = true;
-            this.rdb_power.CheckedChanged += new System.EventHandler(this.rdb_ice_CheckedChanged);
+            rdb_power.AutoSize = true;
+            rdb_power.Checked = true;
+            rdb_power.Location = new System.Drawing.Point(6, 21);
+            rdb_power.Name = "rdb_power";
+            rdb_power.Size = new System.Drawing.Size(91, 19);
+            rdb_power.TabIndex = 4;
+            rdb_power.TabStop = true;
+            rdb_power.Text = "Power Beam";
+            rdb_power.UseVisualStyleBackColor = true;
+            rdb_power.CheckedChanged += rdb_ice_CheckedChanged;
             // 
             // rdb_plasma
             // 
-            this.rdb_plasma.AutoSize = true;
-            this.rdb_plasma.Location = new System.Drawing.Point(6, 121);
-            this.rdb_plasma.Name = "rdb_plasma";
-            this.rdb_plasma.Size = new System.Drawing.Size(96, 19);
-            this.rdb_plasma.TabIndex = 3;
-            this.rdb_plasma.Text = "Plasma Beam";
-            this.rdb_plasma.UseVisualStyleBackColor = true;
-            this.rdb_plasma.CheckedChanged += new System.EventHandler(this.rdb_ice_CheckedChanged);
+            rdb_plasma.AutoSize = true;
+            rdb_plasma.Location = new System.Drawing.Point(6, 121);
+            rdb_plasma.Name = "rdb_plasma";
+            rdb_plasma.Size = new System.Drawing.Size(96, 19);
+            rdb_plasma.TabIndex = 3;
+            rdb_plasma.Text = "Plasma Beam";
+            rdb_plasma.UseVisualStyleBackColor = true;
+            rdb_plasma.CheckedChanged += rdb_ice_CheckedChanged;
             // 
             // rdb_spazer
             // 
-            this.rdb_spazer.AutoSize = true;
-            this.rdb_spazer.Location = new System.Drawing.Point(6, 96);
-            this.rdb_spazer.Name = "rdb_spazer";
-            this.rdb_spazer.Size = new System.Drawing.Size(92, 19);
-            this.rdb_spazer.TabIndex = 2;
-            this.rdb_spazer.Text = "Spazer Beam";
-            this.rdb_spazer.UseVisualStyleBackColor = true;
-            this.rdb_spazer.CheckedChanged += new System.EventHandler(this.rdb_ice_CheckedChanged);
+            rdb_spazer.AutoSize = true;
+            rdb_spazer.Location = new System.Drawing.Point(6, 96);
+            rdb_spazer.Name = "rdb_spazer";
+            rdb_spazer.Size = new System.Drawing.Size(92, 19);
+            rdb_spazer.TabIndex = 2;
+            rdb_spazer.Text = "Spazer Beam";
+            rdb_spazer.UseVisualStyleBackColor = true;
+            rdb_spazer.CheckedChanged += rdb_ice_CheckedChanged;
             // 
             // rdb_wave
             // 
-            this.rdb_wave.AutoSize = true;
-            this.rdb_wave.Location = new System.Drawing.Point(6, 71);
-            this.rdb_wave.Name = "rdb_wave";
-            this.rdb_wave.Size = new System.Drawing.Size(87, 19);
-            this.rdb_wave.TabIndex = 1;
-            this.rdb_wave.Text = "Wave Beam";
-            this.rdb_wave.UseVisualStyleBackColor = true;
-            this.rdb_wave.CheckedChanged += new System.EventHandler(this.rdb_ice_CheckedChanged);
+            rdb_wave.AutoSize = true;
+            rdb_wave.Location = new System.Drawing.Point(6, 71);
+            rdb_wave.Name = "rdb_wave";
+            rdb_wave.Size = new System.Drawing.Size(87, 19);
+            rdb_wave.TabIndex = 1;
+            rdb_wave.Text = "Wave Beam";
+            rdb_wave.UseVisualStyleBackColor = true;
+            rdb_wave.CheckedChanged += rdb_ice_CheckedChanged;
             // 
             // rdb_ice
             // 
-            this.rdb_ice.AutoSize = true;
-            this.rdb_ice.Location = new System.Drawing.Point(6, 46);
-            this.rdb_ice.Name = "rdb_ice";
-            this.rdb_ice.Size = new System.Drawing.Size(73, 19);
-            this.rdb_ice.TabIndex = 0;
-            this.rdb_ice.Text = "Ice Beam";
-            this.rdb_ice.UseVisualStyleBackColor = true;
-            this.rdb_ice.CheckedChanged += new System.EventHandler(this.rdb_ice_CheckedChanged);
+            rdb_ice.AutoSize = true;
+            rdb_ice.Location = new System.Drawing.Point(6, 46);
+            rdb_ice.Name = "rdb_ice";
+            rdb_ice.Size = new System.Drawing.Size(73, 19);
+            rdb_ice.TabIndex = 0;
+            rdb_ice.Text = "Ice Beam";
+            rdb_ice.UseVisualStyleBackColor = true;
+            rdb_ice.CheckedChanged += rdb_ice_CheckedChanged;
             // 
             // grp_items
             // 
-            this.grp_items.Controls.Add(this.chb_screw);
-            this.grp_items.Controls.Add(this.chb_space_jump);
-            this.grp_items.Controls.Add(this.chb_varia);
-            this.grp_items.Controls.Add(this.chb_spring);
-            this.grp_items.Controls.Add(this.chb_hijump);
-            this.grp_items.Controls.Add(this.chb_spider);
-            this.grp_items.Controls.Add(this.chb_bombs);
-            this.grp_items.Location = new System.Drawing.Point(6, 22);
-            this.grp_items.Name = "grp_items";
-            this.grp_items.Size = new System.Drawing.Size(108, 199);
-            this.grp_items.TabIndex = 0;
-            this.grp_items.TabStop = false;
-            this.grp_items.Text = "Items";
+            grp_items.Controls.Add(chb_screw);
+            grp_items.Controls.Add(chb_space_jump);
+            grp_items.Controls.Add(chb_varia);
+            grp_items.Controls.Add(chb_spring);
+            grp_items.Controls.Add(chb_hijump);
+            grp_items.Controls.Add(chb_spider);
+            grp_items.Controls.Add(chb_bombs);
+            grp_items.Location = new System.Drawing.Point(6, 22);
+            grp_items.Name = "grp_items";
+            grp_items.Size = new System.Drawing.Size(108, 199);
+            grp_items.TabIndex = 0;
+            grp_items.TabStop = false;
+            grp_items.Text = "Items";
             // 
             // chb_screw
             // 
-            this.chb_screw.AutoSize = true;
-            this.chb_screw.Location = new System.Drawing.Point(6, 172);
-            this.chb_screw.Name = "chb_screw";
-            this.chb_screw.Size = new System.Drawing.Size(94, 19);
-            this.chb_screw.TabIndex = 6;
-            this.chb_screw.Text = "Screw Attack";
-            this.chb_screw.UseVisualStyleBackColor = true;
-            this.chb_screw.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_screw.AutoSize = true;
+            chb_screw.Location = new System.Drawing.Point(6, 172);
+            chb_screw.Name = "chb_screw";
+            chb_screw.Size = new System.Drawing.Size(94, 19);
+            chb_screw.TabIndex = 6;
+            chb_screw.Text = "Screw Attack";
+            chb_screw.UseVisualStyleBackColor = true;
+            chb_screw.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_space_jump
             // 
-            this.chb_space_jump.AutoSize = true;
-            this.chb_space_jump.Location = new System.Drawing.Point(6, 147);
-            this.chb_space_jump.Name = "chb_space_jump";
-            this.chb_space_jump.Size = new System.Drawing.Size(89, 19);
-            this.chb_space_jump.TabIndex = 5;
-            this.chb_space_jump.Text = "Space Jump";
-            this.chb_space_jump.UseVisualStyleBackColor = true;
-            this.chb_space_jump.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_space_jump.AutoSize = true;
+            chb_space_jump.Location = new System.Drawing.Point(6, 147);
+            chb_space_jump.Name = "chb_space_jump";
+            chb_space_jump.Size = new System.Drawing.Size(89, 19);
+            chb_space_jump.TabIndex = 5;
+            chb_space_jump.Text = "Space Jump";
+            chb_space_jump.UseVisualStyleBackColor = true;
+            chb_space_jump.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_varia
             // 
-            this.chb_varia.AutoSize = true;
-            this.chb_varia.Location = new System.Drawing.Point(6, 122);
-            this.chb_varia.Name = "chb_varia";
-            this.chb_varia.Size = new System.Drawing.Size(74, 19);
-            this.chb_varia.TabIndex = 4;
-            this.chb_varia.Text = "Varia Suit";
-            this.chb_varia.UseVisualStyleBackColor = true;
-            this.chb_varia.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_varia.AutoSize = true;
+            chb_varia.Location = new System.Drawing.Point(6, 122);
+            chb_varia.Name = "chb_varia";
+            chb_varia.Size = new System.Drawing.Size(74, 19);
+            chb_varia.TabIndex = 4;
+            chb_varia.Text = "Varia Suit";
+            chb_varia.UseVisualStyleBackColor = true;
+            chb_varia.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_spring
             // 
-            this.chb_spring.AutoSize = true;
-            this.chb_spring.Location = new System.Drawing.Point(6, 72);
-            this.chb_spring.Name = "chb_spring";
-            this.chb_spring.Size = new System.Drawing.Size(82, 19);
-            this.chb_spring.TabIndex = 3;
-            this.chb_spring.Text = "Spring Ball";
-            this.chb_spring.UseVisualStyleBackColor = true;
-            this.chb_spring.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_spring.AutoSize = true;
+            chb_spring.Location = new System.Drawing.Point(6, 72);
+            chb_spring.Name = "chb_spring";
+            chb_spring.Size = new System.Drawing.Size(82, 19);
+            chb_spring.TabIndex = 3;
+            chb_spring.Text = "Spring Ball";
+            chb_spring.UseVisualStyleBackColor = true;
+            chb_spring.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_hijump
             // 
-            this.chb_hijump.AutoSize = true;
-            this.chb_hijump.Location = new System.Drawing.Point(6, 97);
-            this.chb_hijump.Name = "chb_hijump";
-            this.chb_hijump.Size = new System.Drawing.Size(72, 19);
-            this.chb_hijump.TabIndex = 2;
-            this.chb_hijump.Text = "Hi-Jump";
-            this.chb_hijump.UseVisualStyleBackColor = true;
-            this.chb_hijump.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_hijump.AutoSize = true;
+            chb_hijump.Location = new System.Drawing.Point(6, 97);
+            chb_hijump.Name = "chb_hijump";
+            chb_hijump.Size = new System.Drawing.Size(72, 19);
+            chb_hijump.TabIndex = 2;
+            chb_hijump.Text = "Hi-Jump";
+            chb_hijump.UseVisualStyleBackColor = true;
+            chb_hijump.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_spider
             // 
-            this.chb_spider.AutoSize = true;
-            this.chb_spider.Location = new System.Drawing.Point(6, 47);
-            this.chb_spider.Name = "chb_spider";
-            this.chb_spider.Size = new System.Drawing.Size(81, 19);
-            this.chb_spider.TabIndex = 1;
-            this.chb_spider.Text = "Spider Ball";
-            this.chb_spider.UseVisualStyleBackColor = true;
-            this.chb_spider.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_spider.AutoSize = true;
+            chb_spider.Location = new System.Drawing.Point(6, 47);
+            chb_spider.Name = "chb_spider";
+            chb_spider.Size = new System.Drawing.Size(81, 19);
+            chb_spider.TabIndex = 1;
+            chb_spider.Text = "Spider Ball";
+            chb_spider.UseVisualStyleBackColor = true;
+            chb_spider.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_bombs
             // 
-            this.chb_bombs.AutoSize = true;
-            this.chb_bombs.Location = new System.Drawing.Point(6, 22);
-            this.chb_bombs.Name = "chb_bombs";
-            this.chb_bombs.Size = new System.Drawing.Size(63, 19);
-            this.chb_bombs.TabIndex = 0;
-            this.chb_bombs.Text = "Bombs";
-            this.chb_bombs.UseVisualStyleBackColor = true;
-            this.chb_bombs.CheckedChanged += new System.EventHandler(this.chb_bombs_CheckedChanged);
+            chb_bombs.AutoSize = true;
+            chb_bombs.Location = new System.Drawing.Point(6, 22);
+            chb_bombs.Name = "chb_bombs";
+            chb_bombs.Size = new System.Drawing.Size(63, 19);
+            chb_bombs.TabIndex = 0;
+            chb_bombs.Text = "Bombs";
+            chb_bombs.UseVisualStyleBackColor = true;
+            chb_bombs.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // tlt_bank_tip
             // 
-            this.tlt_bank_tip.AutoPopDelay = 0;
-            this.tlt_bank_tip.InitialDelay = 550;
-            this.tlt_bank_tip.ReshowDelay = 110;
-            this.tlt_bank_tip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.tlt_bank_tip.ToolTipTitle = "INFO";
-            this.tlt_bank_tip.UseFading = false;
+            tlt_bank_tip.AutoPopDelay = 0;
+            tlt_bank_tip.InitialDelay = 550;
+            tlt_bank_tip.ReshowDelay = 110;
+            tlt_bank_tip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            tlt_bank_tip.ToolTipTitle = "INFO";
+            tlt_bank_tip.UseFading = false;
+            // 
+            // chb_debug_menu
+            // 
+            chb_debug_menu.AutoSize = true;
+            chb_debug_menu.Location = new System.Drawing.Point(540, 272);
+            chb_debug_menu.Name = "chb_debug_menu";
+            chb_debug_menu.Size = new System.Drawing.Size(95, 34);
+            chb_debug_menu.TabIndex = 8;
+            chb_debug_menu.Text = "Include\r\nDebug Menu";
+            chb_debug_menu.UseVisualStyleBackColor = true;
+            chb_debug_menu.CheckedChanged += chb_debug_menu_CheckedChanged;
             // 
             // TestRom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(661, 417);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.statusStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "TestRom";
-            this.Text = "Test ROM Settings";
-            this.panel1.ResumeLayout(false);
-            this.grp_testROM.ResumeLayout(false);
-            this.grp_position.ResumeLayout(false);
-            this.grp_cam.ResumeLayout(false);
-            this.grp_cam.PerformLayout();
-            this.grp_samus.ResumeLayout(false);
-            this.grp_samus.PerformLayout();
-            this.grp_level_data.ResumeLayout(false);
-            this.grp_graphics.ResumeLayout(false);
-            this.grp_graphics.PerformLayout();
-            this.grp_misc.ResumeLayout(false);
-            this.grp_misc.PerformLayout();
-            this.grp_more_data.ResumeLayout(false);
-            this.grp_more_data.PerformLayout();
-            this.grp_misc_data.ResumeLayout(false);
-            this.grp_misc_data.PerformLayout();
-            this.grp_beams.ResumeLayout(false);
-            this.grp_beams.PerformLayout();
-            this.grp_items.ResumeLayout(false);
-            this.grp_items.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoSize = true;
+            ClientSize = new System.Drawing.Size(661, 417);
+            Controls.Add(panel1);
+            Controls.Add(statusStrip1);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Name = "TestRom";
+            Text = "Test ROM Settings";
+            panel1.ResumeLayout(false);
+            grp_testROM.ResumeLayout(false);
+            grp_testROM.PerformLayout();
+            grp_position.ResumeLayout(false);
+            grp_cam.ResumeLayout(false);
+            grp_cam.PerformLayout();
+            grp_samus.ResumeLayout(false);
+            grp_samus.PerformLayout();
+            grp_level_data.ResumeLayout(false);
+            grp_graphics.ResumeLayout(false);
+            grp_graphics.PerformLayout();
+            grp_misc.ResumeLayout(false);
+            grp_misc.PerformLayout();
+            grp_more_data.ResumeLayout(false);
+            grp_more_data.PerformLayout();
+            grp_misc_data.ResumeLayout(false);
+            grp_misc_data.PerformLayout();
+            grp_beams.ResumeLayout(false);
+            grp_beams.PerformLayout();
+            grp_items.ResumeLayout(false);
+            grp_items.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -967,5 +950,6 @@
         private System.Windows.Forms.TextBox txb_max_missiles;
         private System.Windows.Forms.TextBox txb_energy;
         private System.Windows.Forms.GroupBox grp_graphics;
+        private System.Windows.Forms.CheckBox chb_debug_menu;
     }
 }

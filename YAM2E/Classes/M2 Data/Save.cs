@@ -74,6 +74,9 @@ public class Save
         r.Write8(dataStart + 35, IGTMinutes);
         r.Write8(dataStart + 36, IGTHours);
         r.Write8(dataStart + 37, MetroidCount);
+
+        //Debug Menu
+        if (this.IncludeDebugMenu) r.ReplaceBytes(new int[] { 0x2CB6, 0x2D02 }, new byte[] { 0x20, 0x28 }); //Enables Debug menu
     }
 
     /// <summary>
@@ -116,6 +119,8 @@ public class Save
         s.IGTHours = IGTHours;
         s.IGTMinutes = IGTMinutes;
     }
+
+    public bool IncludeDebugMenu { get; set; } = false;
 
     #region Save Data
 

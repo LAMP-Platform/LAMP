@@ -90,6 +90,8 @@ public partial class TestRom : Form
         txb_acid_damage.Text = Format.IntToString(save.AcidDamage);
         txb_spike_damage.Text = Format.IntToString(save.SpikeDamage);
 
+        //Debug
+        chb_debug_menu.Checked = save.IncludeDebugMenu;
     }
 
     #region Events
@@ -258,6 +260,11 @@ public partial class TestRom : Form
     private void txb_spike_damage_TextChanged(object sender, EventArgs e)
     {
         save.SpikeDamage = (byte)Format.StringToInt(txb_spike_damage.Text);
+    }
+
+    private void chb_debug_menu_CheckedChanged(object sender, EventArgs e)
+    {
+        save.IncludeDebugMenu = chb_debug_menu.Checked;
     }
     #endregion
 }

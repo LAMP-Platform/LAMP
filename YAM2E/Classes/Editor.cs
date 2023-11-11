@@ -814,7 +814,6 @@ public static class Editor
             //applying tweaks
             tROM.Write8(0x140EC, 0x0B); //instantly start new game on boot
             tROM.ReplaceBytes(new int[] { 0x0D12, 0x0D17, 0x0D1C }, new byte[] { 0x00, 0x00, 0x00 }); //Skip Samus appearance fanfare
-            tROM.ReplaceBytes(new int[] { 0x2CB6, 0x2D02 }, new byte[] { 0x20, 0x28 }); //Enables Debug menu
 
             //saving test ROM
             tROM.SaveROMAsFile(tempPath);
