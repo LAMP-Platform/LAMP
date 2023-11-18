@@ -30,9 +30,14 @@ public partial class TestRom : Form
     //Fields
     private Save save;
 
+    private bool updatingBeams = false;
+
     //Methods
     private void FillValues()
     {
+        //Special settings
+        btn_advanced.Checked = Globals.LoadedProject.useAdvancedTestSettings;
+
         //Items
         byte check = save.Items;
         chb_bombs.Checked = (check & 0x1) == 0x1 ? true : false;
@@ -42,13 +47,16 @@ public partial class TestRom : Form
         chb_spring.Checked = (check & 0x10) == 0x10 ? true : false;
         chb_spider.Checked = (check & 0x20) == 0x20 ? true : false;
         chb_varia.Checked = (check & 0x40) == 0x40 ? true : false;
+        chb_undefined.Checked = (check & 0x80) == 0x80 ? true : false;
 
         //Beam
         check = save.Beam;
+        rdb_power.Checked = check == 0 ? true : false;
         rdb_ice.Checked = check == 1 ? true : false;
         rdb_wave.Checked = check == 2 ? true : false;
         rdb_spazer.Checked = check == 3 ? true : false;
         rdb_plasma.Checked = check == 4 ? true : false;
+        txb_beam_value.Text = Format.IntToString(check);
 
         //Misc
         txb_energy.Text = Format.IntToString(Format.DecimalToBcd((Format.BcdToInt(save.EnergyTanksFilled) * 100) + Format.BcdToInt(save.StartEnegery))); //TODO: have to convert from BCD to hex first before doing math
@@ -56,6 +64,7 @@ public partial class TestRom : Form
         txb_missiles.Text = Format.IntToString(save.StartMissiles);
         txb_metroids.Text = Format.IntToString(save.MetroidCount);
         txb_music.Text = Format.IntToString(save.Music);
+        txb_real_metroids.Text = Format.IntToString(save.RealMetroidCount);
 
         //Position
         txb_sam_screen_x.Text = Format.IntToString(save.SamusScreenX);
@@ -110,19 +119,24 @@ public partial class TestRom : Form
         item = chb_spring.Checked == true ? (byte)(item | 0x10) : item;
         item = chb_spider.Checked == true ? (byte)(item | 0x20) : item;
         item = chb_varia.Checked == true ? (byte)(item | 0x40) : item;
+        item = chb_undefined.Checked == true ? (byte)(item | 0x80) : item;
 
         save.Items = item;
     }
 
     private void rdb_ice_CheckedChanged(object sender, EventArgs e) //Triggers if any radio button is checked
     {
+        if (updatingBeams) return;
+
         byte beam = 0;
+        beam = rdb_power.Checked == true ? (byte)0 : beam;
         beam = rdb_ice.Checked == true ? (byte)1 : beam;
         beam = rdb_wave.Checked == true ? (byte)2 : beam;
         beam = rdb_spazer.Checked == true ? (byte)3 : beam;
         beam = rdb_plasma.Checked == true ? (byte)4 : beam;
 
         save.Beam = beam;
+        txb_beam_value.Text = Format.IntToString(beam);
     }
 
     private void btn_set_savegame_Click(object sender, EventArgs e) //Copies all the data from the current TestROM Save to initial save game
@@ -162,7 +176,11 @@ public partial class TestRom : Form
     {
         int val = Format.StringToInt(txb_metroids.Text);
         save.MetroidCount = (byte)val;
+        if (btn_advanced.Checked) return;
+
+        //only automatically update real metroid counter if no advanced settings turned on
         save.RealMetroidCount = (byte)Format.DecimalToBcd(Format.BcdToInt(val) + 0x8);
+        txb_real_metroids.Text = Format.IntToString(save.RealMetroidCount);
     }
 
     private void txb_music_TextChanged(object sender, EventArgs e)
@@ -265,6 +283,39 @@ public partial class TestRom : Form
     private void chb_debug_menu_CheckedChanged(object sender, EventArgs e)
     {
         save.IncludeDebugMenu = chb_debug_menu.Checked;
+    }
+
+    private void btn_advanced_Click(object sender, EventArgs e)
+    {
+        btn_advanced.Checked = !btn_advanced.Checked;
+        Globals.LoadedProject.useAdvancedTestSettings = btn_advanced.Checked;
+    }
+
+    private void btn_advanced_CheckedChanged(object sender, EventArgs e)
+    {
+        bool c = btn_advanced.Checked;
+        chb_undefined.Enabled = lbl_beam_value.Enabled = txb_beam_value.Enabled = lbl_real_metroids.Enabled = txb_real_metroids.Enabled = c;
+    }
+
+    private void txb_beam_value_TextChanged(object sender, EventArgs e)
+    {
+        save.Beam = (byte)Format.StringToInt(txb_beam_value.Text, 0xFF);
+
+        updatingBeams = true;
+
+        byte check = save.Beam;
+        rdb_power.Checked = check == 0 ? true : false;
+        rdb_ice.Checked = check == 1 ? true : false;
+        rdb_wave.Checked = check == 2 ? true : false;
+        rdb_spazer.Checked = check == 3 ? true : false;
+        rdb_plasma.Checked = check == 4 ? true : false;
+
+        updatingBeams = false;
+    }
+
+    private void txb_real_metroids_TextChanged(object sender, EventArgs e)
+    {
+        save.RealMetroidCount = (byte)Format.StringToInt(txb_real_metroids.Text, 0xFF);
     }
     #endregion
 }

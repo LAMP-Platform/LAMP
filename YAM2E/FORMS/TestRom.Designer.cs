@@ -31,8 +31,9 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TestRom));
             statusStrip1 = new System.Windows.Forms.StatusStrip();
-            panel1 = new System.Windows.Forms.Panel();
+            pnl_main = new System.Windows.Forms.Panel();
             grp_testROM = new System.Windows.Forms.GroupBox();
+            chb_debug_menu = new System.Windows.Forms.CheckBox();
             btn_set_savegame = new System.Windows.Forms.Button();
             btn_test = new System.Windows.Forms.Button();
             grp_position = new System.Windows.Forms.GroupBox();
@@ -72,6 +73,8 @@
             cbb_solidity = new System.Windows.Forms.ComboBox();
             lbl_solidity_table = new System.Windows.Forms.Label();
             grp_misc_data = new System.Windows.Forms.GroupBox();
+            txb_real_metroids = new System.Windows.Forms.TextBox();
+            lbl_real_metroids = new System.Windows.Forms.Label();
             txb_metroids = new System.Windows.Forms.TextBox();
             txb_missiles = new System.Windows.Forms.TextBox();
             txb_max_missiles = new System.Windows.Forms.TextBox();
@@ -83,12 +86,15 @@
             lbl_max_missiles = new System.Windows.Forms.Label();
             lbl_energy = new System.Windows.Forms.Label();
             grp_beams = new System.Windows.Forms.GroupBox();
+            txb_beam_value = new System.Windows.Forms.TextBox();
+            lbl_beam_value = new System.Windows.Forms.Label();
             rdb_power = new System.Windows.Forms.RadioButton();
             rdb_plasma = new System.Windows.Forms.RadioButton();
             rdb_spazer = new System.Windows.Forms.RadioButton();
             rdb_wave = new System.Windows.Forms.RadioButton();
             rdb_ice = new System.Windows.Forms.RadioButton();
             grp_items = new System.Windows.Forms.GroupBox();
+            chb_undefined = new System.Windows.Forms.CheckBox();
             chb_screw = new System.Windows.Forms.CheckBox();
             chb_space_jump = new System.Windows.Forms.CheckBox();
             chb_varia = new System.Windows.Forms.CheckBox();
@@ -96,9 +102,11 @@
             chb_hijump = new System.Windows.Forms.CheckBox();
             chb_spider = new System.Windows.Forms.CheckBox();
             chb_bombs = new System.Windows.Forms.CheckBox();
+            menu = new System.Windows.Forms.ToolStrip();
+            tls_advanced = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_advanced = new System.Windows.Forms.ToolStripMenuItem();
             tlt_bank_tip = new System.Windows.Forms.ToolTip(components);
-            chb_debug_menu = new System.Windows.Forms.CheckBox();
-            panel1.SuspendLayout();
+            pnl_main.SuspendLayout();
             grp_testROM.SuspendLayout();
             grp_position.SuspendLayout();
             grp_cam.SuspendLayout();
@@ -110,25 +118,28 @@
             grp_misc_data.SuspendLayout();
             grp_beams.SuspendLayout();
             grp_items.SuspendLayout();
+            menu.SuspendLayout();
             SuspendLayout();
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 395);
+            statusStrip1.Location = new System.Drawing.Point(0, 436);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(661, 22);
+            statusStrip1.Size = new System.Drawing.Size(649, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
             // 
-            // panel1
+            // pnl_main
             // 
-            panel1.AutoScroll = true;
-            panel1.Controls.Add(grp_testROM);
-            panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel1.Location = new System.Drawing.Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(661, 395);
-            panel1.TabIndex = 7;
+            pnl_main.AutoScroll = true;
+            pnl_main.Controls.Add(grp_testROM);
+            pnl_main.Controls.Add(menu);
+            pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            pnl_main.Location = new System.Drawing.Point(0, 0);
+            pnl_main.Name = "pnl_main";
+            pnl_main.Padding = new System.Windows.Forms.Padding(6);
+            pnl_main.Size = new System.Drawing.Size(649, 436);
+            pnl_main.TabIndex = 7;
             // 
             // grp_testROM
             // 
@@ -141,16 +152,28 @@
             grp_testROM.Controls.Add(grp_misc_data);
             grp_testROM.Controls.Add(grp_beams);
             grp_testROM.Controls.Add(grp_items);
-            grp_testROM.Location = new System.Drawing.Point(12, 12);
+            grp_testROM.Dock = System.Windows.Forms.DockStyle.Fill;
+            grp_testROM.Location = new System.Drawing.Point(6, 31);
             grp_testROM.Name = "grp_testROM";
-            grp_testROM.Size = new System.Drawing.Size(637, 371);
+            grp_testROM.Size = new System.Drawing.Size(637, 399);
             grp_testROM.TabIndex = 7;
             grp_testROM.TabStop = false;
             grp_testROM.Text = "Test ROM";
             // 
+            // chb_debug_menu
+            // 
+            chb_debug_menu.AutoSize = true;
+            chb_debug_menu.Location = new System.Drawing.Point(540, 297);
+            chb_debug_menu.Name = "chb_debug_menu";
+            chb_debug_menu.Size = new System.Drawing.Size(95, 34);
+            chb_debug_menu.TabIndex = 8;
+            chb_debug_menu.Text = "Include\r\nDebug Menu";
+            chb_debug_menu.UseVisualStyleBackColor = true;
+            chb_debug_menu.CheckedChanged += chb_debug_menu_CheckedChanged;
+            // 
             // btn_set_savegame
             // 
-            btn_set_savegame.Location = new System.Drawing.Point(540, 312);
+            btn_set_savegame.Location = new System.Drawing.Point(540, 368);
             btn_set_savegame.Name = "btn_set_savegame";
             btn_set_savegame.Size = new System.Drawing.Size(89, 23);
             btn_set_savegame.TabIndex = 7;
@@ -161,7 +184,7 @@
             // 
             // btn_test
             // 
-            btn_test.Location = new System.Drawing.Point(540, 341);
+            btn_test.Location = new System.Drawing.Point(540, 339);
             btn_test.Name = "btn_test";
             btn_test.Size = new System.Drawing.Size(89, 23);
             btn_test.TabIndex = 6;
@@ -175,7 +198,7 @@
             grp_position.Controls.Add(grp_samus);
             grp_position.Location = new System.Drawing.Point(382, 22);
             grp_position.Name = "grp_position";
-            grp_position.Size = new System.Drawing.Size(247, 199);
+            grp_position.Size = new System.Drawing.Size(247, 226);
             grp_position.TabIndex = 0;
             grp_position.TabStop = false;
             grp_position.Text = "Position";
@@ -192,7 +215,7 @@
             grp_cam.Controls.Add(lbl_cam_screen_y);
             grp_cam.Location = new System.Drawing.Point(126, 22);
             grp_cam.Name = "grp_cam";
-            grp_cam.Size = new System.Drawing.Size(114, 171);
+            grp_cam.Size = new System.Drawing.Size(114, 198);
             grp_cam.TabIndex = 8;
             grp_cam.TabStop = false;
             grp_cam.Text = "Camera";
@@ -281,7 +304,7 @@
             grp_samus.Controls.Add(lbl_samus_screen_y);
             grp_samus.Location = new System.Drawing.Point(6, 22);
             grp_samus.Name = "grp_samus";
-            grp_samus.Size = new System.Drawing.Size(114, 169);
+            grp_samus.Size = new System.Drawing.Size(114, 198);
             grp_samus.TabIndex = 0;
             grp_samus.TabStop = false;
             grp_samus.Text = "Samus";
@@ -363,7 +386,7 @@
             grp_level_data.Controls.Add(grp_graphics);
             grp_level_data.Controls.Add(grp_misc);
             grp_level_data.Controls.Add(grp_more_data);
-            grp_level_data.Location = new System.Drawing.Point(6, 227);
+            grp_level_data.Location = new System.Drawing.Point(6, 254);
             grp_level_data.Name = "grp_level_data";
             grp_level_data.Size = new System.Drawing.Size(528, 137);
             grp_level_data.TabIndex = 5;
@@ -550,6 +573,8 @@
             // 
             // grp_misc_data
             // 
+            grp_misc_data.Controls.Add(txb_real_metroids);
+            grp_misc_data.Controls.Add(lbl_real_metroids);
             grp_misc_data.Controls.Add(txb_metroids);
             grp_misc_data.Controls.Add(txb_missiles);
             grp_misc_data.Controls.Add(txb_max_missiles);
@@ -562,10 +587,30 @@
             grp_misc_data.Controls.Add(lbl_energy);
             grp_misc_data.Location = new System.Drawing.Point(234, 22);
             grp_misc_data.Name = "grp_misc_data";
-            grp_misc_data.Size = new System.Drawing.Size(141, 199);
+            grp_misc_data.Size = new System.Drawing.Size(141, 226);
             grp_misc_data.TabIndex = 2;
             grp_misc_data.TabStop = false;
             grp_misc_data.Text = "Miscellaneous";
+            // 
+            // txb_real_metroids
+            // 
+            txb_real_metroids.Enabled = false;
+            txb_real_metroids.Location = new System.Drawing.Point(92, 195);
+            txb_real_metroids.Name = "txb_real_metroids";
+            txb_real_metroids.Size = new System.Drawing.Size(40, 23);
+            txb_real_metroids.TabIndex = 18;
+            txb_real_metroids.TextChanged += txb_real_metroids_TextChanged;
+            txb_real_metroids.Leave += txb_leave;
+            // 
+            // lbl_real_metroids
+            // 
+            lbl_real_metroids.AutoSize = true;
+            lbl_real_metroids.Enabled = false;
+            lbl_real_metroids.Location = new System.Drawing.Point(6, 198);
+            lbl_real_metroids.Name = "lbl_real_metroids";
+            lbl_real_metroids.Size = new System.Drawing.Size(82, 15);
+            lbl_real_metroids.TabIndex = 17;
+            lbl_real_metroids.Text = "Real Metroids:";
             // 
             // txb_metroids
             // 
@@ -619,7 +664,7 @@
             // lbl_music
             // 
             lbl_music.AutoSize = true;
-            lbl_music.Location = new System.Drawing.Point(6, 137);
+            lbl_music.Location = new System.Drawing.Point(6, 139);
             lbl_music.Name = "lbl_music";
             lbl_music.Size = new System.Drawing.Size(42, 15);
             lbl_music.TabIndex = 7;
@@ -663,6 +708,8 @@
             // 
             // grp_beams
             // 
+            grp_beams.Controls.Add(txb_beam_value);
+            grp_beams.Controls.Add(lbl_beam_value);
             grp_beams.Controls.Add(rdb_power);
             grp_beams.Controls.Add(rdb_plasma);
             grp_beams.Controls.Add(rdb_spazer);
@@ -670,10 +717,30 @@
             grp_beams.Controls.Add(rdb_ice);
             grp_beams.Location = new System.Drawing.Point(120, 22);
             grp_beams.Name = "grp_beams";
-            grp_beams.Size = new System.Drawing.Size(108, 199);
+            grp_beams.Size = new System.Drawing.Size(108, 226);
             grp_beams.TabIndex = 1;
             grp_beams.TabStop = false;
             grp_beams.Text = "Beams";
+            // 
+            // txb_beam_value
+            // 
+            txb_beam_value.Enabled = false;
+            txb_beam_value.Location = new System.Drawing.Point(57, 195);
+            txb_beam_value.Name = "txb_beam_value";
+            txb_beam_value.Size = new System.Drawing.Size(40, 23);
+            txb_beam_value.TabIndex = 16;
+            txb_beam_value.TextChanged += txb_beam_value_TextChanged;
+            txb_beam_value.Leave += txb_leave;
+            // 
+            // lbl_beam_value
+            // 
+            lbl_beam_value.AutoSize = true;
+            lbl_beam_value.Enabled = false;
+            lbl_beam_value.Location = new System.Drawing.Point(6, 198);
+            lbl_beam_value.Name = "lbl_beam_value";
+            lbl_beam_value.Size = new System.Drawing.Size(38, 15);
+            lbl_beam_value.TabIndex = 5;
+            lbl_beam_value.Text = "Value:";
             // 
             // rdb_power
             // 
@@ -734,6 +801,7 @@
             // 
             // grp_items
             // 
+            grp_items.Controls.Add(chb_undefined);
             grp_items.Controls.Add(chb_screw);
             grp_items.Controls.Add(chb_space_jump);
             grp_items.Controls.Add(chb_varia);
@@ -743,10 +811,22 @@
             grp_items.Controls.Add(chb_bombs);
             grp_items.Location = new System.Drawing.Point(6, 22);
             grp_items.Name = "grp_items";
-            grp_items.Size = new System.Drawing.Size(108, 199);
+            grp_items.Size = new System.Drawing.Size(108, 226);
             grp_items.TabIndex = 0;
             grp_items.TabStop = false;
             grp_items.Text = "Items";
+            // 
+            // chb_undefined
+            // 
+            chb_undefined.AutoSize = true;
+            chb_undefined.Enabled = false;
+            chb_undefined.Location = new System.Drawing.Point(6, 197);
+            chb_undefined.Name = "chb_undefined";
+            chb_undefined.Size = new System.Drawing.Size(81, 19);
+            chb_undefined.TabIndex = 7;
+            chb_undefined.Text = "Undefined";
+            chb_undefined.UseVisualStyleBackColor = true;
+            chb_undefined.CheckedChanged += chb_bombs_CheckedChanged;
             // 
             // chb_screw
             // 
@@ -825,6 +905,34 @@
             chb_bombs.UseVisualStyleBackColor = true;
             chb_bombs.CheckedChanged += chb_bombs_CheckedChanged;
             // 
+            // menu
+            // 
+            menu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tls_advanced });
+            menu.Location = new System.Drawing.Point(6, 6);
+            menu.Name = "menu";
+            menu.Size = new System.Drawing.Size(637, 25);
+            menu.TabIndex = 8;
+            menu.Text = "toolStrip1";
+            // 
+            // tls_advanced
+            // 
+            tls_advanced.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            tls_advanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_advanced });
+            tls_advanced.Image = (System.Drawing.Image)resources.GetObject("tls_advanced.Image");
+            tls_advanced.ImageTransparentColor = System.Drawing.Color.Magenta;
+            tls_advanced.Name = "tls_advanced";
+            tls_advanced.Size = new System.Drawing.Size(73, 22);
+            tls_advanced.Text = "Advanced";
+            // 
+            // btn_advanced
+            // 
+            btn_advanced.Name = "btn_advanced";
+            btn_advanced.Size = new System.Drawing.Size(194, 22);
+            btn_advanced.Text = "Enable Special Settings";
+            btn_advanced.CheckedChanged += btn_advanced_CheckedChanged;
+            btn_advanced.Click += btn_advanced_Click;
+            // 
             // tlt_bank_tip
             // 
             tlt_bank_tip.AutoPopDelay = 0;
@@ -834,29 +942,19 @@
             tlt_bank_tip.ToolTipTitle = "INFO";
             tlt_bank_tip.UseFading = false;
             // 
-            // chb_debug_menu
-            // 
-            chb_debug_menu.AutoSize = true;
-            chb_debug_menu.Location = new System.Drawing.Point(540, 272);
-            chb_debug_menu.Name = "chb_debug_menu";
-            chb_debug_menu.Size = new System.Drawing.Size(95, 34);
-            chb_debug_menu.TabIndex = 8;
-            chb_debug_menu.Text = "Include\r\nDebug Menu";
-            chb_debug_menu.UseVisualStyleBackColor = true;
-            chb_debug_menu.CheckedChanged += chb_debug_menu_CheckedChanged;
-            // 
             // TestRom
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new System.Drawing.Size(661, 417);
-            Controls.Add(panel1);
+            ClientSize = new System.Drawing.Size(649, 458);
+            Controls.Add(pnl_main);
             Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Name = "TestRom";
             Text = "Test ROM Settings";
-            panel1.ResumeLayout(false);
+            pnl_main.ResumeLayout(false);
+            pnl_main.PerformLayout();
             grp_testROM.ResumeLayout(false);
             grp_testROM.PerformLayout();
             grp_position.ResumeLayout(false);
@@ -877,6 +975,8 @@
             grp_beams.PerformLayout();
             grp_items.ResumeLayout(false);
             grp_items.PerformLayout();
+            menu.ResumeLayout(false);
+            menu.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -884,7 +984,7 @@
         #endregion
 
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnl_main;
         private System.Windows.Forms.GroupBox grp_testROM;
         private System.Windows.Forms.GroupBox grp_items;
         private System.Windows.Forms.CheckBox chb_hijump;
@@ -951,5 +1051,13 @@
         private System.Windows.Forms.TextBox txb_energy;
         private System.Windows.Forms.GroupBox grp_graphics;
         private System.Windows.Forms.CheckBox chb_debug_menu;
+        private System.Windows.Forms.ToolStrip menu;
+        private System.Windows.Forms.ToolStripDropDownButton tls_advanced;
+        private System.Windows.Forms.ToolStripMenuItem btn_advanced;
+        private System.Windows.Forms.CheckBox chb_undefined;
+        private System.Windows.Forms.TextBox txb_real_metroids;
+        private System.Windows.Forms.Label lbl_real_metroids;
+        private System.Windows.Forms.TextBox txb_beam_value;
+        private System.Windows.Forms.Label lbl_beam_value;
     }
 }

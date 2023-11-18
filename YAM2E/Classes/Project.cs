@@ -16,6 +16,7 @@ public class Project
     public bool OptimizeObjectData { get; set; } = false;
     public bool FixVerticalObjectLoading { get; set; } = false;
     public bool useTilesets { get; set; } = true;
+    public bool useAdvancedTestSettings { get; set; } = false;
     public string ProjectSpecificROM { get; set; } = "";
 
     //Transition specific Data
