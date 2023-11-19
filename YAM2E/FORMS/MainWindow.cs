@@ -148,9 +148,9 @@ public partial class MainWindow : Form
         ResumeLayout();
 
         //Hide the test button if building for release
-        #if DEBUG
+#if DEBUG
         return;
-        #endif
+#endif
         btnTest.Dispose();
     }
     #endregion
@@ -1273,6 +1273,8 @@ public partial class MainWindow : Form
 
     private void btn_open_collision_editor_Click(object sender, EventArgs e)
         => new CollisionEditor(0).Show();
+
+    private void btn_open_tweaks_editor_image_Click(object sender, EventArgs e) => new DataChunkEditor().Show();
     #endregion
 
     #endregion

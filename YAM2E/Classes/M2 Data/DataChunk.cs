@@ -56,6 +56,7 @@ public class DataChunk
     public int DataLength { get; set; }
     public byte[] Data { get; set; }
     public string DataType { get; set; } = "Data";
+    public bool Include { get; set; } = true;
 
     //Methods
     /// <summary>
@@ -115,6 +116,7 @@ public class DataChunk
     /// <summary>
     /// If <paramref name="SecondChunk"/> overlaps with the <see cref="DataChunk"/> it merges both of them into a new <see cref="DataChunk"/>.
     /// The data of the <paramref name="SecondChunk"/> will take priority over the existing <see cref="DataChunk"/>.
+    /// The inlcusion flag of the first DataChunk will take priority.
     /// If <paramref name="forceMerge"/> is set to true it will always merge the two chunks, even if they do not overlap. Data not covered by any chunk will be filled with data from the ROM.
     /// </summary>
     public DataChunk Merge(DataChunk SecondChunk, bool forceMerge = false)
@@ -147,6 +149,7 @@ public class DataChunk
         }
 
         DataChunk d = new DataChunk(new Pointer(dataStart), data, sb.ToString());
+        d.Include = Include;
         return (d);
     }
 

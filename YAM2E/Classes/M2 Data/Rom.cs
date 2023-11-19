@@ -188,7 +188,7 @@ public class Rom
         #region DataChunks
         if ((exceptions & CompilationItem.DataChunk) == 0)
         {
-            foreach (DataChunk dc in Globals.DataChunks) dc.Write(this);
+            foreach (DataChunk dc in Globals.DataChunks) if (dc.Include) dc.Write(this);
         }
         #endregion
 
@@ -206,6 +206,7 @@ public class Rom
     {
         foreach (DataChunk c in Globals.DataChunks)
         {
+            if (!c.Include) continue;
             if (c.DataStart.Offset <= offset && offset < c.DataStart.Offset + c.DataLength) //Read offset lies within a saved data chunk
             {
                 //return the value from the data chunk instead of the ROM

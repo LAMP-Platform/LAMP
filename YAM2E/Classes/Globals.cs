@@ -87,9 +87,6 @@ internal static class Globals
 
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
-    
-    //Tweak data
-    public static List<Tweak> Tweaks = new List<Tweak>();
 
     //Area data
     public static int SelectedArea = 0;

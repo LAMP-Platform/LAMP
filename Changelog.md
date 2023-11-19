@@ -1,4 +1,4 @@
-# Version B 5.0
+# Version R 1.0
 ### Released: XX.XX.2023
 **Changes:**
 * Transition Editor rework
@@ -15,11 +15,13 @@
 * The project path on the recent files screen can now be opened in explorer
 * Added a value converter tool
 * LAMP now starts in fullscreen if closed in fullscreen
-* Tile displays now highlight tiles that can not currently be displayed by LAMP  
+* Tile displays now highlight tiles that can not currently be displayed by LAMP
 * Removed redundant data from the project files
+* Added special options to the Save Editor
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty
+* Objects: When optimizing objects no empty set is written
 * TestROM: Tilesets with an index >= 10 cause an exception
 * TestROM: Missile values are capped at 0xFF
 * TestROM: Wrong math on the energy value

@@ -338,14 +338,6 @@ public static class Editor
                 Globals.Tilesets = JsonSerializer.Deserialize<List<Tileset>>(json);
             }
 
-            //Tweaks
-            Globals.Tweaks.Clear();
-            if (File.Exists(dirCustom + "/Tweaks.json"))
-            {
-                json = File.ReadAllText(dirCustom + "/Tweaks.json");
-                Globals.Tweaks = JsonSerializer.Deserialize<List<Tweak>>(json);
-            }
-
             //Data Chunks
             Globals.DataChunks.Clear();
             if (File.Exists(dirCustom + "/Chunks.json"))
@@ -412,7 +404,7 @@ public static class Editor
             return false;
         }
     }
-
+    
     /// <summary>
     /// Opens an "open" Dialog Window and returns the path to the file.
     /// </summary>
@@ -518,13 +510,6 @@ public static class Editor
         {
             path = dirCustom + "/Tilesets.json";
             SaveJsonObject(Globals.Tilesets, path);
-        }
-
-        //Tweaks
-        if (Globals.Tweaks.Count != 0)
-        {
-            path = dirCustom + "/Tweaks.json";
-            SaveJsonObject(Globals.Tweaks, path);
         }
 
         //DataChunks

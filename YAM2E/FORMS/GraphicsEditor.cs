@@ -338,7 +338,7 @@ public partial class GraphicsEditor : Form
     private void btn_import_gfx_Click(object sender, EventArgs e)
     {
         string path = Editor.ShowOpenDialog("Character Graphics (*.chr)|*.chr|Binary File (*.*)|*.*");
-        if (!File.Exists(path)) return;
+        if (!File.Exists(path) || path == string.Empty) return;
 
         //Reading data from file
         byte[] data = File.ReadAllBytes(path);
@@ -359,7 +359,7 @@ public partial class GraphicsEditor : Form
     private void btn_import_meta_Click(object sender, EventArgs e)
     {
         string path = Editor.ShowOpenDialog("Binary File (*.*)|*.*");
-        if (!File.Exists(path)) return;
+        if (!File.Exists(path) || path == string.Empty) return;
 
         //Reading data from file
         byte[] data = File.ReadAllBytes(path);
@@ -384,6 +384,7 @@ public partial class GraphicsEditor : Form
     private void btn_export_gfx_Click(object sender, EventArgs e)
     {
         string path = Editor.ShowSaveDialog("Character Graphics (*.chr)|*.chr");
+        if (path == string.Empty) return;
 
         File.WriteAllBytes(path, (byte[])(DataChunk)LoadedGFX);
     }
@@ -391,6 +392,7 @@ public partial class GraphicsEditor : Form
     private void btn_export_meta_Click(object sender, EventArgs e)
     {
         string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+        if (path == string.Empty) return;
 
         File.WriteAllBytes(path, (byte[])(DataChunk)LoadedMeta);
     }
