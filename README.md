@@ -30,7 +30,7 @@ like a built in map and beam switching.
 A hack currently in development by LOO-E. Zebes is being carefully recreated in the engine of Metroid 2. There might even be some new content
 in the hack once it is finished.
 
-<img src="https://cdn.discordapp.com/attachments/370769199653584896/1127734500047212595/Bendezium_Mines-0.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127741751357087905/norfair-1.png" alt="drawing" width="160"/> <img src="https://cdn.discordapp.com/attachments/370769199653584896/1127741750782459944/tourian-1.png" alt="drawing" width="160"/>
+<img src="https://i.vgy.me/uvDeji.png" alt="drawing" width="160"/> <img src="https://i.vgy.me/DEWY72.png" alt="drawing" width="160"/> <img src="https://i.vgy.me/XiWdhX.png" alt="drawing" width="160"/>
 
 These projects show that everyone can easily pick up LAMP and make a promising hack of Metroid 2 with it!
 
