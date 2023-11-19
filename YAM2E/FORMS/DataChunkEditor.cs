@@ -33,7 +33,7 @@ namespace LAMP.FORMS
                 };
 
                 p.Controls.Add(dcd);
-                Controls.Add(p);
+                pnl_main.Controls.Add(p);
             }
         }
 
@@ -41,7 +41,15 @@ namespace LAMP.FORMS
         {
             DataChunkDisplay dcd = sender as DataChunkDisplay;
             Globals.DataChunks.Remove(dcd.Chunk);
-            Controls.Remove(dcd);
+            foreach (Control c in pnl_main.Controls)
+            {
+                if (c is not Panel) continue;
+                var p = c as Panel;
+                if (!p.Controls.Contains(dcd)) continue;
+                p.Controls.Remove(dcd);
+                pnl_main.Controls.Remove(p);
+                break;
+            }
         }
     }
 }

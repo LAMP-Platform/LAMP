@@ -18,6 +18,7 @@
 * Tile displays now highlight tiles that can not currently be displayed by LAMP
 * Removed redundant data from the project files
 * Added special options to the Save Editor
+* Added a Data Chunk Manager
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty
