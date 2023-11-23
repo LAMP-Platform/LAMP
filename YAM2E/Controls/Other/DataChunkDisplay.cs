@@ -18,6 +18,16 @@ namespace LAMP.Controls.Other
         public DataChunk Chunk { get; set; }
         public event EventHandler RemoveThisChunk;
 
+        bool canPreview
+        {
+            get
+            {
+                if (Chunk.DataType == "Graphics") return true;
+                if (Chunk.DataType == "MetatileTable") return true;
+                else return false;
+            }
+        }
+
         public DataChunkDisplay(DataChunk chunk)
         {
             InitializeComponent();
@@ -35,5 +45,10 @@ namespace LAMP.Controls.Other
         }
 
         private void btn_remove_Click(object sender, EventArgs e) => RemoveThisChunk.Invoke(this, new EventArgs());
+
+        private void btn_preview_Click(object sender, EventArgs e)
+        {
+ 
+        }
     }
 }

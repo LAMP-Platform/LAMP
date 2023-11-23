@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             pnl_main = new System.Windows.Forms.Panel();
+            btn_preview = new System.Windows.Forms.Button();
+            btn_export = new System.Windows.Forms.Button();
             chb_include = new System.Windows.Forms.CheckBox();
             btn_remove = new System.Windows.Forms.Button();
             seperator = new Seperator();
@@ -40,6 +42,8 @@
             // pnl_main
             // 
             pnl_main.BackColor = System.Drawing.SystemColors.Control;
+            pnl_main.Controls.Add(btn_preview);
+            pnl_main.Controls.Add(btn_export);
             pnl_main.Controls.Add(chb_include);
             pnl_main.Controls.Add(btn_remove);
             pnl_main.Controls.Add(seperator);
@@ -50,6 +54,29 @@
             pnl_main.Name = "pnl_main";
             pnl_main.Size = new System.Drawing.Size(294, 90);
             pnl_main.TabIndex = 0;
+            // 
+            // btn_preview
+            // 
+            btn_preview.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_preview.Image = Properties.Resources.FilePreview;
+            btn_preview.Location = new System.Drawing.Point(264, 30);
+            btn_preview.Name = "btn_preview";
+            btn_preview.Size = new System.Drawing.Size(23, 23);
+            btn_preview.TabIndex = 6;
+            btn_preview.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            btn_preview.UseVisualStyleBackColor = true;
+            btn_preview.Click += btn_preview_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.Location = new System.Drawing.Point(183, 62);
+            btn_export.Name = "btn_export";
+            btn_export.Size = new System.Drawing.Size(23, 23);
+            btn_export.TabIndex = 5;
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            btn_export.UseVisualStyleBackColor = true;
             // 
             // chb_include
             // 
@@ -127,5 +154,7 @@
         private Seperator seperator;
         private System.Windows.Forms.Button btn_remove;
         private System.Windows.Forms.CheckBox chb_include;
+        private System.Windows.Forms.Button btn_export;
+        private System.Windows.Forms.Button btn_preview;
     }
 }
