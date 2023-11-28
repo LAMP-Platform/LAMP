@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pnl_main = new System.Windows.Forms.Panel();
+            lbl_contains = new System.Windows.Forms.Label();
             btn_preview = new System.Windows.Forms.Button();
             btn_export = new System.Windows.Forms.Button();
             chb_include = new System.Windows.Forms.CheckBox();
@@ -36,12 +38,14 @@
             seperator = new Seperator();
             lbl_range = new System.Windows.Forms.Label();
             lbl_type = new System.Windows.Forms.Label();
+            toolTip = new System.Windows.Forms.ToolTip(components);
             pnl_main.SuspendLayout();
             SuspendLayout();
             // 
             // pnl_main
             // 
             pnl_main.BackColor = System.Drawing.SystemColors.Control;
+            pnl_main.Controls.Add(lbl_contains);
             pnl_main.Controls.Add(btn_preview);
             pnl_main.Controls.Add(btn_export);
             pnl_main.Controls.Add(chb_include);
@@ -52,36 +56,49 @@
             pnl_main.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_main.Location = new System.Drawing.Point(1, 1);
             pnl_main.Name = "pnl_main";
-            pnl_main.Size = new System.Drawing.Size(294, 90);
+            pnl_main.Size = new System.Drawing.Size(294, 113);
             pnl_main.TabIndex = 0;
+            // 
+            // lbl_contains
+            // 
+            lbl_contains.AutoSize = true;
+            lbl_contains.Location = new System.Drawing.Point(7, 56);
+            lbl_contains.Name = "lbl_contains";
+            lbl_contains.Size = new System.Drawing.Size(126, 15);
+            lbl_contains.TabIndex = 7;
+            lbl_contains.Text = "Not used in any Tileset";
             // 
             // btn_preview
             // 
-            btn_preview.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_preview.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_preview.Image = Properties.Resources.FilePreview;
-            btn_preview.Location = new System.Drawing.Point(264, 30);
+            btn_preview.Location = new System.Drawing.Point(264, 53);
             btn_preview.Name = "btn_preview";
             btn_preview.Size = new System.Drawing.Size(23, 23);
             btn_preview.TabIndex = 6;
             btn_preview.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            toolTip.SetToolTip(btn_preview, "Preview");
             btn_preview.UseVisualStyleBackColor = true;
+            btn_preview.Visible = false;
             btn_preview.Click += btn_preview_Click;
             // 
             // btn_export
             // 
-            btn_export.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_export.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_export.Image = Properties.Resources.Export;
-            btn_export.Location = new System.Drawing.Point(183, 62);
+            btn_export.Location = new System.Drawing.Point(183, 85);
             btn_export.Name = "btn_export";
             btn_export.Size = new System.Drawing.Size(23, 23);
             btn_export.TabIndex = 5;
             btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            toolTip.SetToolTip(btn_export, "Export");
             btn_export.UseVisualStyleBackColor = true;
             // 
             // chb_include
             // 
+            chb_include.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             chb_include.AutoSize = true;
-            chb_include.Location = new System.Drawing.Point(7, 65);
+            chb_include.Location = new System.Drawing.Point(7, 88);
             chb_include.Name = "chb_include";
             chb_include.Size = new System.Drawing.Size(65, 19);
             chb_include.TabIndex = 4;
@@ -91,9 +108,9 @@
             // 
             // btn_remove
             // 
-            btn_remove.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_remove.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             btn_remove.Image = Properties.Resources.Remove;
-            btn_remove.Location = new System.Drawing.Point(212, 62);
+            btn_remove.Location = new System.Drawing.Point(212, 85);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new System.Drawing.Size(75, 23);
             btn_remove.TabIndex = 3;
@@ -104,9 +121,9 @@
             // 
             // seperator
             // 
-            seperator.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            seperator.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             seperator.BackColor = System.Drawing.SystemColors.ControlDark;
-            seperator.Location = new System.Drawing.Point(7, 55);
+            seperator.Location = new System.Drawing.Point(7, 78);
             seperator.MaximumSize = new System.Drawing.Size(0, 1);
             seperator.Name = "seperator";
             seperator.Size = new System.Drawing.Size(280, 1);
@@ -140,7 +157,7 @@
             MinimumSize = new System.Drawing.Size(296, 92);
             Name = "DataChunkDisplay";
             Padding = new System.Windows.Forms.Padding(1);
-            Size = new System.Drawing.Size(296, 92);
+            Size = new System.Drawing.Size(296, 115);
             pnl_main.ResumeLayout(false);
             pnl_main.PerformLayout();
             ResumeLayout(false);
@@ -156,5 +173,7 @@
         private System.Windows.Forms.CheckBox chb_include;
         private System.Windows.Forms.Button btn_export;
         private System.Windows.Forms.Button btn_preview;
+        private System.Windows.Forms.Label lbl_contains;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }

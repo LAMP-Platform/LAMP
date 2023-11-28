@@ -53,6 +53,7 @@ public class DataChunk
 
     //Fields
     public Pointer DataStart { get; set; }
+    public Pointer DataEnd => DataStart + DataLength - 1;
     public int DataLength { get; set; }
     public byte[] Data { get; set; }
     public string DataType { get; set; } = "Data";
@@ -162,6 +163,27 @@ public class DataChunk
         {
             rom.Write8(DataStart + i, Data[i]);
         }
+    }
+
+    /// <summary>
+    /// Checks if the offset of any Tileset component
+    /// </summary>
+    public bool ContainedInTileset(Tileset t) 
+    {
+        //Compare offsets
+        if (ContainedInChunk(t.GfxOffset)) return true;
+        if (ContainedInChunk(Editor.GetMetaPointerFromTable(t.MetatileTable))) return true;
+        if (ContainedInChunk(Editor.GetCollisionPointerFromTable(t.CollisionTable))) return true;
+        if (ContainedInChunk(Editor.GetSolidityPointerFromTable(t.SolidityTable))) return true; 
+        return false;
+    }
+
+    /// <summary>
+    /// Returns true if the Pointer is inside the Data
+    /// </summary>
+    private bool ContainedInChunk(Pointer p)
+    {
+        return (p >= DataStart && p <= DataEnd);
     }
 
     public static explicit operator byte[](DataChunk d) => d.Data;

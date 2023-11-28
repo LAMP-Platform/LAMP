@@ -56,6 +56,7 @@ namespace LAMP
             btn_solidity_editor = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             btn_save_editor = new System.Windows.Forms.ToolStripMenuItem();
+            dataChunkManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_view = new System.Windows.Forms.ToolStripDropDownButton();
             btn_view_show_objects = new System.Windows.Forms.ToolStripMenuItem();
             btn_show_scroll_bounds = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,7 +117,6 @@ namespace LAMP
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
-            dataChunkManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -329,6 +329,13 @@ namespace LAMP
             btn_save_editor.Text = "Save Editor";
             btn_save_editor.Click += btn_save_editor_Click;
             // 
+            // dataChunkManagerToolStripMenuItem
+            // 
+            dataChunkManagerToolStripMenuItem.Name = "dataChunkManagerToolStripMenuItem";
+            dataChunkManagerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            dataChunkManagerToolStripMenuItem.Text = "Data Chunk Manager";
+            dataChunkManagerToolStripMenuItem.Click += btn_open_tweaks_editor_image_Click;
+            // 
             // tool_strip_view
             // 
             tool_strip_view.AutoToolTip = false;
@@ -534,7 +541,7 @@ namespace LAMP
             btn_open_tweaks_editor_image.Name = "btn_open_tweaks_editor_image";
             btn_open_tweaks_editor_image.Size = new System.Drawing.Size(23, 22);
             btn_open_tweaks_editor_image.Text = "Data Chunk Manager";
-            btn_open_tweaks_editor_image.ToolTipText = "Data Viewer";
+            btn_open_tweaks_editor_image.ToolTipText = "Data Chunk Manager";
             btn_open_tweaks_editor_image.Click += btn_open_tweaks_editor_image_Click;
             // 
             // btn_open_transition_editor_image
@@ -923,13 +930,6 @@ namespace LAMP
             Tooltip_info.InitialDelay = 100;
             Tooltip_info.ReshowDelay = 200;
             Tooltip_info.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            // 
-            // dataChunkManagerToolStripMenuItem
-            // 
-            dataChunkManagerToolStripMenuItem.Name = "dataChunkManagerToolStripMenuItem";
-            dataChunkManagerToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-            dataChunkManagerToolStripMenuItem.Text = "Data Chunk Manager";
-            dataChunkManagerToolStripMenuItem.Click += btn_open_tweaks_editor_image_Click;
             // 
             // MainWindow
             // 

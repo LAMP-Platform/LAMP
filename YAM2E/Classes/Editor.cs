@@ -610,7 +610,7 @@ public static class Editor
     /// </summary>
     public static Pointer GetSolidityPointerFromTable(int index)
     {
-        return new Pointer(0x8, ROM.SolidityIndices + 4 * index);
+        return (ROM.SolidityIndices + 4 * index);
     }
 
     /// <summary>

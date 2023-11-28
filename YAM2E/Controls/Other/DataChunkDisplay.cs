@@ -1,4 +1,5 @@
-﻿using LAMP.Classes.M2_Data;
+﻿using LAMP.Classes;
+using LAMP.Classes.M2_Data;
 using LAMP.Utilities;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,24 @@ namespace LAMP.Controls.Other
             this.Chunk = chunk;
 
             lbl_type.Text = chunk.DataType;
-            lbl_range.Text = $"Location: {Format.PointerToString(chunk.DataStart)} - {Format.PointerToString(chunk.DataStart + chunk.DataLength - 1)}";
+            lbl_range.Text = $"Location: {Format.PointerToString(chunk.DataStart)} - {Format.PointerToString(chunk.DataStart + chunk.DataLength - 1)}.";
             chb_include.Checked = chunk.Include;
+
+            //Checking which Tilesets contain this DataChunk
+            List<string> tilesets = new List<string>();
+            foreach (Tileset t in Globals.Tilesets) if (Chunk.ContainedInTileset(t)) tilesets.Add(t.Name);
+
+            if (tilesets.Count == 0) return;
+
+            lbl_contains.Text = "Contained in: ";
+            for (int i = 0; i < tilesets.Count; i++)
+            {
+                string s = ",";
+                if (i == tilesets.Count - 1) s = "";
+                lbl_contains.Text += $"{tilesets[i]}{s} ";
+            }
+
+            btn_preview.Visible = true;
         }
 
         private void chb_include_CheckedChanged(object sender, EventArgs e)
@@ -48,7 +65,7 @@ namespace LAMP.Controls.Other
 
         private void btn_preview_Click(object sender, EventArgs e)
         {
- 
+
         }
     }
 }
