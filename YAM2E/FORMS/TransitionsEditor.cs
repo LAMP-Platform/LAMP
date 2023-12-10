@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Windows.Forms;
 using LAMP.Classes;
 using LAMP.Classes.M2_Data;
@@ -35,7 +37,7 @@ public partial class TransitionsEditor : Form
             if (selectedIndex == value) return;
             selectedIndex = value;
 
-            ReloadTransition();
+            LoadTransition();
         }
     }
     int selectedIndex = -1; //This is set to -1 because the index will initially be 0, therefore, we still want to trigger this once
@@ -98,7 +100,7 @@ public partial class TransitionsEditor : Form
         }
     }
 
-    void LoadTransition()
+    void CheckIfCopy()
     {
         if (LoadedTransition.CopyOf != -1) //Transition is a duplicate
         {
@@ -179,12 +181,12 @@ public partial class TransitionsEditor : Form
         pnlTransition.ResumeLayout(); //Resume layout logic
     }
 
-    void ReloadTransition()
+    void LoadTransition()
     {
         try
         {
             LoadedTransition = Globals.Transitions[SelectedIndex];
-            LoadTransition();
+            CheckIfCopy();
             ReadTransition();
         }
         catch (Exception ex)
@@ -226,7 +228,7 @@ public partial class TransitionsEditor : Form
         Transition t = Globals.Transitions[cbb_tred_transition_selection.SelectedIndex];
         t.Data = new List<byte>(LoadedTransition.Data);
         t.CopyOf = -1;
-        ReloadTransition();
+        LoadTransition();
     }
 
     private void btn_remove_all_ButtonClick(object sender, EventArgs e)
@@ -261,7 +263,7 @@ public partial class TransitionsEditor : Form
             MessageBox.Show("There is not enough space left in the Transition to load this Tileset!", "Out of space", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
         }
         LoadedTransition.Data.InsertRange(0, tilesetData); //Inserting the data before the end.
-        ReloadTransition();
+        LoadTransition();
     }
 
     private void txb_transition_name_TextChanged(object sender, EventArgs e)
@@ -340,7 +342,42 @@ public partial class TransitionsEditor : Form
             MessageBox.Show("There is not enough space left in the Transition to load this Tileset!", "Out of space", MessageBoxButtons.OK, MessageBoxIcon.Error); return;
         }
         LoadedTransition.Data.InsertRange(0, data); //Inserting the data before the end.
-        ReloadTransition();
+        LoadTransition();
     }
     #endregion
+
+    private void btn_export_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowSaveDialog("Transition (*.lts)|*.lts");
+        if (path == string.Empty) return;
+
+        ExportTransition t = new ExportTransition()
+        {
+            Name = LoadedTransition.Name,
+            Data = LoadedTransition.Data
+        };
+
+        Editor.SaveJsonObject(t, path);
+    }
+
+    private void btn_import_Click(object sender, EventArgs e)
+    {
+        string path = Editor.ShowOpenDialog("Transition (*.lts)|*.lts");
+        if (!File.Exists(path)) return;
+
+        string json = File.ReadAllText(path);
+        ExportTransition file = JsonSerializer.Deserialize<ExportTransition>(json);
+
+        if (file == null) return;
+        Transition t = new Transition()
+        {
+            Name = file.Name,
+            Data = file.Data,
+            CopyOf = -1,
+            Number = LoadedTransition.Number
+        };
+
+        Globals.Transitions[SelectedIndex] = t;
+        LoadTransition();
+    }
 }

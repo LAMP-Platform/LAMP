@@ -56,6 +56,8 @@ namespace LAMP.FORMS
             btn_add_tileset = new System.Windows.Forms.Button();
             cbb_tileset_select = new System.Windows.Forms.ComboBox();
             pnl_gauge = new System.Windows.Forms.Panel();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
             grp_tred_selection.SuspendLayout();
             sts_tred_status_strip.SuspendLayout();
             grpTransition.SuspendLayout();
@@ -125,7 +127,7 @@ namespace LAMP.FORMS
             // 
             // sts_tred_status_strip
             // 
-            sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length, status_spring, btn_remove_all });
+            sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length, status_spring, btn_import, btn_export, btn_remove_all });
             sts_tred_status_strip.Location = new System.Drawing.Point(0, 584);
             sts_tred_status_strip.Name = "sts_tred_status_strip";
             sts_tred_status_strip.Size = new System.Drawing.Size(569, 22);
@@ -141,7 +143,7 @@ namespace LAMP.FORMS
             // status_spring
             // 
             status_spring.Name = "status_spring";
-            status_spring.Size = new System.Drawing.Size(362, 17);
+            status_spring.Size = new System.Drawing.Size(207, 17);
             status_spring.Spring = true;
             // 
             // btn_remove_all
@@ -347,6 +349,28 @@ namespace LAMP.FORMS
             pnl_gauge.Size = new System.Drawing.Size(569, 15);
             pnl_gauge.TabIndex = 8;
             // 
+            // btn_export
+            // 
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 20);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_export.Click += btn_export_Click;
+            // 
+            // btn_import
+            // 
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 20);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_import.Click += btn_import_Click;
+            // 
             // TransitionsEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -405,5 +429,7 @@ namespace LAMP.FORMS
         private System.Windows.Forms.ToolStripStatusLabel status_spring;
         private System.Windows.Forms.ToolStripSplitButton btn_remove_all;
         private System.Windows.Forms.Panel pnl_opcodes;
+        private System.Windows.Forms.ToolStripDropDownButton btn_export;
+        private System.Windows.Forms.ToolStripDropDownButton btn_import;
     }
 }

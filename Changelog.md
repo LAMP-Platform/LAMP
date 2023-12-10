@@ -9,6 +9,7 @@
 * Added Solidity Editor
 * Added Collision Editor
 * Tilesets can be exported and imported
+* Transitions can be exported and imported
 * Object settings are now part of the main window
 * Added button to automatically assign object number
 * Project specific base ROMs

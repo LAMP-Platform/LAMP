@@ -13,3 +13,15 @@ public class Transition
     public List<byte> Data { get; set; }
     public int CopyOf { get; set; } = -1;
 }
+
+/// <summary>
+/// This should only be used to export a Transition as a seperate file
+/// </summary>
+public class ExportTransition
+{
+    [JsonConstructor]
+    public ExportTransition() {}
+
+    public string Name { get; set; }
+    public List<byte> Data { get; set; }
+}
