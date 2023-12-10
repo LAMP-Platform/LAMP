@@ -94,6 +94,7 @@ public static class Editor
         string projname = ShowSaveDialog("Project File (*.m2)|*.m2");
         if (projname == String.Empty) return;
         Globals.LoadedProject = new Project();
+        Globals.LoadedProject.CheckIfDictionaryUpToDate();
         SaveJsonObject(Globals.LoadedProject, projname);
 
         Globals.ProjName = projname;
