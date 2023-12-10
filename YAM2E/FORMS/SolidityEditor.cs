@@ -140,6 +140,7 @@ public partial class SolidityEditor : Form
     private void btn_export_Click(object sender, EventArgs e)
     {
         string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+        if (!File.Exists(path)) return;
 
         byte samus = (byte)Format.StringToInt(txb_samus.Text, 0x7F);
         byte objects = (byte)Format.StringToInt(txb_objects.Text, 0x7F);

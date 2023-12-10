@@ -178,6 +178,7 @@ namespace LAMP.FORMS
         private void btn_export_Click(object sender, EventArgs e)
         {
             string path = Editor.ShowSaveDialog("Binary File (*.*)|*.*");
+            if (!File.Exists(path)) return;
 
             File.WriteAllBytes(path, Data);
         }
