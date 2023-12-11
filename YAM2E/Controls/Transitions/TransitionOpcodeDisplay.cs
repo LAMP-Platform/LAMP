@@ -53,7 +53,6 @@ public partial class TransitionOpcodeDisplay : UserControl
             if (!Opcode.isExpandable) return;
 
             pnl_parameters.Visible = value;
-            pnl_footer.Visible = value;
             Seperator.Visible = value;
 
             if (Expanded) btn_expand.Image = Resources.CollapseArrow;
@@ -76,15 +75,6 @@ public partial class TransitionOpcodeDisplay : UserControl
         btn_expand.Visible = o.isExpandable;
         if (o.isExpandable) return;
 
-        //Move the buttons to top header if no parameters exist
-        pnl_header.Controls.Add(btn_remove_opcode);
-        pnl_header.Controls.Add(btn_move_down);
-        pnl_header.Controls.Add(btn_move_up);
-        btn_remove_opcode.Location = btn_expand.Location;
-        btn_move_down.Location = new Point(btn_expand.Location.X - 26, btn_expand.Location.Y);
-        btn_move_up.Location = new Point(btn_move_down.Location.X - 26, btn_move_down.Location.Y);
-
-        pnl_footer.Visible = false;
         Seperator.Visible = false;
     }
 

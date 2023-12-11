@@ -39,6 +39,8 @@ namespace LAMP.FORMS
             sts_tred_status_strip = new System.Windows.Forms.StatusStrip();
             lbl_tred_transition_length = new System.Windows.Forms.ToolStripStatusLabel();
             status_spring = new System.Windows.Forms.ToolStripStatusLabel();
+            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
             btn_remove_all = new System.Windows.Forms.ToolStripSplitButton();
             tlt_tred_warning = new System.Windows.Forms.ToolTip(components);
             txb_transition_info = new System.Windows.Forms.TextBox();
@@ -56,8 +58,6 @@ namespace LAMP.FORMS
             btn_add_tileset = new System.Windows.Forms.Button();
             cbb_tileset_select = new System.Windows.Forms.ComboBox();
             pnl_gauge = new System.Windows.Forms.Panel();
-            btn_export = new System.Windows.Forms.ToolStripDropDownButton();
-            btn_import = new System.Windows.Forms.ToolStripDropDownButton();
             grp_tred_selection.SuspendLayout();
             sts_tred_status_strip.SuspendLayout();
             grpTransition.SuspendLayout();
@@ -130,7 +130,7 @@ namespace LAMP.FORMS
             sts_tred_status_strip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { lbl_tred_transition_length, status_spring, btn_import, btn_export, btn_remove_all });
             sts_tred_status_strip.Location = new System.Drawing.Point(0, 584);
             sts_tred_status_strip.Name = "sts_tred_status_strip";
-            sts_tred_status_strip.Size = new System.Drawing.Size(569, 22);
+            sts_tred_status_strip.Size = new System.Drawing.Size(634, 22);
             sts_tred_status_strip.TabIndex = 3;
             sts_tred_status_strip.Text = "statusStrip1";
             // 
@@ -143,8 +143,30 @@ namespace LAMP.FORMS
             // status_spring
             // 
             status_spring.Name = "status_spring";
-            status_spring.Size = new System.Drawing.Size(207, 17);
+            status_spring.Size = new System.Drawing.Size(303, 17);
             status_spring.Spring = true;
+            // 
+            // btn_import
+            // 
+            btn_import.Image = Properties.Resources.Import;
+            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_import.Name = "btn_import";
+            btn_import.ShowDropDownArrow = false;
+            btn_import.Size = new System.Drawing.Size(63, 20);
+            btn_import.Text = "Import";
+            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_import.Click += btn_import_Click;
+            // 
+            // btn_export
+            // 
+            btn_export.Image = Properties.Resources.Export;
+            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_export.Name = "btn_export";
+            btn_export.ShowDropDownArrow = false;
+            btn_export.Size = new System.Drawing.Size(61, 20);
+            btn_export.Text = "Export";
+            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            btn_export.Click += btn_export_Click;
             // 
             // btn_remove_all
             // 
@@ -197,7 +219,7 @@ namespace LAMP.FORMS
             gau_transition_length.Dock = System.Windows.Forms.DockStyle.Fill;
             gau_transition_length.Location = new System.Drawing.Point(9, 3);
             gau_transition_length.Name = "gau_transition_length";
-            gau_transition_length.Size = new System.Drawing.Size(551, 9);
+            gau_transition_length.Size = new System.Drawing.Size(616, 9);
             gau_transition_length.TabIndex = 7;
             gau_transition_length.Value = 0D;
             // 
@@ -208,7 +230,7 @@ namespace LAMP.FORMS
             grpTransition.Dock = System.Windows.Forms.DockStyle.Fill;
             grpTransition.Location = new System.Drawing.Point(3, 3);
             grpTransition.Name = "grpTransition";
-            grpTransition.Size = new System.Drawing.Size(279, 563);
+            grpTransition.Size = new System.Drawing.Size(344, 563);
             grpTransition.TabIndex = 8;
             grpTransition.TabStop = false;
             grpTransition.Text = "Transition";
@@ -220,7 +242,7 @@ namespace LAMP.FORMS
             pnlTransition.Location = new System.Drawing.Point(3, 19);
             pnlTransition.Name = "pnlTransition";
             pnlTransition.Padding = new System.Windows.Forms.Padding(6, 3, 6, 0);
-            pnlTransition.Size = new System.Drawing.Size(273, 541);
+            pnlTransition.Size = new System.Drawing.Size(338, 541);
             pnlTransition.TabIndex = 0;
             // 
             // pnl_warning
@@ -280,7 +302,7 @@ namespace LAMP.FORMS
             // 
             splt_main.Panel2.Controls.Add(grpTransition);
             splt_main.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 9, 3);
-            splt_main.Size = new System.Drawing.Size(569, 569);
+            splt_main.Size = new System.Drawing.Size(634, 569);
             splt_main.SplitterDistance = 274;
             splt_main.TabIndex = 9;
             // 
@@ -346,41 +368,19 @@ namespace LAMP.FORMS
             pnl_gauge.Location = new System.Drawing.Point(0, 569);
             pnl_gauge.Name = "pnl_gauge";
             pnl_gauge.Padding = new System.Windows.Forms.Padding(9, 3, 9, 3);
-            pnl_gauge.Size = new System.Drawing.Size(569, 15);
+            pnl_gauge.Size = new System.Drawing.Size(634, 15);
             pnl_gauge.TabIndex = 8;
-            // 
-            // btn_export
-            // 
-            btn_export.Image = Properties.Resources.Export;
-            btn_export.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_export.Name = "btn_export";
-            btn_export.ShowDropDownArrow = false;
-            btn_export.Size = new System.Drawing.Size(61, 20);
-            btn_export.Text = "Export";
-            btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            btn_export.Click += btn_export_Click;
-            // 
-            // btn_import
-            // 
-            btn_import.Image = Properties.Resources.Import;
-            btn_import.ImageTransparentColor = System.Drawing.Color.Magenta;
-            btn_import.Name = "btn_import";
-            btn_import.ShowDropDownArrow = false;
-            btn_import.Size = new System.Drawing.Size(63, 20);
-            btn_import.Text = "Import";
-            btn_import.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            btn_import.Click += btn_import_Click;
             // 
             // TransitionsEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(569, 606);
+            ClientSize = new System.Drawing.Size(634, 606);
             Controls.Add(splt_main);
             Controls.Add(pnl_gauge);
             Controls.Add(sts_tred_status_strip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new System.Drawing.Size(585, 500);
+            MinimumSize = new System.Drawing.Size(650, 500);
             Name = "TransitionsEditor";
             Text = "Transition Editor";
             grp_tred_selection.ResumeLayout(false);
