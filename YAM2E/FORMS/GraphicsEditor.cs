@@ -80,6 +80,7 @@ public partial class GraphicsEditor : Form
     private TileViewer MetatileSet = new TileViewer() { PixelTileSize = 8 };
     private GFX LoadedGFX;
     private Metatiles LoadedMeta;
+    private bool changedMetaValue = false;
     public int GfxWidth { get; set; } = 16;
     public int GfxHeight { get; set; } = 8;
 
@@ -108,6 +109,17 @@ public partial class GraphicsEditor : Form
     private int selectedColor = 3;
 
     //Metatile Editor
+    private int? SelectedTileID
+    {
+        get => selectedTileID;
+        set
+        {
+            if (value == selectedTileID) return;
+            selectedTileID = value;
+            if (value == null || changedMetaValue) return;
+            txb_hex_input.Text = Format.IntToString((int)value);
+        }
+    }
     private int? selectedTileID = null;
     #endregion
 
@@ -145,7 +157,7 @@ public partial class GraphicsEditor : Form
             case LampTool.Select:
 
                 //selecting pressed tile
-                selectedTileID = tileNum.Y * GfxWidth + tileNum.X;
+                SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
                 GraphicsSet.SelRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
 
                 break;
@@ -214,9 +226,9 @@ public partial class GraphicsEditor : Form
                 if (selectedTileID == null) return;
 
                 //place down tile
-                if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)selectedTileID);
+                if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)SelectedTileID);
                 else if (e.Button == MouseButtons.Right) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, 0xFF);
-                else if (e.Button == MouseButtons.Middle) selectedTileID = LoadedMeta.GetMetaTile(tileNum.X, tileNum.Y);
+                else if (e.Button == MouseButtons.Middle) SelectedTileID = LoadedMeta.GetMetaTile(tileNum.X, tileNum.Y);
 
                 //invalidate
                 MetatileSet.Invalidate();
@@ -272,6 +284,13 @@ public partial class GraphicsEditor : Form
     {
         if (LoadedGFX != null) Editor.AddDataChunk((DataChunk)LoadedGFX);
         if (LoadedMeta != null) Editor.AddDataChunk((DataChunk)LoadedMeta);
+    }
+
+    private void txb_hex_input_TextChanged(object sender, EventArgs e)
+    {
+        changedMetaValue = true;
+        SelectedTileID = Format.StringToInt(txb_hex_input.Text, 0xFF);
+        changedMetaValue = false;
     }
     #endregion
 
