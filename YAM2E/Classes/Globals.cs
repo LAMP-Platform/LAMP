@@ -77,7 +77,7 @@ internal static class Globals
 
     //Data lists
     public static List<List<GameScreen>> Screens;
-    public static List<Area> Areas;
+    public static List<Area> Areas; 
     public static List<List<Enemy>> Objects;
     public static List<Transition> Transitions;
 
