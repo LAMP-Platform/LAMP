@@ -1068,7 +1068,8 @@ public static class Editor
         {
             for (int j = 0; j < 16; j++)
             {
-                g.DrawImage(Globals.Metatiles[s.Data[counter]], new Point(16 * j, 16 * i));
+                if (s.Data[counter] <= 0x7F) g.DrawImage(Globals.Metatiles[s.Data[counter]], new Point(16 * j, 16 * i));
+                else g.FillRectangle(new SolidBrush(Color.DarkRed), new Rectangle(16 * j, 16 * i, 16 * j + 16, 16 * i + 16));
                 counter++;
             }
         }

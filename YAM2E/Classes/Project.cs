@@ -18,6 +18,7 @@ public class Project
     public bool useTilesets { get; set; } = true;
     public bool useAdvancedTestSettings { get; set; } = false;
     public string ProjectSpecificROM { get; set; } = "";
+    public byte FillTile { get; set; } = 0xFF;
 
     //Transition specific Data
     public List<TransitionOpcode> TransitionOpcodes { get; set; } = GenerateStandardOpcodes();
@@ -28,7 +29,7 @@ public class Project
         {
             new TransitionOpcode("Fadeout [0](A)"),
             new TransitionOpcode("End Transition [0;1](FF)"),
-            new TransitionOpcode("Warp [0](4), to Bank [1], at Screen    X [3], and Screen Y [2]"),
+            new TransitionOpcode("Warp [0](4), to Bank [1],, at Screen    X [3], and Screen Y [2]"),
             new TransitionOpcode("Branch to a new Transition [0](9), If Metroids alive <= [2;3], Transition Index [4;7]"),
             new TransitionOpcode("Load Background Graphics [0;1](B1), from Bank [2;3], at Offset [4;7]"),
             new TransitionOpcode("Load Object Graphics [0;1](B2), from Bank [2;3], at Offset [4;7]"),

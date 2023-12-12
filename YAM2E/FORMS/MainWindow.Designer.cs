@@ -68,6 +68,8 @@ namespace LAMP
             btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             btn_about = new System.Windows.Forms.ToolStripMenuItem();
             btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
+            btn_area = new System.Windows.Forms.ToolStripDropDownButton();
+            btn_area_clear = new System.Windows.Forms.ToolStripMenuItem();
             tls_input = new Controls.Other.TilesetInput();
             lbl_area_bank = new System.Windows.Forms.Label();
             cbb_area_bank = new System.Windows.Forms.ComboBox();
@@ -141,7 +143,7 @@ namespace LAMP
             // 
             tool_strip_main_buttons.BackColor = System.Drawing.Color.Gainsboro;
             tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tool_strip_file, tool_strip_options, tool_strip_tools, tool_strip_editors, tool_strip_view, tool_strip_help });
+            tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tool_strip_file, tool_strip_options, tool_strip_tools, tool_strip_editors, tool_strip_view, btn_area, tool_strip_help });
             tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -248,14 +250,14 @@ namespace LAMP
             // btn_data_viewer
             // 
             btn_data_viewer.Name = "btn_data_viewer";
-            btn_data_viewer.Size = new System.Drawing.Size(180, 22);
+            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
             btn_data_viewer.Text = "Data Viewer";
             btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // btn_converter
             // 
             btn_converter.Name = "btn_converter";
-            btn_converter.Size = new System.Drawing.Size(180, 22);
+            btn_converter.Size = new System.Drawing.Size(136, 22);
             btn_converter.Text = "Converter";
             btn_converter.Click += btn_converter_Click;
             // 
@@ -431,6 +433,24 @@ namespace LAMP
             btn_bug_report.Size = new System.Drawing.Size(142, 22);
             btn_bug_report.Text = "Report a Bug";
             btn_bug_report.Click += btn_bug_report_Click;
+            // 
+            // btn_area
+            // 
+            btn_area.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            btn_area.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { btn_area_clear });
+            btn_area.Image = (System.Drawing.Image)resources.GetObject("btn_area.Image");
+            btn_area.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_area.Name = "btn_area";
+            btn_area.ShowDropDownArrow = false;
+            btn_area.Size = new System.Drawing.Size(35, 22);
+            btn_area.Text = "Area";
+            // 
+            // btn_area_clear
+            // 
+            btn_area_clear.Name = "btn_area_clear";
+            btn_area_clear.Size = new System.Drawing.Size(180, 22);
+            btn_area_clear.Text = "Clear";
+            btn_area_clear.Click += btn_area_clear_Click;
             // 
             // tls_input
             // 
@@ -1065,6 +1085,8 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_open_collision_editor;
         private System.Windows.Forms.ToolStripButton btn_collision_editor;
         private System.Windows.Forms.ToolStripMenuItem dataChunkManagerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton btn_area;
+        private System.Windows.Forms.ToolStripMenuItem btn_area_clear;
     }
 }
 
