@@ -120,12 +120,6 @@ namespace LAMP
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
-            btn_area_replace_inputs = new System.Windows.Forms.GroupBox();
-            btn_area_replace_new_input = new System.Windows.Forms.TextBox();
-            btn_area_replace_target_input = new System.Windows.Forms.TextBox();
-            btn_area_replace_confirm = new System.Windows.Forms.Button();
-            btn_area_replace_new_id = new System.Windows.Forms.Label();
-            btn_area_replace_target_id = new System.Windows.Forms.Label();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -144,7 +138,6 @@ namespace LAMP
             grp_object_inspector.SuspendLayout();
             pnl_data_selection.SuspendLayout();
             grp_data_selector.SuspendLayout();
-            btn_area_replace_inputs.SuspendLayout();
             SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -423,13 +416,14 @@ namespace LAMP
             btn_area_clear.Name = "btn_area_clear";
             btn_area_clear.Size = new System.Drawing.Size(180, 22);
             btn_area_clear.Text = "Clear";
-            btn_area_clear.Click += btn_area_clear_Click;
+            btn_area_clear.Click += Btn_Area_Clear_Click;
             // 
             // btn_area_replace
             // 
             btn_area_replace.Name = "btn_area_replace";
             btn_area_replace.Size = new System.Drawing.Size(180, 22);
             btn_area_replace.Text = "Replace";
+            btn_area_replace.Click += Btn_Area_Replace_Click;
             // 
             // tool_strip_help
             // 
@@ -447,14 +441,14 @@ namespace LAMP
             // 
             btn_wiki.Image = Properties.Resources.HelpTableOfContents;
             btn_wiki.Name = "btn_wiki";
-            btn_wiki.Size = new System.Drawing.Size(180, 22);
+            btn_wiki.Size = new System.Drawing.Size(142, 22);
             btn_wiki.Text = "Wiki";
             btn_wiki.Click += btn_wiki_Click;
             // 
             // btn_about
             // 
             btn_about.Name = "btn_about";
-            btn_about.Size = new System.Drawing.Size(180, 22);
+            btn_about.Size = new System.Drawing.Size(142, 22);
             btn_about.Text = "About LAMP";
             btn_about.Visible = false;
             // 
@@ -462,7 +456,7 @@ namespace LAMP
             // 
             btn_bug_report.Image = Properties.Resources.StatusError;
             btn_bug_report.Name = "btn_bug_report";
-            btn_bug_report.Size = new System.Drawing.Size(180, 22);
+            btn_bug_report.Size = new System.Drawing.Size(142, 22);
             btn_bug_report.Text = "Report a Bug";
             btn_bug_report.Click += btn_bug_report_Click;
             // 
@@ -816,7 +810,7 @@ namespace LAMP
             btnTest.TabIndex = 9;
             btnTest.Text = "Test Button";
             btnTest.UseVisualStyleBackColor = true;
-            btnTest.Click += btnTest_Click;
+            btnTest.Click += BtnTest_Click;
             // 
             // pnl_main_window_view
             // 
@@ -864,7 +858,6 @@ namespace LAMP
             // 
             // pnl_tileset_resize.Panel2
             // 
-            pnl_tileset_resize.Panel2.Controls.Add(btn_area_replace_inputs);
             pnl_tileset_resize.Panel2.Controls.Add(grp_object_inspector);
             pnl_tileset_resize.Panel2.Controls.Add(btnTest);
             pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
@@ -966,61 +959,6 @@ namespace LAMP
             Tooltip_info.ReshowDelay = 200;
             Tooltip_info.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
-            // btn_area_replace_inputs
-            // 
-            btn_area_replace_inputs.Controls.Add(btn_area_replace_new_input);
-            btn_area_replace_inputs.Controls.Add(btn_area_replace_target_input);
-            btn_area_replace_inputs.Controls.Add(btn_area_replace_confirm);
-            btn_area_replace_inputs.Controls.Add(btn_area_replace_new_id);
-            btn_area_replace_inputs.Controls.Add(btn_area_replace_target_id);
-            btn_area_replace_inputs.Location = new System.Drawing.Point(58, 137);
-            btn_area_replace_inputs.Name = "btn_area_replace_inputs";
-            btn_area_replace_inputs.Size = new System.Drawing.Size(176, 139);
-            btn_area_replace_inputs.TabIndex = 8;
-            btn_area_replace_inputs.TabStop = false;
-            btn_area_replace_inputs.Text = "Replace Tile in Area";
-            // 
-            // btn_area_replace_new_input
-            // 
-            btn_area_replace_new_input.Location = new System.Drawing.Point(120, 60);
-            btn_area_replace_new_input.Name = "btn_area_replace_new_input";
-            btn_area_replace_new_input.Size = new System.Drawing.Size(39, 23);
-            btn_area_replace_new_input.TabIndex = 4;
-            // 
-            // btn_area_replace_target_input
-            // 
-            btn_area_replace_target_input.Location = new System.Drawing.Point(120, 32);
-            btn_area_replace_target_input.Name = "btn_area_replace_target_input";
-            btn_area_replace_target_input.Size = new System.Drawing.Size(39, 23);
-            btn_area_replace_target_input.TabIndex = 3;
-            // 
-            // btn_area_replace_confirm
-            // 
-            btn_area_replace_confirm.Location = new System.Drawing.Point(18, 99);
-            btn_area_replace_confirm.Name = "btn_area_replace_confirm";
-            btn_area_replace_confirm.Size = new System.Drawing.Size(141, 23);
-            btn_area_replace_confirm.TabIndex = 2;
-            btn_area_replace_confirm.Text = "confirm";
-            btn_area_replace_confirm.UseVisualStyleBackColor = true;
-            // 
-            // btn_area_replace_new_id
-            // 
-            btn_area_replace_new_id.AutoSize = true;
-            btn_area_replace_new_id.Location = new System.Drawing.Point(18, 64);
-            btn_area_replace_new_id.Name = "btn_area_replace_new_id";
-            btn_area_replace_new_id.Size = new System.Drawing.Size(91, 15);
-            btn_area_replace_new_id.TabIndex = 1;
-            btn_area_replace_new_id.Text = "Replace with ID:";
-            // 
-            // btn_area_replace_target_id
-            // 
-            btn_area_replace_target_id.AutoSize = true;
-            btn_area_replace_target_id.Location = new System.Drawing.Point(18, 36);
-            btn_area_replace_target_id.Name = "btn_area_replace_target_id";
-            btn_area_replace_target_id.Size = new System.Drawing.Size(77, 15);
-            btn_area_replace_target_id.TabIndex = 0;
-            btn_area_replace_target_id.Text = "Target Tile ID:";
-            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -1063,8 +1001,6 @@ namespace LAMP
             pnl_data_selection.ResumeLayout(false);
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
-            btn_area_replace_inputs.ResumeLayout(false);
-            btn_area_replace_inputs.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1160,12 +1096,6 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton btn_area;
         private System.Windows.Forms.ToolStripMenuItem btn_area_clear;
         private System.Windows.Forms.ToolStripMenuItem btn_area_replace;
-        private System.Windows.Forms.GroupBox btn_area_replace_inputs;
-        private System.Windows.Forms.TextBox btn_area_replace_new_input;
-        private System.Windows.Forms.TextBox btn_area_replace_target_input;
-        private System.Windows.Forms.Button btn_area_replace_confirm;
-        private System.Windows.Forms.Label btn_area_replace_new_id;
-        private System.Windows.Forms.Label btn_area_replace_target_id;
     }
 }
 

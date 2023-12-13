@@ -1279,11 +1279,11 @@ public partial class MainWindow : Form
 
     #endregion
 
-    private void btnTest_Click(object sender, EventArgs e)
+    private void BtnTest_Click(object sender, EventArgs e)
     {
     }
 
-    private void btn_area_clear_Click(object sender, EventArgs e)
+    private void Btn_Area_Clear_Click(object sender, EventArgs e)
     {
         //Clearing all area screens
         List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
@@ -1293,6 +1293,27 @@ public partial class MainWindow : Form
             for (int i = 0; i < screen.Data.Length;  i++)
             {
                 screen.Data[i] = Globals.LoadedProject.FillTile;
+            }
+        }
+
+        //Redraw area
+        Editor.DrawAreaBank(cbb_area_bank.SelectedIndex, Globals.AreaBank, new Point(0, 0));
+        Room.BackgroundImage = Globals.AreaBank;
+        Room.Invalidate();
+    }
+    private void Btn_Area_Replace_Click(object sender, EventArgs e)
+    {
+        //Clearing all area screens
+        List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
+        byte targetTile = 0x08;
+        byte newTile = 0x00;
+
+        foreach (GameScreen screen in screenList)
+        {
+            for (int i = 0; i < screen.Data.Length; i++)
+            {
+                byte curTile = screen.Data[i];
+                if (curTile == targetTile) screen.Data[i] = newTile; 
             }
         }
 
