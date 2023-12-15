@@ -1290,7 +1290,7 @@ public partial class MainWindow : Form
 
         foreach (GameScreen screen in screenList)
         {
-            for (int i = 0; i < screen.Data.Length;  i++)
+            for (int i = 0; i < screen.Data.Length; i++)
             {
                 screen.Data[i] = Globals.LoadedProject.FillTile;
             }
