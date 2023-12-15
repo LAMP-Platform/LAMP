@@ -76,5 +76,13 @@ namespace LAMP.FORMS
             tile_viewer.RedRect = new Rectangle(selStart.X, selStart.Y, tile_viewer.TileSize - 1, tile_viewer.TileSize - 1);
         }
 
+        private void btn_replace_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do you want to replace all tiles in this area?\n" +
+                "(this action cannot be undone)",
+                "Replace All Tiles",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning) == DialogResult.No) DialogResult = DialogResult.Cancel;
+        }
     }
 }
