@@ -26,6 +26,7 @@ public partial class ProjectSettings : Form
         chb_fix_object_loading.Checked = Globals.LoadedProject.FixVerticalObjectLoading;
         rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
         txb_rom_path.Text = Globals.LoadedProject.ProjectSpecificROM;
+        txb_default_tile.Text = Format.IntToString(Globals.LoadedProject.FillTile);
 
         LoadOffsets();
         construct = false;
@@ -128,5 +129,10 @@ public partial class ProjectSettings : Form
     private void chb_fix_object_loading_CheckedChanged(object sender, EventArgs e)
     {
         Globals.LoadedProject.FixVerticalObjectLoading = chb_fix_object_loading.Checked;
+    }
+
+    private void txb_default_tile_TextChanged(object sender, EventArgs e)
+    {
+        Globals.LoadedProject.FillTile = (byte)Format.StringToInt(txb_default_tile.Text, 0xFF);
     }
 }

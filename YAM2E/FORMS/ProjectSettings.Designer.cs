@@ -38,6 +38,8 @@
             tlt_info = new System.Windows.Forms.ToolTip(components);
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             grp_tileset_usage = new System.Windows.Forms.GroupBox();
+            txb_default_tile = new System.Windows.Forms.TextBox();
+            lbl_default_tile = new System.Windows.Forms.Label();
             rbt_use_tilesets = new System.Windows.Forms.RadioButton();
             rbt_use_offsets = new System.Windows.Forms.RadioButton();
             txb_rom_path = new System.Windows.Forms.TextBox();
@@ -58,10 +60,10 @@
             grp_compiler.Controls.Add(chb_fix_object_loading);
             grp_compiler.Controls.Add(chb_rmv_mt_o_list);
             grp_compiler.Dock = System.Windows.Forms.DockStyle.Fill;
-            grp_compiler.Location = new System.Drawing.Point(6, 152);
+            grp_compiler.Location = new System.Drawing.Point(6, 178);
             grp_compiler.Name = "grp_compiler";
             grp_compiler.Padding = new System.Windows.Forms.Padding(6);
-            grp_compiler.Size = new System.Drawing.Size(398, 366);
+            grp_compiler.Size = new System.Drawing.Size(398, 340);
             grp_compiler.TabIndex = 0;
             grp_compiler.TabStop = false;
             grp_compiler.Text = "Compiling";
@@ -82,7 +84,7 @@
             pnl_offsets.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_offsets.Location = new System.Drawing.Point(6, 60);
             pnl_offsets.Name = "pnl_offsets";
-            pnl_offsets.Size = new System.Drawing.Size(386, 300);
+            pnl_offsets.Size = new System.Drawing.Size(386, 274);
             pnl_offsets.TabIndex = 1;
             // 
             // chb_fix_object_loading
@@ -129,20 +131,39 @@
             // 
             // grp_tileset_usage
             // 
+            grp_tileset_usage.Controls.Add(txb_default_tile);
+            grp_tileset_usage.Controls.Add(lbl_default_tile);
             grp_tileset_usage.Controls.Add(rbt_use_tilesets);
             grp_tileset_usage.Controls.Add(rbt_use_offsets);
             grp_tileset_usage.Dock = System.Windows.Forms.DockStyle.Top;
             grp_tileset_usage.Location = new System.Drawing.Point(6, 75);
             grp_tileset_usage.Name = "grp_tileset_usage";
-            grp_tileset_usage.Size = new System.Drawing.Size(398, 77);
+            grp_tileset_usage.Size = new System.Drawing.Size(398, 103);
             grp_tileset_usage.TabIndex = 2;
             grp_tileset_usage.TabStop = false;
             grp_tileset_usage.Text = "Tileset Usage";
             // 
+            // txb_default_tile
+            // 
+            txb_default_tile.Location = new System.Drawing.Point(81, 71);
+            txb_default_tile.Name = "txb_default_tile";
+            txb_default_tile.Size = new System.Drawing.Size(32, 23);
+            txb_default_tile.TabIndex = 3;
+            txb_default_tile.TextChanged += txb_default_tile_TextChanged;
+            // 
+            // lbl_default_tile
+            // 
+            lbl_default_tile.AutoSize = true;
+            lbl_default_tile.Location = new System.Drawing.Point(6, 74);
+            lbl_default_tile.Name = "lbl_default_tile";
+            lbl_default_tile.Size = new System.Drawing.Size(69, 15);
+            lbl_default_tile.TabIndex = 2;
+            lbl_default_tile.Text = "Default Tile:";
+            // 
             // rbt_use_tilesets
             // 
             rbt_use_tilesets.AutoSize = true;
-            rbt_use_tilesets.Location = new System.Drawing.Point(6, 47);
+            rbt_use_tilesets.Location = new System.Drawing.Point(6, 48);
             rbt_use_tilesets.Name = "rbt_use_tilesets";
             rbt_use_tilesets.Size = new System.Drawing.Size(141, 19);
             rbt_use_tilesets.TabIndex = 1;
@@ -256,5 +277,7 @@
         private System.Windows.Forms.Panel pnl_offsets;
         private Controls.Other.Seperator sep_writeOffsetsSeperator;
         private System.Windows.Forms.CheckBox chb_fix_object_loading;
+        private System.Windows.Forms.Label lbl_default_tile;
+        private System.Windows.Forms.TextBox txb_default_tile;
     }
 }

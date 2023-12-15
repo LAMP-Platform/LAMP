@@ -58,6 +58,7 @@ public partial class MainWindow : Form
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
     public static Enemy heldObject = null;
+    private byte selectedTileId = 0;
 
     //Main Editor vars
     public static bool EditingTiles { get; set; } = true;
@@ -640,7 +641,7 @@ public partial class MainWindow : Form
                 //Setting start of selection
                 SelectionStart = tile;
                 Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, Room.PixelTileSize, Room.PixelTileSize);
-
+                if (e.Button == MouseButtons.Right) selectedTileId = Editor.GetTileFromXY(tile.X, tile.Y, cbb_area_bank.SelectedIndex);
                 break;
 
             case (LampTool.Fill): //fill everything in with one tile
@@ -733,7 +734,7 @@ public partial class MainWindow : Form
 
             case (LampTool.Select): //Selecting tiles directly from the room window
 
-                if ((e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) || RoomSelectedTile == tile) break;
+                if ((e.Button != MouseButtons.Left || e.Button == MouseButtons.Right) || RoomSelectedTile == tile) break;
                 RoomSelectedTile = tile;
 
                 int width = Math.Abs((tile.X) - SelectionStart.X) + Room.PixelTileSize; //Width and Height of the Selection
@@ -933,6 +934,7 @@ public partial class MainWindow : Form
 
         Room.ContextMenuStrip = null;
         if (toolbar_room.SelectedTool == LampTool.Move) Room.ContextMenuStrip = ctx_room_context_menu;
+        if (toolbar_room.SelectedTool == LampTool.Select) Room.ContextMenuStrip = ctx_select_tool;
     }
     #endregion
 
@@ -1279,12 +1281,18 @@ public partial class MainWindow : Form
 
     #endregion
 
-    private void btnTest_Click(object sender, EventArgs e)
+    private void BtnTest_Click(object sender, EventArgs e)
     {
     }
 
-    private void btn_area_clear_Click(object sender, EventArgs e)
+    private void Btn_Area_Clear_Click(object sender, EventArgs e)
     {
+        if (MessageBox.Show("Do you want to erase all tiles in this area?\n" +
+            "(this action cannot be undone)", 
+            "Clear All Tiles", 
+            MessageBoxButtons.YesNo, 
+            MessageBoxIcon.Warning) == DialogResult.No) { return; }
+
         //Clearing all area screens
         List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
 
@@ -1293,6 +1301,31 @@ public partial class MainWindow : Form
             for (int i = 0; i < screen.Data.Length; i++)
             {
                 screen.Data[i] = Globals.LoadedProject.FillTile;
+            }
+        }
+
+        //Redraw area
+        Editor.DrawAreaBank(cbb_area_bank.SelectedIndex, Globals.AreaBank, new Point(0, 0));
+        Room.BackgroundImage = Globals.AreaBank;
+        Room.Invalidate();
+    }
+    private void Btn_Area_Replace_Click(object sender, EventArgs e)
+    {
+        //Replacing all instances in an area of a selected tile with another tile
+        List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
+        byte targetTile = selectedTileId;
+        TileSelectDialog dialog = new TileSelectDialog(selectedTileset);
+
+        if (dialog.ShowDialog() == DialogResult.Cancel) { return; }
+
+        byte newTile = (byte)dialog.Result;
+
+        foreach (GameScreen screen in screenList)
+        {
+            for (int i = 0; i < screen.Data.Length; i++)
+            {
+                byte curTile = screen.Data[i];
+                if (curTile == targetTile) screen.Data[i] = newTile; 
             }
         }
 
