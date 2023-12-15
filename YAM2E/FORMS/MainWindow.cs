@@ -58,6 +58,7 @@ public partial class MainWindow : Form
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
     public static Enemy heldObject = null;
+    private byte selectedTileId = 0;
 
     //Main Editor vars
     public static bool EditingTiles { get; set; } = true;
@@ -640,7 +641,7 @@ public partial class MainWindow : Form
                 //Setting start of selection
                 SelectionStart = tile;
                 Room.SelRect = new Rectangle(SelectionStart.X, SelectionStart.Y, Room.PixelTileSize, Room.PixelTileSize);
-
+                if (e.Button == MouseButtons.Right) selectedTileId = Editor.GetTileFromXY(tile.X, tile.Y, cbb_area_bank.SelectedIndex);
                 break;
 
             case (LampTool.Fill): //fill everything in with one tile
@@ -733,7 +734,7 @@ public partial class MainWindow : Form
 
             case (LampTool.Select): //Selecting tiles directly from the room window
 
-                if ((e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) || RoomSelectedTile == tile) break;
+                if ((e.Button != MouseButtons.Left || e.Button == MouseButtons.Right) || RoomSelectedTile == tile) break;
                 RoomSelectedTile = tile;
 
                 int width = Math.Abs((tile.X) - SelectionStart.X) + Room.PixelTileSize; //Width and Height of the Selection
@@ -933,6 +934,7 @@ public partial class MainWindow : Form
 
         Room.ContextMenuStrip = null;
         if (toolbar_room.SelectedTool == LampTool.Move) Room.ContextMenuStrip = ctx_room_context_menu;
+        if (toolbar_room.SelectedTool == LampTool.Select) Room.ContextMenuStrip = ctx_select_tool;
     }
     #endregion
 
@@ -1311,7 +1313,7 @@ public partial class MainWindow : Form
     {
         //Clearing all area screens
         List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
-        byte targetTile = 0x08;
+        byte targetTile = selectedTileId;
         byte newTile = 0x00;
 
         foreach (GameScreen screen in screenList)

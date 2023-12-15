@@ -120,6 +120,8 @@ namespace LAMP
             pnl_data_selection = new System.Windows.Forms.Panel();
             grp_data_selector = new System.Windows.Forms.GroupBox();
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
+            ctx_select_tool = new System.Windows.Forms.ContextMenuStrip(components);
+            replaceSelectedTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -138,6 +140,7 @@ namespace LAMP
             grp_object_inspector.SuspendLayout();
             pnl_data_selection.SuspendLayout();
             grp_data_selector.SuspendLayout();
+            ctx_select_tool.SuspendLayout();
             SuspendLayout();
             // 
             // tool_strip_main_buttons
@@ -414,14 +417,14 @@ namespace LAMP
             // btn_area_clear
             // 
             btn_area_clear.Name = "btn_area_clear";
-            btn_area_clear.Size = new System.Drawing.Size(180, 22);
+            btn_area_clear.Size = new System.Drawing.Size(115, 22);
             btn_area_clear.Text = "Clear";
             btn_area_clear.Click += Btn_Area_Clear_Click;
             // 
             // btn_area_replace
             // 
             btn_area_replace.Name = "btn_area_replace";
-            btn_area_replace.Size = new System.Drawing.Size(180, 22);
+            btn_area_replace.Size = new System.Drawing.Size(115, 22);
             btn_area_replace.Text = "Replace";
             btn_area_replace.Click += Btn_Area_Replace_Click;
             // 
@@ -959,6 +962,18 @@ namespace LAMP
             Tooltip_info.ReshowDelay = 200;
             Tooltip_info.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // ctx_select_tool
+            // 
+            ctx_select_tool.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { replaceSelectedTileToolStripMenuItem });
+            ctx_select_tool.Name = "ctx_select_tool";
+            ctx_select_tool.Size = new System.Drawing.Size(184, 48);
+            // 
+            // replaceSelectedTileToolStripMenuItem
+            // 
+            replaceSelectedTileToolStripMenuItem.Name = "replaceSelectedTileToolStripMenuItem";
+            replaceSelectedTileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            replaceSelectedTileToolStripMenuItem.Text = "Replace Selected Tile";
+            // 
             // MainWindow
             // 
             AllowDrop = true;
@@ -1001,6 +1016,7 @@ namespace LAMP
             pnl_data_selection.ResumeLayout(false);
             grp_data_selector.ResumeLayout(false);
             grp_data_selector.PerformLayout();
+            ctx_select_tool.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1096,6 +1112,8 @@ namespace LAMP
         private System.Windows.Forms.ToolStripDropDownButton btn_area;
         private System.Windows.Forms.ToolStripMenuItem btn_area_clear;
         private System.Windows.Forms.ToolStripMenuItem btn_area_replace;
+        private System.Windows.Forms.ContextMenuStrip ctx_select_tool;
+        private System.Windows.Forms.ToolStripMenuItem replaceSelectedTileToolStripMenuItem;
     }
 }
 
