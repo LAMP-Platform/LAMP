@@ -432,7 +432,7 @@ namespace LAMP
             btn_area_clear.Name = "btn_area_clear";
             btn_area_clear.Size = new System.Drawing.Size(180, 22);
             btn_area_clear.Text = "Clear";
-            btn_area_clear.Click += btn_area_clear_Click;
+            btn_area_clear.Click += Btn_Area_Replace_Click;
             // 
             // tool_strip_help
             // 
