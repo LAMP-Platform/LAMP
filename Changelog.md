@@ -1,5 +1,5 @@
 # Version R 1.0
-### Released: XX.XX.2023
+### Released: XX.XX.202X
 **Changes:**
 * Transition Editor rework
 * Transitions can be named
@@ -20,6 +20,7 @@
 * Removed redundant data from the project files
 * Added special options to the Save Editor
 * Added a Data Chunk Manager
+* Added the ability to clear an entire area
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty

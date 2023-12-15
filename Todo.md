@@ -1,13 +1,14 @@
-﻿# Feature Ideas
+﻿# 'til next release
+* Add the export/import to data chunk viewer
+* Finish Graphics Editor
+* Squash bugs
+
+# Feature Ideas
  * Undo / Redo
  * Go through Transition
- * Graphics Editor
- * Tileset Editor
  * Screen placing tool
  * Unique screen view
- * Clear screen / area data
  * better object displaying
- * Tweaks Editor
  * Compile to IPS
 
 # Outside Editor things
