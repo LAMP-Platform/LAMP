@@ -1311,10 +1311,14 @@ public partial class MainWindow : Form
     }
     private void Btn_Area_Replace_Click(object sender, EventArgs e)
     {
-        //Clearing all area screens
+        //Replacing all instances in an area of a selected tile with another tile
         List<GameScreen> screenList = Globals.Screens[cbb_area_bank.SelectedIndex];
         byte targetTile = selectedTileId;
-        byte newTile = 0x00;
+        TileSelectDialog dialog = new TileSelectDialog(selectedTileset);
+
+        if (dialog.ShowDialog() == DialogResult.Cancel) { return; }
+
+        byte newTile = (byte)dialog.Result;
 
         foreach (GameScreen screen in screenList)
         {
