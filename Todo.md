@@ -6,6 +6,7 @@
 # Feature Ideas
  * Undo / Redo
  * Go through Transition
+ * Screen preview in screen settings
  * Screen placing tool
  * Unique screen view
  * better object displaying
