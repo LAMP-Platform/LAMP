@@ -93,6 +93,7 @@
             btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             toolTip.SetToolTip(btn_export, "Export");
             btn_export.UseVisualStyleBackColor = true;
+            btn_export.Click += btn_export_Click;
             // 
             // chb_include
             // 

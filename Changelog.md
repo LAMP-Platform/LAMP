@@ -21,6 +21,7 @@
 * Added special options to the Save Editor
 * Added a Data Chunk Manager
 * Added the ability to clear an entire area
+* Added the ability to replace tiles with a different tile
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty

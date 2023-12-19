@@ -1,5 +1,4 @@
 ﻿# 'til next release
-* Add the export/import to data chunk viewer
 * Finish Graphics Editor
 * Squash bugs
 
