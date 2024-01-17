@@ -52,4 +52,5 @@ dotnet publish -r win-x86 -c release
 
 #
 
-For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the [Development Discord](https://discord.gg/YT6M2rAqqS)!
+For assistance and help refer to the [LAMP Wiki](https://github.com/ConConner/LAMP/wiki) or join the [Development Discord](https://discord.gg/YT6M2rAqqS)!  
+Want to share a Metroid 2 or other Metroid hack?  Join the [Metroid Construction Community](https://metroidconstruction.com/) or [Metroid Construction Discord](https://discord.gg/xDwaaqa)!
