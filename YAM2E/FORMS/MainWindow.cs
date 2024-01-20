@@ -1288,9 +1288,9 @@ public partial class MainWindow : Form
     private void Btn_Area_Clear_Click(object sender, EventArgs e)
     {
         if (MessageBox.Show("Do you want to erase all tiles in this area?\n" +
-            "(this action cannot be undone)", 
-            "Clear All Tiles", 
-            MessageBoxButtons.YesNo, 
+            "(this action cannot be undone)",
+            "Clear All Tiles",
+            MessageBoxButtons.YesNo,
             MessageBoxIcon.Warning) == DialogResult.No) { return; }
 
         //Clearing all area screens
@@ -1325,7 +1325,7 @@ public partial class MainWindow : Form
             for (int i = 0; i < screen.Data.Length; i++)
             {
                 byte curTile = screen.Data[i];
-                if (curTile == targetTile) screen.Data[i] = newTile; 
+                if (curTile == targetTile) screen.Data[i] = newTile;
             }
         }
 
