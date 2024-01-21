@@ -394,6 +394,8 @@ public static class Editor
     {
         try
         {
+            if (!Path.IsPathRooted(path)) path = Path.Combine(Globals.ProjDirectory, path);
+
             ROM = new Rom(path);
             return true;
         }

@@ -111,7 +111,10 @@ public partial class ProjectSettings : Form
     {
         Globals.LoadedProject.ProjectSpecificROM = txb_rom_path.Text;
 
-        if (!File.Exists(Globals.LoadedProject.ProjectSpecificROM))
+        string checkPath = txb_rom_path.Text;
+        if (!Path.IsPathRooted(Globals.LoadedProject.ProjectSpecificROM)) checkPath = Path.Combine(Globals.ProjDirectory, txb_rom_path.Text);
+
+        if (!File.Exists(checkPath))
         {
             Editor.LoadRomFromPath(Globals.RomPath, true);
             return;
