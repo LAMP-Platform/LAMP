@@ -25,7 +25,7 @@ public class Pointer
         bOffset = pointer;
 
         //calculating direct offset
-        int offset = (int)((pointer - 0x4000) + bank * 0x4000);
+        int offset = (int)((pointer - (bank == 0 ? 0x0 : 0x4000)) + bank * 0x4000);
         Offset = offset;
     }
 

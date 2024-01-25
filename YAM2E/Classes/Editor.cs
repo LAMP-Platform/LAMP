@@ -15,6 +15,7 @@ using System.Drawing.Drawing2D;
 using LAMP.Controls;
 using LAMP.Properties;
 using System.Net.Http;
+using LAMP.Utilities;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -833,6 +834,27 @@ public static class Editor
             }
         }
         Globals.DataChunks.Add(chunk);
+    }
+
+    /// <summary>
+    /// Takes a RGBDS generated symbol file and turns it into a dictionary with proper pointer objects
+    /// </summary>
+    /// <param name="path">Path to a .sym file</param>
+    /// <returns></returns>
+    public static Dictionary<string, Pointer> ConvertSymbolToPointer(string path)
+    {
+        Dictionary<string, Pointer> result = new();
+
+        string file = File.ReadAllText(path);
+        string[] lines = file.Split('\n');
+        for (int i = 1; i < lines.Length - 1; i++)
+        {
+            lines[i] = lines[i].Trim();
+            string[] keyValue = lines[i].Split(' ');
+            result.Add(keyValue[1], Format.StringToPointer(keyValue[0]));
+        }
+
+        return result;
     }
 
     #region Borders
