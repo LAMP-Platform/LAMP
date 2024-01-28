@@ -33,6 +33,7 @@
             grp_compiler = new System.Windows.Forms.GroupBox();
             sep_writeOffsetsSeperator = new Controls.Other.Seperator();
             pnl_offsets = new System.Windows.Forms.Panel();
+            chb_assemble_compile = new System.Windows.Forms.CheckBox();
             chb_fix_object_loading = new System.Windows.Forms.CheckBox();
             chb_rmv_mt_o_list = new System.Windows.Forms.CheckBox();
             tlt_info = new System.Windows.Forms.ToolTip(components);
@@ -46,6 +47,9 @@
             btn_select_rom = new System.Windows.Forms.Button();
             lbl_specific_rom_path = new System.Windows.Forms.Label();
             grp_project_specific_rom = new System.Windows.Forms.GroupBox();
+            lbl_disassembly_path = new System.Windows.Forms.Label();
+            btn_select_disassembly = new System.Windows.Forms.Button();
+            txb_disassembly_path = new System.Windows.Forms.TextBox();
             pnl_main = new System.Windows.Forms.Panel();
             grp_compiler.SuspendLayout();
             grp_tileset_usage.SuspendLayout();
@@ -57,13 +61,14 @@
             // 
             grp_compiler.Controls.Add(sep_writeOffsetsSeperator);
             grp_compiler.Controls.Add(pnl_offsets);
+            grp_compiler.Controls.Add(chb_assemble_compile);
             grp_compiler.Controls.Add(chb_fix_object_loading);
             grp_compiler.Controls.Add(chb_rmv_mt_o_list);
             grp_compiler.Dock = System.Windows.Forms.DockStyle.Fill;
-            grp_compiler.Location = new System.Drawing.Point(6, 178);
+            grp_compiler.Location = new System.Drawing.Point(6, 221);
             grp_compiler.Name = "grp_compiler";
             grp_compiler.Padding = new System.Windows.Forms.Padding(6);
-            grp_compiler.Size = new System.Drawing.Size(398, 340);
+            grp_compiler.Size = new System.Drawing.Size(398, 364);
             grp_compiler.TabIndex = 0;
             grp_compiler.TabStop = false;
             grp_compiler.Text = "Compiling";
@@ -72,7 +77,7 @@
             // 
             sep_writeOffsetsSeperator.BackColor = System.Drawing.SystemColors.ControlDark;
             sep_writeOffsetsSeperator.Dock = System.Windows.Forms.DockStyle.Top;
-            sep_writeOffsetsSeperator.Location = new System.Drawing.Point(6, 60);
+            sep_writeOffsetsSeperator.Location = new System.Drawing.Point(6, 79);
             sep_writeOffsetsSeperator.MaximumSize = new System.Drawing.Size(0, 1);
             sep_writeOffsetsSeperator.Name = "sep_writeOffsetsSeperator";
             sep_writeOffsetsSeperator.Size = new System.Drawing.Size(386, 1);
@@ -82,10 +87,25 @@
             // 
             pnl_offsets.AutoScroll = true;
             pnl_offsets.Dock = System.Windows.Forms.DockStyle.Fill;
-            pnl_offsets.Location = new System.Drawing.Point(6, 60);
+            pnl_offsets.Location = new System.Drawing.Point(6, 79);
             pnl_offsets.Name = "pnl_offsets";
-            pnl_offsets.Size = new System.Drawing.Size(386, 274);
+            pnl_offsets.Size = new System.Drawing.Size(386, 279);
             pnl_offsets.TabIndex = 1;
+            // 
+            // chb_assemble_compile
+            // 
+            chb_assemble_compile.AutoSize = true;
+            chb_assemble_compile.Dock = System.Windows.Forms.DockStyle.Top;
+            chb_assemble_compile.Enabled = false;
+            chb_assemble_compile.Location = new System.Drawing.Point(6, 60);
+            chb_assemble_compile.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            chb_assemble_compile.Name = "chb_assemble_compile";
+            chb_assemble_compile.Size = new System.Drawing.Size(386, 19);
+            chb_assemble_compile.TabIndex = 9;
+            chb_assemble_compile.Text = "Build assembly before compilation";
+            tlt_info.SetToolTip(chb_assemble_compile, "If the object data gets optimised, it is reccommended\r\nto use the HEX tweak that changes vertical object\r\nloading!");
+            chb_assemble_compile.UseVisualStyleBackColor = true;
+            chb_assemble_compile.CheckedChanged += btn_assemble_compile_CheckedChanged;
             // 
             // chb_fix_object_loading
             // 
@@ -123,7 +143,7 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 524);
+            statusStrip1.Location = new System.Drawing.Point(0, 591);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new System.Drawing.Size(410, 22);
             statusStrip1.TabIndex = 1;
@@ -136,7 +156,7 @@
             grp_tileset_usage.Controls.Add(rbt_use_tilesets);
             grp_tileset_usage.Controls.Add(rbt_use_offsets);
             grp_tileset_usage.Dock = System.Windows.Forms.DockStyle.Top;
-            grp_tileset_usage.Location = new System.Drawing.Point(6, 75);
+            grp_tileset_usage.Location = new System.Drawing.Point(6, 118);
             grp_tileset_usage.Name = "grp_tileset_usage";
             grp_tileset_usage.Size = new System.Drawing.Size(398, 103);
             grp_tileset_usage.TabIndex = 2;
@@ -209,22 +229,54 @@
             lbl_specific_rom_path.AutoSize = true;
             lbl_specific_rom_path.Location = new System.Drawing.Point(6, 19);
             lbl_specific_rom_path.Name = "lbl_specific_rom_path";
-            lbl_specific_rom_path.Size = new System.Drawing.Size(64, 15);
+            lbl_specific_rom_path.Size = new System.Drawing.Size(148, 15);
             lbl_specific_rom_path.TabIndex = 3;
-            lbl_specific_rom_path.Text = "ROM Path:";
+            lbl_specific_rom_path.Text = "Project specifig ROM Path:";
             // 
             // grp_project_specific_rom
             // 
+            grp_project_specific_rom.Controls.Add(lbl_disassembly_path);
+            grp_project_specific_rom.Controls.Add(btn_select_disassembly);
+            grp_project_specific_rom.Controls.Add(txb_disassembly_path);
             grp_project_specific_rom.Controls.Add(lbl_specific_rom_path);
             grp_project_specific_rom.Controls.Add(btn_select_rom);
             grp_project_specific_rom.Controls.Add(txb_rom_path);
             grp_project_specific_rom.Dock = System.Windows.Forms.DockStyle.Top;
             grp_project_specific_rom.Location = new System.Drawing.Point(6, 3);
             grp_project_specific_rom.Name = "grp_project_specific_rom";
-            grp_project_specific_rom.Size = new System.Drawing.Size(398, 72);
+            grp_project_specific_rom.Size = new System.Drawing.Size(398, 115);
             grp_project_specific_rom.TabIndex = 6;
             grp_project_specific_rom.TabStop = false;
-            grp_project_specific_rom.Text = "Project specific ROM";
+            grp_project_specific_rom.Text = "Paths";
+            // 
+            // lbl_disassembly_path
+            // 
+            lbl_disassembly_path.AutoSize = true;
+            lbl_disassembly_path.Location = new System.Drawing.Point(6, 63);
+            lbl_disassembly_path.Name = "lbl_disassembly_path";
+            lbl_disassembly_path.Size = new System.Drawing.Size(102, 15);
+            lbl_disassembly_path.TabIndex = 6;
+            lbl_disassembly_path.Text = "Disassembly Path:";
+            // 
+            // btn_select_disassembly
+            // 
+            btn_select_disassembly.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_select_disassembly.Image = (System.Drawing.Image)resources.GetObject("btn_select_disassembly.Image");
+            btn_select_disassembly.Location = new System.Drawing.Point(369, 81);
+            btn_select_disassembly.Name = "btn_select_disassembly";
+            btn_select_disassembly.Size = new System.Drawing.Size(23, 23);
+            btn_select_disassembly.TabIndex = 8;
+            btn_select_disassembly.UseVisualStyleBackColor = true;
+            btn_select_disassembly.Click += btn_select_disassembly_Click;
+            // 
+            // txb_disassembly_path
+            // 
+            txb_disassembly_path.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            txb_disassembly_path.Location = new System.Drawing.Point(6, 81);
+            txb_disassembly_path.Name = "txb_disassembly_path";
+            txb_disassembly_path.Size = new System.Drawing.Size(357, 23);
+            txb_disassembly_path.TabIndex = 7;
+            txb_disassembly_path.TextChanged += txb_disassembly_path_TextChanged;
             // 
             // pnl_main
             // 
@@ -235,14 +287,14 @@
             pnl_main.Location = new System.Drawing.Point(0, 0);
             pnl_main.Name = "pnl_main";
             pnl_main.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            pnl_main.Size = new System.Drawing.Size(410, 524);
+            pnl_main.Size = new System.Drawing.Size(410, 591);
             pnl_main.TabIndex = 7;
             // 
             // ProjectSettings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(410, 546);
+            ClientSize = new System.Drawing.Size(410, 613);
             Controls.Add(pnl_main);
             Controls.Add(statusStrip1);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
@@ -279,5 +331,9 @@
         private System.Windows.Forms.CheckBox chb_fix_object_loading;
         private System.Windows.Forms.Label lbl_default_tile;
         private System.Windows.Forms.TextBox txb_default_tile;
+        private System.Windows.Forms.Label lbl_disassembly_path;
+        private System.Windows.Forms.Button btn_select_disassembly;
+        private System.Windows.Forms.TextBox txb_disassembly_path;
+        private System.Windows.Forms.CheckBox chb_assemble_compile;
     }
 }

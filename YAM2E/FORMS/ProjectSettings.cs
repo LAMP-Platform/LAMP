@@ -26,7 +26,9 @@ public partial class ProjectSettings : Form
         chb_fix_object_loading.Checked = Globals.LoadedProject.FixVerticalObjectLoading;
         rbt_use_tilesets.Checked = Globals.LoadedProject.useTilesets;
         txb_rom_path.Text = Globals.LoadedProject.ProjectSpecificROM;
+        txb_disassembly_path.Text = Globals.LoadedProject.DisassemblyPath;
         txb_default_tile.Text = Format.IntToString(Globals.LoadedProject.FillTile);
+        chb_assemble_compile.Checked = Globals.LoadedProject.BuildAssemblyWhenCompiling;
 
         LoadOffsets();
         construct = false;
@@ -112,7 +114,7 @@ public partial class ProjectSettings : Form
         Globals.LoadedProject.ProjectSpecificROM = txb_rom_path.Text;
 
         string checkPath = txb_rom_path.Text;
-        if (!Path.IsPathRooted(Globals.LoadedProject.ProjectSpecificROM)) checkPath = Path.Combine(Globals.ProjDirectory, txb_rom_path.Text);
+        if (!Path.IsPathRooted(checkPath)) checkPath = Path.Combine(Globals.ProjDirectory, checkPath);
 
         if (!File.Exists(checkPath))
         {
@@ -137,5 +139,29 @@ public partial class ProjectSettings : Form
     private void txb_default_tile_TextChanged(object sender, EventArgs e)
     {
         Globals.LoadedProject.FillTile = (byte)Format.StringToInt(txb_default_tile.Text, 0xFF);
+    }
+
+    private void btn_assemble_compile_CheckedChanged(object sender, EventArgs e)
+    {
+        Globals.LoadedProject.BuildAssemblyWhenCompiling = chb_assemble_compile.Checked;
+    }
+
+    private void txb_disassembly_path_TextChanged(object sender, EventArgs e)
+    {
+        Globals.LoadedProject.DisassemblyPath = txb_disassembly_path.Text;
+
+        string checkPath = txb_disassembly_path.Text;
+        if (!Path.IsPathRooted(checkPath)) checkPath = Path.Combine(Globals.ProjDirectory, checkPath);
+
+        chb_assemble_compile.Enabled = File.Exists(Path.Combine(checkPath, "build.bat"));
+    }
+
+    private void btn_select_disassembly_Click(object sender, EventArgs e)
+    {
+        using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+        {
+            if (fbd.ShowDialog() == DialogResult.OK && fbd.SelectedPath != String.Empty)   
+                txb_disassembly_path.Text = fbd.SelectedPath;
+        }
     }
 }

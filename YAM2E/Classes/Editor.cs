@@ -454,6 +454,8 @@ public static class Editor
     {
         try
         {
+            BuildAssembly();
+
             string filepath = ShowSaveDialog("Metroid 2: Return of Samus ROM (*.gb)|*.gb");
             if (filepath == String.Empty) return;
             SaveProject();
@@ -791,6 +793,8 @@ public static class Editor
 
         try
         {
+            BuildAssembly();
+
             string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
             ROM.Compile(tempPath);
 
@@ -855,6 +859,30 @@ public static class Editor
         }
 
         return result;
+    }
+
+    public static void BuildAssembly()
+    {
+        if (!Globals.LoadedProject.BuildAssemblyWhenCompiling) return;
+
+        //change directory
+        string oldWorkDir = Directory.GetCurrentDirectory();
+        Directory.SetCurrentDirectory(Globals.LoadedProject.DisassemblyPath);
+
+        try {
+            Process process;
+            ProcessStartInfo startInfo = new(Path.Combine(Globals.LoadedProject.DisassemblyPath, "build.bat"));
+            startInfo.Arguments = "/c";
+            //startInfo.CreateNoWindow = true;
+            process = Process.Start(startInfo);
+            process.WaitForExit();
+
+            string path = Path.Combine(Globals.LoadedProject.DisassemblyPath, "out\\M2RoS.gb");
+            if (File.Exists(path)) Editor.LoadRomFromPath(path);
+        }
+        catch {}
+
+        Directory.SetCurrentDirectory(oldWorkDir);
     }
 
     #region Borders

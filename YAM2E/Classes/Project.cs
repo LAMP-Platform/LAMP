@@ -18,6 +18,8 @@ public class Project
     public bool useTilesets { get; set; } = true;
     public bool useAdvancedTestSettings { get; set; } = false;
     public string ProjectSpecificROM { get; set; } = "";
+    public string DisassemblyPath { get; set; } = "";
+    public bool BuildAssemblyWhenCompiling { get; set; } = false;
     public byte FillTile { get; set; } = 0xFF;
 
     //Transition specific Data
