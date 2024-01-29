@@ -50,34 +50,4 @@ public class Project
         };
         return result;
     }
-
-    //Pointers to every offset that LAMP will write to
-    public Dictionary<string, Pointer> WriteOffsets { get; set; } = new();
-
-    private static Dictionary<string, Pointer> CheckDictionary = new()
-    {
-        { "Areas", new Pointer(0x24000) },
-
-        { "ObjectPointerTable", new Pointer(0x3, 0x42E0) }, //6 Tables of Pointers to object lists
-        { "ObjectDataLists", new Pointer(0x3, 0x50E0) }, //Lists of objects on screen, first entry should always be empty
-        { "ObjectDataEnd", new Pointer(0x3, 0x6300) }, //This is the first byte of new data that should not be overwritten!
-
-        { "TransitionPointerTable", new Pointer(0x5, 0x42E5) }, //Table of 512 or 0x200 pointers to transition codes
-        { "TransitionDataLists", new Pointer(0x5, 0x46E5) }, //Table of <512 Transitions, first one should stay 0xFF
-        { "TransitionDataEnd", new Pointer(0x5, 0x55A3) }, //This is the first byte of new data that should not be overwritten!
-
-        { "MetatilePointers", new Pointer(0x8, 0x7F1A) },
-        { "CollisionPointers", new Pointer(0x8, 0x7EEA) },
-        { "SolidityIndices", new Pointer(0x8, 0x7EFA) },
-
-        { "SaveData", new Pointer(0x4E64) },
-    };
-
-    /// <summary>
-    /// Checks if the offset dictionary is up to date with the <see cref="CheckDictionary"/>.
-    /// </summary>
-    public void CheckIfDictionaryUpToDate()
-    {
-        if (WriteOffsets.Count != CheckDictionary.Count) WriteOffsets = CheckDictionary;
-    }
 }

@@ -29,61 +29,8 @@ public partial class ProjectSettings : Form
         txb_disassembly_path.Text = Globals.LoadedProject.DisassemblyPath;
         txb_default_tile.Text = Format.IntToString(Globals.LoadedProject.FillTile);
         chb_assemble_compile.Checked = Globals.LoadedProject.BuildAssemblyWhenCompiling;
-
-        LoadOffsets();
+        
         construct = false;
-    }
-
-    private void LoadOffsets()
-    {
-        foreach (KeyValuePair<string, Pointer> entry in Globals.LoadedProject.WriteOffsets)
-        {
-            //create new panel which will house a label and a text box
-            Panel Base = new Panel()
-            {
-                Dock = DockStyle.Top,
-                Padding = new Padding(0, 3, 3, 0),
-                Height = 35,
-            };
-
-            //Label
-            Label label = new Label()
-            {
-                Text = entry.Key,
-                Width = 149,
-                Location = new Point(0, 9),
-            };
-
-            //Text box input
-            TextBox Input = new TextBox()
-            {
-                Text = Format.PointerToString(entry.Value),
-                Location = new Point(150, 6),
-                Tag = entry.Key,
-                //Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-            };
-
-            Input.TextChanged += OffsetValueChanged;
-            Input.Leave += LeftOffsetTextbox;
-
-            Base.Controls.Add(label);
-            Base.Controls.Add(Input);
-            pnl_offsets.Controls.Add(Base);
-        }
-    }
-
-    public void OffsetValueChanged(object sender, EventArgs e)
-    {
-        if (construct) return;
-        TextBox b = sender as TextBox;
-        Globals.LoadedProject.WriteOffsets[b.Tag.ToString()] = Format.StringToPointer(b.Text);
-    }
-
-    public void LeftOffsetTextbox(object sender, EventArgs e)
-    {
-        if (construct) return;
-        TextBox b = sender as TextBox;
-        b.Text = Format.PointerToString(Globals.LoadedProject.WriteOffsets[b.Tag.ToString()]);
     }
 
     private void chb_rmv_mt_o_list_CheckedChanged(object sender, EventArgs e)
@@ -154,6 +101,16 @@ public partial class ProjectSettings : Form
         if (!Path.IsPathRooted(checkPath)) checkPath = Path.Combine(Globals.ProjDirectory, checkPath);
 
         chb_assemble_compile.Enabled = File.Exists(Path.Combine(checkPath, "build.bat"));
+        if (!chb_assemble_compile.Enabled) chb_assemble_compile.Checked = false;
+        
+        //Loading ROM
+        string outputPath = Path.Combine(checkPath, "out\\M2RoS.gb");
+        if (File.Exists(outputPath))
+        {
+            txb_rom_path.Enabled = false;
+            Editor.LoadRomFromPath(outputPath);
+        }
+        btn_select_rom.Enabled = txb_rom_path.Enabled = !File.Exists(outputPath);
     }
 
     private void btn_select_disassembly_Click(object sender, EventArgs e)

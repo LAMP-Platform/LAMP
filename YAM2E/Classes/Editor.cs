@@ -27,7 +27,7 @@ public static class Editor
     public const string Version = "LAMP Beta 4.0";
 
     /// <summary>
-    /// The ROM as a byte array.
+    /// The current M2RoS ROM that will get used when compiling or reading Data
     /// </summary>
     public static Rom ROM { get; set; }
 
@@ -95,7 +95,6 @@ public static class Editor
         string projname = ShowSaveDialog("Project File (*.m2)|*.m2");
         if (projname == String.Empty) return;
         Globals.LoadedProject = new Project();
-        Globals.LoadedProject.CheckIfDictionaryUpToDate();
         SaveJsonObject(Globals.LoadedProject, projname);
 
         Globals.ProjName = projname;
@@ -295,7 +294,6 @@ public static class Editor
 
             //Loading Data
             Globals.LoadedProject = JsonSerializer.Deserialize<Project>(json);
-            Globals.LoadedProject.CheckIfDictionaryUpToDate();
 
             //Loading Project Specific ROM if existing
             if (Globals.LoadedProject.ProjectSpecificROM != String.Empty)
@@ -308,6 +306,19 @@ public static class Editor
                     LoadRomFromPath(Globals.RomPath);
                 }
             }
+            
+            //Loading Disassembly ROM
+            if (Globals.LoadedProject.DisassemblyPath != String.Empty)
+            {
+                if (LoadRomFromPath(Globals.LoadedProject.DisassemblyPath + "\\out\\M2RoS.gb") != true)
+                {
+                    MessageBox.Show("The standard ROM will be loaded!\n", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    LoadRomFromPath(Globals.RomPath);
+                }
+            }
+            
 
             ///METROID 2 DATA
             //Screens
@@ -861,26 +872,61 @@ public static class Editor
         return result;
     }
 
+    /// <summary>
+    /// This method will execute the build.bat of a Disassembly if a disassembly path is set and the project setting <see cref="Project.BuildAssemblyWhenCompiling"/>
+    /// is set. If a ROM can be found in the out\ directory it will get loaded as the current ROM
+    /// </summary>
+    /// <exception cref="Exception">If the build.bat cannot be found but <see cref="Project.BuildAssemblyWhenCompiling"/> is still set, it will throw an exception</exception>
     public static void BuildAssembly()
     {
         if (!Globals.LoadedProject.BuildAssemblyWhenCompiling) return;
 
+        string disassemblyPath = Globals.LoadedProject.DisassemblyPath;
+        if (!Path.IsPathRooted(disassemblyPath)) disassemblyPath = Path.Combine(Globals.ProjDirectory, disassemblyPath);
+
+        if (!File.Exists(Path.Combine(disassemblyPath, "build.bat"))) throw new Exception("No build.bat found for the Disassembly");
+        
         //change directory
         string oldWorkDir = Directory.GetCurrentDirectory();
-        Directory.SetCurrentDirectory(Globals.LoadedProject.DisassemblyPath);
+        Directory.SetCurrentDirectory(disassemblyPath);
 
-        try {
+        try
+        {
             Process process;
-            ProcessStartInfo startInfo = new(Path.Combine(Globals.LoadedProject.DisassemblyPath, "build.bat"));
-            startInfo.Arguments = "/c";
+            ProcessStartInfo startInfo = new(Path.Combine(disassemblyPath, "build.bat"));
             //startInfo.CreateNoWindow = true;
             process = Process.Start(startInfo);
             process.WaitForExit();
 
-            string path = Path.Combine(Globals.LoadedProject.DisassemblyPath, "out\\M2RoS.gb");
+            //Loading new ROM
+            string path = Path.Combine(disassemblyPath, "out\\M2RoS.gb");
             if (File.Exists(path)) Editor.LoadRomFromPath(path);
+            else
+            {
+                MessageBox.Show($"No ROM found under {disassemblyPath}.\n\n" +
+                                $"Make sure the ROM is in a directory named 'out' in your Disassembly root\n\n" +
+                                $"The currently loaded ROM will be used!",
+                    "No ROM found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
+            //Loading symbol file
+            path = Path.Combine(disassemblyPath, "out\\M2RoS.sym");
+            if (File.Exists(path)) Globals.Offsets = Editor.ConvertSymbolToPointer(path);
+            else
+            {
+                MessageBox.Show($"No symbol file found under {disassemblyPath}.\n\n" +
+                                $"Make sure the symbol file is in a directory named 'out' in your Disassembly root\n\n" +
+                                $"The standard offsets will be used!",
+                    "No symbol file found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Globals.Offsets = null;
+            }
         }
-        catch {}
+        catch (Exception e)
+        {
+            throw new Exception("Error while building the Disassembly \r\n\n" + e.ToString());
+        }
 
         Directory.SetCurrentDirectory(oldWorkDir);
     }

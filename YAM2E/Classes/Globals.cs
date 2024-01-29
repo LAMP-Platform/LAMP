@@ -113,6 +113,9 @@ internal static class Globals
     public static Save InitialSaveGame = new Save();
     public static Save TestROMSave = new Save();
 
+    //Offset dictionary
+    public static Dictionary<string, Pointer> Offsets;
+    
     #region User Settings
     public static string RomPath = Properties.programsettings.Default.ROMPath;
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;

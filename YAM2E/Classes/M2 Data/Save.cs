@@ -35,7 +35,7 @@ public class Save
     /// </summary>
     public void WriteToROM(Rom r)
     {
-        Pointer dataStart = Rom.OffsetOf["SaveData"];
+        Pointer dataStart = Rom.OffsetOf("initialSaveFile");
 
         //Samus' Position
         r.Write8(dataStart, SamusY);

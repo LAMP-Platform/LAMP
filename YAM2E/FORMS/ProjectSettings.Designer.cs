@@ -231,7 +231,7 @@
             lbl_specific_rom_path.Name = "lbl_specific_rom_path";
             lbl_specific_rom_path.Size = new System.Drawing.Size(148, 15);
             lbl_specific_rom_path.TabIndex = 3;
-            lbl_specific_rom_path.Text = "Project specifig ROM Path:";
+            lbl_specific_rom_path.Text = "Project specific ROM Path:";
             // 
             // grp_project_specific_rom
             // 
