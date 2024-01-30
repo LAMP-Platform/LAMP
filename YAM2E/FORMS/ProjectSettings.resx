@@ -120,6 +120,17 @@
   <metadata name="tlt_info.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="chb_assemble_compile.ToolTip" xml:space="preserve">
+    <value>If a disassembly path is given, LAMP will launch the
+build.bat file from that given path before compiling
+the ROM.
+
+If a ROM is present at out\M2RoS.gb it will
+load it before compiling the ROM it
+
+If a symbol file is present at out\M2RoS.sym
+it will load before compiling the ROM.</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>106, 17</value>
   </metadata>

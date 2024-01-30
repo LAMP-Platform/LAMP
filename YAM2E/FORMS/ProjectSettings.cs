@@ -29,7 +29,7 @@ public partial class ProjectSettings : Form
         txb_disassembly_path.Text = Globals.LoadedProject.DisassemblyPath;
         txb_default_tile.Text = Format.IntToString(Globals.LoadedProject.FillTile);
         chb_assemble_compile.Checked = Globals.LoadedProject.BuildAssemblyWhenCompiling;
-        
+
         construct = false;
     }
 
@@ -102,7 +102,7 @@ public partial class ProjectSettings : Form
 
         chb_assemble_compile.Enabled = File.Exists(Path.Combine(checkPath, "build.bat"));
         if (!chb_assemble_compile.Enabled) chb_assemble_compile.Checked = false;
-        
+
         //Loading ROM
         string outputPath = Path.Combine(checkPath, "out\\M2RoS.gb");
         if (File.Exists(outputPath))
@@ -117,7 +117,7 @@ public partial class ProjectSettings : Form
     {
         using (FolderBrowserDialog fbd = new FolderBrowserDialog())
         {
-            if (fbd.ShowDialog() == DialogResult.OK && fbd.SelectedPath != String.Empty)   
+            if (fbd.ShowDialog() == DialogResult.OK && fbd.SelectedPath != String.Empty)
                 txb_disassembly_path.Text = fbd.SelectedPath;
         }
     }
