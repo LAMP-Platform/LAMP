@@ -250,7 +250,7 @@
             grp_graphics.Location = new System.Drawing.Point(3, 6);
             grp_graphics.Name = "grp_graphics";
             grp_graphics.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            grp_graphics.Size = new System.Drawing.Size(544, 257);
+            grp_graphics.Size = new System.Drawing.Size(544, 233);
             grp_graphics.TabIndex = 5;
             grp_graphics.TabStop = false;
             grp_graphics.Text = "Graphics";
@@ -261,8 +261,9 @@
             pnl_graphics_view.Dock = System.Windows.Forms.DockStyle.Fill;
             pnl_graphics_view.Location = new System.Drawing.Point(6, 71);
             pnl_graphics_view.Name = "pnl_graphics_view";
-            pnl_graphics_view.Size = new System.Drawing.Size(532, 180);
+            pnl_graphics_view.Size = new System.Drawing.Size(532, 156);
             pnl_graphics_view.TabIndex = 2;
+            pnl_graphics_view.MouseDown += pnl_graphics_view_MouseDown;
             // 
             // pnl_colors
             // 
@@ -397,7 +398,7 @@
             grp_metatiles.Location = new System.Drawing.Point(3, 3);
             grp_metatiles.Name = "grp_metatiles";
             grp_metatiles.Padding = new System.Windows.Forms.Padding(6, 3, 6, 6);
-            grp_metatiles.Size = new System.Drawing.Size(544, 256);
+            grp_metatiles.Size = new System.Drawing.Size(544, 280);
             grp_metatiles.TabIndex = 6;
             grp_metatiles.TabStop = false;
             grp_metatiles.Text = "Metatiles";
@@ -408,7 +409,7 @@
             flw_metatile_view.Dock = System.Windows.Forms.DockStyle.Fill;
             flw_metatile_view.Location = new System.Drawing.Point(6, 71);
             flw_metatile_view.Name = "flw_metatile_view";
-            flw_metatile_view.Size = new System.Drawing.Size(532, 179);
+            flw_metatile_view.Size = new System.Drawing.Size(532, 203);
             flw_metatile_view.TabIndex = 0;
             // 
             // toolbar_metatiles
@@ -462,14 +463,14 @@
             pnl_gfx_view.Panel2.Controls.Add(pnl_apply);
             pnl_gfx_view.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 9, 6);
             pnl_gfx_view.Size = new System.Drawing.Size(556, 565);
-            pnl_gfx_view.SplitterDistance = 266;
+            pnl_gfx_view.SplitterDistance = 242;
             pnl_gfx_view.TabIndex = 0;
             // 
             // pnl_apply
             // 
             pnl_apply.Controls.Add(btn_apply);
             pnl_apply.Dock = System.Windows.Forms.DockStyle.Bottom;
-            pnl_apply.Location = new System.Drawing.Point(3, 259);
+            pnl_apply.Location = new System.Drawing.Point(3, 283);
             pnl_apply.Name = "pnl_apply";
             pnl_apply.Size = new System.Drawing.Size(544, 30);
             pnl_apply.TabIndex = 7;

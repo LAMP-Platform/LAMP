@@ -65,6 +65,7 @@ public class TileViewer : Control
     }
     private bool showGrid = false;
     public float[] GridPattern { get; set; }
+    public Color GridColor { get; set; } = Color.LightGray;
 
     /// <summary>
     /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>.
@@ -149,10 +150,12 @@ public class TileViewer : Control
     {
         if (redRect.X != -1) e.Graphics.DrawRectangle(TilePen, redRect);
 
-        //Drawing grid
-        if (GridPattern != null) GridPen.DashPattern = GridPattern;
+        #region Grid
         if (ShowGrid)
         {
+            Pen GridPen = new Pen(GridColor, 1);
+            if (GridPattern != null) GridPen.DashPattern = GridPattern;
+
             for (int i = 0; i < Width / TileSize; i++)
             {
                 e.Graphics.DrawLine(GridPen, i * TileSize, 0, i * TileSize, Height);
@@ -162,6 +165,7 @@ public class TileViewer : Control
                 e.Graphics.DrawLine(GridPen, 0, i * TileSize, Width, i * TileSize);
             }
         }
+        #endregion
 
         if (selRect.X == -1 || !selRect.IntersectsWith(e.ClipRectangle)) return;
 

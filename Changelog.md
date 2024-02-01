@@ -13,6 +13,7 @@
 * Object settings are now part of the main window
 * Added button to automatically assign object number
 * Project specific base ROMs
+* Disassembly Support
 * The project path on the recent files screen can now be opened in explorer
 * Added a value converter tool
 * LAMP now starts in fullscreen if closed in fullscreen

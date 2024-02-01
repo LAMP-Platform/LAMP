@@ -55,7 +55,6 @@ public partial class GraphicsEditor : Form
         GraphicsSet.MouseDown += new MouseEventHandler(GraphicsSetMouseDown);
         GraphicsSet.MouseMove += new MouseEventHandler(GraphicsSetMouseMove);
         GraphicsSet.MouseUp += new MouseEventHandler(GraphicsSetMouseUp);
-        GraphicsSet.ShowGrid = true;
 
         //Adding the TileViewer for Metatiles
         flw_metatile_view.Controls.Add(MetatileSet);
@@ -108,7 +107,7 @@ public partial class GraphicsEditor : Form
 
     //Graphics Editor
     private int selectedColor = 3;
-    private bool canPlaceMetatile => (GraphicsSet.SelectedRegion.X % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Y % GraphicsSet.PixelTileSize == 0) &&
+    private bool wholeTilesSelected => (GraphicsSet.SelectedRegion.X % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Y % GraphicsSet.PixelTileSize == 0) &&
         (GraphicsSet.SelectedRegion.Width % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Height % GraphicsSet.PixelTileSize == 0);
     private const int minimumZoom = 4;
     private Point selectionStart;
@@ -132,7 +131,8 @@ public partial class GraphicsEditor : Form
 
     #region Actions
     /// <summary>
-    /// Fills all neighbouring pixels with the same color to a new color
+    /// Fills all neighbouring pixels with the same color to a new color.
+    /// If a selection is made, it will check to stay inside
     /// </summary>
     /// <param name="p">The pixel to start the FloodFill</param>
     /// <param name="oldColor">The color that should be replaced</param>
@@ -140,7 +140,14 @@ public partial class GraphicsEditor : Form
     private void FloodFillPixel(Point p, int oldColor, int newColor)
     {
         //check if pixel in bounds
-        if (p.X < 0 || p.Y < 0 || p.X >= LoadedGFX.Width * GraphicsSet.PixelTileSize ||p.Y >= LoadedGFX.Height * GraphicsSet.PixelTileSize) return;
+        if (p.X < 0 || p.Y < 0 || p.X >= LoadedGFX.Width * GraphicsSet.PixelTileSize || p.Y >= LoadedGFX.Height * GraphicsSet.PixelTileSize) return;
+        //check if in selection
+        if (GraphicsSet.SelRect.X >= 0)
+        {
+            Rectangle checkRectangle = GraphicsSet.SelRect;
+            Point checkPoint = new Point(p.X * GraphicsSet.Zoom, p.Y * GraphicsSet.Zoom);
+            if (!checkRectangle.Contains(checkPoint)) return;
+        }
 
         //check if pixel is supposed to be edited
         if (LoadedGFX.GetPixel(p) != oldColor) return;
@@ -204,6 +211,7 @@ public partial class GraphicsEditor : Form
                     return;
                 }
                 if (e.Button != MouseButtons.Left) return;
+                if (GraphicsSet.SelRect.X >= 0 && !GraphicsSet.SelRect.Contains(e.Location)) return;
 
                 //place down pixel
                 LoadedGFX?.SetPixel(pixel, selectedColor);
@@ -221,9 +229,16 @@ public partial class GraphicsEditor : Form
 
             case LampTool.Select:
 
+                if (e.Button != MouseButtons.Left) break;
+
+                //check if a selection already exists
+                if (GraphicsSet.SelRect.X != -1)
+                {
+                }
+
                 //selecting pressed tile
                 //on lower zoom levels it will just select the tile as a whole
-                if ((GraphicsSet.Zoom <= minimumZoom && !shift) ||(GraphicsSet.Zoom > minimumZoom && shift))
+                if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift))
                 {
                     SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
 
@@ -273,6 +288,7 @@ public partial class GraphicsEditor : Form
             case LampTool.Pen:
 
                 if (e.Button != MouseButtons.Left) return;
+                if (GraphicsSet.SelRect.X >= 0 && !GraphicsSet.SelRect.Contains(e.Location)) return;
 
                 GraphicsSet.RedRect = new Rectangle(-1, -1, 1, 1);
 
@@ -300,10 +316,10 @@ public partial class GraphicsEditor : Form
 
                 //selecting pressed tile
                 //on lower zoom levels it will just select the tiles as a whole
-                if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift) )
+                if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift))
                 {
                     GraphicsSet.RedRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
-                    if (e.Button != MouseButtons.Left) break;
+                    if (e.Button != MouseButtons.Left || selectionStart.X == -1) break;
 
                     //adjust selectionStart if holding shift
                     selectionStart = new Point(selectionStart.X / GraphicsSet.TileSize * GraphicsSet.TileSize, selectionStart.Y / GraphicsSet.TileSize * GraphicsSet.TileSize);
@@ -315,17 +331,21 @@ public partial class GraphicsEditor : Form
                 }
                 //else set end coordinate of pixel selection
                 GraphicsSet.RedRect = new Rectangle(pixel.X * GraphicsSet.Zoom, pixel.Y * GraphicsSet.Zoom, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
-                if (e.Button != MouseButtons.Left) break;
+                if (e.Button != MouseButtons.Left || selectionStart.X == -1) break;
 
                 selectionEnd = new Point((pixel.X + 1) * zoom, (pixel.Y + 1) * zoom);
                 GraphicsSet.SelRect = SelectionBetweenPoints(selectionStart, selectionEnd, zoom);
-                
+
                 break;
         }
     }
     private void GraphicsSetMouseUp(object sender, MouseEventArgs e)
     {
 
+    }
+    private void pnl_graphics_view_MouseDown(object sender, MouseEventArgs e) //Clicking outside
+    {
+        if (toolbar_graphics.SelectedTool == LampTool.Select) GraphicsSet.SelRect = new Rectangle(-1, -1, 0, 0);
     }
     #endregion
 
@@ -344,7 +364,7 @@ public partial class GraphicsEditor : Form
             case LampTool.Pen:
 
                 if (selectedTileID == null) return;
-                if (!canPlaceMetatile) return;
+                if (!wholeTilesSelected) return;
 
                 //place down tile
                 if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)SelectedTileID);
@@ -449,6 +469,7 @@ public partial class GraphicsEditor : Form
             MetatileSet.BackgroundImage = new Bitmap(1, 1);
         }
     }
+
     /// <summary>
     /// Toolbar for the GFX Editor
     /// </summary>
@@ -462,11 +483,10 @@ public partial class GraphicsEditor : Form
                 break;
         }
     }
-
     private void toolbar_graphics_ToolSwitched(object sender, EventArgs e)
     {
         //Hide additional bars
-        pnl_colors.Visible = toolbar_graphics.SelectedTool == LampTool.Pen || toolbar_graphics.SelectedTool == LampTool.Fill;
+        //pnl_colors.Visible = toolbar_graphics.SelectedTool == LampTool.Pen || toolbar_graphics.SelectedTool == LampTool.Fill;
 
         //Remove red rect
         GraphicsSet.RedRect = new Rectangle(0, 0, 0, 0);
