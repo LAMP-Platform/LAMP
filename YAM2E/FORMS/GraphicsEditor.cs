@@ -140,6 +140,23 @@ public partial class GraphicsEditor : Form
         {
             case LampTool.Pen:
 
+                if (e.Button == MouseButtons.Right)
+                {
+                    //Select color of current pixel
+                    selectedColor = (int)LoadedGFX?.GetPixel(pixel);
+
+                    //Change the current color display (THIS IS VERY DUMB CODE, SORRY)
+                    foreach (Control c in pnl_colors.Controls)
+                    {
+                        if (c is not Panel) continue;
+                        Panel p = c as Panel;
+                        string panelColor = p.Tag as string;
+                        if (selectedColor == Convert.ToInt32(panelColor)) pnl_current_color.BackColor = p.BackColor;
+                    }
+                    return;
+                }
+                if (e.Button != MouseButtons.Left) return;
+
                 //place down pixel
                 LoadedGFX?.SetPixel(pixel, selectedColor);
                 int changedTile = LoadedGFX.GetTileID(pixel.X, pixel.Y);
@@ -176,6 +193,8 @@ public partial class GraphicsEditor : Form
         switch (toolbar_graphics.SelectedTool)
         {
             case LampTool.Pen:
+
+                if (e.Button != MouseButtons.Left) return;
 
                 GraphicsSet.RedRect = new Rectangle(-1, -1, 1, 1);
 
@@ -236,7 +255,7 @@ public partial class GraphicsEditor : Form
                 break;
         }
     }
-    private void MetatileSetMouseMove(object sender, MouseEventArgs e) 
+    private void MetatileSetMouseMove(object sender, MouseEventArgs e)
     {
         //The currently selected pixel
         Point pixel = new Point(Math.Max(Math.Min(e.X, MetatileSet.BackgroundImage.Width * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom, Math.Max(Math.Min(e.Y, MetatileSet.BackgroundImage.Height * MetatileSet.Zoom - 1), 0) / MetatileSet.Zoom);
@@ -261,8 +280,10 @@ public partial class GraphicsEditor : Form
     #region Events
     private void pnl_color_Click(object sender, EventArgs e)
     {
-        string number = ((Panel)sender).Tag as string;
+        Panel p = sender as Panel;
+        string number = p.Tag as string;
         selectedColor = Convert.ToInt32(number);
+        pnl_current_color.BackColor = p.BackColor;
     }
 
     private void btn_accept_Click(object sender, EventArgs e)
@@ -339,6 +360,12 @@ public partial class GraphicsEditor : Form
                 break;
         }
     }
+
+    private void toolbar_graphics_ToolSwitched(object sender, EventArgs e)
+    {
+        pnl_colors.Visible = toolbar_graphics.SelectedTool == LampTool.Pen || toolbar_graphics.SelectedTool == LampTool.Fill;
+    }
+
     /// <summary>
     /// Toolbar for the Metatile Editor
     /// </summary>

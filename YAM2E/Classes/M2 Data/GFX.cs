@@ -105,17 +105,22 @@ public class GFX
 
         //grabbing the two bytes for the according row
         int row = y % 8;
-        byte topByte = Tiles[tileNr].Data[row * 2];
-        byte lowByte = Tiles[tileNr].Data[row * 2 + 1];
+        byte lowByte = Tiles[tileNr].Data[row * 2];
+        byte highByte = Tiles[tileNr].Data[row * 2 + 1];
 
         //getting the bits
-        return (topByte & 0b0000_0001) | (lowByte & 0b0000_0010);
+        int column = x % 8;
+        return (ByteOp.IsBitSet(lowByte, 7 - column) ? 0b1 : 0b0) | (ByteOp.IsBitSet(highByte, 7 - column) ? 0b10 : 0b00); //what the hell is this code
     }
     /// <summary>
     /// Gets the value of the pixel at <see cref="Point"/> <paramref name="p"/> of the GFX plane.
     /// </summary>
     public int GetPixel(Point p) => GetPixel(p.X, p.Y);
 
+    /// <summary>
+    /// Gets the index of the tile at the <see cref="Point"/> <paramref name="p"/>.
+    /// </summary>
+    public int GetTileID(Point p) => GetTileID(p.X, p.Y);
     /// <summary>
     /// Gets the index of the tile at the coordinates <paramref name="x"/>, <paramref name="y"/>.
     /// </summary>
