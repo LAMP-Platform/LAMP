@@ -116,7 +116,6 @@ namespace LAMP.FORMS
             // cbb_tred_transition_selection
             // 
             cbb_tred_transition_selection.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            cbb_tred_transition_selection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_tred_transition_selection.DropDownWidth = 74;
             cbb_tred_transition_selection.FormattingEnabled = true;
             cbb_tred_transition_selection.Location = new System.Drawing.Point(73, 22);
