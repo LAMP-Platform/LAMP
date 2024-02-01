@@ -111,25 +111,50 @@ public partial class GraphicsEditor : Form
         (GraphicsSet.SelectedRegion.Width % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Height % GraphicsSet.PixelTileSize == 0);
     private const int minimumZoom = 4;
     private Point selectionStart;
+    private int selectedTilesWidth = 0;
+    private int selectedTilesHeight = 0;
 
     //Metatile Editor
-    private int? SelectedTileID
-    {
-        get => selectedTileID;
-        set
-        {
-            if (value == selectedTileID) return;
-            selectedTileID = value;
-            if (value == null || changedMetaValue) return;
-            txb_hex_input.Text = Format.IntToString((int)value);
-        }
-    }
-    private int? selectedTileID = null;
+    private List<int> selectedTiles = new List<int>();
+    private int middleClickTile = 0xFF;
     #endregion
 
     #region Methods
 
     #region Actions
+    private void SetTilesets()
+    {
+        if (GraphicsPointer == null)
+        {
+            Bitmap b = new(1, 1); //This clears the images
+            LoadedGFX = null;
+            GraphicsSet.BackgroundImage = b;
+            MetatileSet.BackgroundImage = b;
+            return;
+        }
+
+        LoadedGFX = new GFX(GraphicsPointer, GfxWidth, GfxHeight);
+        txb_offset.Text = Format.PointerToString(GraphicsPointer);
+
+        //Graphics View
+        LoadedGFX.Draw();
+        GraphicsSet.BackgroundImage = LoadedGFX.Image;
+
+        //Metatile View
+        if (MetatilePointer != null)
+        {
+            LoadedMeta = new Metatiles(LoadedGFX, MetatilePointer);
+            LoadedMeta.Draw();
+            MetatileSet.BackgroundImage = LoadedMeta.Image;
+            txb_meta_offset.Text = Format.PointerToString(metatilePointer);
+        }
+        else
+        {
+            LoadedMeta = null;
+            MetatileSet.BackgroundImage = new Bitmap(1, 1);
+        }
+    }
+
     /// <summary>
     /// Fills all neighbouring pixels with the same color to a new color.
     /// If a selection is made, it will check to stay inside
@@ -153,7 +178,7 @@ public partial class GraphicsEditor : Form
                         if (!checkRectangle.Contains(checkPoint)) continue;
                     }
 
-                    if (LoadedGFX.GetPixel(i, j) == oldColor) LoadedGFX.SetPixel(i, j, newColor, true); 
+                    if (LoadedGFX.GetPixel(i, j) == oldColor) LoadedGFX.SetPixel(i, j, newColor, true);
                 }
             }
             return;
@@ -195,6 +220,17 @@ public partial class GraphicsEditor : Form
         int y = Math.Min(p1.Y, p2.Y);
 
         return new Rectangle(x, y, width - 1, height - 1);
+    }
+
+    private void PlaceMetatiles(int x, int y)
+    {
+        for (int i = 0; i < selectedTilesWidth; i++)
+        {
+            for (int j = 0; j < selectedTilesHeight; j++)
+            {
+                LoadedMeta.ChangeMetaTile(x + i, y + j, (byte)selectedTiles[i * selectedTilesHeight + j]);
+            }
+        }
     }
     #endregion
 
@@ -260,8 +296,6 @@ public partial class GraphicsEditor : Form
                 //on lower zoom levels it will just select the tile as a whole
                 if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift))
                 {
-                    SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
-
                     selectionStart = new Point(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize);
                     GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
                     break;
@@ -361,11 +395,38 @@ public partial class GraphicsEditor : Form
     }
     private void GraphicsSetMouseUp(object sender, MouseEventArgs e)
     {
+        switch (toolbar_graphics.SelectedTool)
+        {
+            case (LampTool.Select):
 
+                //check if whole tiles are selected
+                if (!wholeTilesSelected) break;
+
+                //load selected tiles
+                selectedTiles.Clear();
+                Rectangle selection = GraphicsSet.SelectedRegion;
+                int width = selectedTilesWidth = selection.Width / GraphicsSet.PixelTileSize;
+                int height = selectedTilesHeight = selection.Height / GraphicsSet.PixelTileSize;
+
+                for (int i = 0; i < width; i++) //getting the tile ID
+                {
+                    for (int j = 0; j < height; j++)
+                    {
+                        int x = selection.X / GraphicsSet.PixelTileSize + i;
+                        int y = selection.Y / GraphicsSet.PixelTileSize + j;
+                        selectedTiles.Add(y * GfxWidth + x);
+                    }
+                }
+
+                break;
+
+            default:
+                break;
+        }
     }
     private void pnl_graphics_view_MouseDown(object sender, MouseEventArgs e) //Clicking outside
     {
-        if (toolbar_graphics.SelectedTool == LampTool.Select) GraphicsSet.SelRect = new Rectangle(-1, -1, 0, 0);
+        GraphicsSet.SelRect = new Rectangle(-1, -1, 0, 0);
     }
     #endregion
 
@@ -383,13 +444,15 @@ public partial class GraphicsEditor : Form
         {
             case LampTool.Pen:
 
-                if (selectedTileID == null) return;
+                if (selectedTiles.Count == 0) return;
                 if (!wholeTilesSelected) return;
 
                 //place down tile
-                if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)SelectedTileID);
-                else if (e.Button == MouseButtons.Right) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, 0xFF);
-                else if (e.Button == MouseButtons.Middle) SelectedTileID = LoadedMeta.GetMetaTile(tileNum.X, tileNum.Y);
+                if (e.Button == MouseButtons.Left)
+                {
+                    PlaceMetatiles(tileNum.X, tileNum.Y);
+                }
+                else if (e.Button == MouseButtons.Middle) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)middleClickTile);
 
                 //invalidate
                 MetatileSet.Invalidate();
@@ -410,8 +473,17 @@ public partial class GraphicsEditor : Form
         {
             case LampTool.Pen:
 
-                if (selectedTileID == null) return;
-                else MetatileSet.RedRect = new Rectangle(tileNum.X * MetatileSet.TileSize, tileNum.Y * MetatileSet.TileSize, MetatileSet.TileSize - 1, MetatileSet.TileSize - 1);
+                if (!wholeTilesSelected) return;
+                else MetatileSet.RedRect = new Rectangle(tileNum.X * MetatileSet.TileSize, tileNum.Y * MetatileSet.TileSize, selectedTilesWidth * MetatileSet.TileSize - 1, selectedTilesHeight * MetatileSet.TileSize);
+
+                if (e.Button == MouseButtons.Left)
+                {
+                    PlaceMetatiles(tileNum.X, tileNum.Y);
+                }
+                else if (e.Button == MouseButtons.Middle) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)middleClickTile);
+
+                //invalidate
+                MetatileSet.Invalidate();
 
                 break;
         }
@@ -451,44 +523,14 @@ public partial class GraphicsEditor : Form
 
     private void txb_hex_input_TextChanged(object sender, EventArgs e)
     {
-        changedMetaValue = true;
-        SelectedTileID = Format.StringToInt(txb_hex_input.Text, 0xFF);
-        changedMetaValue = false;
+        middleClickTile = Format.StringToInt(txb_hex_input.Text);
+    }
+
+    private void chb_grid_CheckedChanged(object sender, EventArgs e)
+    {
+        GraphicsSet.ShowGrid = chb_graphics_grid.Checked;
     }
     #endregion
-
-    private void SetTilesets()
-    {
-        if (GraphicsPointer == null)
-        {
-            Bitmap b = new(1, 1); //This clears the images
-            LoadedGFX = null;
-            GraphicsSet.BackgroundImage = b;
-            MetatileSet.BackgroundImage = b;
-            return;
-        }
-
-        LoadedGFX = new GFX(GraphicsPointer, GfxWidth, GfxHeight);
-        txb_offset.Text = Format.PointerToString(GraphicsPointer);
-
-        //Graphics View
-        LoadedGFX.Draw();
-        GraphicsSet.BackgroundImage = LoadedGFX.Image;
-
-        //Metatile View
-        if (MetatilePointer != null)
-        {
-            LoadedMeta = new Metatiles(LoadedGFX, MetatilePointer);
-            LoadedMeta.Draw();
-            MetatileSet.BackgroundImage = LoadedMeta.Image;
-            txb_meta_offset.Text = Format.PointerToString(metatilePointer);
-        }
-        else
-        {
-            LoadedMeta = null;
-            MetatileSet.BackgroundImage = new Bitmap(1, 1);
-        }
-    }
 
     /// <summary>
     /// Toolbar for the GFX Editor

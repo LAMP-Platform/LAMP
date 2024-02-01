@@ -81,6 +81,7 @@ public class Metatiles
     public void ChangeMetaTile(int numX, int numY, byte tileID)
     {
         int tileNum = GetTileNumberFromXYIndex(numX, numY);
+        if (tileNum >= Table.Length) return;
         Table[tileNum] = tileID;
         RedrawMetaTile(tileNum, numX * 8, numY * 8);
     }
