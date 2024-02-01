@@ -79,7 +79,7 @@ public class GFX
     /// <summary>
     /// Changes the Pixel of a tile at the <paramref name="x"/>, <paramref name="y"/> position of the GFX plane
     /// </summary>
-    public void SetPixel(int x, int y, int value)
+    public void SetPixel(int x, int y, int value, bool noRedraw = false)
     {
         //figure out which tile should be modified
         int tileNr = (y / 8) * Width + (x / 8);
@@ -88,12 +88,13 @@ public class GFX
         Tiles[tileNr].SetPixel(x % 8, y % 8, value);
 
         //Update the modified Tile
+        if (noRedraw) return;
         Redraw(tileNr);
     }
     /// <summary>
     /// Changes the Pixel of a tile at the <see cref="Point"/> <paramref name="p"/> of the GFX plane.
     /// </summary>
-    public void SetPixel(Point p, int value) => SetPixel(p.X, p.Y, value);
+    public void SetPixel(Point p, int value, bool noRedraw = false) => SetPixel(p.X, p.Y, value, noRedraw);
 
     /// <summary>
     /// Gets the value of the pixel at <paramref name="x"/>, <paramref name="y"/> of the GFX plane.

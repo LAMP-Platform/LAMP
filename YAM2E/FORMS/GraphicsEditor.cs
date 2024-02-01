@@ -125,6 +125,33 @@ public partial class GraphicsEditor : Form
 
     #region Methods
 
+    #region Actions
+    /// <summary>
+    /// Fills all neighbouring pixels with the same color to a new color
+    /// </summary>
+    /// <param name="p">The pixel to start the FloodFill</param>
+    /// <param name="oldColor">The color that should be replaced</param>
+    /// <param name="newColor">The new color</param>
+    private void FloodFillPixel(Point p, int oldColor, int newColor)
+    {
+        //check if pixel in bounds
+        if (p.X < 0 || p.Y < 0 || p.X >= LoadedGFX.Width * GraphicsSet.PixelTileSize ||p.Y >= LoadedGFX.Height * GraphicsSet.PixelTileSize) return;
+
+        //check if pixel is supposed to be edited
+        if (LoadedGFX.GetPixel(p) != oldColor) return;
+        if (LoadedGFX.GetPixel(p) == newColor) return;
+
+        //replace pixel
+        LoadedGFX.SetPixel(p, newColor, true);
+
+        //FloodFill in other directions
+        FloodFillPixel(new Point(p.X + 1, p.Y), oldColor, newColor);
+        FloodFillPixel(new Point(p.X - 1, p.Y), oldColor, newColor);
+        FloodFillPixel(new Point(p.X, p.Y + 1), oldColor, newColor);
+        FloodFillPixel(new Point(p.X, p.Y - 1), oldColor, newColor);
+    }
+    #endregion
+
     #region Graphics View
     private void GraphicsSetMouseDown(object sender, MouseEventArgs e)
     {
@@ -176,6 +203,24 @@ public partial class GraphicsEditor : Form
                 //selecting pressed tile
                 SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
                 GraphicsSet.SelRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+
+                break;
+
+            case LampTool.Fill:
+
+                //FloodFilling from current Pixel
+                FloodFillPixel(pixel, LoadedGFX.GetPixel(pixel), selectedColor);
+
+                //update visuals
+                LoadedGFX.Draw();
+                GraphicsSet.BackgroundImage = LoadedGFX.Image;
+                GraphicsSet.Invalidate();
+
+                //update metatiles
+                if (LoadedMeta == null) return;
+                LoadedMeta.Draw();
+                MetatileSet.BackgroundImage = LoadedMeta.Image;
+                MetatileSet.Invalidate();
 
                 break;
         }
@@ -363,7 +408,11 @@ public partial class GraphicsEditor : Form
 
     private void toolbar_graphics_ToolSwitched(object sender, EventArgs e)
     {
+        //Hide additional bars
         pnl_colors.Visible = toolbar_graphics.SelectedTool == LampTool.Pen || toolbar_graphics.SelectedTool == LampTool.Fill;
+
+        //Remove red rect
+        GraphicsSet.RedRect = new Rectangle(0, 0, 0, 0);
     }
 
     /// <summary>
