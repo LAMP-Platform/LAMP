@@ -49,6 +49,7 @@
             grp_graphics = new System.Windows.Forms.GroupBox();
             pnl_graphics_view = new System.Windows.Forms.Panel();
             pnl_colors = new System.Windows.Forms.Panel();
+            chb_neighbouring = new System.Windows.Forms.CheckBox();
             pnl_current_color = new System.Windows.Forms.Panel();
             lbl_current_color = new System.Windows.Forms.Label();
             pnl_black = new System.Windows.Forms.Panel();
@@ -267,6 +268,7 @@
             // 
             // pnl_colors
             // 
+            pnl_colors.Controls.Add(chb_neighbouring);
             pnl_colors.Controls.Add(pnl_current_color);
             pnl_colors.Controls.Add(lbl_current_color);
             pnl_colors.Controls.Add(pnl_black);
@@ -279,11 +281,25 @@
             pnl_colors.Size = new System.Drawing.Size(532, 24);
             pnl_colors.TabIndex = 5;
             // 
+            // chb_neighbouring
+            // 
+            chb_neighbouring.AutoSize = true;
+            chb_neighbouring.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            chb_neighbouring.Checked = true;
+            chb_neighbouring.CheckState = System.Windows.Forms.CheckState.Checked;
+            chb_neighbouring.Location = new System.Drawing.Point(182, 2);
+            chb_neighbouring.Name = "chb_neighbouring";
+            chb_neighbouring.Size = new System.Drawing.Size(103, 19);
+            chb_neighbouring.TabIndex = 6;
+            chb_neighbouring.Text = "Neighbouring:";
+            chb_neighbouring.UseVisualStyleBackColor = true;
+            chb_neighbouring.Visible = false;
+            // 
             // pnl_current_color
             // 
             pnl_current_color.BackColor = System.Drawing.Color.FromArgb(107, 107, 107);
             pnl_current_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            pnl_current_color.Location = new System.Drawing.Point(167, 0);
+            pnl_current_color.Location = new System.Drawing.Point(155, 0);
             pnl_current_color.Margin = new System.Windows.Forms.Padding(0);
             pnl_current_color.Name = "pnl_current_color";
             pnl_current_color.Size = new System.Drawing.Size(24, 24);
@@ -293,7 +309,7 @@
             // lbl_current_color
             // 
             lbl_current_color.AutoSize = true;
-            lbl_current_color.Location = new System.Drawing.Point(114, 3);
+            lbl_current_color.Location = new System.Drawing.Point(102, 3);
             lbl_current_color.Name = "lbl_current_color";
             lbl_current_color.Size = new System.Drawing.Size(50, 15);
             lbl_current_color.TabIndex = 5;
@@ -563,5 +579,6 @@
         private System.Windows.Forms.Panel pnl_meta_input;
         private System.Windows.Forms.Panel pnl_current_color;
         private System.Windows.Forms.Label lbl_current_color;
+        private System.Windows.Forms.CheckBox chb_neighbouring;
     }
 }

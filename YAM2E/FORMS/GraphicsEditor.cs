@@ -139,6 +139,26 @@ public partial class GraphicsEditor : Form
     /// <param name="newColor">The new color</param>
     private void FloodFillPixel(Point p, int oldColor, int newColor)
     {
+        //if not neighbouring
+        if (!chb_neighbouring.Checked)
+        {
+            for (int i = 0; i < LoadedGFX.Width * GraphicsSet.PixelTileSize; i++)
+            {
+                for (int j = 0; j < LoadedGFX.Height * GraphicsSet.PixelTileSize; j++)
+                {
+                    if (GraphicsSet.SelRect.X >= 0)
+                    {
+                        Rectangle checkRectangle = GraphicsSet.SelRect;
+                        Point checkPoint = new Point(i * GraphicsSet.Zoom, j * GraphicsSet.Zoom);
+                        if (!checkRectangle.Contains(checkPoint)) continue;
+                    }
+
+                    if (LoadedGFX.GetPixel(i, j) == oldColor) LoadedGFX.SetPixel(i, j, newColor, true); 
+                }
+            }
+            return;
+        }
+
         //check if pixel in bounds
         if (p.X < 0 || p.Y < 0 || p.X >= LoadedGFX.Width * GraphicsSet.PixelTileSize || p.Y >= LoadedGFX.Height * GraphicsSet.PixelTileSize) return;
         //check if in selection
@@ -287,10 +307,10 @@ public partial class GraphicsEditor : Form
         {
             case LampTool.Pen:
 
+                if (GraphicsSet.Zoom > minimumZoom) GraphicsSet.RedRect = new Rectangle(pixel.X * GraphicsSet.Zoom, pixel.Y * GraphicsSet.Zoom, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
+
                 if (e.Button != MouseButtons.Left) return;
                 if (GraphicsSet.SelRect.X >= 0 && !GraphicsSet.SelRect.Contains(e.Location)) return;
-
-                GraphicsSet.RedRect = new Rectangle(-1, -1, 1, 1);
 
                 //Continue only if clicking
                 if (e.Button != MouseButtons.Left && e.Button != MouseButtons.Right) return;
@@ -487,6 +507,7 @@ public partial class GraphicsEditor : Form
     {
         //Hide additional bars
         //pnl_colors.Visible = toolbar_graphics.SelectedTool == LampTool.Pen || toolbar_graphics.SelectedTool == LampTool.Fill;
+        chb_neighbouring.Visible = toolbar_graphics.SelectedTool == LampTool.Fill;
 
         //Remove red rect
         GraphicsSet.RedRect = new Rectangle(0, 0, 0, 0);
