@@ -41,7 +41,8 @@ public class TileViewer : Control
         set
         {
             //setting rectangles
-            ResetSelection();
+            RedRect = new Rectangle(0, 0, 0, 0);
+            SelRect = ScaleRect(SelRect, Zoom, value);
 
             zoom = Math.Max(value, 1);
             if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
@@ -104,6 +105,12 @@ public class TileViewer : Control
     {
         RedRect = new Rectangle(-1, -1, 0, 0);
         SelRect = new Rectangle(-1, -1, 0, 0);
+    }
+
+    public Rectangle ScaleRect(Rectangle rec, int oldZoom, int newZoom)
+    {
+        Rectangle standardRect = new Rectangle(rec.X / oldZoom, rec.Y / oldZoom, (rec.Width + 1)/ oldZoom, (rec.Height +1 )/ oldZoom);
+        return new Rectangle(standardRect.X * newZoom, standardRect.Y * newZoom, standardRect.Width * newZoom - 1, standardRect.Height * newZoom - 1);
     }
 
     public TileViewer()

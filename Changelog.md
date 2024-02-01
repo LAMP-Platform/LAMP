@@ -21,7 +21,7 @@
 * Added special options to the Save Editor
 * Added a Data Chunk Manager
 * Added the ability to clear an entire area
-* Added the ability to replace tiles with a different tile
+* Added the ability to replace all occurances of a tile with a different tile
  
 **Fixes:** 
 * Objects: Empty screens might not be compiled as empty
@@ -33,6 +33,7 @@
 * Room Editor: Zooming out with the hotkey enables the zoom out button even though it shouldnt
 * Room Editor: Zooming in with the hotkey can zoom past the limit
 * Tileset Editor: Combobox for Tileset is not properly sized to fit the names
+* General: Rectangles are scaled incorrectly when zooming in Tile Displays
 
 # Version B 4.0
 ### Released: 02.06.2023

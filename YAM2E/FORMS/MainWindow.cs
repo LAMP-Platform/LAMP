@@ -935,6 +935,8 @@ public partial class MainWindow : Form
         Room.ContextMenuStrip = null;
         if (toolbar_room.SelectedTool == LampTool.Move) Room.ContextMenuStrip = ctx_room_context_menu;
         if (toolbar_room.SelectedTool == LampTool.Select) Room.ContextMenuStrip = ctx_select_tool;
+
+        Room.RedRect = Rectangle.Empty;
     }
     #endregion
 

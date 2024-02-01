@@ -47,9 +47,9 @@ public class RoomViewer : UserControl
 
             //setting rectangles
             //bad way of rescaling the rectangles, a proper way would be to only scale the rectangles once they get drawn :/
-            selRect = RecOp.Multiply(RecOp.Divide(selRect, zoom), value);
-            redRect = RecOp.Multiply(RecOp.Divide(redRect, zoom), value);
-            selectedObject = RecOp.Multiply(RecOp.Divide(selectedObject, zoom), value);
+            selRect = ScaleRect(selRect, Zoom, value);
+            redRect = ScaleRect(redRect, Zoom, value);
+            selectedObject = ScaleRect(selectedObject, Zoom, value);
 
             zoom = Math.Max(value, 1);
             if (BackgroundImage != null) Size = BackgroundImage.Size * zoom;
@@ -266,6 +266,12 @@ public class RoomViewer : UserControl
     {
         RedRect = new Rectangle(-1, -1, 0, 0);
         SelRect = new Rectangle(-1, -1, 0, 0);
+    }
+
+    public Rectangle ScaleRect(Rectangle rec, int oldZoom, int newZoom)
+    {
+        Rectangle standardRect = new Rectangle(rec.X / oldZoom, rec.Y / oldZoom, (rec.Width + 1) / oldZoom, (rec.Height + 1) / oldZoom);
+        return new Rectangle(standardRect.X * newZoom, standardRect.Y * newZoom, standardRect.Width * newZoom - 1, standardRect.Height * newZoom - 1);
     }
 
     protected override void OnPaint(PaintEventArgs e)
