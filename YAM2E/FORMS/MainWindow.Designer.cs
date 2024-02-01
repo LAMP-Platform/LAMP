@@ -91,6 +91,7 @@ namespace LAMP
             lbl_main_hovered_screen = new System.Windows.Forms.ToolStripStatusLabel();
             lbl_screen_used = new System.Windows.Forms.ToolStripStatusLabel();
             grp_main_tileset_viewer = new System.Windows.Forms.GroupBox();
+            btn_edit_tileset = new System.Windows.Forms.Button();
             flw_tileset_view = new System.Windows.Forms.FlowLayoutPanel();
             toolbar_tileset = new Controls.Room.ToolBar();
             grp_main_room_viewer = new System.Windows.Forms.GroupBox();
@@ -169,7 +170,7 @@ namespace LAMP
             // 
             btn_new_project.Image = Properties.Resources.Add;
             btn_new_project.Name = "btn_new_project";
-            btn_new_project.Size = new System.Drawing.Size(180, 22);
+            btn_new_project.Size = new System.Drawing.Size(150, 22);
             btn_new_project.Text = "New Project";
             btn_new_project.Click += btn_new_project_Click;
             // 
@@ -177,7 +178,7 @@ namespace LAMP
             // 
             btn_open_rom.Image = Properties.Resources.FolderOpened;
             btn_open_rom.Name = "btn_open_rom";
-            btn_open_rom.Size = new System.Drawing.Size(180, 22);
+            btn_open_rom.Size = new System.Drawing.Size(150, 22);
             btn_open_rom.Text = "Open Project";
             btn_open_rom.Click += btn_open_rom_Click;
             // 
@@ -185,20 +186,20 @@ namespace LAMP
             // 
             btn_save_project.Image = Properties.Resources.Save;
             btn_save_project.Name = "btn_save_project";
-            btn_save_project.Size = new System.Drawing.Size(180, 22);
+            btn_save_project.Size = new System.Drawing.Size(150, 22);
             btn_save_project.Text = "Save Project";
             btn_save_project.Click += btn_save_project_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             btn_create_backup.Name = "btn_create_backup";
-            btn_create_backup.Size = new System.Drawing.Size(180, 22);
+            btn_create_backup.Size = new System.Drawing.Size(150, 22);
             btn_create_backup.Text = "Create Backup";
             btn_create_backup.Visible = false;
             btn_create_backup.Click += btn_create_backup_Click;
@@ -206,13 +207,13 @@ namespace LAMP
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_compile_ROM
             // 
             btn_compile_ROM.Image = Properties.Resources.Compile;
             btn_compile_ROM.Name = "btn_compile_ROM";
-            btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
+            btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
             btn_compile_ROM.Text = "Compile ROM";
             btn_compile_ROM.Click += btn_compile_ROM_Click;
             // 
@@ -232,7 +233,7 @@ namespace LAMP
             // 
             btn_rom_file.Image = Properties.Resources.Settings;
             btn_rom_file.Name = "btn_rom_file";
-            btn_rom_file.Size = new System.Drawing.Size(180, 22);
+            btn_rom_file.Size = new System.Drawing.Size(165, 22);
             btn_rom_file.Text = "Program Settings";
             btn_rom_file.Click += rOMFileToolStripMenuItem_Click;
             // 
@@ -240,7 +241,7 @@ namespace LAMP
             // 
             btn_project_settings.Image = Properties.Resources.Settings;
             btn_project_settings.Name = "btn_project_settings";
-            btn_project_settings.Size = new System.Drawing.Size(180, 22);
+            btn_project_settings.Size = new System.Drawing.Size(165, 22);
             btn_project_settings.Text = "Project Settings";
             btn_project_settings.Click += btn_project_settings_Click;
             // 
@@ -675,6 +676,7 @@ namespace LAMP
             // 
             // grp_main_tileset_viewer
             // 
+            grp_main_tileset_viewer.Controls.Add(btn_edit_tileset);
             grp_main_tileset_viewer.Controls.Add(flw_tileset_view);
             grp_main_tileset_viewer.Controls.Add(toolbar_tileset);
             grp_main_tileset_viewer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -685,6 +687,18 @@ namespace LAMP
             grp_main_tileset_viewer.TabIndex = 4;
             grp_main_tileset_viewer.TabStop = false;
             grp_main_tileset_viewer.Text = "Tileset";
+            // 
+            // btn_edit_tileset
+            // 
+            btn_edit_tileset.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_edit_tileset.Image = Properties.Resources.PenOneSelected;
+            btn_edit_tileset.Location = new System.Drawing.Point(242, 19);
+            btn_edit_tileset.Name = "btn_edit_tileset";
+            btn_edit_tileset.Size = new System.Drawing.Size(23, 23);
+            btn_edit_tileset.TabIndex = 23;
+            Tooltip_info.SetToolTip(btn_edit_tileset, "Edit current Tileset");
+            btn_edit_tileset.UseVisualStyleBackColor = true;
+            btn_edit_tileset.Click += btn_edit_tileset_Click;
             // 
             // flw_tileset_view
             // 
@@ -1120,6 +1134,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem btn_area_clear;
         private System.Windows.Forms.ContextMenuStrip ctx_select_tool;
         private System.Windows.Forms.ToolStripMenuItem replaceSelectedTileToolStripMenuItem;
+        private System.Windows.Forms.Button btn_edit_tileset;
     }
 }
 

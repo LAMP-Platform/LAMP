@@ -526,9 +526,13 @@ public partial class GraphicsEditor : Form
         middleClickTile = Format.StringToInt(txb_hex_input.Text);
     }
 
-    private void chb_grid_CheckedChanged(object sender, EventArgs e)
+    private void chb_graphics_grid_CheckedChanged(object sender, EventArgs e)
     {
         GraphicsSet.ShowGrid = chb_graphics_grid.Checked;
+    }
+    private void chb_metatiles_grid_CheckedChanged(object sender, EventArgs e)
+    {
+        MetatileSet.ShowGrid = chb_metatiles_grid.Checked;
     }
     #endregion
 

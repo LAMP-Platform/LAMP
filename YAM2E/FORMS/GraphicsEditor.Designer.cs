@@ -59,17 +59,17 @@
             pnl_dark_gray = new System.Windows.Forms.Panel();
             toolbar_graphics = new Controls.Room.ToolBar();
             pnl_meta_input = new System.Windows.Forms.Panel();
+            pictureBox1 = new System.Windows.Forms.PictureBox();
+            lbl_hex_input = new System.Windows.Forms.Label();
             txb_hex_input = new System.Windows.Forms.TextBox();
             grp_metatiles = new System.Windows.Forms.GroupBox();
+            chb_metatiles_grid = new System.Windows.Forms.CheckBox();
             flw_metatile_view = new System.Windows.Forms.FlowLayoutPanel();
             toolbar_metatiles = new Controls.Room.ToolBar();
             pnl_main = new System.Windows.Forms.SplitContainer();
             pnl_gfx_view = new System.Windows.Forms.SplitContainer();
             pnl_apply = new System.Windows.Forms.Panel();
             btn_apply = new System.Windows.Forms.Button();
-            lbl_hex_input = new System.Windows.Forms.Label();
-            chb_metatiles_grid = new System.Windows.Forms.CheckBox();
-            pictureBox1 = new System.Windows.Forms.PictureBox();
             status_strip.SuspendLayout();
             grp_data_selector.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)num_height).BeginInit();
@@ -77,6 +77,7 @@
             grp_graphics.SuspendLayout();
             pnl_colors.SuspendLayout();
             pnl_meta_input.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             grp_metatiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pnl_main).BeginInit();
             pnl_main.Panel1.SuspendLayout();
@@ -87,7 +88,6 @@
             pnl_gfx_view.Panel2.SuspendLayout();
             pnl_gfx_view.SuspendLayout();
             pnl_apply.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // status_strip
@@ -270,7 +270,7 @@
             chb_graphics_grid.TabIndex = 6;
             chb_graphics_grid.Text = "Grid";
             chb_graphics_grid.UseVisualStyleBackColor = true;
-            chb_graphics_grid.CheckedChanged += chb_grid_CheckedChanged;
+            chb_graphics_grid.CheckedChanged += chb_graphics_grid_CheckedChanged;
             // 
             // pnl_graphics_view
             // 
@@ -405,12 +405,33 @@
             pnl_meta_input.Size = new System.Drawing.Size(532, 24);
             pnl_meta_input.TabIndex = 5;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackgroundImage = (System.Drawing.Image)resources.GetObject("pictureBox1.BackgroundImage");
+            pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            pictureBox1.Location = new System.Drawing.Point(3, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(18, 24);
+            pictureBox1.TabIndex = 5;
+            pictureBox1.TabStop = false;
+            // 
+            // lbl_hex_input
+            // 
+            lbl_hex_input.AutoSize = true;
+            lbl_hex_input.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            lbl_hex_input.Location = new System.Drawing.Point(19, 4);
+            lbl_hex_input.Name = "lbl_hex_input";
+            lbl_hex_input.Size = new System.Drawing.Size(28, 15);
+            lbl_hex_input.TabIndex = 4;
+            lbl_hex_input.Text = "Tile:";
+            // 
             // txb_hex_input
             // 
             txb_hex_input.Location = new System.Drawing.Point(53, 1);
             txb_hex_input.Name = "txb_hex_input";
             txb_hex_input.Size = new System.Drawing.Size(35, 23);
             txb_hex_input.TabIndex = 1;
+            txb_hex_input.Text = "0xFF";
             txb_hex_input.TextChanged += txb_hex_input_TextChanged;
             // 
             // grp_metatiles
@@ -427,6 +448,17 @@
             grp_metatiles.TabIndex = 6;
             grp_metatiles.TabStop = false;
             grp_metatiles.Text = "Metatiles";
+            // 
+            // chb_metatiles_grid
+            // 
+            chb_metatiles_grid.AutoSize = true;
+            chb_metatiles_grid.Location = new System.Drawing.Point(322, 22);
+            chb_metatiles_grid.Name = "chb_metatiles_grid";
+            chb_metatiles_grid.Size = new System.Drawing.Size(48, 19);
+            chb_metatiles_grid.TabIndex = 7;
+            chb_metatiles_grid.Text = "Grid";
+            chb_metatiles_grid.UseVisualStyleBackColor = true;
+            chb_metatiles_grid.CheckedChanged += chb_metatiles_grid_CheckedChanged;
             // 
             // flw_metatile_view
             // 
@@ -513,36 +545,6 @@
             btn_apply.UseVisualStyleBackColor = true;
             btn_apply.Click += btn_apply_Click;
             // 
-            // lbl_hex_input
-            // 
-            lbl_hex_input.AutoSize = true;
-            lbl_hex_input.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            lbl_hex_input.Location = new System.Drawing.Point(19, 4);
-            lbl_hex_input.Name = "lbl_hex_input";
-            lbl_hex_input.Size = new System.Drawing.Size(28, 15);
-            lbl_hex_input.TabIndex = 4;
-            lbl_hex_input.Text = "Tile:";
-            // 
-            // chb_metatiles_grid
-            // 
-            chb_metatiles_grid.AutoSize = true;
-            chb_metatiles_grid.Location = new System.Drawing.Point(322, 22);
-            chb_metatiles_grid.Name = "chb_metatiles_grid";
-            chb_metatiles_grid.Size = new System.Drawing.Size(48, 19);
-            chb_metatiles_grid.TabIndex = 7;
-            chb_metatiles_grid.Text = "Grid";
-            chb_metatiles_grid.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackgroundImage = (System.Drawing.Image)resources.GetObject("pictureBox1.BackgroundImage");
-            pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            pictureBox1.Location = new System.Drawing.Point(3, 0);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new System.Drawing.Size(18, 24);
-            pictureBox1.TabIndex = 5;
-            pictureBox1.TabStop = false;
-            // 
             // GraphicsEditor
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -566,6 +568,7 @@
             pnl_colors.PerformLayout();
             pnl_meta_input.ResumeLayout(false);
             pnl_meta_input.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             grp_metatiles.ResumeLayout(false);
             grp_metatiles.PerformLayout();
             pnl_main.Panel1.ResumeLayout(false);
@@ -577,7 +580,6 @@
             ((System.ComponentModel.ISupportInitialize)pnl_gfx_view).EndInit();
             pnl_gfx_view.ResumeLayout(false);
             pnl_apply.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

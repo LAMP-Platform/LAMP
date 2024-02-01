@@ -1279,13 +1279,11 @@ public partial class MainWindow : Form
         => new CollisionEditor(0).Show();
 
     private void btn_open_tweaks_editor_image_Click(object sender, EventArgs e) => new DataChunkEditor().Show();
-    #endregion
 
-    #endregion
-
-    private void BtnTest_Click(object sender, EventArgs e)
+    private void btn_edit_tileset_Click(object sender, EventArgs e)
     {
-        Editor.ConvertSymbolToPointer("E:\\METROID\\Metroid 2 RoS\\M2RoS\\out\\M2RoS.sym");
+        if (Globals.LoadedProject.useTilesets) new GraphicsEditor(selectedTileset).Show();
+        else new GraphicsEditor(gfxOffset, MetatilePointer).Show();
     }
 
     private void Btn_Area_Clear_Click(object sender, EventArgs e)
@@ -1312,6 +1310,7 @@ public partial class MainWindow : Form
         Room.BackgroundImage = Globals.AreaBank;
         Room.Invalidate();
     }
+
     private void Btn_Area_Replace_Click(object sender, EventArgs e)
     {
         //Replacing all instances in an area of a selected tile with another tile
@@ -1336,5 +1335,13 @@ public partial class MainWindow : Form
         Editor.DrawAreaBank(cbb_area_bank.SelectedIndex, Globals.AreaBank, new Point(0, 0));
         Room.BackgroundImage = Globals.AreaBank;
         Room.Invalidate();
+    }
+    #endregion
+
+    #endregion
+
+    private void BtnTest_Click(object sender, EventArgs e)
+    {
+        Editor.ConvertSymbolToPointer("E:\\METROID\\Metroid 2 RoS\\M2RoS\\out\\M2RoS.sym");
     }
 }
