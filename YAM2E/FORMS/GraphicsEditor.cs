@@ -55,6 +55,7 @@ public partial class GraphicsEditor : Form
         GraphicsSet.MouseDown += new MouseEventHandler(GraphicsSetMouseDown);
         GraphicsSet.MouseMove += new MouseEventHandler(GraphicsSetMouseMove);
         GraphicsSet.MouseUp += new MouseEventHandler(GraphicsSetMouseUp);
+        GraphicsSet.ShowGrid = true;
 
         //Adding the TileViewer for Metatiles
         flw_metatile_view.Controls.Add(MetatileSet);
@@ -107,6 +108,10 @@ public partial class GraphicsEditor : Form
 
     //Graphics Editor
     private int selectedColor = 3;
+    private bool canPlaceMetatile => (GraphicsSet.SelectedRegion.X % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Y % GraphicsSet.PixelTileSize == 0) &&
+        (GraphicsSet.SelectedRegion.Width % GraphicsSet.PixelTileSize == 0) && (GraphicsSet.SelectedRegion.Height % GraphicsSet.PixelTileSize == 0);
+    private const int minimumZoom = 4;
+    private Point selectionStart;
 
     //Metatile Editor
     private int? SelectedTileID
@@ -150,11 +155,27 @@ public partial class GraphicsEditor : Form
         FloodFillPixel(new Point(p.X, p.Y + 1), oldColor, newColor);
         FloodFillPixel(new Point(p.X, p.Y - 1), oldColor, newColor);
     }
+
+    private Rectangle SelectionBetweenPoints(Point p1, Point p2, int adjustment = 0)
+    {
+        if (p2.X <= p1.X) { p2.X -= adjustment; p1.X += adjustment; }
+        if (p2.Y <= p1.Y) { p2.Y -= adjustment; p1.Y += adjustment; }
+
+        int width = Math.Abs(p2.X - p1.X);
+        int height = Math.Abs(p2.Y - p1.Y);
+
+        int x = Math.Min(p1.X, p2.X);
+        int y = Math.Min(p1.Y, p2.Y);
+
+        return new Rectangle(x, y, width - 1, height - 1);
+    }
     #endregion
 
     #region Graphics View
     private void GraphicsSetMouseDown(object sender, MouseEventArgs e)
     {
+        bool shift = (ModifierKeys & Keys.Shift) != 0;
+
         //NOTE to self: if I ever remake LAMP this should probably be moved in the tile display controls and passed as EventArgs.
         //The currently selected pixel
         Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
@@ -201,8 +222,18 @@ public partial class GraphicsEditor : Form
             case LampTool.Select:
 
                 //selecting pressed tile
-                SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
-                GraphicsSet.SelRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+                //on lower zoom levels it will just select the tile as a whole
+                if ((GraphicsSet.Zoom <= minimumZoom && !shift) ||(GraphicsSet.Zoom > minimumZoom && shift))
+                {
+                    SelectedTileID = tileNum.Y * GfxWidth + tileNum.X;
+
+                    selectionStart = new Point(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize);
+                    GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+                    break;
+                }
+                //else set Start coordinate of pixel selection
+                selectionStart = new Point(pixel.X * GraphicsSet.Zoom, pixel.Y * GraphicsSet.Zoom);
+                GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
 
                 break;
 
@@ -227,6 +258,8 @@ public partial class GraphicsEditor : Form
     }
     private void GraphicsSetMouseMove(object sender, MouseEventArgs e)
     {
+        bool shift = (ModifierKeys & Keys.Shift) != 0;
+
         //The currently selected pixel
         Point pixel = new Point(Math.Max(Math.Min(e.X, GraphicsSet.BackgroundImage.Width * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom, Math.Max(Math.Min(e.Y, GraphicsSet.BackgroundImage.Height * GraphicsSet.Zoom - 1), 0) / GraphicsSet.Zoom);
         Point tileNum = new Point(pixel.X / GraphicsSet.PixelTileSize, pixel.Y / GraphicsSet.PixelTileSize); //The number of the tile selected
@@ -262,8 +295,31 @@ public partial class GraphicsEditor : Form
 
             case LampTool.Select:
 
-                GraphicsSet.RedRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+                int zoom = GraphicsSet.Zoom;
+                Point selectionEnd;
 
+                //selecting pressed tile
+                //on lower zoom levels it will just select the tiles as a whole
+                if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift) )
+                {
+                    GraphicsSet.RedRect = new Rectangle(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+                    if (e.Button != MouseButtons.Left) break;
+
+                    //adjust selectionStart if holding shift
+                    selectionStart = new Point(selectionStart.X / GraphicsSet.TileSize * GraphicsSet.TileSize, selectionStart.Y / GraphicsSet.TileSize * GraphicsSet.TileSize);
+
+                    selectionEnd = new Point((tile.X + GraphicsSet.PixelTileSize) * zoom, (tile.Y + GraphicsSet.PixelTileSize) * zoom);
+                    GraphicsSet.SelRect = SelectionBetweenPoints(selectionStart, selectionEnd, GraphicsSet.TileSize);
+
+                    break;
+                }
+                //else set end coordinate of pixel selection
+                GraphicsSet.RedRect = new Rectangle(pixel.X * GraphicsSet.Zoom, pixel.Y * GraphicsSet.Zoom, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
+                if (e.Button != MouseButtons.Left) break;
+
+                selectionEnd = new Point((pixel.X + 1) * zoom, (pixel.Y + 1) * zoom);
+                GraphicsSet.SelRect = SelectionBetweenPoints(selectionStart, selectionEnd, zoom);
+                
                 break;
         }
     }
@@ -288,6 +344,7 @@ public partial class GraphicsEditor : Form
             case LampTool.Pen:
 
                 if (selectedTileID == null) return;
+                if (!canPlaceMetatile) return;
 
                 //place down tile
                 if (e.Button == MouseButtons.Left) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)SelectedTileID);

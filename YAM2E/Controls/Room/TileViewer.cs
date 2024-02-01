@@ -51,6 +51,22 @@ public class TileViewer : Control
     private int zoom = 1;
 
     /// <summary>
+    /// The grid will show lines every <see cref="TileSize"/> pixels.
+    /// The drawn lines will use the <see cref="GridPattern"/> as a DashPattern.
+    /// </summary>
+    public bool ShowGrid
+    {
+        get => showGrid;
+        set
+        {
+            showGrid = value;
+            this.Invalidate();
+        }
+    }
+    private bool showGrid = false;
+    public float[] GridPattern { get; set; }
+
+    /// <summary>
     /// The amount of pixels that represent one in-game <see cref="PixelTileSize"/>.
     /// </summary>
     public int TileSize => PixelTileSize * zoom;
@@ -94,12 +110,18 @@ public class TileViewer : Control
         }
     }
     private Rectangle selRect = new Rectangle(-1, -1, 0, 0);
+    /// <summary>
+    /// a scaled down version of the current rectangle that will always have the
+    /// amount of pixels encapsulated by <see cref="selRect"/>
+    /// </summary>
+    public Rectangle SelectedRegion => new Rectangle(selRect.X / Zoom, selRect.Y / Zoom, (selRect.Width + 1) / Zoom, (selRect.Height + 1) / Zoom);
     #endregion
 
     //Pens
     private Pen SelectionPen { get; set; } = new Pen(Globals.SelectionColor, 1);
     private Pen TilePen { get; set; } = new Pen(Globals.SelectedColor, 1);
     private Pen BlackPen { get; set; } = new Pen(Color.Black, 1);
+    private Pen GridPen { get; set; } = new Pen(Color.White, 1);
 
     public void ResetSelection()
     {
@@ -126,6 +148,21 @@ public class TileViewer : Control
     protected override void OnPaint(PaintEventArgs e)
     {
         if (redRect.X != -1) e.Graphics.DrawRectangle(TilePen, redRect);
+
+        //Drawing grid
+        if (GridPattern != null) GridPen.DashPattern = GridPattern;
+        if (ShowGrid)
+        {
+            for (int i = 0; i < Width / TileSize; i++)
+            {
+                e.Graphics.DrawLine(GridPen, i * TileSize, 0, i * TileSize, Height);
+            }
+            for (int i = 0; i < Height / TileSize; i++)
+            {
+                e.Graphics.DrawLine(GridPen, 0, i * TileSize, Width, i * TileSize);
+            }
+        }
+
         if (selRect.X == -1 || !selRect.IntersectsWith(e.ClipRectangle)) return;
 
         //Dash pattern

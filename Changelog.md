@@ -1,5 +1,5 @@
 # Version R 1.0
-### Released: XX.XX.202X
+### Released: XX.XX.2024
 **Changes:**
 * Transition Editor rework
 * Transitions can be named
