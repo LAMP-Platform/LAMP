@@ -76,7 +76,7 @@ public class Save
         r.Write8(dataStart + 37, MetroidCount);
 
         //Debug Menu
-        if (this.IncludeDebugMenu) r.ReplaceBytes(new int[] { 0x2CB6, 0x2D02 }, new byte[] { 0x20, 0x28 }); //Enables Debug menu
+        if (this.IncludeDebugMenu) r.ReplaceBytes(new int[] { Rom.OffsetOf("tryPausing.endIf_A") + 0x4, Rom.OffsetOf("gameMode_Paused.endIf") + 0xB }, new byte[] { 0x20, 0x28 }); //Enables Debug menu
     }
 
     /// <summary>

@@ -267,7 +267,7 @@ public class Rom
         DataCopy.RemoveRange(offset, values.Count());
         DataCopy.InsertRange(offset, values);
     }
-
+    
     /// <summary>
     /// Writes a byte from the list for each offset in the list.
     /// </summary>
@@ -325,24 +325,27 @@ public class Rom
     public Pointer CollisionPointers { get; } = new Pointer(0x8, 0x7EEA);
     public Pointer SolidityIndices { get; } = new Pointer(0x8, 0x7EFA);
 
-    
+
     //Dictionary used if no symvbol file is loaded
     private static readonly Dictionary<string, Pointer> StandardOffsets = new()
     {
         { "Areas", new Pointer(0x24000) },
 
-        { "enemyDataPointers", new Pointer(0x3, 0x42E0) }, //6 Tables of Pointers to object lists
-        { "enemyBank9_00", new Pointer(0x3, 0x50E0) }, //Lists of objects on screen, first entry should always be empty
-        { "enemyHeaderPointers", new Pointer(0x3, 0x6300) }, //This is the first byte of new data that should not be overwritten! End of object Data
+        { "enemyDataPointers", new Pointer(0x3, 0x42E0) },      //6 Tables of Pointers to object lists
+        { "enemyBank9_00", new Pointer(0x3, 0x50E0) },          //Lists of objects on screen, first entry should always be empty
+        { "enemyHeaderPointers", new Pointer(0x3, 0x6300) },    //This  is the first byte of new data that should not be overwritten! End of object Data
 
-        { "doorPointerTable", new Pointer(0x5, 0x42E5) }, //Table of 512 or 0x200 pointers to transition codes
-        { "door000", new Pointer(0x5, 0x46E5) }, //Table of <512 Transitions, first one should stay 0xFF
-        { "creditsRoutine", new Pointer(0x5, 0x55A3) }, //This is the first byte of new data that should not be overwritten!
+        { "doorPointerTable", new Pointer(0x5, 0x42E5) },   //Table of 512 or 0x200 pointers to transition codes
+        { "door000", new Pointer(0x5, 0x46E5) },            //Table of <512 Transitions, first one should stay 0xFF
+        { "creditsRoutine", new Pointer(0x5, 0x55A3) },     //This is the first byte of new data that should not be overwritten!
 
         { "metatilePointerTable", new Pointer(0x8, 0x7F1A) },
         { "collisionPointerTable", new Pointer(0x8, 0x7EEA) },
         { "solidityIndexTable", new Pointer(0x8, 0x7EFA) },
 
         { "initialSaveFile", new Pointer(0x4E64) },
+
+        { "tryPausing.endIf_A", new Pointer(0x2CB2) },      //Pointers for enabling debug
+        { "gameMode_Paused.endIf", new Pointer(0x2CF7) },   //
     };
 }
