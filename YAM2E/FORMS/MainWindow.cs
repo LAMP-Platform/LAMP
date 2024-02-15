@@ -18,6 +18,8 @@ using System.Text.RegularExpressions;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.CodeDom;
 using System.ComponentModel.Design;
+using LAMP.Actions;
+using LAMP.Interfaces;
 
 namespace LAMP;
 
@@ -64,6 +66,7 @@ public partial class MainWindow : Form
     public static bool EditingTiles { get; set; } = true;
     bool MovedObject = false;
     Point MoveStartPoint;
+    Stack<LAMP.Interfaces.Action> EditHistory = new();
 
     //Object Editor
     private Enemy inspectorObject;
@@ -314,67 +317,10 @@ public partial class MainWindow : Form
 
     private void PlaceSelectedTiles(Point tilePosition)
     {
-        int x = tilePosition.X;
-        int y = tilePosition.Y;
 
-        //generate array with tiles that have to be replaced
-        RoomTile[] replaceTiles = new RoomTile[Editor.SelectionWidth * Editor.SelectionHeight];
-        int count = 0;
-        for (int i = 0; i < Editor.SelectionHeight; i++)
-        {
-            for (int j = 0; j < Editor.SelectionWidth; j++)
-            {
-                int tx = x + 16 * j;
-                int ty = y + 16 * i;
-                RoomTile t = new RoomTile();
-                int scrnNr = Editor.GetScreenNrFromXY(tx, ty, Globals.SelectedArea);
-                if (scrnNr == -1)
-                {
-                    replaceTiles[count++] = new RoomTile() { Unused = true };
-                    continue;
-                }
-                t.ScreenNr = scrnNr;
-                t.Screen = Globals.Screens[Globals.SelectedArea][t.ScreenNr];
-                t.Area = Globals.SelectedArea;
-                t.Position = new Point(tx % 256, ty % 256);
-                replaceTiles[count++] = t;
-            }
-        }
+        EditHistory.Push(new PlaceTileAction(tilePosition, Editor.SelectedTiles, Editor.SelectionWidth, Editor.SelectionHeight, Room));
+        EditHistory.Peek().Do();
 
-        //Writing data
-        count = 0;
-        List<int> updatedScreens = new List<int>();
-        foreach (RoomTile t in replaceTiles)
-        {
-            if (t.Unused) continue;
-            t.ReplaceTile(Editor.SelectedTiles[count]);
-            if (!updatedScreens.Contains(t.ScreenNr)) updatedScreens.Add(t.ScreenNr);
-            Editor.DrawScreen(Globals.SelectedArea, t.ScreenNr);
-            count++;
-        }
-
-        //redrawing updated screens
-        count = 0;
-        Graphics g = Graphics.FromImage(Globals.AreaBank);
-        foreach (int nr in Globals.Areas[Globals.SelectedArea].Screens)
-        {
-            //screen pos
-            int sy = count / 16;
-            int sx = count % 16;
-            sx *= 256;
-            sy *= 256;
-
-            if (!updatedScreens.Contains(nr))
-            {
-                count++;
-                continue;
-            }
-            GameScreen screen = Globals.Screens[Globals.SelectedArea][nr];
-            g.DrawImage(screen.Image, new Point(sx, sy));
-            Room.Invalidate(new Rectangle(sx * Room.Zoom, sy * Room.Zoom, 256 * Room.Zoom, 256 * Room.Zoom));
-            count++;
-        }
-        g.Dispose();
     }
 
     private void FloodFill(Point StartPosition)
@@ -1343,5 +1289,11 @@ public partial class MainWindow : Form
     private void BtnTest_Click(object sender, EventArgs e)
     {
         new Test_form().Show();
+    }
+
+    private void btn_undo_Click(object sender, EventArgs e)
+    {
+        if (EditHistory.Count == 0) return;
+        EditHistory.Pop().Undo();
     }
 }
