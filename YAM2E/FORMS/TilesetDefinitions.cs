@@ -23,6 +23,7 @@ public partial class TilesetDefinitions : Form
     {
         Location = new Point(3, 3),
         BackColor = Globals.ColorBlack,
+        Cursor = Cursors.Hand,
     };
     private Pointer MetatilePointer;
 
@@ -51,6 +52,7 @@ public partial class TilesetDefinitions : Form
         pnl_preview.Controls.Add(Tileset);
         Tileset.BringToFront();
         Tileset.ResetSelection();
+        Tileset.Click += btn_edit_Click;
         UpdateTileset();
     }
 

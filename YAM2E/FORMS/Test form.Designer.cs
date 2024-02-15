@@ -28,17 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new System.Windows.Forms.TextBox();
+            grp1 = new System.Windows.Forms.GroupBox();
+            lbl = new System.Windows.Forms.Label();
+            grp2 = new System.Windows.Forms.GroupBox();
+            grp1.SuspendLayout();
             SuspendLayout();
             // 
-            // textBox1
+            // grp1
             // 
-            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            textBox1.Location = new System.Drawing.Point(453, 508);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(184, 16);
-            textBox1.TabIndex = 0;
-            textBox1.Text = "AHHH\r\na";
+            grp1.Controls.Add(lbl);
+            grp1.Location = new System.Drawing.Point(28, 28);
+            grp1.Name = "grp1";
+            grp1.Size = new System.Drawing.Size(359, 205);
+            grp1.TabIndex = 0;
+            grp1.TabStop = false;
+            grp1.Text = "Panel 1";
+            grp1.DragLeave += grp1_DragLeave;
+            // 
+            // lbl
+            // 
+            lbl.AutoSize = true;
+            lbl.Location = new System.Drawing.Point(114, 92);
+            lbl.Name = "lbl";
+            lbl.Size = new System.Drawing.Size(60, 15);
+            lbl.TabIndex = 0;
+            lbl.Text = "MOVE ME";
+            lbl.MouseDown += lbl_MouseDown;
+            lbl.MouseLeave += lbl_MouseLeave;
+            lbl.MouseMove += lbl_MouseMove;
+            lbl.MouseUp += lbl_MouseUp;
+            // 
+            // grp2
+            // 
+            grp2.Location = new System.Drawing.Point(28, 239);
+            grp2.Name = "grp2";
+            grp2.Size = new System.Drawing.Size(359, 205);
+            grp2.TabIndex = 1;
+            grp2.TabStop = false;
+            grp2.Text = "Panel 2";
             // 
             // Test_form
             // 
@@ -46,17 +73,21 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             BackColor = System.Drawing.SystemColors.Control;
-            ClientSize = new System.Drawing.Size(805, 734);
-            Controls.Add(textBox1);
+            ClientSize = new System.Drawing.Size(444, 497);
+            Controls.Add(grp2);
+            Controls.Add(grp1);
             Name = "Test_form";
             RightToLeft = System.Windows.Forms.RightToLeft.No;
             Text = "Test_form";
+            grp1.ResumeLayout(false);
+            grp1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.GroupBox grp1;
+        private System.Windows.Forms.GroupBox grp2;
+        private System.Windows.Forms.Label lbl;
     }
 }

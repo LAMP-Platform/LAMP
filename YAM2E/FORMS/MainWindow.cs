@@ -1342,6 +1342,6 @@ public partial class MainWindow : Form
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
-        Editor.ConvertSymbolToPointer("E:\\METROID\\Metroid 2 RoS\\M2RoS\\out\\M2RoS.sym");
+        new Test_form().Show();
     }
 }
