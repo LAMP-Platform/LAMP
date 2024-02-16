@@ -20,6 +20,7 @@ using System.CodeDom;
 using System.ComponentModel.Design;
 using LAMP.Actions;
 using LAMP.Interfaces;
+using Action = LAMP.Interfaces.Action;
 
 namespace LAMP;
 
@@ -67,6 +68,7 @@ public partial class MainWindow : Form
     bool MovedObject = false;
     Point MoveStartPoint;
     Stack<LAMP.Interfaces.Action> EditHistory = new();
+    private GroupedAction TargetedActionGroup;
 
     //Object Editor
     private Enemy inspectorObject;
@@ -317,9 +319,10 @@ public partial class MainWindow : Form
 
     private void PlaceSelectedTiles(Point tilePosition)
     {
-
-        EditHistory.Push(new PlaceTileAction(tilePosition, Editor.SelectedTiles, Editor.SelectionWidth, Editor.SelectionHeight, Room));
-        EditHistory.Peek().Do();
+        //Ad tile placing action to 
+        var actn = new PlaceTileAction(tilePosition, Editor.SelectedTiles, Editor.SelectionWidth, Editor.SelectionHeight, Room);
+        TargetedActionGroup.Actions.Add(actn);
+        actn.Do();
 
     }
 
@@ -571,6 +574,9 @@ public partial class MainWindow : Form
 
                 if (e.Button == MouseButtons.Left)
                 {
+                    //Create new Action group which stores all the tiles placed while holding down
+                    //Should get added to edit stack after releasing
+                    TargetedActionGroup = new();
                     PlaceSelectedTiles(tile);
                 }
                 if (e.Button == MouseButtons.Right) //Quick Select
@@ -753,6 +759,11 @@ public partial class MainWindow : Form
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
+        if (TargetedActionGroup != null)
+        {
+            EditHistory.Push(TargetedActionGroup);
+            TargetedActionGroup = null;
+        }
         Room.HeldObject = new Rectangle(-1, -1, 1, 1);
 
         switch (toolbar_room.SelectedTool)
