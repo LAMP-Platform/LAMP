@@ -39,6 +39,8 @@ internal class PlaceTileAction : Action
     private byte[] OldTiles { get; set; }
     public byte[] TargetTiles { get; set; }
 
+    public string Description => "Placed Tile";
+
     //Methods
     /// <summary>
     /// Generates an Array that contains the tiles that have to be replaced

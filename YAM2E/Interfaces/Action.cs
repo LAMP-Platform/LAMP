@@ -10,4 +10,5 @@ internal interface Action
 {
     public void Do();
     public void Undo();
+    public String Description { get; }
 }

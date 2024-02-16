@@ -9,6 +9,14 @@ namespace LAMP.Actions;
 internal class GroupedAction : Action
 {
     public List<Action> Actions = new List<Action>();
+    public string Description
+    {
+        get
+        {
+            string name = Actions[0].Description;
+            return $"{name} ({Actions.Count})";
+        }
+    }
 
     public void Do()
     {

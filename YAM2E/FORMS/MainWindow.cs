@@ -67,8 +67,9 @@ public partial class MainWindow : Form
     public static bool EditingTiles { get; set; } = true;
     bool MovedObject = false;
     Point MoveStartPoint;
-    Stack<LAMP.Interfaces.Action> EditHistory = new();
     private GroupedAction TargetedActionGroup;
+    List<LAMP.Interfaces.Action> EditHistory = new();
+    int UndoRedoHead = -1;
 
     //Object Editor
     private Enemy inspectorObject;
@@ -478,6 +479,22 @@ public partial class MainWindow : Form
         s.CamY = s.SamusY = (byte)posY;
     }
 
+    private void AddActionToHistory(Action action) 
+    {
+        //Edit History is in the present. Nothing in the timeline has been undone
+        if (UndoRedoHead == EditHistory.Count - 1)
+        {
+            EditHistory.Add(action);
+            UndoRedoHead = EditHistory.Count - 1;
+            return;
+        }
+
+        //We are somewhere in the past and need to delete the future
+        EditHistory.RemoveRange(UndoRedoHead + 1, EditHistory.Count - UndoRedoHead - 1);
+        EditHistory.Add(action);
+        UndoRedoHead = EditHistory.Count - 1;
+    }
+
     #region Main Window Events
 
     #region Tileset Events
@@ -761,7 +778,7 @@ public partial class MainWindow : Form
     {
         if (TargetedActionGroup != null)
         {
-            EditHistory.Push(TargetedActionGroup);
+            AddActionToHistory(TargetedActionGroup);
             TargetedActionGroup = null;
         }
         Room.HeldObject = new Rectangle(-1, -1, 1, 1);
@@ -1304,7 +1321,15 @@ public partial class MainWindow : Form
 
     private void btn_undo_Click(object sender, EventArgs e)
     {
-        if (EditHistory.Count == 0) return;
-        EditHistory.Pop().Undo();
+        if (EditHistory.Count == 0 || UndoRedoHead == -1) return;
+        EditHistory[UndoRedoHead].Undo();
+        UndoRedoHead--;
+    }
+
+    private void btn_redo_Click(object sender, EventArgs e)
+    {
+        if (EditHistory.Count == 0 || UndoRedoHead == EditHistory.Count - 1) return;
+        UndoRedoHead++;
+        EditHistory[UndoRedoHead].Do();
     }
 }

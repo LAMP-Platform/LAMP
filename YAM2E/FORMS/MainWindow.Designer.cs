@@ -110,6 +110,7 @@ namespace LAMP
             pnl_main_window_view = new System.Windows.Forms.SplitContainer();
             pnl_tileset = new System.Windows.Forms.Panel();
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
+            btn_undo = new System.Windows.Forms.Button();
             grp_object_inspector = new System.Windows.Forms.GroupBox();
             btn_auto_number = new System.Windows.Forms.Button();
             txb_object_number = new System.Windows.Forms.TextBox();
@@ -121,7 +122,7 @@ namespace LAMP
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
             ctx_select_tool = new System.Windows.Forms.ContextMenuStrip(components);
             replaceSelectedTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            btn_undo = new System.Windows.Forms.Button();
+            btn_redo = new System.Windows.Forms.Button();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -874,6 +875,7 @@ namespace LAMP
             // 
             // pnl_tileset_resize.Panel2
             // 
+            pnl_tileset_resize.Panel2.Controls.Add(btn_redo);
             pnl_tileset_resize.Panel2.Controls.Add(btn_undo);
             pnl_tileset_resize.Panel2.Controls.Add(grp_object_inspector);
             pnl_tileset_resize.Panel2.Controls.Add(btnTest);
@@ -881,6 +883,17 @@ namespace LAMP
             pnl_tileset_resize.Size = new System.Drawing.Size(286, 570);
             pnl_tileset_resize.SplitterDistance = 193;
             pnl_tileset_resize.TabIndex = 5;
+            // 
+            // btn_undo
+            // 
+            btn_undo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_undo.Location = new System.Drawing.Point(100, 338);
+            btn_undo.Name = "btn_undo";
+            btn_undo.Size = new System.Drawing.Size(82, 23);
+            btn_undo.TabIndex = 11;
+            btn_undo.Text = "Undo";
+            btn_undo.UseVisualStyleBackColor = true;
+            btn_undo.Click += btn_undo_Click;
             // 
             // grp_object_inspector
             // 
@@ -989,16 +1002,16 @@ namespace LAMP
             replaceSelectedTileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             replaceSelectedTileToolStripMenuItem.Text = "Replace Selected Tile";
             // 
-            // btn_undo
+            // btn_redo
             // 
-            btn_undo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_undo.Location = new System.Drawing.Point(100, 338);
-            btn_undo.Name = "btn_undo";
-            btn_undo.Size = new System.Drawing.Size(82, 23);
-            btn_undo.TabIndex = 11;
-            btn_undo.Text = "Undo";
-            btn_undo.UseVisualStyleBackColor = true;
-            btn_undo.Click += btn_undo_Click;
+            btn_redo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            btn_redo.Location = new System.Drawing.Point(188, 338);
+            btn_redo.Name = "btn_redo";
+            btn_redo.Size = new System.Drawing.Size(82, 23);
+            btn_redo.TabIndex = 12;
+            btn_redo.Text = "Redo";
+            btn_redo.UseVisualStyleBackColor = true;
+            btn_redo.Click += btn_redo_Click;
             // 
             // MainWindow
             // 
@@ -1140,6 +1153,7 @@ namespace LAMP
         private System.Windows.Forms.ToolStripMenuItem replaceSelectedTileToolStripMenuItem;
         private System.Windows.Forms.Button btn_edit_tileset;
         private System.Windows.Forms.Button btn_undo;
+        private System.Windows.Forms.Button btn_redo;
     }
 }
 
