@@ -12,6 +12,8 @@ internal class RoomTile
     public int Area { get; set; }
     public Point Position { get; set; }
     public bool Unused { get; set; } = false;
+    public byte TileID => Screen.Data[(Position.Y / 16) * 16 + (Position.X / 16)];
+
 
     public void ReplaceTile(byte tileID)
     {

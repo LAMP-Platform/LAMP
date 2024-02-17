@@ -169,7 +169,7 @@ namespace LAMP
             // 
             btn_new_project.Image = Properties.Resources.Add;
             btn_new_project.Name = "btn_new_project";
-            btn_new_project.Size = new System.Drawing.Size(180, 22);
+            btn_new_project.Size = new System.Drawing.Size(150, 22);
             btn_new_project.Text = "New Project";
             btn_new_project.Click += btn_new_project_Click;
             // 
@@ -177,7 +177,7 @@ namespace LAMP
             // 
             btn_open_rom.Image = Properties.Resources.FolderOpened;
             btn_open_rom.Name = "btn_open_rom";
-            btn_open_rom.Size = new System.Drawing.Size(180, 22);
+            btn_open_rom.Size = new System.Drawing.Size(150, 22);
             btn_open_rom.Text = "Open Project";
             btn_open_rom.Click += btn_open_rom_Click;
             // 
@@ -185,20 +185,20 @@ namespace LAMP
             // 
             btn_save_project.Image = Properties.Resources.Save;
             btn_save_project.Name = "btn_save_project";
-            btn_save_project.Size = new System.Drawing.Size(180, 22);
+            btn_save_project.Size = new System.Drawing.Size(150, 22);
             btn_save_project.Text = "Save Project";
             btn_save_project.Click += btn_save_project_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             btn_create_backup.Name = "btn_create_backup";
-            btn_create_backup.Size = new System.Drawing.Size(180, 22);
+            btn_create_backup.Size = new System.Drawing.Size(150, 22);
             btn_create_backup.Text = "Create Backup";
             btn_create_backup.Visible = false;
             btn_create_backup.Click += btn_create_backup_Click;
@@ -206,13 +206,13 @@ namespace LAMP
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_compile_ROM
             // 
             btn_compile_ROM.Image = Properties.Resources.Compile;
             btn_compile_ROM.Name = "btn_compile_ROM";
-            btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
+            btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
             btn_compile_ROM.Text = "Compile ROM";
             btn_compile_ROM.Click += btn_compile_ROM_Click;
             // 
@@ -232,7 +232,7 @@ namespace LAMP
             // 
             btn_rom_file.Image = Properties.Resources.Settings;
             btn_rom_file.Name = "btn_rom_file";
-            btn_rom_file.Size = new System.Drawing.Size(180, 22);
+            btn_rom_file.Size = new System.Drawing.Size(165, 22);
             btn_rom_file.Text = "Program Settings";
             btn_rom_file.Click += rOMFileToolStripMenuItem_Click;
             // 
@@ -240,7 +240,7 @@ namespace LAMP
             // 
             btn_project_settings.Image = Properties.Resources.Settings;
             btn_project_settings.Name = "btn_project_settings";
-            btn_project_settings.Size = new System.Drawing.Size(180, 22);
+            btn_project_settings.Size = new System.Drawing.Size(165, 22);
             btn_project_settings.Text = "Project Settings";
             btn_project_settings.Click += btn_project_settings_Click;
             // 
@@ -260,14 +260,14 @@ namespace LAMP
             // 
             btn_data_viewer.Image = Properties.Resources.DataViewer;
             btn_data_viewer.Name = "btn_data_viewer";
-            btn_data_viewer.Size = new System.Drawing.Size(180, 22);
+            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
             btn_data_viewer.Text = "Data Viewer";
             btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // btn_converter
             // 
             btn_converter.Name = "btn_converter";
-            btn_converter.Size = new System.Drawing.Size(180, 22);
+            btn_converter.Size = new System.Drawing.Size(136, 22);
             btn_converter.Text = "Converter";
             btn_converter.Click += btn_converter_Click;
             // 
@@ -430,7 +430,7 @@ namespace LAMP
             // 
             btn_area_clear.Image = Properties.Resources.Clear;
             btn_area_clear.Name = "btn_area_clear";
-            btn_area_clear.Size = new System.Drawing.Size(180, 22);
+            btn_area_clear.Size = new System.Drawing.Size(98, 22);
             btn_area_clear.Text = "Area";
             btn_area_clear.Click += Btn_Area_Clear_Click;
             // 
@@ -450,7 +450,7 @@ namespace LAMP
             // 
             btn_wiki.Image = Properties.Resources.HelpTableOfContents;
             btn_wiki.Name = "btn_wiki";
-            btn_wiki.Size = new System.Drawing.Size(180, 22);
+            btn_wiki.Size = new System.Drawing.Size(142, 22);
             btn_wiki.Text = "Wiki";
             btn_wiki.Click += btn_wiki_Click;
             // 
@@ -458,7 +458,7 @@ namespace LAMP
             // 
             btn_bug_report.Image = Properties.Resources.StatusError;
             btn_bug_report.Name = "btn_bug_report";
-            btn_bug_report.Size = new System.Drawing.Size(180, 22);
+            btn_bug_report.Size = new System.Drawing.Size(142, 22);
             btn_bug_report.Text = "Report a Bug";
             btn_bug_report.Click += btn_bug_report_Click;
             // 
@@ -704,6 +704,7 @@ namespace LAMP
             // toolbar_tileset
             // 
             toolbar_tileset.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_tileset.History = null;
             toolbar_tileset.Location = new System.Drawing.Point(6, 19);
             toolbar_tileset.MaxZoom = 10;
             toolbar_tileset.Name = "toolbar_tileset";
@@ -740,6 +741,7 @@ namespace LAMP
             // toolbar_room
             // 
             toolbar_room.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_room.History = null;
             toolbar_room.Location = new System.Drawing.Point(6, 19);
             toolbar_room.MaxZoom = 5;
             toolbar_room.Name = "toolbar_room";

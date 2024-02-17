@@ -1,6 +1,7 @@
 # Version R 1.0
 ### Released: XX.XX.2024
 **Changes:**
+* Undo / Redo added
 * Transition Editor rework
 * Transitions can be named
 * Added error messages if too many objects or transitions exist

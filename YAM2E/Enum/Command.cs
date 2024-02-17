@@ -9,5 +9,7 @@ public enum LampToolCommand
     RotateRight,
     RotateLeft,
     ZoomIn,
-    ZoomOut
+    ZoomOut,
+    Undo,
+    Redo
 }
