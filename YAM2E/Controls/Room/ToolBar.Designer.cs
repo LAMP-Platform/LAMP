@@ -46,6 +46,9 @@
             sep_zoom = new Other.SeperatorVertical();
             btn_zoom_in = new System.Windows.Forms.Button();
             btn_zoom_out = new System.Windows.Forms.Button();
+            sep_undo_redo = new Other.SeperatorVertical();
+            btn_undo = new System.Windows.Forms.Button();
+            btn_redo = new System.Windows.Forms.Button();
             tlt_button_name = new System.Windows.Forms.ToolTip(components);
             flw_controls.SuspendLayout();
             SuspendLayout();
@@ -186,10 +189,13 @@
             flw_controls.Controls.Add(sep_zoom);
             flw_controls.Controls.Add(btn_zoom_in);
             flw_controls.Controls.Add(btn_zoom_out);
+            flw_controls.Controls.Add(sep_undo_redo);
+            flw_controls.Controls.Add(btn_undo);
+            flw_controls.Controls.Add(btn_redo);
             flw_controls.Location = new System.Drawing.Point(0, 0);
             flw_controls.Margin = new System.Windows.Forms.Padding(0);
             flw_controls.Name = "flw_controls";
-            flw_controls.Size = new System.Drawing.Size(309, 24);
+            flw_controls.Size = new System.Drawing.Size(364, 24);
             flw_controls.TabIndex = 9;
             // 
             // btn_move
@@ -258,6 +264,46 @@
             btn_zoom_out.UseVisualStyleBackColor = true;
             btn_zoom_out.Click += btn_zoom_out_Click;
             // 
+            // sep_undo_redo
+            // 
+            sep_undo_redo.BackColor = System.Drawing.SystemColors.ControlDark;
+            sep_undo_redo.Location = new System.Drawing.Point(312, 2);
+            sep_undo_redo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
+            sep_undo_redo.Name = "sep_undo_redo";
+            sep_undo_redo.Size = new System.Drawing.Size(1, 20);
+            sep_undo_redo.TabIndex = 12;
+            sep_undo_redo.Visible = false;
+            // 
+            // btn_undo
+            // 
+            btn_undo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            btn_undo.Enabled = false;
+            btn_undo.Image = Properties.Resources.Undo;
+            btn_undo.Location = new System.Drawing.Point(316, 0);
+            btn_undo.Margin = new System.Windows.Forms.Padding(0);
+            btn_undo.Name = "btn_undo";
+            btn_undo.Size = new System.Drawing.Size(24, 24);
+            btn_undo.TabIndex = 15;
+            tlt_button_name.SetToolTip(btn_undo, "Undo");
+            btn_undo.UseVisualStyleBackColor = true;
+            btn_undo.Visible = false;
+            btn_undo.Click += btn_undo_Click;
+            // 
+            // btn_redo
+            // 
+            btn_redo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            btn_redo.Enabled = false;
+            btn_redo.Image = Properties.Resources.Redo;
+            btn_redo.Location = new System.Drawing.Point(340, 0);
+            btn_redo.Margin = new System.Windows.Forms.Padding(0);
+            btn_redo.Name = "btn_redo";
+            btn_redo.Size = new System.Drawing.Size(24, 24);
+            btn_redo.TabIndex = 16;
+            tlt_button_name.SetToolTip(btn_redo, "Redo");
+            btn_redo.UseVisualStyleBackColor = true;
+            btn_redo.Visible = false;
+            btn_redo.Click += btn_redo_Click;
+            // 
             // tlt_button_name
             // 
             tlt_button_name.AutomaticDelay = 1000;
@@ -269,7 +315,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(flw_controls);
             Name = "ToolBar";
-            Size = new System.Drawing.Size(369, 24);
+            Size = new System.Drawing.Size(368, 24);
             flw_controls.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -294,5 +340,8 @@
         private System.Windows.Forms.Button btn_zoom_out;
         private System.Windows.Forms.ToolTip tlt_button_name;
         private System.Windows.Forms.Button btn_move;
+        private Other.SeperatorVertical sep_undo_redo;
+        private System.Windows.Forms.Button btn_undo;
+        private System.Windows.Forms.Button btn_redo;
     }
 }

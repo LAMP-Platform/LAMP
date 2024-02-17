@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using LAMP.Controls.Other;
 using LAMP.Properties;
 using LAMP;
+using LAMP.Classes;
 
 namespace LAMP.Controls.Room;
 
@@ -19,6 +20,7 @@ public partial class ToolBar : UserControl
     {
         InitializeComponent();
         SelectedTool = LampTool.Pen;
+        CheckUndoRedo(null, null);
     }
 
     #region EVENTS
@@ -106,6 +108,19 @@ public partial class ToolBar : UserControl
         }
     }
     private int zoomLevel = 1;
+
+    public EditHistory History
+    {
+        get => history;
+        set
+        {
+            if (value == history) return;
+            history = value;
+            history.AddedAction += CheckUndoRedo;
+            history.UndoRedo += CheckUndoRedo;
+        }
+    }
+    private EditHistory history;
     #endregion
 
     /// <summary>
@@ -152,6 +167,14 @@ public partial class ToolBar : UserControl
         if (!(flipH || flipV || rotateL || rotateR)) sep_transform.Visible = false;
     }
 
+    public void SetUndoRedo(bool undo, bool redo)
+    {
+        btn_undo.Visible = undo;
+        btn_redo.Visible = redo;
+
+        sep_undo_redo.Visible = !(undo || redo);
+    }
+
     public void DisableZoomSeperator()
     {
         sep_zoom.Visible = false;
@@ -170,6 +193,13 @@ public partial class ToolBar : UserControl
         btn_zoom_in.Enabled = zoomIn;
         btn_zoom_out.Enabled = zoomOut;
     }
+
+    private void CheckUndoRedo(object sender, EventArgs e)
+    {
+        btn_undo.Enabled = (History != null && History.canUndo);
+        btn_redo.Enabled = (History != null && History.canRedo);
+    }
+
 
     #region ToolEvents
     private void btn_pen_Click(object sender, EventArgs e)
@@ -256,6 +286,18 @@ public partial class ToolBar : UserControl
 
         selectedTool = LampTool.Move;
         OnToolSwitched(new EventArgs());
+    }
+
+    private void btn_undo_Click(object sender, EventArgs e)
+    {
+        triggeredCommand = LampToolCommand.Undo;
+        OnToolCommandTriggered(new EventArgs());
+    }
+
+    private void btn_redo_Click(object sender, EventArgs e)
+    {
+        triggeredCommand = LampToolCommand.Redo;
+        OnToolCommandTriggered(new EventArgs());
     }
 }
 #endregion

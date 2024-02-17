@@ -110,7 +110,6 @@ namespace LAMP
             pnl_main_window_view = new System.Windows.Forms.SplitContainer();
             pnl_tileset = new System.Windows.Forms.Panel();
             pnl_tileset_resize = new System.Windows.Forms.SplitContainer();
-            btn_undo = new System.Windows.Forms.Button();
             grp_object_inspector = new System.Windows.Forms.GroupBox();
             btn_auto_number = new System.Windows.Forms.Button();
             txb_object_number = new System.Windows.Forms.TextBox();
@@ -122,7 +121,6 @@ namespace LAMP
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
             ctx_select_tool = new System.Windows.Forms.ContextMenuStrip(components);
             replaceSelectedTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            btn_redo = new System.Windows.Forms.Button();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -706,6 +704,7 @@ namespace LAMP
             // toolbar_tileset
             // 
             toolbar_tileset.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_tileset.History = null;
             toolbar_tileset.Location = new System.Drawing.Point(6, 19);
             toolbar_tileset.MaxZoom = 10;
             toolbar_tileset.Name = "toolbar_tileset";
@@ -742,6 +741,7 @@ namespace LAMP
             // toolbar_room
             // 
             toolbar_room.Dock = System.Windows.Forms.DockStyle.Top;
+            toolbar_room.History = null;
             toolbar_room.Location = new System.Drawing.Point(6, 19);
             toolbar_room.MaxZoom = 5;
             toolbar_room.Name = "toolbar_room";
@@ -875,25 +875,12 @@ namespace LAMP
             // 
             // pnl_tileset_resize.Panel2
             // 
-            pnl_tileset_resize.Panel2.Controls.Add(btn_redo);
-            pnl_tileset_resize.Panel2.Controls.Add(btn_undo);
             pnl_tileset_resize.Panel2.Controls.Add(grp_object_inspector);
             pnl_tileset_resize.Panel2.Controls.Add(btnTest);
             pnl_tileset_resize.Panel2.Padding = new System.Windows.Forms.Padding(9, 6, 6, 9);
             pnl_tileset_resize.Size = new System.Drawing.Size(286, 570);
             pnl_tileset_resize.SplitterDistance = 193;
             pnl_tileset_resize.TabIndex = 5;
-            // 
-            // btn_undo
-            // 
-            btn_undo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_undo.Location = new System.Drawing.Point(100, 338);
-            btn_undo.Name = "btn_undo";
-            btn_undo.Size = new System.Drawing.Size(82, 23);
-            btn_undo.TabIndex = 11;
-            btn_undo.Text = "Undo";
-            btn_undo.UseVisualStyleBackColor = true;
-            btn_undo.Click += btn_undo_Click;
             // 
             // grp_object_inspector
             // 
@@ -1001,17 +988,6 @@ namespace LAMP
             replaceSelectedTileToolStripMenuItem.Name = "replaceSelectedTileToolStripMenuItem";
             replaceSelectedTileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             replaceSelectedTileToolStripMenuItem.Text = "Replace Selected Tile";
-            // 
-            // btn_redo
-            // 
-            btn_redo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btn_redo.Location = new System.Drawing.Point(188, 338);
-            btn_redo.Name = "btn_redo";
-            btn_redo.Size = new System.Drawing.Size(82, 23);
-            btn_redo.TabIndex = 12;
-            btn_redo.Text = "Redo";
-            btn_redo.UseVisualStyleBackColor = true;
-            btn_redo.Click += btn_redo_Click;
             // 
             // MainWindow
             // 
@@ -1152,8 +1128,6 @@ namespace LAMP
         private System.Windows.Forms.ContextMenuStrip ctx_select_tool;
         private System.Windows.Forms.ToolStripMenuItem replaceSelectedTileToolStripMenuItem;
         private System.Windows.Forms.Button btn_edit_tileset;
-        private System.Windows.Forms.Button btn_undo;
-        private System.Windows.Forms.Button btn_redo;
     }
 }
 

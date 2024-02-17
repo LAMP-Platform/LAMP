@@ -68,8 +68,7 @@ public partial class MainWindow : Form
     bool MovedObject = false;
     Point MoveStartPoint;
     private GroupedAction TargetedActionGroup;
-    List<LAMP.Interfaces.Action> EditHistory = new();
-    int UndoRedoHead = -1;
+    private EditHistory editHistory = new();
 
     //Object Editor
     private Enemy inspectorObject;
@@ -130,6 +129,8 @@ public partial class MainWindow : Form
 
         toolbar_room.SetTransform(false, false, false, false);
         toolbar_room.SetTools(true, true, true, false);
+        toolbar_room.SetUndoRedo(true, true);
+        toolbar_room.History = editHistory;
 
         //Adding Converter to Panel
         pnl_tileset_resize.Panel2.Controls.Add(PermaConverter);
@@ -479,22 +480,6 @@ public partial class MainWindow : Form
         s.CamY = s.SamusY = (byte)posY;
     }
 
-    private void AddActionToHistory(Action action) 
-    {
-        //Edit History is in the present. Nothing in the timeline has been undone
-        if (UndoRedoHead == EditHistory.Count - 1)
-        {
-            EditHistory.Add(action);
-            UndoRedoHead = EditHistory.Count - 1;
-            return;
-        }
-
-        //We are somewhere in the past and need to delete the future
-        EditHistory.RemoveRange(UndoRedoHead + 1, EditHistory.Count - UndoRedoHead - 1);
-        EditHistory.Add(action);
-        UndoRedoHead = EditHistory.Count - 1;
-    }
-
     #region Main Window Events
 
     #region Tileset Events
@@ -778,7 +763,7 @@ public partial class MainWindow : Form
     {
         if (TargetedActionGroup != null)
         {
-            AddActionToHistory(TargetedActionGroup);
+            editHistory.AddActionToHistory(TargetedActionGroup);
             TargetedActionGroup = null;
         }
         Room.HeldObject = new Rectangle(-1, -1, 1, 1);
@@ -899,6 +884,14 @@ public partial class MainWindow : Form
             case (LampToolCommand.Paste):
                 pasteTiles();
                 break;
+
+            case (LampToolCommand.Undo):
+                editHistory.Undo();
+                break;
+
+            case (LampToolCommand.Redo):
+                editHistory.Redo();
+                break;
         }
     }
 
@@ -974,6 +967,12 @@ public partial class MainWindow : Form
             case Keys.OemMinus:
                 toolbar_room.ZoomLevel--;
                 Room.Zoom = toolbar_room.ZoomLevel;
+                break;
+
+            //Undo Redo
+            case Keys.Z:
+                if (e.Modifiers == (Keys.Control | Keys.Shift)) editHistory.Redo();
+                if (e.Modifiers == Keys.Control) editHistory.Undo();
                 break;
         }
     }
@@ -1317,19 +1316,5 @@ public partial class MainWindow : Form
     private void BtnTest_Click(object sender, EventArgs e)
     {
         new Test_form().Show();
-    }
-
-    private void btn_undo_Click(object sender, EventArgs e)
-    {
-        if (EditHistory.Count == 0 || UndoRedoHead == -1) return;
-        EditHistory[UndoRedoHead].Undo();
-        UndoRedoHead--;
-    }
-
-    private void btn_redo_Click(object sender, EventArgs e)
-    {
-        if (EditHistory.Count == 0 || UndoRedoHead == EditHistory.Count - 1) return;
-        UndoRedoHead++;
-        EditHistory[UndoRedoHead].Do();
     }
 }

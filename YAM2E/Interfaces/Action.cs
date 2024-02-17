@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAMP.Interfaces;
 
-internal interface Action
+public interface Action
 {
     public void Do();
     public void Undo();
