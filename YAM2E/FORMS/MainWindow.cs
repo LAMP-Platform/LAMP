@@ -321,7 +321,7 @@ public partial class MainWindow : Form
 
     private void PlaceSelectedTiles(Point tilePosition)
     {
-        //Ad tile placing action to 
+        //Add tile placing action to 
         var actn = new PlaceTileAction(tilePosition, Editor.SelectedTiles, Editor.SelectionWidth, Editor.SelectionHeight, Room);
         TargetedActionGroup.Actions.Add(actn);
         actn.Do();
@@ -578,6 +578,7 @@ public partial class MainWindow : Form
                 {
                     //Create new Action group which stores all the tiles placed while holding down
                     //Should get added to edit stack after releasing
+                    if (Editor.SelectedTiles == null) break;
                     TargetedActionGroup = new();
                     PlaceSelectedTiles(tile);
                 }
@@ -680,7 +681,7 @@ public partial class MainWindow : Form
                     Room.RedRect = new Rectangle(tile.X, tile.Y, RoomSelectedSize.Width, RoomSelectedSize.Height);
                 }
 
-                if (e.Button != MouseButtons.Left) break;
+                if (e.Button != MouseButtons.Left || Editor.SelectedTiles == null) break;
 
                 PlaceSelectedTiles(tile);
 

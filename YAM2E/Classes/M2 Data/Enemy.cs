@@ -23,6 +23,11 @@ public class Enemy
         sY = y;
     }
 
+    /// <summary>
+    /// Returns the absolute position of the enemy in the area
+    /// </summary>
+    /// <param name="screen"></param>
+    /// <returns></returns>
     public Point GetPosition(int screen)
     {
         //calculating actual position in the area
