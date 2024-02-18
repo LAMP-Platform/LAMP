@@ -11,6 +11,9 @@ public class Enemy
     public byte sX { get; set; }
     public byte sY { get; set; }
 
+    /// <summary>
+    /// Unused
+    /// </summary>
     public string LocationInfo = "";
 
     [JsonConstructor]

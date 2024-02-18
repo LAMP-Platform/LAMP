@@ -60,7 +60,6 @@ public partial class MainWindow : Form
     /// </summary>
     private Point RoomSelectedCoordinate = new Point(-1, -1);
     private Size RoomSelectedSize = new Size(-1, -1);
-    public static Enemy heldObject = null;
     private byte selectedTileId = 0;
 
     //Main Editor vars
@@ -89,6 +88,7 @@ public partial class MainWindow : Form
         }
     }
     int inspectorObjectScreen = 0;
+    public static Enemy heldObject = null;
 
 
     //Graphics vars
@@ -480,6 +480,13 @@ public partial class MainWindow : Form
         s.CamY = s.SamusY = (byte)posY;
     }
 
+    ///<summary>Resets the held object rectangle and hides inspector</summary>
+    private void ResetObjectSelection() 
+    {
+        InspectorObject = null;
+        Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
+    }
+
     #region Main Window Events
 
     #region Tileset Events
@@ -605,16 +612,17 @@ public partial class MainWindow : Form
 
             case (LampTool.Move): //Move selected tiles, objects, edit screens and more
 
+                if (heldObject != null && MovedObject) break;
                 MovedObject = false;
                 if (!Room.ShowObjects) break;
                 heldObject = Editor.FindObject(pixel.X, pixel.Y, Globals.SelectedArea);
                 InspectorObject = heldObject;
                 inspectorObjectScreen = Globals.SelectedScreenNr;
 
-                if (InspectorObject == null) Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
+                if (heldObject == null) ResetObjectSelection();
                 else
                 {
-                    Point objectLocation = InspectorObject.GetPosition(Globals.SelectedScreenNr);
+                    Point objectLocation = heldObject.GetPosition(Globals.SelectedScreenNr);
                     Room.SelectedObject = new Rectangle(objectLocation.X * Room.Zoom, objectLocation.Y * Room.Zoom, Room.TileSize - 1, Room.TileSize - 1);
                 }
 
@@ -723,7 +731,13 @@ public partial class MainWindow : Form
                         //This code should only run once
                         MovedObject = true;
 
-                        Editor.RemoveObject(heldObject, Globals.SelectedArea, Globals.SelectedScreenNr);
+                        //Add action group so that start and end of movement are grouped as one action
+                        TargetedActionGroup = new();
+
+                        var action = new DeleteObjectAction(heldObject, Globals.SelectedArea, Globals.SelectedScreenNr, Room);
+                        action.Do();
+                        TargetedActionGroup.Actions.Add(action);
+
                         Room.HeldObject = new Rectangle(e.X - Room.TileSize / 2, e.Y - Room.TileSize / 2, Room.TileSize - 1, Room.TileSize - 1);
                     }
                 }
@@ -762,11 +776,6 @@ public partial class MainWindow : Form
 
     private void Room_MouseUp(object sender, MouseEventArgs e)
     {
-        if (TargetedActionGroup != null)
-        {
-            editHistory.AddActionToHistory(TargetedActionGroup);
-            TargetedActionGroup = null;
-        }
         Room.HeldObject = new Rectangle(-1, -1, 1, 1);
 
         switch (toolbar_room.SelectedTool)
@@ -801,10 +810,20 @@ public partial class MainWindow : Form
             heldObject.sX = (byte)(objectCoordinate.X % 256);
             heldObject.sY = (byte)(objectCoordinate.Y % 256);
 
-            Globals.Objects[Globals.SelectedScreenNr + 256 * Globals.SelectedArea].Add(heldObject);
+            //Move object to new location
+            var action = new AddObjectAction(heldObject, Globals.SelectedArea, Globals.SelectedScreenNr, Room);
+            action.Do();
+            TargetedActionGroup.Actions.Add(action);
         }
+
         MovedObject = false;
         heldObject = null;
+
+        if (TargetedActionGroup != null && TargetedActionGroup.Actions.Count != 0)
+        {
+            editHistory.AddActionToHistory(TargetedActionGroup);
+        }
+        TargetedActionGroup = null;
     }
 
     private void RoomDoubleClicked(object sender, MouseEventArgs e)
@@ -888,10 +907,12 @@ public partial class MainWindow : Form
 
             case (LampToolCommand.Undo):
                 editHistory.Undo();
+                ResetObjectSelection();
                 break;
 
             case (LampToolCommand.Redo):
                 editHistory.Redo();
+                ResetObjectSelection();
                 break;
         }
     }
@@ -935,15 +956,21 @@ public partial class MainWindow : Form
 
             //Quick object delete
             case Keys.Delete:
+                DeleteObjectAction action;
                 if (InspectorObject != null)
                 {
+                    action = new DeleteObjectAction(InspectorObject, Globals.SelectedArea, inspectorObjectScreen, Room);
+                    action.Do();
+                    editHistory.AddActionToHistory(action);
 
-                    Editor.RemoveObject(InspectorObject, Globals.SelectedArea, inspectorObjectScreen);
                     InspectorObject = null;
                     Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
                     break;
                 }
-                Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+                action = Editor.RemoveObjectCoordinates(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+                if (action == null) break;
+                action.Do();
+                editHistory.AddActionToHistory(action);
                 break;
 
             //TODO: some keybind to quickly edit scrolls
@@ -1134,7 +1161,11 @@ public partial class MainWindow : Form
 
     private void ctx_btn_remove_object_Click(object sender, EventArgs e)
     {
-        Editor.RemoveObject(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+        var action = Editor.RemoveObjectCoordinates(RoomSelectedCoordinate.X, RoomSelectedCoordinate.Y, Globals.SelectedArea);
+        if (action == null) return;
+        action.Do();
+        editHistory.AddActionToHistory(action);
+
         Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
     }
 

@@ -16,6 +16,7 @@ using LAMP.Controls;
 using LAMP.Properties;
 using System.Net.Http;
 using LAMP.Utilities;
+using LAMP.Actions;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -996,52 +997,21 @@ public static class Editor
         return null;
     }
 
-    public static bool RemoveObject(int x, int y, int bank)
+    public static DeleteObjectAction RemoveObjectCoordinates(int x, int y, int bank)
     {
-        RoomViewer room = MainWindow.Room;
         x %= 256;
         y %= 256;
         int screen = Globals.SelectedScreenNr + 256 * bank;
-        int count = 0;
         foreach (Enemy o in Globals.Objects[screen])
         {
             //Checking if x and y are inside a 16px rectangle of the object
             Rectangle check = new Rectangle(o.sX - 8, o.sY - 8, 16, 16);
             if (check.Contains(x, y))
             {
-                Globals.Objects[screen].RemoveAt(count);
-
-                //Invalidating part where object is removed
-                int X = (Globals.SelectedScreenNr % 16) * 256;
-                int Y = (Globals.SelectedScreenNr / 16) * 256;
-                room.Invalidate(new Rectangle((X + o.sX - 8) * room.Zoom, (Y + o.sY - 8) * room.Zoom, room.TileSize, room.TileSize));
-
-                return true;
+                return new DeleteObjectAction(o, bank, Globals.SelectedScreenNr, MainWindow.Room);
             }
-            count++;
         }
-        return false;
-    }
-
-    public static bool RemoveObject(Enemy enemy, int bank, int screen)
-    {
-        RoomViewer room = MainWindow.Room;
-        try
-        {
-            screen = screen + 256 * bank;
-            Globals.Objects[screen].Remove(enemy);
-
-            //Invalidating part where object is removed
-            int X = (Globals.SelectedScreenNr % 16) * 256;
-            int Y = (Globals.SelectedScreenNr / 16) * 256;
-            room.Invalidate(new Rectangle((X + enemy.sX - 8) * room.Zoom, (Y + enemy.sY - 8) * room.Zoom, room.TileSize, room.TileSize));
-
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        return null;
     }
     #endregion
 
