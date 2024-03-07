@@ -343,9 +343,12 @@ public class Rom
         { "collisionPointerTable", new Pointer(0x8, 0x7EEA) },
         { "solidityIndexTable", new Pointer(0x8, 0x7EFA) },
 
-        { "initialSaveFile", new Pointer(0x4E64) },
+        { "initialSaveFile", new Pointer(0x1, 0x4E64) },
 
         { "tryPausing.endIf_A", new Pointer(0x2CB2) },      //Pointers for enabling debug
         { "gameMode_Paused.endIf", new Pointer(0x2CF7) },   //
+
+        { "loadTitleScreen.endIf", new Pointer(0x5, 0x40E3) },  //Pointer for skipping title screen
+        { "loadGame_samusData", new Pointer(0x0, 0xCA3) },      //Pointer that for skipping fanfare
     };
 }
