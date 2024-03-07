@@ -1,5 +1,6 @@
 ﻿using LAMP.Classes;
 using LAMP.Classes.M2_Data;
+using LAMP.FORMS;
 using LAMP.Utilities;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace LAMP.Controls.Other
                 lbl_contains.Text += $"{tilesets[i]}{s} ";
             }
 
-            btn_preview.Visible = true;
+            btn_preview.Visible = canPreview;
         }
 
         private void chb_include_CheckedChanged(object sender, EventArgs e)
@@ -66,7 +67,17 @@ namespace LAMP.Controls.Other
 
         private void btn_preview_Click(object sender, EventArgs e)
         {
+            String containedIn = lbl_contains.Text.Substring(14).Split(',')[0].Trim();
 
+            //Find the tileset
+            foreach (Tileset t in Globals.Tilesets)
+            {
+                if (t.Name == containedIn)
+                {
+                    new GraphicsEditor(t).Show();
+                    return;
+                }
+            }
         }
 
         private void btn_export_Click(object sender, EventArgs e)
