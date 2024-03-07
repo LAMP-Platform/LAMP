@@ -77,6 +77,15 @@ public class Save
 
         //Debug Menu
         if (this.IncludeDebugMenu) r.ReplaceBytes(new int[] { Rom.OffsetOf("tryPausing.endIf_A") + 0x4, Rom.OffsetOf("gameMode_Paused.endIf") + 0xB }, new byte[] { 0x20, 0x28 }); //Enables Debug menu
+
+        //Tweaks
+        //Skip title screen
+        if (SkipTitleScreen) r.Write8(Rom.OffsetOf("loadTitleScreen.endIf") + 0x9, 0x0B);
+
+        //Skip appearance fanfare
+        if (!SkipSamusFanfare) return;
+        Pointer offset = Rom.OffsetOf("loadGame_samusData") + 0x6F;
+        r.ReplaceBytes(new int[] { offset, offset + 0x5, offset + 0xA }, new byte[] { 0x00, 0x00, 0x00 });
     }
 
     /// <summary>
@@ -121,6 +130,8 @@ public class Save
     }
 
     public bool IncludeDebugMenu { get; set; } = false;
+    public bool SkipSamusFanfare { get; set; } = false;
+    public bool SkipTitleScreen { get; set; } = false;
 
     #region Save Data
 

@@ -20,7 +20,7 @@
 * LAMP now starts in fullscreen if closed in fullscreen
 * Tile displays now highlight tiles that can not currently be displayed by LAMP
 * Removed redundant data from the project files
-* Added special options to the Save Editor
+* Added more options to the Save Editor
 * Added a Data Chunk Manager
 * Added the ability to clear an entire area
 * Added the ability to replace all occurances of a tile with a different tile

@@ -816,9 +816,6 @@ public static class Editor
             //Applying the save file
             save.WriteToROM(tROM);
 
-            //applying tweaks
-            ApplyQuickTestTweaks(tROM);
-
             //saving test ROM
             tROM.SaveROMAsFile(tempPath);
 
@@ -831,16 +828,6 @@ public static class Editor
         {
             MessageBox.Show("Test ROM could not be launched.\n\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-    }
-
-    private static void ApplyQuickTestTweaks(Rom r)
-    {
-        //Skip title screen
-        r.Write8(Rom.OffsetOf("loadTitleScreen.endIf") + 0x9, 0x0B);
-
-        //Skip appearance fanfare
-        Pointer offset = Rom.OffsetOf("loadGame_samusData") + 0x6F;
-        r.ReplaceBytes(new int[] { offset, offset + 0x5, offset + 0xA }, new byte[] { 0x00, 0x00, 0x00 });
     }
 
     /// <summary>

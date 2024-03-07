@@ -33,6 +33,8 @@
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             pnl_main = new System.Windows.Forms.Panel();
             grp_testROM = new System.Windows.Forms.GroupBox();
+            chb_fanfare = new System.Windows.Forms.CheckBox();
+            chb_title_screen = new System.Windows.Forms.CheckBox();
             chb_debug_menu = new System.Windows.Forms.CheckBox();
             btn_set_savegame = new System.Windows.Forms.Button();
             btn_test = new System.Windows.Forms.Button();
@@ -144,6 +146,8 @@
             // grp_testROM
             // 
             grp_testROM.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            grp_testROM.Controls.Add(chb_fanfare);
+            grp_testROM.Controls.Add(chb_title_screen);
             grp_testROM.Controls.Add(chb_debug_menu);
             grp_testROM.Controls.Add(btn_set_savegame);
             grp_testROM.Controls.Add(btn_test);
@@ -160,14 +164,36 @@
             grp_testROM.TabStop = false;
             grp_testROM.Text = "Test ROM";
             // 
+            // chb_fanfare
+            // 
+            chb_fanfare.AutoSize = true;
+            chb_fanfare.Location = new System.Drawing.Point(539, 314);
+            chb_fanfare.Name = "chb_fanfare";
+            chb_fanfare.Size = new System.Drawing.Size(65, 19);
+            chb_fanfare.TabIndex = 10;
+            chb_fanfare.Text = "Fanfare";
+            chb_fanfare.UseVisualStyleBackColor = true;
+            chb_fanfare.CheckedChanged += chb_fanfare_CheckedChanged;
+            // 
+            // chb_title_screen
+            // 
+            chb_title_screen.AutoSize = true;
+            chb_title_screen.Location = new System.Drawing.Point(539, 289);
+            chb_title_screen.Name = "chb_title_screen";
+            chb_title_screen.Size = new System.Drawing.Size(86, 19);
+            chb_title_screen.TabIndex = 9;
+            chb_title_screen.Text = "Title Screen";
+            chb_title_screen.UseVisualStyleBackColor = true;
+            chb_title_screen.CheckedChanged += chb_title_screen_CheckedChanged;
+            // 
             // chb_debug_menu
             // 
             chb_debug_menu.AutoSize = true;
-            chb_debug_menu.Location = new System.Drawing.Point(540, 297);
+            chb_debug_menu.Location = new System.Drawing.Point(539, 265);
             chb_debug_menu.Name = "chb_debug_menu";
-            chb_debug_menu.Size = new System.Drawing.Size(95, 34);
+            chb_debug_menu.Size = new System.Drawing.Size(95, 19);
             chb_debug_menu.TabIndex = 8;
-            chb_debug_menu.Text = "Include\r\nDebug Menu";
+            chb_debug_menu.Text = "Debug Menu";
             chb_debug_menu.UseVisualStyleBackColor = true;
             chb_debug_menu.CheckedChanged += chb_debug_menu_CheckedChanged;
             // 
@@ -1059,5 +1085,7 @@
         private System.Windows.Forms.Label lbl_real_metroids;
         private System.Windows.Forms.TextBox txb_beam_value;
         private System.Windows.Forms.Label lbl_beam_value;
+        private System.Windows.Forms.CheckBox chb_title_screen;
+        private System.Windows.Forms.CheckBox chb_fanfare;
     }
 }

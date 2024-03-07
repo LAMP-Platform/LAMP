@@ -101,6 +101,8 @@ public partial class TestRom : Form
 
         //Debug
         chb_debug_menu.Checked = save.IncludeDebugMenu;
+        chb_title_screen.Checked = !save.SkipTitleScreen;
+        chb_fanfare.Checked = !save.SkipSamusFanfare;
     }
 
     #region Events
@@ -316,6 +318,16 @@ public partial class TestRom : Form
     private void txb_real_metroids_TextChanged(object sender, EventArgs e)
     {
         save.RealMetroidCount = (byte)Format.StringToInt(txb_real_metroids.Text, 0xFF);
+    }
+
+    private void chb_title_screen_CheckedChanged(object sender, EventArgs e)
+    {
+        save.SkipTitleScreen = !chb_title_screen.Checked;
+    }
+
+    private void chb_fanfare_CheckedChanged(object sender, EventArgs e)
+    {
+        save.SkipSamusFanfare = !chb_fanfare.Checked;
     }
     #endregion
 }
