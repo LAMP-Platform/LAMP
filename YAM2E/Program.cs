@@ -1,3 +1,4 @@
+using LAMP.FORMS;
 using System;
 using System.Net.Http;
 using System.Windows.Forms;
@@ -19,5 +20,5 @@ internal static class Program
          Application.EnableVisualStyles();
          Application.SetCompatibleTextRenderingDefault(false);
          Application.Run(new MainWindow());
-     }
+    }
  }

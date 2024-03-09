@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Security.Cryptography;
 using LAMP.Controls.Transitions;
+using System.Text.Json;
 
 namespace LAMP;
 
@@ -124,5 +125,6 @@ internal static class Globals
     public static List<string> recentFiles = Properties.programsettings.Default.recentFiles.Cast<string>().ToList();
     public static List<string> pinnedFiles = Properties.programsettings.Default.pinnedFiles.Cast<string>().ToList();
     public static CompilationItem CompilerExclude = (CompilationItem)Properties.programsettings.Default.compilerExclude;
+    public static UserSettings UserSettings = JsonSerializer.Deserialize<UserSettings>(Properties.programsettings.Default.userSettings);
     #endregion
 }

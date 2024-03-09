@@ -21,6 +21,7 @@ using System.ComponentModel.Design;
 using LAMP.Actions;
 using LAMP.Interfaces;
 using Action = LAMP.Interfaces.Action;
+using System.Text.Json;
 
 namespace LAMP;
 
@@ -107,6 +108,7 @@ public partial class MainWindow : Form
 
         //Set Fullscreen if closed in fullscreen
         if (Properties.programsettings.Default.startInFullscreen) WindowState = FormWindowState.Maximized;
+        else this.Size = Globals.UserSettings.WindowSize;
 
         //Check for new Version
         Editor.CheckForUpdate();
@@ -939,6 +941,12 @@ public partial class MainWindow : Form
                     MessageBoxIcon.Question);
 
         if (r == DialogResult.Yes) Editor.SaveProject();
+
+        //Save window size
+        Globals.UserSettings.WindowSize = this.Size;
+        Properties.programsettings.Default.userSettings = JsonSerializer.Serialize(Globals.UserSettings);
+        Properties.programsettings.Default.Save();
+
         e.Cancel = (r == DialogResult.Cancel);
     }
 

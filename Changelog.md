@@ -14,10 +14,10 @@
 * Object settings are now part of the main window
 * Added button to automatically assign object number
 * Project specific base ROMs
-* Disassembly Support
+* Basic Disassembly Support
 * The project path on the recent files screen can now be opened in explorer
 * Added a value converter tool
-* LAMP now starts in fullscreen if closed in fullscreen
+* LAMP remembers the last used window size
 * Tile displays now highlight tiles that can not currently be displayed by LAMP
 * Removed redundant data from the project files
 * Added more options to the Save Editor
