@@ -288,8 +288,11 @@ public partial class GraphicsEditor : Form
                 if (e.Button != MouseButtons.Left) break;
 
                 //check if a selection already exists
+                bool resetSelection = false;
                 if (GraphicsSet.SelRect.X != -1)
                 {
+                    GraphicsSet.SelRect = new Rectangle(-1, -1, 0, 0);
+                    resetSelection = true;
                 }
 
                 //selecting pressed tile
@@ -297,12 +300,12 @@ public partial class GraphicsEditor : Form
                 if ((GraphicsSet.Zoom <= minimumZoom && !shift) || (GraphicsSet.Zoom > minimumZoom && shift))
                 {
                     selectionStart = new Point(tileNum.X * GraphicsSet.TileSize, tileNum.Y * GraphicsSet.TileSize);
-                    GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
+                    if (!resetSelection) GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.TileSize - 1, GraphicsSet.TileSize - 1);
                     break;
                 }
                 //else set Start coordinate of pixel selection
                 selectionStart = new Point(pixel.X * GraphicsSet.Zoom, pixel.Y * GraphicsSet.Zoom);
-                GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
+                if (!resetSelection) GraphicsSet.SelRect = new Rectangle(selectionStart.X, selectionStart.Y, GraphicsSet.Zoom - 1, GraphicsSet.Zoom - 1);
 
                 break;
 
@@ -451,6 +454,10 @@ public partial class GraphicsEditor : Form
                 if (e.Button == MouseButtons.Left)
                 {
                     PlaceMetatiles(tileNum.X, tileNum.Y);
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    LoadedMeta.GetMetaTile(tileNum.X, tileNum.Y);
                 }
                 else if (e.Button == MouseButtons.Middle) LoadedMeta.ChangeMetaTile(tileNum.X, tileNum.Y, (byte)middleClickTile);
 

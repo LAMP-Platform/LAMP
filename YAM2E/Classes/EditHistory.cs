@@ -18,6 +18,27 @@ public class EditHistory
     public bool canUndo => UndoStack.Count > 0;
     public bool canRedo => RedoStack.Count > 0;
 
+    public string[] undoDescriptions
+    {
+        get
+        {
+            List<Action> stackList = UndoStack.ToList();
+            string[] result = new string[UndoStack.Count];
+            for (int i = 0; i < UndoStack.Count; i++) result[i] = stackList[i].Description;
+            return result;
+        }
+    }
+    public string[] redoDescriptions
+    {
+        get
+        {
+            List<Action> stackList = RedoStack.ToList();
+            string[] result = new string[RedoStack.Count];
+            for (int i = 0; i < RedoStack.Count; i++) result[i] = stackList[i].Description;
+            return result;
+        }
+    }
+
     public void Undo()
     {
         if (!canUndo) return;

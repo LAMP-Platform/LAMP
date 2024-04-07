@@ -1,9 +1,9 @@
-﻿# 'til next release
-* Finish Graphics Editor
-* Squash bugs
+﻿# TODOS
 
-# Feature Ideas
- * Undo / Redo
+## 'til next release
+* Finish Graphics Editor
+
+## Feature Ideas
  * Go through Transition
  * Screen preview in screen settings
  * Screen placing tool
@@ -11,12 +11,14 @@
  * better object displaying
  * Compile to IPS
 
-# Outside Editor things
+## Outside Editor things
  * write a more helpful readme.md
  * add more wiki documentation
  * add more code documentation (please someone do this for me D: )
 
-# Increasing the amount of (theoretically) possible Tilesets
+# BRAINSTORMING
+
+## Increasing the amount of (theoretically) possible Tilesets
 From what I have seen so far, being able to allow for more tilesets seems to be pretty simple.
 GFX can already be loaded from any Bank.
 The goal now would be to put the metatiles and collisions in seperate banks.
@@ -83,10 +85,10 @@ or add yet another byte to allow for every bank to be reached.
 For the former idea it would probably make sense to have the bank value as a relative offset, since the banks $0-$F are already
 used up and this way each table type could have up to $F unique banks assigned.
 
-# Increasing the amount of total Areas usable
+## Increasing the amount of total Areas usable
 *Todo*
 
-# Transition editor, opcode syntax edit
+## Transition editor, opcode syntax edit
 Right now all the opcodes are hardcoded into LAMP. In the future, however, people might want to alter
 the data that the editor writes in order to comply with their custom code. Because of this I will
 try to implement an opcode "programming" language.
@@ -122,7 +124,7 @@ Examples:
 * [x;y] - Indicates that the value is for the Nybbles from x through y
 * (x) - Predefines a value for the last data template
 
-# Compiling straight to IPS
+## Compiling straight to IPS
 Currently, LAMP only supports compilation to a ROM. However, for hack distribution this is not the most
 optimal file format. While it might not take a long time, it is still an slightly convoluted process to first
 compile a ROM and then use a third party tool to create a patch.
