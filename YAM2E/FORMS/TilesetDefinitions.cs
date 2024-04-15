@@ -177,8 +177,11 @@ public partial class TilesetDefinitions : Form
         //object
         Tileset t = Globals.Tilesets[cbb_tileset_id.SelectedIndex];
         t.Name = txb_tileset_name.Text;
-        t.GfxOffset = Format.StringToPointer(txb_gfx_offset.Text);
+
+        Pointer gfxOffset = Format.StringToPointer(txb_gfx_offset.Text);
+        t.GfxOffset = gfxOffset == null ? new Pointer(0) : gfxOffset;
         txb_gfx_offset.Text = Format.PointerToString(t.GfxOffset);
+
         t.MetatileTable = cbb_metatile_table.SelectedIndex;
         t.CollisionTable = cbb_collision_table.SelectedIndex;
         t.SolidityTable = cbb_solidity_table.SelectedIndex;
