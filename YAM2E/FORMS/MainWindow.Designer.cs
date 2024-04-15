@@ -69,6 +69,7 @@ namespace LAMP
             tool_strip_help = new System.Windows.Forms.ToolStripDropDownButton();
             btn_wiki = new System.Windows.Forms.ToolStripMenuItem();
             btn_bug_report = new System.Windows.Forms.ToolStripMenuItem();
+            btn_git = new System.Windows.Forms.ToolStripDropDownButton();
             tls_input = new Controls.Other.TilesetInput();
             lbl_area_bank = new System.Windows.Forms.Label();
             cbb_area_bank = new System.Windows.Forms.ComboBox();
@@ -146,7 +147,7 @@ namespace LAMP
             // 
             tool_strip_main_buttons.BackColor = System.Drawing.Color.Gainsboro;
             tool_strip_main_buttons.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tool_strip_file, tool_strip_options, tool_strip_tools, tool_strip_editors, tool_strip_view, btn_clear, tool_strip_help });
+            tool_strip_main_buttons.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { tool_strip_file, tool_strip_options, tool_strip_tools, tool_strip_editors, tool_strip_view, btn_clear, tool_strip_help, btn_git });
             tool_strip_main_buttons.Location = new System.Drawing.Point(0, 0);
             tool_strip_main_buttons.Name = "tool_strip_main_buttons";
             tool_strip_main_buttons.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -461,6 +462,17 @@ namespace LAMP
             btn_bug_report.Size = new System.Drawing.Size(142, 22);
             btn_bug_report.Text = "Report a Bug";
             btn_bug_report.Click += btn_bug_report_Click;
+            // 
+            // btn_git
+            // 
+            btn_git.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            btn_git.Image = (System.Drawing.Image)resources.GetObject("btn_git.Image");
+            btn_git.ImageTransparentColor = System.Drawing.Color.Magenta;
+            btn_git.Name = "btn_git";
+            btn_git.ShowDropDownArrow = false;
+            btn_git.Size = new System.Drawing.Size(26, 22);
+            btn_git.Text = "Git";
+            btn_git.Visible = false;
             // 
             // tls_input
             // 
@@ -1128,6 +1140,7 @@ namespace LAMP
         private System.Windows.Forms.ContextMenuStrip ctx_select_tool;
         private System.Windows.Forms.ToolStripMenuItem replaceSelectedTileToolStripMenuItem;
         private System.Windows.Forms.Button btn_edit_tileset;
+        private System.Windows.Forms.ToolStripDropDownButton btn_git;
     }
 }
 

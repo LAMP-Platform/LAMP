@@ -113,6 +113,9 @@ public partial class MainWindow : Form
         //Check for new Version
         Editor.CheckForUpdate();
 
+        //Check if Git is installed
+        Globals.GitInstalled = Tools.ExistsOnPath("git");
+
         //Populating combobox values for screen settings
         for (int i = 0; i < 512; i++)
         {
@@ -215,6 +218,8 @@ public partial class MainWindow : Form
         //Enabling UI
         foreach (ToolStripItem c in tool_strip_image_buttons.Items) c.Enabled = true;
         foreach (ToolStripItem c in tool_strip_main_buttons.Items) c.Enabled = true;
+
+        if (Globals.GitInstalled) btn_git.Visible = true;
     }
 
     private void UpdateTileset()
@@ -328,86 +333,6 @@ public partial class MainWindow : Form
         TargetedActionGroup.Actions.Add(actn);
         actn.Do();
 
-    }
-
-    private void FloodFill(Point StartPosition)
-    {
-        List<RoomTile> replaceTiles = new List<RoomTile>();
-
-        //get current tile
-        //current Screen
-        GameScreen current = Globals.Screens[Globals.SelectedArea][Editor.GetScreenNrFromXY(StartPosition.X, StartPosition.Y, Globals.SelectedArea)];
-        int tx = (StartPosition.X % 256) / 16;
-        int ty = (StartPosition.Y % 256) / 16;
-        int count = ty * 16 + tx;
-
-        int originalID = current.Data[count];
-
-        //Starting the FillSteps
-        FillStep(new Point(StartPosition.X, StartPosition.Y), originalID, replaceTiles);
-
-        //List should now have all the tiles to replace
-        //Writing data
-        count = 0;
-        List<int> updatedScreens = new List<int>();
-        foreach (RoomTile t in replaceTiles)
-        {
-            if (t.Unused) continue;
-            t.ReplaceTile(Editor.SelectedTiles[0]);
-            if (!updatedScreens.Contains(t.ScreenNr)) updatedScreens.Add(t.ScreenNr);
-            Editor.DrawScreen(Globals.SelectedArea, t.ScreenNr);
-            count++;
-        }
-
-        //redrawing updated screens
-        count = 0;
-        Graphics g = Graphics.FromImage(Globals.AreaBank);
-        foreach (int nr in Globals.Areas[Globals.SelectedArea].Screens)
-        {
-            //screen pos
-            int sy = count / 16;
-            int sx = count % 16;
-            sx *= 256;
-            sy *= 256;
-
-            if (!updatedScreens.Contains(nr))
-            {
-                count++;
-                continue;
-            }
-            GameScreen screen = Globals.Screens[Globals.SelectedArea][nr];
-            g.DrawImage(screen.Image, new Point(sx, sy));
-            Room.Invalidate(new Rectangle(sx * Room.Zoom, sy * Room.Zoom, 256 * Room.Zoom, 256 * Room.Zoom));
-            count++;
-        }
-        g.Dispose();
-    }
-
-    private void FillStep(Point Start, int originalID, List<RoomTile> tileList)
-    {
-        //get current ID
-        GameScreen current = Globals.Screens[Globals.SelectedArea][Editor.GetScreenNrFromXY(Start.X, Start.Y, Globals.SelectedArea)];
-        int tx = (Start.X % 256) / 16;
-        int ty = (Start.Y % 256) / 16;
-        int count = ty * 16 + tx;
-
-        int currentID = current.Data[count];
-
-        if (currentID != originalID) return;
-
-        //Add current tile
-        RoomTile t = new RoomTile();
-        t.ScreenNr = Editor.GetScreenNrFromXY(Start.X, Start.Y, Globals.SelectedArea);
-        t.Screen = current;
-        t.Area = Globals.SelectedArea;
-        t.Position = new Point(Start.X % 256, Start.Y % 256);
-        tileList.Add(t);
-
-        //Doing fill steps in all directions
-        FillStep(new Point(Start.X + 16, Start.Y), originalID, tileList);
-        FillStep(new Point(Start.X - 16, Start.Y), originalID, tileList);
-        FillStep(new Point(Start.X, Start.Y + 16), originalID, tileList);
-        FillStep(new Point(Start.X, Start.Y - 16), originalID, tileList);
     }
 
     private void ToggleScreenOutlines()
@@ -609,7 +534,6 @@ public partial class MainWindow : Form
                 break;
 
             case (LampTool.Fill): //fill everything in with one tile
-                FloodFill(tile);
                 break;
 
             case (LampTool.Move): //Move selected tiles, objects, edit screens and more
@@ -1129,7 +1053,7 @@ public partial class MainWindow : Form
     }
 
     private void chb_view_objects_CheckedChanged(object sender, EventArgs e)
-    {
+    { 
         btn_view_show_objects.Checked = btn_show_objects.Checked = !btn_show_objects.Checked;
         Room.ShowObjects = btn_show_objects.Checked;
 

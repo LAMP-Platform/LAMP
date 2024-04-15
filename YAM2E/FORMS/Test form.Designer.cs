@@ -28,44 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            grp1 = new System.Windows.Forms.GroupBox();
-            lbl = new System.Windows.Forms.Label();
-            grp2 = new System.Windows.Forms.GroupBox();
-            grp1.SuspendLayout();
+            listBox1 = new System.Windows.Forms.ListBox();
+            button1 = new System.Windows.Forms.Button();
+            textBox1 = new System.Windows.Forms.TextBox();
             SuspendLayout();
             // 
-            // grp1
+            // listBox1
             // 
-            grp1.Controls.Add(lbl);
-            grp1.Location = new System.Drawing.Point(28, 28);
-            grp1.Name = "grp1";
-            grp1.Size = new System.Drawing.Size(359, 205);
-            grp1.TabIndex = 0;
-            grp1.TabStop = false;
-            grp1.Text = "Panel 1";
-            grp1.DragLeave += grp1_DragLeave;
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new System.Drawing.Point(12, 53);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new System.Drawing.Size(195, 289);
+            listBox1.TabIndex = 0;
+            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
-            // lbl
+            // button1
             // 
-            lbl.AutoSize = true;
-            lbl.Location = new System.Drawing.Point(114, 92);
-            lbl.Name = "lbl";
-            lbl.Size = new System.Drawing.Size(60, 15);
-            lbl.TabIndex = 0;
-            lbl.Text = "MOVE ME";
-            lbl.MouseDown += lbl_MouseDown;
-            lbl.MouseLeave += lbl_MouseLeave;
-            lbl.MouseMove += lbl_MouseMove;
-            lbl.MouseUp += lbl_MouseUp;
+            button1.Location = new System.Drawing.Point(132, 24);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // grp2
+            // textBox1
             // 
-            grp2.Location = new System.Drawing.Point(28, 239);
-            grp2.Name = "grp2";
-            grp2.Size = new System.Drawing.Size(359, 205);
-            grp2.TabIndex = 1;
-            grp2.TabStop = false;
-            grp2.Text = "Panel 2";
+            textBox1.Location = new System.Drawing.Point(12, 24);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(114, 23);
+            textBox1.TabIndex = 2;
             // 
             // Test_form
             // 
@@ -74,20 +67,20 @@
             AutoScroll = true;
             BackColor = System.Drawing.SystemColors.Control;
             ClientSize = new System.Drawing.Size(444, 497);
-            Controls.Add(grp2);
-            Controls.Add(grp1);
+            Controls.Add(textBox1);
+            Controls.Add(button1);
+            Controls.Add(listBox1);
             Name = "Test_form";
             RightToLeft = System.Windows.Forms.RightToLeft.No;
             Text = "Test_form";
-            grp1.ResumeLayout(false);
-            grp1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.GroupBox grp1;
-        private System.Windows.Forms.GroupBox grp2;
-        private System.Windows.Forms.Label lbl;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

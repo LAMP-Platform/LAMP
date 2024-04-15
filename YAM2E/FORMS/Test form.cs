@@ -21,38 +21,12 @@ public partial class Test_form : Form
         InitializeComponent();
     }
 
-    bool isDragging = false;
-    int clickOffsetX;
-    int clickOffsetY;
-
-    private void grp1_DragLeave(object sender, EventArgs e)
+    private void button1_Click(object sender, EventArgs e)
     {
-
     }
 
-    private void lbl_MouseDown(object sender, MouseEventArgs e)
-    {
-        isDragging = true;
-        clickOffsetX = e.X;
-        clickOffsetY = e.Y;
-    }
-
-    private void lbl_MouseLeave(object sender, EventArgs e)
+    private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
     {
 
-    }
-
-    private void lbl_MouseUp(object sender, MouseEventArgs e)
-    {
-        isDragging = false;
-    }
-
-    private void lbl_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (!isDragging) return;
-        Control c = sender as Control;
-
-        c.Left = e.X + c.Left - clickOffsetX;
-        c.Top = e.Y + c.Top - clickOffsetY;
     }
 }

@@ -116,6 +116,9 @@ internal static class Globals
 
     //Offset dictionary
     public static Dictionary<string, Pointer> Offsets;
+
+    //Utils
+    public static bool GitInstalled = false;
     
     #region User Settings
     public static string RomPath = Properties.programsettings.Default.ROMPath;
