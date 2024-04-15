@@ -29,6 +29,7 @@ public class Rom
     public static Pointer OffsetOf(string key)
     {
         if (Globals.Offsets != null && Globals.Offsets.ContainsKey(key)) return Globals.Offsets[key];
+        if (!StandardOffsets.ContainsKey(key)) return null;
         return StandardOffsets[key];
     }
 
