@@ -6,9 +6,9 @@ using LAMP.Interfaces;
 
 namespace LAMP.Actions;
 
-internal class GroupedAction : Action
+internal class GroupedAction : IAction
 {
-    public List<Action> Actions = new List<Action>();
+    public List<IAction> Actions = new List<IAction>();
     public string Description
     {
         get
@@ -20,13 +20,13 @@ internal class GroupedAction : Action
 
     public void Do()
     {
-        foreach (Action action in Actions) { action.Do(); }
+        foreach (IAction action in Actions) { action.Do(); }
     }
 
     public void Undo()
     {
         Actions.Reverse();
-        foreach (Action action in Actions) { action.Undo(); }
+        foreach (IAction action in Actions) { action.Undo(); }
         Actions.Reverse();
     }
 }

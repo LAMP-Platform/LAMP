@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LAMP.Actions;
 
-public class AddObjectAction : Action
+public class AddObjectAction : IAction
 {
     public AddObjectAction(Enemy targetEnemy, int bank, int screen, RoomViewer roomViewer)
     {

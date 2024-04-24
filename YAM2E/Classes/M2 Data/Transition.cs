@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using LAMP.Interfaces;
 
 namespace LAMP.Classes.M2_Data;
 
-public class Transition
+public class Transition : INamedResource
 {
     [JsonConstructor]
     public Transition() { }

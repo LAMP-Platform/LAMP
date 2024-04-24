@@ -21,6 +21,7 @@ public class Project
     public string DisassemblyPath { get; set; } = "";
     public bool BuildAssemblyWhenCompiling { get; set; } = false;
     public byte FillTile { get; set; } = 0xFF;
+    public bool EnableGBCSupport { get; set; } = false;
 
     //Transition specific Data
     public List<TransitionOpcode> TransitionOpcodes { get; set; } = GenerateStandardOpcodes();

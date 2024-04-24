@@ -20,7 +20,7 @@ using System.CodeDom;
 using System.ComponentModel.Design;
 using LAMP.Actions;
 using LAMP.Interfaces;
-using Action = LAMP.Interfaces.Action;
+using Action = LAMP.Interfaces.IAction;
 using System.Text.Json;
 
 namespace LAMP;
@@ -1355,6 +1355,9 @@ public partial class MainWindow : Form
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
-        new Test_form().Show();
+        LAMP.Classes.M2_Data.GBC.Color c1 = LAMP.Classes.M2_Data.GBC.Color.FromRGB(150, 164, 184);
+        LAMP.Classes.M2_Data.GBC.Color c2 = LAMP.Classes.M2_Data.GBC.Color.FromRGB(50, 91, 140);
+        LAMP.Classes.M2_Data.GBC.Color c3 = LAMP.Classes.M2_Data.GBC.Color.FromRGB(5, 26, 51);
+        LAMP.Classes.M2_Data.GBC.Color c4 = new(0,0,0);
     }
 }

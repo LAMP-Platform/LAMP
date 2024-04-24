@@ -11,7 +11,7 @@ using LAMP.Interfaces;
 
 namespace LAMP.Actions;
 
-internal class PlaceTileAction : Action
+internal class PlaceTileAction : IAction
 {
     public PlaceTileAction(Point location, byte[] tiles, int width, int height, RoomViewer viewer, bool generateUndo = true)
     {

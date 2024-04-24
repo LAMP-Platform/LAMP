@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LAMP.Actions;
 
-public class DeleteObjectAction : Action
+public class DeleteObjectAction : IAction
 {
     public DeleteObjectAction(Enemy targetEnemy, int bank, int screen, RoomViewer roomViewer)
     {

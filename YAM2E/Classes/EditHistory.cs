@@ -9,8 +9,8 @@ namespace LAMP.Classes;
 public class EditHistory
 {
     //Fields
-    private Stack<Action> UndoStack = new();
-    private Stack<Action> RedoStack = new();
+    private Stack<IAction> UndoStack = new();
+    private Stack<IAction> RedoStack = new();
 
     public event System.EventHandler AddedAction;
     public event System.EventHandler UndoRedo;
@@ -22,7 +22,7 @@ public class EditHistory
     {
         get
         {
-            List<Action> stackList = UndoStack.ToList();
+            List<IAction> stackList = UndoStack.ToList();
             string[] result = new string[UndoStack.Count];
             for (int i = 0; i < UndoStack.Count; i++) result[i] = stackList[i].Description;
             return result;
@@ -32,7 +32,7 @@ public class EditHistory
     {
         get
         {
-            List<Action> stackList = RedoStack.ToList();
+            List<IAction> stackList = RedoStack.ToList();
             string[] result = new string[RedoStack.Count];
             for (int i = 0; i < RedoStack.Count; i++) result[i] = stackList[i].Description;
             return result;
@@ -43,7 +43,7 @@ public class EditHistory
     {
         if (!canUndo) return;
 
-        Action last = UndoStack.Pop();
+        IAction last = UndoStack.Pop();
         last.Undo();
         RedoStack.Push(last);
 
@@ -54,14 +54,14 @@ public class EditHistory
     {
         if (!canRedo) return;
 
-        Action last = RedoStack.Pop();
+        IAction last = RedoStack.Pop();
         last.Do();
         UndoStack.Push(last);
 
         UndoRedo?.Invoke(this, new System.EventArgs());
     }
 
-    public void AddActionToHistory(Action action)
+    public void AddActionToHistory(IAction action)
     {
         UndoStack.Push(action);
         RedoStack.Clear();
