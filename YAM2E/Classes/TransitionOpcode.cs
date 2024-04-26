@@ -1,7 +1,9 @@
-﻿using LAMP.Utilities;
+﻿using LAMP.Interfaces;
+using LAMP.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
 using System.Text;
@@ -23,11 +25,14 @@ namespace LAMP.Classes
             NybbleIndices = new int?[templates.Length];
             ParameterLength = new int[templates.Length];
             PredefinedValue = new int?[templates.Length];
+            ParameterListNames = new string[templates.Length];
+
             for (int i = 0; i < templates.Length; i++)
             {
                 int? ind = null;
                 int length = 1;
                 int? value = null;
+                string listName = "";
 
                 string template = templates[i];
 
@@ -41,13 +46,23 @@ namespace LAMP.Classes
                     }
 
                     //get predefined value
-                    string val = Regex.Match(Regex.Match(template, @"\((.*?)\)").Value, @"[0-9]+|[A-F]+").Value;
+                    string val = Regex.Match(Regex.Match(template, @"\((.*?)\)").Value, @"[^()].*[^()]").Value;
+
+                    //Check first if input string references a INamedResource List
+                    var info = typeof(Globals).GetField(val);
+                    if (info != null)
+                    {
+                        listName = val;
+                        val = "";
+                    }
+
                     if (val != "") value = Format.StringToInt(val);
                 }
 
                 NybbleIndices[i] = ind;
                 ParameterLength[i] = length;
                 PredefinedValue[i] = value;
+                ParameterListNames[i] = listName;
             }
         }
 
@@ -85,6 +100,12 @@ namespace LAMP.Classes
         /// </summary>
         [JsonIgnore]
         public int?[] PredefinedValue { get; set; }
+
+        /// <summary>
+        /// An array of the Names of the lists that should be used in the dropdown menu
+        /// </summary>
+        [JsonIgnore]
+        public string[] ParameterListNames { get; set; } = null;
 
         /// <summary>
         /// The number of bytes that make up the opcode

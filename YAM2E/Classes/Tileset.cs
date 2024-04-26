@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using LAMP.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace LAMP.Classes;
 
-public class Tileset
+public class Tileset : INamedResource
 {
     [JsonConstructor]
     public Tileset() {}

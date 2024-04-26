@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using LAMP.Controls.Transitions;
 using System.Text.Json;
+using LAMP.Interfaces;
 
 namespace LAMP;
 

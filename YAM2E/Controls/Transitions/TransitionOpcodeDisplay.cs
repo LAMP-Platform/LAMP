@@ -1,10 +1,13 @@
 ﻿using LAMP.Classes;
+using LAMP.Classes.M2_Data;
 using LAMP.Controls;
 using LAMP.Controls.Other;
 using LAMP.FORMS;
+using LAMP.Interfaces;
 using LAMP.Properties;
 using LAMP.Utilities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -142,27 +145,65 @@ public partial class TransitionOpcodeDisplay : UserControl
         for (int i = 1; i < Opcode.Description.Length; i++)
         {
             string currentTitle = Opcode.Description[i];
-            OpcodeParameter parameter = new OpcodeParameter(currentTitle, Opcode.NybbleIndices[i] != null);
+            bool isList = false;
+            List<INamedResource> inputList = null;
+            if (Opcode.ParameterListNames[i] != "")
+            {
+                //Get List object
+                string listName = Opcode.ParameterListNames[i];
+                IList ls = typeof(Globals).GetField(listName)?.GetValue(null) as IList;
+
+                //Convert contents to INamedResource
+                inputList = new();
+                foreach (object o in ls)
+                {
+                    inputList.Add(o as INamedResource);
+                }
+
+                isList = inputList != null;
+            }
+
+            OpcodeParameter parameter = new OpcodeParameter(currentTitle, Opcode.NybbleIndices[i] != null, isList);
             parameter.Dock = DockStyle.Top;
             parameter.Visible = true;
             pnl_parameters.Controls.Add(parameter);
             parameter.BringToFront();
             Parameters.Add(parameter);
 
-            if (parameter.txb_Parameter == null) continue;
-
-            //Adding event
-            parameter.txb_Parameter.TextChanged += txb_parameter_TextChanged;
-            parameter.txb_Parameter.Leave += txb_parameter_Leave;
+            if (parameter.txb_Parameter != null)
+            {
+                //Adding event
+                parameter.txb_Parameter.TextChanged += txb_parameter_TextChanged;
+                parameter.txb_Parameter.Leave += txb_parameter_Leave;
+            } 
+            if (isList)
+            {
+                parameter.cbb_ParameterList.SelectedIndexChanged += cbb_ParameterList_SelectedIndexChanged;
+            }
 
             //Adding data
             if (Opcode.NybbleIndices[i] == null) continue;
 
-            parameter.txb_Parameter.Text = Format.IntToString(getParameterValue(i));
+            if (!isList) parameter.txb_Parameter.Text = Format.IntToString(getParameterValue(i));
+            else
+            {
+                //Add list content to list input
+                for (int k = 0; k < inputList.Count; k++)
+                {
+                    INamedResource r = inputList[k];
+                    string name = r.Name != "" ? $" - {r.Name}" : "";
+                    parameter.cbb_ParameterList.Items.Add(k.ToString("X3") + name);
+                }
+                parameter.cbb_ParameterList.AutoSize();
+
+                //Set current index
+                parameter.cbb_ParameterList.SelectedIndex = getParameterValue(i);
+            }
         }
 
         init = false;
     }
+
     private int getParameterValue(int parameterIndex)
     {
         int dataStart = (int)Opcode.NybbleIndices[parameterIndex];
@@ -180,6 +221,19 @@ public partial class TransitionOpcodeDisplay : UserControl
         if (dataLength == 4) value = ByteOp.SwitchBytes(value);
 
         return value;
+    }
+
+    /// <summary>
+    /// Returns the index of the parameter, that the input control edits
+    /// </summary>
+    private int findParameterIndex(object control)
+    {
+        for (int i = 0; i < Parameters.Count; i++)
+        {
+            if (Parameters[i].txb_Parameter != control && Parameters[i].cbb_ParameterList != control) continue;
+            return (i + 1); // +1 since the first index is for the opcode title
+        }
+        return -1;
     }
 
     #region Events
@@ -213,15 +267,7 @@ public partial class TransitionOpcodeDisplay : UserControl
         if (init) return;
 
         TextBox box = (TextBox)sender;
-        int boxindex = 0;
-
-        //Figuring out at which index the parameter is
-        for (int i = 0; i < Parameters.Count; i++)
-        {
-            if (Parameters[i].txb_Parameter != box) continue;
-            boxindex = i + 1; // +1 since the first index is for the opcode title
-            break;
-        }
+        int boxindex = findParameterIndex(box);
 
         //Writing back that value
         int dataStart = (int)Opcode.NybbleIndices[boxindex];
@@ -241,17 +287,31 @@ public partial class TransitionOpcodeDisplay : UserControl
     public void txb_parameter_Leave(object sender, EventArgs e)
     {
         TextBox box = (TextBox)sender;
-        int boxindex = 0;
-
-        //Figuring out at which index the parameter is
-        for (int i = 0; i < Parameters.Count; i++)
-        {
-            if (Parameters[i].txb_Parameter != box) continue;
-            boxindex = i + 1; // +1 since the first index is for the opcode title
-            break;
-        }
+        int boxindex = findParameterIndex(box);
 
         box.Text = Format.IntToString(getParameterValue(boxindex));
+    }
+
+    public void cbb_ParameterList_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (init) return;
+
+        ComboBox box = (ComboBox)sender;
+        int boxindex = findParameterIndex(box);
+
+        //Writing back the value
+        int dataStart = (int)Opcode.NybbleIndices[boxindex];
+        int dataLength = Opcode.ParameterLength[boxindex];
+        int value = box.SelectedIndex;
+        if (dataLength == 4) value = ByteOp.SwitchBytes(value);
+
+        //Writing the data to the array
+        for (int i = 0; i < dataLength; i++)
+        {
+            ByteOp.SetNybble(Data, dataStart + i, (byte)((value >> ((dataLength - 1 - i) * 4)) & 0xF));
+        }
+
+        OnParameterChanged(new EventArgs());
     }
 
     private void btn_remove_opcode_Click(object sender, EventArgs e) => onRemoveOpcode?.Invoke(this, e);

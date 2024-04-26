@@ -30,6 +30,7 @@
         {
             lbl_title = new System.Windows.Forms.Label();
             txb_parameter = new System.Windows.Forms.TextBox();
+            cbb_parameterList = new System.Windows.Forms.ComboBox();
             SuspendLayout();
             // 
             // lbl_title
@@ -49,10 +50,21 @@
             txb_parameter.Size = new System.Drawing.Size(54, 23);
             txb_parameter.TabIndex = 1;
             // 
+            // cbb_parameterList
+            // 
+            cbb_parameterList.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            cbb_parameterList.FormattingEnabled = true;
+            cbb_parameterList.Location = new System.Drawing.Point(129, 4);
+            cbb_parameterList.Name = "cbb_parameterList";
+            cbb_parameterList.Size = new System.Drawing.Size(54, 23);
+            cbb_parameterList.TabIndex = 2;
+            cbb_parameterList.Visible = false;
+            // 
             // OpcodeParameter
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(cbb_parameterList);
             Controls.Add(txb_parameter);
             Controls.Add(lbl_title);
             Name = "OpcodeParameter";
@@ -66,5 +78,6 @@
 
         private System.Windows.Forms.Label lbl_title;
         private System.Windows.Forms.TextBox txb_parameter;
+        private System.Windows.Forms.ComboBox cbb_parameterList;
     }
 }
