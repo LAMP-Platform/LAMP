@@ -143,7 +143,7 @@ public class Rom
                     Write8(lastAdd.Offset, 0xFF);
                 }
             }
-            if (lastAdd >= OffsetOf("enemyHeaderPointers")) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (lastAdd >= OffsetOf("enemyData_end")) MessageBox.Show($"The amount of object data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         //Object loading tweak
@@ -182,7 +182,7 @@ public class Rom
                     lastAdd += t.Data.Count;
                 }
             }
-            if (lastAdd >= OffsetOf("creditsRoutine")) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (lastAdd >= OffsetOf("doorData_end")) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         #endregion
 
@@ -334,11 +334,11 @@ public class Rom
 
         { "enemyDataPointers", new Pointer(0x3, 0x42E0) },      //6 Tables of Pointers to object lists
         { "enemyBank9_00", new Pointer(0x3, 0x50E0) },          //Lists of objects on screen, first entry should always be empty
-        { "enemyHeaderPointers", new Pointer(0x3, 0x6300) },    //This  is the first byte of new data that should not be overwritten! End of object Data
+        { "enemyData_end", new Pointer(0x3, 0x6300) },    //This  is the first byte of new data that should not be overwritten! End of object Data
 
         { "doorPointerTable", new Pointer(0x5, 0x42E5) },   //Table of 512 or 0x200 pointers to transition codes
         { "door000", new Pointer(0x5, 0x46E5) },            //Table of <512 Transitions, first one should stay 0xFF
-        { "creditsRoutine", new Pointer(0x5, 0x55A3) },     //This is the first byte of new data that should not be overwritten!
+        { "doorData_end", new Pointer(0x5, 0x55A3) },     //This is the first byte of new data that should not be overwritten!
 
         { "metatilePointerTable", new Pointer(0x8, 0x7F1A) },
         { "collisionPointerTable", new Pointer(0x8, 0x7EEA) },

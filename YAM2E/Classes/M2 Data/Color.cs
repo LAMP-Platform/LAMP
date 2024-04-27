@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LAMP.Classes.M2_Data.GBC;
@@ -29,6 +30,7 @@ public struct Color
     /// <summary>
     /// The red component of the color. Maximum value of 0x1F (DEC 31)
     /// </summary>
+    [JsonIgnore]
     public byte R 
     { 
         get
@@ -45,6 +47,7 @@ public struct Color
     /// <summary>
     /// The green component of the color. Maximum value of 0x1F (DEC 31)
     /// </summary>
+    [JsonIgnore]
     public byte G
     {
         get
@@ -61,6 +64,7 @@ public struct Color
     /// <summary>
     /// The blue component of the color. Maximum value of 0x1F (DEC 31)
     /// </summary>
+    [JsonIgnore]
     public byte B
     {
         get
