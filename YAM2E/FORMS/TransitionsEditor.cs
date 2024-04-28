@@ -61,12 +61,7 @@ public partial class TransitionsEditor : Form
         InitializeComponent();
         txb_warning_header.BackColor = DefaultBackColor;
 
-        for (int i = 0; i < Globals.Transitions.Count; i++)
-        {
-            Transition check = Globals.Transitions[i];
-            string name = check.Name != "" ? $" - {check.Name}" : "";
-            cbb_tred_transition_selection.Items.Add(i.ToString("X3") + name);
-        }
+        cbb_tred_transition_selection.AddNumberedListContent(Globals.Transitions);
         cbb_tred_transition_selection.AutoSize();
         cbb_tred_transition_selection.SelectedIndex = TransitionIndex;
 

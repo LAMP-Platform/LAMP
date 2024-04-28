@@ -343,6 +343,13 @@ public static class Editor
             json = File.ReadAllText(dirData + "/Transitions.json");
             Globals.Transitions = JsonSerializer.Deserialize<List<Transition>>(json);
 
+            //Color Data
+            if (File.Exists(dirData + "/Color/Palettes.json"))
+            {
+                json = File.ReadAllText(dirData + "/Color/Palettes.json");
+                Globals.Palettes = JsonSerializer.Deserialize<List<Palette>>(json);
+            }
+
             ///CUSTOM DATA
             //Tilesets
             Globals.Tilesets.Clear();
@@ -521,6 +528,16 @@ public static class Editor
         //Transitions
         path = dirData + "/Transitions.json";
         SaveJsonObject(Globals.Transitions, path);
+
+        //Color Data
+        if (Globals.Palettes.Count != 0)
+        {
+            path = dirData + "/Color/";
+            Directory.CreateDirectory(path);
+
+            path = dirData + "/Color/Palettes.json";
+            SaveJsonObject(Globals.Palettes, path);
+        }
 
         ///CUSTOM
         //Tilesets

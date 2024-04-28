@@ -8,6 +8,7 @@ using System.CodeDom;
 using System.Windows.Forms;
 using System.ComponentModel.Design;
 using System.Linq;
+using LAMP.Classes.M2_Data.GBC;
 
 namespace LAMP.Classes;
 
@@ -28,9 +29,19 @@ public class Rom
     
     public static Pointer OffsetOf(string key)
     {
+        //Check if symbol even exists. If not, throw an exception
+        if (!ContainsSymbol(key)) throw new Exception($"Symbol not found. No pointer can be associated with the symbol:\n\n{key}");
+
         if (Globals.Offsets != null && Globals.Offsets.ContainsKey(key)) return Globals.Offsets[key];
-        if (!StandardOffsets.ContainsKey(key)) return null;
         return StandardOffsets[key];
+    }
+
+    /// <summary>
+    /// Checks if a symbol is currently loaded in either the global or standard symbol dictionary
+    /// </summary>
+    public static bool ContainsSymbol(string key)
+    {
+        return (Globals.Offsets != null && Globals.Offsets.ContainsKey(key)) || StandardOffsets.ContainsKey(key);
     }
 
     // constructor
@@ -183,6 +194,24 @@ public class Rom
                 }
             }
             if (lastAdd >= OffsetOf("doorData_end")) MessageBox.Show($"The amount of transition data is exceeding the reserved space in the ROM!\n\nThe ROM might get corrupted.", "Too many objects", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        #endregion
+        
+        #region Palettes
+        if ((exceptions & CompilationItem.Palettes) == 0 && Globals.Palettes.Count != 0 && Globals.LoadedProject.EnableGBCSupport)
+        {
+            for (int i = 0; i < Globals.Palettes.Count; i++)
+            {
+                Palette p = Globals.Palettes[i];
+                Pointer offset = OffsetOf("paletteData") + (i * 0x40);
+
+                foreach (GBColor[] l in p.Colors)
+                    foreach (GBColor c in l)
+                    {
+                        Write16(offset, c.Value);
+                        offset += 2;
+                    }
+            }
         }
         #endregion
 

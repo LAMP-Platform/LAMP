@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LAMP.Classes.M2_Data;
+using LAMP.Interfaces;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,10 @@ namespace LAMP;
 
 public static class ComboboxOp
 {
+    /// <summary>
+    /// Resizes the Flyout width of the combobox to fit the length of the longest item
+    /// </summary>
+    /// <param name="comboBox"></param>
     public static void AutoSize(this ComboBox comboBox)
     {
         const int scrollPadding = 20; //The scroll bar takes up space!
@@ -25,5 +31,20 @@ public static class ComboboxOp
             if (temp > maxWidth) maxWidth = temp;
         }
         comboBox.DropDownWidth = maxWidth > comboBox.Width ? maxWidth + scrollPadding : comboBox.Width;
+    }
+
+    /// <summary>
+    /// Adds the Contents of a IEnumerable with INamedResources as "Index - Name" to the list.
+    /// </summary>
+    public static void AddNumberedListContent(this ComboBox box, IEnumerable<INamedResource> sequence, string format = "X3")
+    {
+        box.BeginUpdate();
+        for (int i = 0; i < sequence.Count(); i++)
+        {
+            INamedResource resource = sequence.ElementAt(i);
+            string name = resource.Name != "" ? $" - {resource.Name}" : "";
+            box.Items.Add(i.ToString(format) + name);
+        }
+        box.EndUpdate();
     }
 }

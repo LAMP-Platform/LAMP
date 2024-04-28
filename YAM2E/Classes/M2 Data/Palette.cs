@@ -27,5 +27,5 @@ public class Palette : INamedResource
     /// <summary>
     /// List of Color lists. Each entry has a length of 4 Colors
     /// </summary>
-    public List<Color[]> Colors { get; set; } = new();
+    public List<GBColor[]> Colors { get; set; } = new();
 }

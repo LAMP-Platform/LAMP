@@ -24,7 +24,7 @@ public static class Format
     {
         if (input.Length == 0) return new(0);
 
-        if (Rom.OffsetOf(input) != null) return Rom.OffsetOf(input);
+        if (Rom.ContainsSymbol(input)) return Rom.OffsetOf(input);
 
         //removing spaces and pre-/suffix
         input = Regex.Replace(input, @"\s+", "");

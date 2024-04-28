@@ -15,4 +15,5 @@ public enum CompilationItem
     Transitions = 8,
     Save = 16,
     DataChunk = 32,
+    Palettes = 64,
 }

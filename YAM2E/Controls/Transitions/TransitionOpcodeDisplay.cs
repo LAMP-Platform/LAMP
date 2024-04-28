@@ -142,23 +142,18 @@ public partial class TransitionOpcodeDisplay : UserControl
 
     private void PopulateParameters()
     {
+        SuspendLayout();
         for (int i = 1; i < Opcode.Description.Length; i++)
         {
             string currentTitle = Opcode.Description[i];
             bool isList = false;
-            List<INamedResource> inputList = null;
+            IEnumerable<INamedResource> inputList = null;
             if (Opcode.ParameterListNames[i] != "")
             {
                 //Get List object
                 string listName = Opcode.ParameterListNames[i];
-                IList ls = typeof(Globals).GetField(listName)?.GetValue(null) as IList;
-
-                //Convert contents to INamedResource
-                inputList = new();
-                foreach (object o in ls)
-                {
-                    inputList.Add(o as INamedResource);
-                }
+                inputList = typeof(Globals).GetField(listName)?.GetValue(null) as IEnumerable<INamedResource>;
+                if (inputList == null) inputList = typeof(Globals).GetProperty(listName)?.GetValue(null) as IEnumerable<INamedResource>;
 
                 isList = inputList != null;
             }
@@ -188,18 +183,14 @@ public partial class TransitionOpcodeDisplay : UserControl
             else
             {
                 //Add list content to list input
-                for (int k = 0; k < inputList.Count; k++)
-                {
-                    INamedResource r = inputList[k];
-                    string name = r.Name != "" ? $" - {r.Name}" : "";
-                    parameter.cbb_ParameterList.Items.Add(k.ToString("X3") + name);
-                }
+                parameter.cbb_ParameterList.AddNumberedListContent(inputList);
                 parameter.cbb_ParameterList.AutoSize();
 
                 //Set current index
                 parameter.cbb_ParameterList.SelectedIndex = getParameterValue(i);
             }
         }
+        ResumeLayout(true);
 
         init = false;
     }

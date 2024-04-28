@@ -49,8 +49,7 @@ namespace LAMP.Classes
                     string val = Regex.Match(Regex.Match(template, @"\((.*?)\)").Value, @"[^()].*[^()]").Value;
 
                     //Check first if input string references a INamedResource List
-                    var info = typeof(Globals).GetField(val);
-                    if (info != null)
+                    if (typeof(Globals).GetField(val) != null || typeof(Globals).GetProperty(val) != null) 
                     {
                         listName = val;
                         val = "";

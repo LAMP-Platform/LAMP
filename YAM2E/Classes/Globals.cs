@@ -90,6 +90,18 @@ internal static class Globals
     //Tileset data
     public static List<Tileset> Tilesets = new List<Tileset>();
 
+    //Color data
+    public static List<Palette> Palettes
+    {
+        get
+        {
+            if (palettes == null) palettes = new();
+            return palettes;
+        }
+        set => palettes = value;
+    }
+    private static List<Palette> palettes = null;
+
     //Area data
     public static int SelectedArea = 0;
     public static int SelectedScreenX = 0;
@@ -104,9 +116,6 @@ internal static class Globals
 
     //Border data
     public static List<Rectangle> ScrollBorders = new List<Rectangle>();
-
-    //Transition Data
-    public static bool ExpandAllOpcodes = false;
 
     //Data chunks
     public static List<DataChunk> DataChunks = new List<DataChunk>();
