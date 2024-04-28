@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace LAMP.Controls;
@@ -160,7 +161,7 @@ public partial class TransitionOpcodeDisplay : UserControl
                 //get options
                 options = Opcode.ParameterListNames[i].Split(';', StringSplitOptions.TrimEntries);
 
-                isList = inputList != null;
+                isList = inputList != null && inputList.Count() > 0;
                 isOptions = options.Length > 1;
             }
 

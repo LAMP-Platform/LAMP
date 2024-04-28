@@ -822,7 +822,13 @@ public static class Editor
 
         try
         {
-            BuildAssembly();
+            //Build Assembly and check for Error code
+            bool noErrors = BuildAssembly();
+            if (Globals.LoadedProject.BuildAssemblyWhenCompiling && !noErrors)
+            {
+                if (MessageBox.Show("There were errors while assembling the disassembly.\n\n Do you want to continue?", "Assembly Errors", 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.No) return;
+            }
 
             string tempPath = Path.Combine(Path.GetTempPath(), "M2test.gb");
             ROM.Compile(tempPath);
@@ -888,12 +894,12 @@ public static class Editor
 
     /// <summary>
     /// This method will execute the build.bat of a Disassembly if a disassembly path is set and the project setting <see cref="Project.BuildAssemblyWhenCompiling"/>
-    /// is set. If a ROM can be found in the out\ directory it will get loaded as the current ROM
+    /// is set. If a ROM can be found in the out\ directory it will get loaded as the current ROM. Returns whether Build was successful or unsuccessful
     /// </summary>
     /// <exception cref="Exception">If the build.bat cannot be found but <see cref="Project.BuildAssemblyWhenCompiling"/> is still set, it will throw an exception</exception>
-    public static void BuildAssembly()
+    public static bool BuildAssembly()
     {
-        if (!Globals.LoadedProject.BuildAssemblyWhenCompiling) return;
+        if (!Globals.LoadedProject.BuildAssemblyWhenCompiling) return false;
 
         string disassemblyPath = Globals.LoadedProject.DisassemblyPath;
         if (!Path.IsPathRooted(disassemblyPath)) disassemblyPath = Path.Combine(Globals.ProjDirectory, disassemblyPath);
@@ -911,6 +917,8 @@ public static class Editor
             //startInfo.CreateNoWindow = true;
             process = Process.Start(startInfo);
             process.WaitForExit();
+
+            if (process.ExitCode != 0) return false;
 
             //Loading new ROM
             string path = Path.Combine(disassemblyPath, "out\\M2RoS.gb");
@@ -943,6 +951,7 @@ public static class Editor
         }
 
         Directory.SetCurrentDirectory(oldWorkDir);
+        return true;
     }
 
     #region Borders

@@ -43,12 +43,12 @@
             rbt_bank_style = new System.Windows.Forms.RadioButton();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             grp_compilation = new System.Windows.Forms.GroupBox();
+            chb_data_chunks = new System.Windows.Forms.CheckBox();
             chb_saves = new System.Windows.Forms.CheckBox();
             chb_transitions = new System.Windows.Forms.CheckBox();
             chb_objects = new System.Windows.Forms.CheckBox();
             chb_areas = new System.Windows.Forms.CheckBox();
             chb_screens = new System.Windows.Forms.CheckBox();
-            chb_data_chunks = new System.Windows.Forms.CheckBox();
             grp_rom_settings.SuspendLayout();
             grp_hex_indicator.SuspendLayout();
             grp_offset_style.SuspendLayout();
@@ -190,9 +190,9 @@
             // 
             // statusStrip1
             // 
-            statusStrip1.Location = new System.Drawing.Point(0, 393);
+            statusStrip1.Location = new System.Drawing.Point(0, 394);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new System.Drawing.Size(376, 22);
+            statusStrip1.Size = new System.Drawing.Size(374, 22);
             statusStrip1.TabIndex = 6;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -210,6 +210,20 @@
             grp_compilation.TabIndex = 7;
             grp_compilation.TabStop = false;
             grp_compilation.Text = "Compilation";
+            // 
+            // chb_data_chunks
+            // 
+            chb_data_chunks.AutoSize = true;
+            chb_data_chunks.Checked = true;
+            chb_data_chunks.CheckState = System.Windows.Forms.CheckState.Checked;
+            chb_data_chunks.Location = new System.Drawing.Point(6, 147);
+            chb_data_chunks.Name = "chb_data_chunks";
+            chb_data_chunks.Size = new System.Drawing.Size(138, 19);
+            chb_data_chunks.TabIndex = 5;
+            chb_data_chunks.Tag = "DataChunk";
+            chb_data_chunks.Text = "Compile DataChunks";
+            chb_data_chunks.UseVisualStyleBackColor = true;
+            chb_data_chunks.CheckedChanged += chb_compilation_itemsCheckedChanged;
             // 
             // chb_saves
             // 
@@ -281,24 +295,11 @@
             chb_screens.UseVisualStyleBackColor = true;
             chb_screens.CheckedChanged += chb_compilation_itemsCheckedChanged;
             // 
-            // chb_data_chunks
-            // 
-            chb_data_chunks.AutoSize = true;
-            chb_data_chunks.Checked = true;
-            chb_data_chunks.CheckState = System.Windows.Forms.CheckState.Checked;
-            chb_data_chunks.Location = new System.Drawing.Point(6, 147);
-            chb_data_chunks.Name = "chb_data_chunks";
-            chb_data_chunks.Size = new System.Drawing.Size(138, 19);
-            chb_data_chunks.TabIndex = 5;
-            chb_data_chunks.Tag = "DataChunk";
-            chb_data_chunks.Text = "Compile DataChunks";
-            chb_data_chunks.UseVisualStyleBackColor = true;
-            // 
             // ProgramSettings
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(376, 415);
+            ClientSize = new System.Drawing.Size(374, 416);
             Controls.Add(grp_compilation);
             Controls.Add(statusStrip1);
             Controls.Add(grp_offset_style);
@@ -307,7 +308,7 @@
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new System.Drawing.Size(392, 277);
+            MinimumSize = new System.Drawing.Size(390, 455);
             Name = "ProgramSettings";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Program Settings";

@@ -7,13 +7,14 @@ using LAMP.Classes;
 using LAMP.Classes.M2_Data;
 using System.Threading.Tasks;
 using System.CodeDom;
+using LAMP.Interfaces;
 
 namespace LAMP.Classes.M2_Data;
 
 /// <summary>
 /// A block of data. In use with a <see cref="Rom"/> it will have reading priority when using <see cref="Rom.Read8(int)"/> and <see cref="Rom.Read16(int)"/>
 /// </summary>
-public class DataChunk
+public class DataChunk : INamedResource
 {
     //Constructors
     [JsonConstructor]
@@ -58,6 +59,7 @@ public class DataChunk
     public byte[] Data { get; set; }
     public string DataType { get; set; } = "Data";
     public bool Include { get; set; } = true;
+    public string Name { get; set; } = "";
 
     //Methods
     /// <summary>

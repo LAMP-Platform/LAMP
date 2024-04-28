@@ -198,7 +198,7 @@ public class Rom
         #endregion
         
         #region Palettes
-        if ((exceptions & CompilationItem.Palettes) == 0 && Globals.Palettes.Count != 0 && Globals.LoadedProject.EnableGBCSupport)
+        if ((exceptions & CompilationItem.Palette) == 0 && Globals.Palettes.Count != 0 && Globals.LoadedProject.EnableGBCSupport)
         {
             for (int i = 0; i < Globals.Palettes.Count; i++)
             {
