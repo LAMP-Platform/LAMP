@@ -90,12 +90,17 @@ public struct GBColor
         return new GBColor((byte)(R / 8), (byte)(G / 8), (byte)(B / 8));
     }
 
+    public static GBColor FromRGB(Color color)
+    {
+        return FromRGB(color.R, color.G, color.B);
+    }
+
     /// <summary>
     /// Returns a 24-bit PC RGB Color from a 15-bit GBC Color
     /// </summary>
     public static Color ToRGB(byte R, byte G, byte B)
     {
-        return Color.FromArgb(R * 8, B * 8, G * 8);
+        return Color.FromArgb(R * 8, G * 8, B * 8);
     }
     /// <summary>
     /// Returns a 24-bit PC RGB Color from the current 15-bit GBC Color

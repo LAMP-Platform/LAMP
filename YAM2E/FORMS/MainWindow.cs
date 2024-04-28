@@ -1355,9 +1355,6 @@ public partial class MainWindow : Form
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
-        LAMP.Classes.M2_Data.GBC.GBColor c1 = LAMP.Classes.M2_Data.GBC.GBColor.FromRGB(150, 164, 184);
-        LAMP.Classes.M2_Data.GBC.GBColor c2 = LAMP.Classes.M2_Data.GBC.GBColor.FromRGB(50, 91, 140);
-        LAMP.Classes.M2_Data.GBC.GBColor c3 = LAMP.Classes.M2_Data.GBC.GBColor.FromRGB(5, 26, 51);
-        LAMP.Classes.M2_Data.GBC.GBColor c4 = new(0,0,0);
+        new PaletteEditor(0).Show();
     }
 }

@@ -72,13 +72,7 @@ public partial class TransitionsEditor : Form
         grp_tilesets.Visible = true;
 
         //Updating the combobox with all the tilesets
-        for (int i = 0; i < Globals.Tilesets.Count; i++)
-        {
-            Tileset t = Globals.Tilesets[i];
-            string name = i.ToString("X");
-            if (t.Name != "") name = t.Name;
-            cbb_tileset_select.Items.Add(name);
-        }
+        cbb_tileset_select.AddNumberedListContent(Globals.Tilesets, "X");
         cbb_tileset_select.SelectedIndex = Globals.Tilesets.Count - 1;
         cbb_tileset_select.AutoSize();
     }
@@ -114,6 +108,7 @@ public partial class TransitionsEditor : Form
 
     void ReadTransition()
     {
+        pnlTransition.SuspendDrawing(); //Extension method that stops drawing entirely
         pnlTransition.SuspendLayout(); //Suspending the layout logic is required here because it is missing in the opcode display code
 
         //Set Transition name
@@ -173,7 +168,9 @@ public partial class TransitionsEditor : Form
 
         //Setting length display
         TransitionLength = LoadedTransition.Data.Count;
+
         pnlTransition.ResumeLayout(); //Resume layout logic
+        pnlTransition.ResumeDrawing();
     }
 
     void LoadTransition()

@@ -42,7 +42,7 @@ public static class ComboboxOp
         for (int i = 0; i < sequence.Count(); i++)
         {
             INamedResource resource = sequence.ElementAt(i);
-            string name = resource.Name != "" ? $" - {resource.Name}" : "";
+            string name = resource.Name?.Length > 0 ? $" - {resource.Name}" : "";
             box.Items.Add(i.ToString(format) + name);
         }
         box.EndUpdate();
