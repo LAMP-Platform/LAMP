@@ -147,7 +147,9 @@ public partial class TransitionOpcodeDisplay : UserControl
         {
             string currentTitle = Opcode.Description[i];
             bool isList = false;
+            bool isOptions = false;
             IEnumerable<INamedResource> inputList = null;
+            string[] options = null;
             if (Opcode.ParameterListNames[i] != "")
             {
                 //Get List object
@@ -155,10 +157,14 @@ public partial class TransitionOpcodeDisplay : UserControl
                 inputList = typeof(Globals).GetField(listName)?.GetValue(null) as IEnumerable<INamedResource>;
                 if (inputList == null) inputList = typeof(Globals).GetProperty(listName)?.GetValue(null) as IEnumerable<INamedResource>;
 
+                //get options
+                options = Opcode.ParameterListNames[i].Split(';', StringSplitOptions.TrimEntries);
+
                 isList = inputList != null;
+                isOptions = options.Length > 1;
             }
 
-            OpcodeParameter parameter = new OpcodeParameter(currentTitle, Opcode.NybbleIndices[i] != null, isList);
+            OpcodeParameter parameter = new OpcodeParameter(currentTitle, Opcode.NybbleIndices[i] != null, isList || isOptions);
             parameter.Dock = DockStyle.Top;
             parameter.Visible = true;
             pnl_parameters.Controls.Add(parameter);
@@ -171,7 +177,7 @@ public partial class TransitionOpcodeDisplay : UserControl
                 parameter.txb_Parameter.TextChanged += txb_parameter_TextChanged;
                 parameter.txb_Parameter.Leave += txb_parameter_Leave;
             } 
-            if (isList)
+            if (isList || isOptions)
             {
                 parameter.cbb_ParameterList.SelectedIndexChanged += cbb_ParameterList_SelectedIndexChanged;
             }
@@ -179,11 +185,16 @@ public partial class TransitionOpcodeDisplay : UserControl
             //Adding data
             if (Opcode.NybbleIndices[i] == null) continue;
 
-            if (!isList) parameter.txb_Parameter.Text = Format.IntToString(getParameterValue(i));
+            if (!isList && !isOptions) parameter.txb_Parameter.Text = Format.IntToString(getParameterValue(i));
             else
             {
                 //Add list content to list input
-                parameter.cbb_ParameterList.AddNumberedListContent(inputList);
+                if (isList) parameter.cbb_ParameterList.AddNumberedListContent(inputList);
+                if (isOptions)
+                {
+                    parameter.cbb_ParameterList.Items.AddRange(options);
+                    parameter.cbb_ParameterList.DropDownStyle = ComboBoxStyle.DropDownList;
+                }
                 parameter.cbb_ParameterList.AutoSize();
 
                 //Set current index

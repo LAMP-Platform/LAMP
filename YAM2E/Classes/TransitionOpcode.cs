@@ -45,11 +45,24 @@ namespace LAMP.Classes
                         length = int.Parse(c[1].Value) - int.Parse(c[0].Value) + 1; //get the amount of nybbles
                     }
 
-                    //get predefined value
+                    //Interpreting the predefined value
+                    /*
+                     * Predefined values can be used to
+                     * 1. Set a predefined value, duh
+                     *    Example: (0xA5)
+                     * 2. Reference a Global List with INamedResource content. This will turn the
+                     *    Input into a Combobox with the list content. The selected index is the value
+                     *    of the parameter.
+                     *    Example: (Transitions)
+                     * 3. Set options. Options are a list of strings which get interpreted as a Combobox
+                     *    with the option content. The selected index is the value.
+                     *    Example: (Sprites; Backgrounds; Data)
+                     */
                     string val = Regex.Match(Regex.Match(template, @"\((.*?)\)").Value, @"[^()].*[^()]").Value;
 
                     //Check first if input string references a INamedResource List
-                    if (typeof(Globals).GetField(val) != null || typeof(Globals).GetProperty(val) != null) 
+                    string[] options = val.Split(';');
+                    if (typeof(Globals).GetField(val) != null || typeof(Globals).GetProperty(val) != null || options.Length > 1) 
                     {
                         listName = val;
                         val = "";
@@ -68,7 +81,7 @@ namespace LAMP.Classes
         /// <summary>
         /// The full string that represents the opcode
         /// </summary>
-        public string OpcodeString { get; set; }
+        public string OpcodeString { get; private set; }
 
         /// <summary>
         /// The index that represents the opcode
