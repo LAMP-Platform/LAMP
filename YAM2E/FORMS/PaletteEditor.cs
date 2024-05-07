@@ -33,9 +33,17 @@ namespace LAMP.FORMS
         private void cbb_palette_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (init) return;
+            init = true;
 
             grp_palette.SuspendDrawing();
             grp_palette.Controls.Clear();
+            if (Globals.Palettes.Count == 0)
+            {
+                grp_palette.ResumeDrawing();
+                txb_name.Text = "";
+                init = false;
+                return;
+            }
             Palette p = loadedPalette = Globals.Palettes[cbb_palette.SelectedIndex];
             txb_name.Text = p.Name;
 
@@ -55,6 +63,7 @@ namespace LAMP.FORMS
                 count++;
             }
             grp_palette.ResumeDrawing();
+            init = false;
         }
 
         private void rowColorChanged(object sender, EventArgs e)
@@ -87,6 +96,7 @@ namespace LAMP.FORMS
 
         private void txb_name_TextChanged(object sender, EventArgs e)
         {
+            if (init) return;
             if (loadedPalette == null) return;
 
             int index = cbb_palette.SelectedIndex;
@@ -104,6 +114,21 @@ namespace LAMP.FORMS
 
             //Enable updating again
             init = false;
+        }
+
+        private void btn_remove_Click(object sender, EventArgs e)
+        {
+            if (Globals.Palettes.Count == 0) return;
+
+            int index = cbb_palette.SelectedIndex;
+            Globals.Palettes.RemoveAt(index);
+
+            cbb_palette.Items.Clear();
+            cbb_palette.AddNumberedListContent(Globals.Palettes, "X2");
+            cbb_palette.AutoSize();
+
+            cbb_palette.SelectedIndex = Math.Min(index, Globals.Palettes.Count - 1);
+            cbb_palette_SelectedIndexChanged(null, null);
         }
     }
 }

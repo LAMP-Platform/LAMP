@@ -323,6 +323,7 @@ public partial class MainWindow : Form
 
     private void PlaceSelectedTiles(Point tilePosition)
     {
+        if (TargetedActionGroup == null) return;
         //Add tile placing action to 
         var actn = new PlaceTileAction(tilePosition, Editor.SelectedTiles, Editor.SelectionWidth, Editor.SelectionHeight, Room);
         TargetedActionGroup.Actions.Add(actn);

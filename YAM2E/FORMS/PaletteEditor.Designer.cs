@@ -70,7 +70,7 @@
             splitContainer1.Panel2.Controls.Add(grp_palette);
             splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3, 3, 6, 3);
             splitContainer1.Size = new System.Drawing.Size(800, 428);
-            splitContainer1.SplitterDistance = 243;
+            splitContainer1.SplitterDistance = 202;
             splitContainer1.TabIndex = 1;
             // 
             // grp_data
@@ -83,7 +83,7 @@
             grp_data.Dock = System.Windows.Forms.DockStyle.Top;
             grp_data.Location = new System.Drawing.Point(6, 3);
             grp_data.Name = "grp_data";
-            grp_data.Size = new System.Drawing.Size(234, 88);
+            grp_data.Size = new System.Drawing.Size(193, 88);
             grp_data.TabIndex = 5;
             grp_data.TabStop = false;
             grp_data.Text = "Select";
@@ -92,17 +92,18 @@
             // 
             btn_remove.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_remove.Image = Properties.Resources.Remove;
-            btn_remove.Location = new System.Drawing.Point(205, 22);
+            btn_remove.Location = new System.Drawing.Point(164, 51);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new System.Drawing.Size(23, 23);
             btn_remove.TabIndex = 5;
             btn_remove.UseVisualStyleBackColor = true;
+            btn_remove.Click += btn_remove_Click;
             // 
             // btn_add
             // 
             btn_add.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             btn_add.Image = Properties.Resources.Add;
-            btn_add.Location = new System.Drawing.Point(176, 22);
+            btn_add.Location = new System.Drawing.Point(164, 22);
             btn_add.Name = "btn_add";
             btn_add.Size = new System.Drawing.Size(23, 23);
             btn_add.TabIndex = 4;
@@ -112,10 +113,11 @@
             // cbb_palette
             // 
             cbb_palette.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            cbb_palette.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cbb_palette.FormattingEnabled = true;
             cbb_palette.Location = new System.Drawing.Point(6, 22);
             cbb_palette.Name = "cbb_palette";
-            cbb_palette.Size = new System.Drawing.Size(164, 23);
+            cbb_palette.Size = new System.Drawing.Size(152, 23);
             cbb_palette.TabIndex = 1;
             cbb_palette.SelectedIndexChanged += cbb_palette_SelectedIndexChanged;
             // 
@@ -124,7 +126,7 @@
             txb_name.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             txb_name.Location = new System.Drawing.Point(51, 51);
             txb_name.Name = "txb_name";
-            txb_name.Size = new System.Drawing.Size(119, 23);
+            txb_name.Size = new System.Drawing.Size(107, 23);
             txb_name.TabIndex = 3;
             txb_name.TextChanged += txb_name_TextChanged;
             // 
@@ -142,7 +144,7 @@
             grp_palette.Dock = System.Windows.Forms.DockStyle.Fill;
             grp_palette.Location = new System.Drawing.Point(3, 3);
             grp_palette.Name = "grp_palette";
-            grp_palette.Size = new System.Drawing.Size(544, 422);
+            grp_palette.Size = new System.Drawing.Size(585, 422);
             grp_palette.TabIndex = 6;
             grp_palette.TabStop = false;
             grp_palette.Text = "Palette";
