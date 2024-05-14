@@ -503,7 +503,43 @@ public static class Editor
         }
         catch (Exception ex)
         {
-            MessageBox.Show("Something went wrong while compiling the ROM.\n" + ex.Message, "Error",
+            MessageBox.Show("Something went wrong while compiling the ROM.\n\n" + ex.Message, "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    /// <summary>
+    /// Compiles the ROM and then creates an IPS Patch from it
+    /// </summary>
+    internal static void CompileIPS()
+    {
+        //Check if Vanilla
+        if (!Hash.Compare(Globals.BaseROMPath, Hash.Metroid2US))
+        {
+            MessageBox.Show($"The currently selected base ROM is not an unmodified Metroid 2: Return of Samus ROM!\n\n" +
+                $"MD5 Hash is:\n{Hash.GetHash(Globals.BaseROMPath)}\n\n" +
+                $"Should be:\n{Hash.Metroid2US}",
+                "Mismatching Hash", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            new ProgramSettings().Show();
+            return;
+        }
+
+        string filepath = ShowSaveDialog("IPS Patch (*.ips)|*.ips");
+        if (filepath == String.Empty) return;
+
+        //Compile ROM
+        try
+        {
+            BuildAssembly();
+            Rom vanilla = new Rom(Globals.BaseROMPath);
+            ROM.Compile("");
+            byte[] patchData = Patch.CreateIPSPatch(vanilla.Data, ROM.DataCopy.ToArray());
+
+            File.WriteAllBytes(filepath, patchData);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Something went wrong while compiling the ROM.\n\n" + ex.Message, "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }

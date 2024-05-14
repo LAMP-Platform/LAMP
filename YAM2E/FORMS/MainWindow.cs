@@ -1187,6 +1187,9 @@ public partial class MainWindow : Form
     private void btn_compile_ROM_Click(object sender, EventArgs e)
         => Editor.CompileROM();
 
+    private void btn_compile_ips_Click(object sender, EventArgs e)
+        => Editor.CompileIPS();
+
     private void btn_project_settings_Click(object sender, EventArgs e)
         => new ProjectSettings().Show();
 
@@ -1369,5 +1372,10 @@ public partial class MainWindow : Form
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
+        string path = Editor.ShowOpenDialog("ips file|*.ips");
+        if (path == "") return;
+
+        byte[] data = File.ReadAllBytes(path);
+        bool result = Patch.ValidateIPSPatch(data);
     }
 }

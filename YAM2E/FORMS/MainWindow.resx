@@ -248,6 +248,9 @@
   <metadata name="ctx_room_context_menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>517, 23</value>
   </metadata>
+  <metadata name="Tooltip_info.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>700, 23</value>
+  </metadata>
   <metadata name="ctx_select_tool.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>816, 23</value>
   </metadata>

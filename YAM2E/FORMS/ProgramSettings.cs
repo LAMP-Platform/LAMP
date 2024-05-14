@@ -46,7 +46,7 @@ public partial class ProgramSettings : Form
     {
         if (init) return;
 
-        Globals.RomPath = txb_rom_path.Text;
+        Globals.BaseROMPath = Globals.RomPath = txb_rom_path.Text;
         Properties.programsettings.Default.ROMPath = Globals.RomPath;
 
         if (!Hash.Compare(Globals.RomPath, Hash.Metroid2US) && File.Exists(Globals.RomPath))

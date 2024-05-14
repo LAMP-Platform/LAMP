@@ -23,7 +23,7 @@ public class Rom
     /// <summary>
     /// Copy of the <see cref="Data"/>, which can be modified and saved with <see cref="SaveROMAsFile(string)"/>.
     /// </summary>
-    private List<byte> DataCopy;
+    public List<byte> DataCopy { get; private set; }
 
     public string Filepath;
     
@@ -226,7 +226,7 @@ public class Rom
         }
         #endregion
 
-        SaveROMAsFile(filename);
+        if (filename != "") SaveROMAsFile(filename);
     }
 
     public void SaveROMAsFile(string filepath)

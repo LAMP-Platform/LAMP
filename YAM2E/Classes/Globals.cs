@@ -129,6 +129,7 @@ internal static class Globals
     
     #region User Settings
     public static string RomPath = Properties.programsettings.Default.ROMPath;
+    public static string BaseROMPath = Properties.programsettings.Default.ROMPath;
     public static bool bankOffsets = Properties.programsettings.Default.bankOffsets;
     public static string hexPrefix = Properties.programsettings.Default.hexPrefix;
     public static string hexSuffix = Properties.programsettings.Default.hexSuffix;
