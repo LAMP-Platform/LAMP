@@ -136,5 +136,6 @@ internal static class Globals
     public static List<string> pinnedFiles = Properties.programsettings.Default.pinnedFiles.Cast<string>().ToList();
     public static CompilationItem CompilerExclude = (CompilationItem)Properties.programsettings.Default.compilerExclude;
     public static UserSettings UserSettings = JsonSerializer.Deserialize<UserSettings>(Properties.programsettings.Default.userSettings);
+    public static bool ShowHashWarning = Properties.programsettings.Default.showHashWarning;
     #endregion
 }

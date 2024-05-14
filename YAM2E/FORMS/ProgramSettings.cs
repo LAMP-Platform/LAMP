@@ -9,14 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using LAMP.Classes;
 using System.IO;
+using LAMP.Utilities;
 
 namespace LAMP.FORMS;
 
 public partial class ProgramSettings : Form
 {
+    bool init = false;
+
     public ProgramSettings()
     {
         InitializeComponent();
+        init = true;
         txb_rom_path.Text = Globals.RomPath;
 
         //Set radio buttons
@@ -29,6 +33,7 @@ public partial class ProgramSettings : Form
         else rbt_offset_style.Checked = true;
 
         SetCompilationChecks();
+        init = false;
     }
 
     private void btn_select_rom_Click(object sender, EventArgs e)
@@ -39,8 +44,17 @@ public partial class ProgramSettings : Form
 
     private void txb_rom_path_TextChanged(object sender, EventArgs e)
     {
+        if (init) return;
+
         Globals.RomPath = txb_rom_path.Text;
         Properties.programsettings.Default.ROMPath = Globals.RomPath;
+
+        if (!Hash.Compare(Globals.RomPath, Hash.Metroid2US) && File.Exists(Globals.RomPath))
+        {
+            Properties.programsettings.Default.showHashWarning = true;
+            Editor.DisplayHashMismatch(Globals.RomPath);
+        }
+
         Properties.programsettings.Default.Save();
     }
 

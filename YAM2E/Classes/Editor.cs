@@ -17,6 +17,7 @@ using LAMP.Properties;
 using System.Net.Http;
 using LAMP.Utilities;
 using LAMP.Actions;
+using LAMP.Dialogs;
 
 namespace LAMP.Classes;
 //TODO: some of this should be put into their respective forms.
@@ -250,6 +251,10 @@ public static class Editor
             return;
         }
 
+        if (!Hash.Compare(Globals.RomPath, Hash.Metroid2US) && Globals.ShowHashWarning)
+        {
+            DisplayHashMismatch(Globals.RomPath);
+        }
 
         //ROM
         if (LoadRomFromPath(Globals.RomPath) == false) return;
@@ -260,6 +265,20 @@ public static class Editor
 
         //saving recent file lists
         SaveRecentFiles();
+    }
+
+    public static void DisplayHashMismatch(string romPath)
+    {
+        DontShowAgainDialog dialog = new DontShowAgainDialog("Mismatching Hash", $"The hash of the base ROM does not match that of vanilla Metroid 2!\r\n" +
+                $"This can cause issues when loading.\r\n\r\n" +
+                $"Vanilla Hash: {Hash.Metroid2US}\r\n" +
+                $"Current Hash: {Hash.GetHash(romPath)}");
+        dialog.DoNotShowAgainText = "Do not show again for this ROM";
+        if (dialog.ShowDialog() == DialogResult.OK)
+        {
+            programsettings.Default.showHashWarning = !dialog.DoNotShowAgain;
+            programsettings.Default.Save();
+        }
     }
 
     private static void SaveRecentFiles()

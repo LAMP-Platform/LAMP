@@ -215,6 +215,9 @@ public partial class MainWindow : Form
         //Enabling UI
         foreach (ToolStripItem c in tool_strip_image_buttons.Items) c.Enabled = true;
         foreach (ToolStripItem c in tool_strip_main_buttons.Items) c.Enabled = true;
+
+        //GBC Support UI
+        btn_palette_editor.Visible = btn_open_palette_editor.Visible = Globals.LoadedProject.EnableGBCSupport;
     }
 
     private void UpdateTileset()
@@ -484,7 +487,7 @@ public partial class MainWindow : Form
     }
 
     ///<summary>Resets the held object rectangle and hides inspector</summary>
-    private void ResetObjectSelection() 
+    private void ResetObjectSelection()
     {
         InspectorObject = null;
         Room.SelectedObject = new Rectangle(-1, -1, 1, 1);
@@ -1350,12 +1353,21 @@ public partial class MainWindow : Form
         Room.BackgroundImage = Globals.AreaBank;
         Room.Invalidate();
     }
+
+    private void btn_palette_editor_Click(object sender, EventArgs e)
+    {
+        if (!Globals.LoadedProject.EnableGBCSupport)
+        {
+            MessageBox.Show("The GBC Support is not enabled for this project", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+        new PaletteEditor(0).Show();
+    }
     #endregion
 
     #endregion
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
-        new PaletteEditor(0).Show();
     }
 }

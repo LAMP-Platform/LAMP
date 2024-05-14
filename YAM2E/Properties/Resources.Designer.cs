@@ -143,6 +143,16 @@ namespace LAMP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ColorPalette {
+            get {
+                object obj = ResourceManager.GetObject("ColorPalette", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Compile {
             get {
                 object obj = ResourceManager.GetObject("Compile", resourceCulture);

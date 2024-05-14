@@ -35,5 +35,8 @@
     <Setting Name="userSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)">{}</Value>
     </Setting>
+    <Setting Name="showHashWarning" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

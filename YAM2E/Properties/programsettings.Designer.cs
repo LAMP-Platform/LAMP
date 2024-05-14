@@ -12,7 +12,7 @@ namespace LAMP.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     internal sealed partial class programsettings : global::System.Configuration.ApplicationSettingsBase {
         
         private static programsettings defaultInstance = ((programsettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new programsettings())));
@@ -132,6 +132,18 @@ namespace LAMP.Properties {
             }
             set {
                 this["userSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showHashWarning {
+            get {
+                return ((bool)(this["showHashWarning"]));
+            }
+            set {
+                this["showHashWarning"] = value;
             }
         }
     }

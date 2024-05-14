@@ -541,7 +541,6 @@ public partial class GraphicsEditor : Form
     {
         MetatileSet.ShowGrid = chb_metatiles_grid.Checked;
     }
-    #endregion
 
     /// <summary>
     /// Toolbar for the GFX Editor
@@ -642,6 +641,19 @@ public partial class GraphicsEditor : Form
 
         File.WriteAllBytes(path, (byte[])(DataChunk)LoadedMeta);
     }
+
+    private void btn_import_imageClick(object sender, EventArgs e)
+    {
+        OpenFileDialog tilesetFile = new OpenFileDialog();
+        tilesetFile.Filter = "Bitmaps (*.png, *.bmp, *.gif, *.jpeg, *.jpg, *.tif, *.tiff)|*.png;*.bmp;*.gif;*.jpeg;*.jpg;*.tif;*.tiff";
+        if (tilesetFile.ShowDialog() != DialogResult.OK) return;
+
+        Bitmap image = new Bitmap(tilesetFile.FileName);
+
+        //Free memory
+        image.Dispose();
+    }
+    #endregion
 
     #endregion
     #endregion
