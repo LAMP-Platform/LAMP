@@ -293,6 +293,16 @@ namespace LAMP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Monitor {
+            get {
+                object obj = ResourceManager.GetObject("Monitor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Numbers {
             get {
                 object obj = ResourceManager.GetObject("Numbers", resourceCulture);

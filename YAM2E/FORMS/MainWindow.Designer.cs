@@ -40,6 +40,7 @@ namespace LAMP
             btn_create_backup = new System.Windows.Forms.ToolStripMenuItem();
             toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             btn_compile_ROM = new System.Windows.Forms.ToolStripMenuItem();
+            btn_compile_ips = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_options = new System.Windows.Forms.ToolStripDropDownButton();
             btn_rom_file = new System.Windows.Forms.ToolStripMenuItem();
             btn_project_settings = new System.Windows.Forms.ToolStripMenuItem();
@@ -123,7 +124,6 @@ namespace LAMP
             Tooltip_info = new System.Windows.Forms.ToolTip(components);
             ctx_select_tool = new System.Windows.Forms.ContextMenuStrip(components);
             replaceSelectedTileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            btn_compile_ips = new System.Windows.Forms.ToolStripMenuItem();
             tool_strip_main_buttons.SuspendLayout();
             tool_strip_image_buttons.SuspendLayout();
             sts_main_status_bar.SuspendLayout();
@@ -172,7 +172,7 @@ namespace LAMP
             // 
             btn_new_project.Image = Properties.Resources.Add;
             btn_new_project.Name = "btn_new_project";
-            btn_new_project.Size = new System.Drawing.Size(180, 22);
+            btn_new_project.Size = new System.Drawing.Size(150, 22);
             btn_new_project.Text = "New Project";
             btn_new_project.Click += btn_new_project_Click;
             // 
@@ -180,7 +180,7 @@ namespace LAMP
             // 
             btn_open_rom.Image = Properties.Resources.FolderOpened;
             btn_open_rom.Name = "btn_open_rom";
-            btn_open_rom.Size = new System.Drawing.Size(180, 22);
+            btn_open_rom.Size = new System.Drawing.Size(150, 22);
             btn_open_rom.Text = "Open Project";
             btn_open_rom.Click += btn_open_rom_Click;
             // 
@@ -188,20 +188,20 @@ namespace LAMP
             // 
             btn_save_project.Image = Properties.Resources.Save;
             btn_save_project.Name = "btn_save_project";
-            btn_save_project.Size = new System.Drawing.Size(180, 22);
+            btn_save_project.Size = new System.Drawing.Size(150, 22);
             btn_save_project.Text = "Save Project";
             btn_save_project.Click += btn_save_project_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
             toolStripSeparator1.Visible = false;
             // 
             // btn_create_backup
             // 
             btn_create_backup.Name = "btn_create_backup";
-            btn_create_backup.Size = new System.Drawing.Size(180, 22);
+            btn_create_backup.Size = new System.Drawing.Size(150, 22);
             btn_create_backup.Text = "Create Backup";
             btn_create_backup.Visible = false;
             btn_create_backup.Click += btn_create_backup_Click;
@@ -209,15 +209,23 @@ namespace LAMP
             // toolStripSeparator7
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
-            toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
+            toolStripSeparator7.Size = new System.Drawing.Size(147, 6);
             // 
             // btn_compile_ROM
             // 
             btn_compile_ROM.Image = Properties.Resources.Compile;
             btn_compile_ROM.Name = "btn_compile_ROM";
-            btn_compile_ROM.Size = new System.Drawing.Size(180, 22);
+            btn_compile_ROM.Size = new System.Drawing.Size(150, 22);
             btn_compile_ROM.Text = "Compile ROM";
             btn_compile_ROM.Click += btn_compile_ROM_Click;
+            // 
+            // btn_compile_ips
+            // 
+            btn_compile_ips.Image = Properties.Resources.LIPS;
+            btn_compile_ips.Name = "btn_compile_ips";
+            btn_compile_ips.Size = new System.Drawing.Size(150, 22);
+            btn_compile_ips.Text = "Compile IPS";
+            btn_compile_ips.Click += btn_compile_ips_Click;
             // 
             // tool_strip_options
             // 
@@ -263,14 +271,15 @@ namespace LAMP
             // 
             btn_data_viewer.Image = Properties.Resources.DataViewer;
             btn_data_viewer.Name = "btn_data_viewer";
-            btn_data_viewer.Size = new System.Drawing.Size(136, 22);
+            btn_data_viewer.Size = new System.Drawing.Size(180, 22);
             btn_data_viewer.Text = "Data Viewer";
             btn_data_viewer.Click += btn_data_viewer_Click;
             // 
             // btn_converter
             // 
+            btn_converter.Image = Properties.Resources.DataViewer;
             btn_converter.Name = "btn_converter";
-            btn_converter.Size = new System.Drawing.Size(136, 22);
+            btn_converter.Size = new System.Drawing.Size(180, 22);
             btn_converter.Text = "Converter";
             btn_converter.Click += btn_converter_Click;
             // 
@@ -287,6 +296,7 @@ namespace LAMP
             // 
             // btn_screen_settings
             // 
+            btn_screen_settings.Image = Properties.Resources.Monitor;
             btn_screen_settings.Name = "btn_screen_settings";
             btn_screen_settings.Size = new System.Drawing.Size(186, 22);
             btn_screen_settings.Text = "Screen Settings";
@@ -1008,14 +1018,6 @@ namespace LAMP
             replaceSelectedTileToolStripMenuItem.Name = "replaceSelectedTileToolStripMenuItem";
             replaceSelectedTileToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             replaceSelectedTileToolStripMenuItem.Text = "Replace Selected Tile";
-            // 
-            // btn_compile_ips
-            // 
-            btn_compile_ips.Image = Properties.Resources.LIPS;
-            btn_compile_ips.Name = "btn_compile_ips";
-            btn_compile_ips.Size = new System.Drawing.Size(180, 22);
-            btn_compile_ips.Text = "Compile IPS";
-            btn_compile_ips.Click += btn_compile_ips_Click;
             // 
             // MainWindow
             // 

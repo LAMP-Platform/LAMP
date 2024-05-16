@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -128,5 +129,16 @@ public static class Patch
             }
         }
         throw new Exception("Inproperly terminated IPS file");
+    }
+
+    /// <summary>
+    /// Applies an IPS patch to the specified <paramref name="data"/>
+    /// </summary>
+    /// <param name="patch">The data of the IPS patch to apply</param>
+    /// <param name="data">The data to apply the IPS patch to</param>
+    /// <returns></returns>
+    public static bool ApplyIPSPatch(byte[] patch, byte[] data)
+    {
+        throw new NotImplementedException();
     }
 }
