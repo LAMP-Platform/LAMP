@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace LAMP.Utilities;
 /// </summary>
 public static class Patch
 {
+    #region IPS Patch
     /// <summary>
     /// Creates an IPS patch, saved as a byte[]
     /// </summary>
@@ -141,4 +143,114 @@ public static class Patch
     {
         throw new NotImplementedException();
     }
+    #endregion
+
+    #region BPS Patch
+    public static byte[] ApplyBPSPatch(byte[] sourceData, byte[] patchData)
+    {
+        using (var sourceStream = new MemoryStream(sourceData))
+        using (var patchStream = new MemoryStream(patchData))
+        {
+            // Read and verify BPS header
+            byte[] header = new byte[4];
+            patchStream.Read(header, 0, 4);
+            if (BitConverter.ToString(header) != "42-50-53-31") // "BPS1"
+            {
+                throw new InvalidDataException("Invalid BPS patch file.");
+            }
+
+            // Read source and target sizes (Base 128 Varint encoded)
+            long sourceSize = ReadVarInt(patchStream);
+            long targetSize = ReadVarInt(patchStream);
+
+            Debug.WriteLine($"Source Size: {sourceSize}, Target Size: {targetSize}");
+
+            // Skip metadata and checksums (for simplicity)
+            long patchMetadataSize = ReadVarInt(patchStream);
+            patchStream.Seek(patchMetadataSize + 12, SeekOrigin.Current);
+
+            byte[] outputData = new byte[targetSize];
+            using (var outputStream = new MemoryStream(outputData, true))
+            {
+                // Process patch commands
+                long sourcePos = 0, targetPos = 0;
+                while (targetPos < targetSize)
+                {
+                    int command = (int)ReadVarInt(patchStream);
+                    int length = (int)ReadVarInt(patchStream);
+
+                    Debug.WriteLine($"Command: {command}, Length: {length}");
+
+                    switch (command & 3)
+                    {
+                        case 0: // Source Read
+                            CopyData(sourceStream, outputStream, ref sourcePos, ref targetPos, length);
+                            break;
+                        case 1: // Target Read
+                            CopyData(patchStream, outputStream, ref targetPos, length);
+                            break;
+                        case 2: // Source Copy
+                            long offset = ReadSignedVarInt(patchStream);
+                            sourcePos += offset;
+                            CopyData(sourceStream, outputStream, ref sourcePos, ref targetPos, length);
+                            break;
+                        case 3: // Target Copy
+                            long copyOffset = ReadSignedVarInt(patchStream);
+                            long tempTargetPos = targetPos;
+                            targetPos += copyOffset;
+                            CopyData(outputStream, outputStream, ref targetPos, ref tempTargetPos, length);
+                            break;
+                    }
+                }
+            }
+
+            return outputData;
+        }
+    }
+
+    private static long ReadVarInt(Stream stream)
+    {
+        long result = 0;
+        int shift = 0;
+        while (true)
+        {
+            int byteRead = stream.ReadByte();
+            if (byteRead == -1) throw new EndOfStreamException();
+            result |= (long)(byteRead & 0x7F) << shift;
+            if ((byteRead & 0x80) != 0) break;
+            shift += 7;
+        }
+        return result;
+    }
+
+    private static long ReadSignedVarInt(Stream stream)
+    {
+        long value = ReadVarInt(stream);
+        return (value & 1) == 1 ? -(value >> 1) : (value >> 1);
+    }
+
+    private static void CopyData(Stream input, Stream output, ref long inputPos, ref long outputPos, int length)
+    {
+        byte[] buffer = new byte[length];
+        input.Seek(inputPos, SeekOrigin.Begin);
+        int bytesRead = input.Read(buffer, 0, length);
+        output.Seek(outputPos, SeekOrigin.Begin); // Ensure correct output position
+        output.Write(buffer, 0, bytesRead);
+        inputPos += bytesRead;
+        outputPos += bytesRead;
+
+        Debug.WriteLine($"CopyData: InputPos={inputPos}, OutputPos={outputPos}, Length={length}");
+    }
+
+    private static void CopyData(Stream input, Stream output, ref long outputPos, int length)
+    {
+        byte[] buffer = new byte[length];
+        int bytesRead = input.Read(buffer, 0, length);
+        output.Seek(outputPos, SeekOrigin.Begin); // Ensure correct output position
+        output.Write(buffer, 0, bytesRead);
+        outputPos += bytesRead;
+
+        Debug.WriteLine($"CopyData (TargetRead): OutputPos={outputPos}, Length={length}");
+    }
+    #endregion
 }

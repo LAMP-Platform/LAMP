@@ -139,7 +139,11 @@ public class Rom
                 {
                     lastAdd += 1;
                     Write16(OffsetOf("enemyDataPointers") + 2 * i, (ushort)lastAdd.bOffset); //Writing pointer to list
-                    foreach (Enemy o in Globals.Objects[i])
+
+                    //Get current screens object list and sort it
+                    List<Enemy> enemies = Globals.Objects[i].OrderBy(o => o.sPos).ToList();
+
+                    foreach (Enemy o in enemies)
                     {
                         //Writing Object list consecutively
                         Write8(lastAdd.Offset, o.Number);

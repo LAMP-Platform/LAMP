@@ -1372,10 +1372,8 @@ public partial class MainWindow : Form
 
     private void BtnTest_Click(object sender, EventArgs e)
     {
-        string path = Editor.ShowOpenDialog("ips file|*.ips");
-        if (path == "") return;
-
-        byte[] data = File.ReadAllBytes(path);
-        bool result = Patch.ValidateIPSPatch(data);
+        //byte[] source = File.ReadAllBytes(@"C:\Users\Conner\Desktop\vanilla.gba");
+        //byte[] patch = File.ReadAllBytes(@"C:\Users\Conner\Desktop\patch.bps");
+        //File.WriteAllBytes(@"C:\Users\Conner\Desktop\GPTPatched.gba", Patch.ApplyBPSPatch(source, patch));
     }
 }

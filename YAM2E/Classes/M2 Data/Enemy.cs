@@ -10,6 +10,8 @@ public class Enemy
     public byte Type { get; set; }
     public byte sX { get; set; }
     public byte sY { get; set; }
+    public int sPos => sY * 256 + sX;
+
 
     /// <summary>
     /// Unused
