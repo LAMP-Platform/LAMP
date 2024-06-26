@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LAMP.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.Linq.Expressions;
@@ -13,15 +14,59 @@ public class Project
     {
     }
 
+    [Setting]
+    [SettingInfo(
+        displayName: "Optimize Object Data", 
+        description: "Allows for more objects in total.\r\n\r\nIf the object data gets optimised, it is reccommended\r\nto use the HEX tweak that changes vertical object\r\nloading,\r\n",
+        category: "Objects")]
     public bool OptimizeObjectData { get; set; } = false;
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Fix vertical Object loading",
+        description: "Fixes the vertical object loading of the\r\ngame which expects objects to be laid\r\nout in a specific way.\r\n",
+        category: "Objects")]
     public bool FixVerticalObjectLoading { get; set; } = false;
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Use Tilesets if possible",
+        description: "If Tilesets are defined for this project, they can be used instead of direct memory adresses.",
+        category: "General")]
     public bool useTilesets { get; set; } = true;
-    public bool useAdvancedTestSettings { get; set; } = false;
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Project specific ROM",
+        description: "The path to a ROM, which should be used as a base for this specific project. Takes precedence over the vanilla ROM.",
+        category: "General")]
     public string ProjectSpecificROM { get; set; } = "";
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Disassembly Path",
+        description: "Path to a M2RoS disassembly. The ROM from the 'out' directory will be used as a base.",
+        category: "Disassembly")]
     public string DisassemblyPath { get; set; } = "";
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Build disassembly before compiling",
+        description: "A build.bat file has to be present at the disassembly path. This will run the build.bat before compiling the ROM.",
+        category: "Disassembly")]
     public bool BuildAssemblyWhenCompiling { get; set; } = false;
+
+    [Setting]
+    [SettingInfo(
+        displayName: "Default Tile",
+        description: "A standard tile that will be used for filling operations if nothing else is specified.",
+        category: "Room Editor")]
     public byte FillTile { get; set; } = 0xFF;
+
     public bool EnableGBCSupport { get; set; } = false;
+
+    public bool useAdvancedTestSettings { get; set; } = false;
+
 
     //Transition specific Data
     public List<TransitionOpcode> TransitionOpcodes { get; set; } = GenerateStandardOpcodes();
