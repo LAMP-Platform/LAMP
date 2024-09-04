@@ -7,7 +7,7 @@
 	<SelfContained>false</SelfContained>
     <RollForward>LatestMajor</RollForward>
     <UseWindowsForms>true</UseWindowsForms>
-    <LangVersion>10</LangVersion>
+    <LangVersion>12</LangVersion>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <ApplicationIcon>LAMP.ico</ApplicationIcon>
 	<PublishSingleFile>true</PublishSingleFile>
