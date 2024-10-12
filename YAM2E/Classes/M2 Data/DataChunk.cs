@@ -14,7 +14,7 @@ namespace LAMP.Classes.M2_Data;
 /// <summary>
 /// A block of data. In use with a <see cref="Rom"/> it will have reading priority when using <see cref="Rom.Read8(int)"/> and <see cref="Rom.Read16(int)"/>
 /// </summary>
-public class DataChunk : INamedResource
+public class DataChunk : IIncludableResource
 {
     //Constructors
     [JsonConstructor]
