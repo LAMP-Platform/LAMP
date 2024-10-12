@@ -36,7 +36,7 @@ jobs:
     - name: Publish 64
       run: dotnet publish YAM2E -r win-x64 -c release -o foo --sc false
     - name: Upload Artifacts 64
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v3
       with:
         name: LAMP-devbuild-x64
         path: foo\LAMP.exe
@@ -44,7 +44,7 @@ jobs:
     - name: Publish 86
       run: dotnet publish YAM2E -r win-x86 -c release -o foo --sc false
     - name: Upload Artifacts 86
-      uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v3
       with:
         name: LAMP-devbuild-x86
         path: foo\LAMP.exe
