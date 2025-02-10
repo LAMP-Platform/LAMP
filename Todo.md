@@ -1,7 +1,7 @@
 ﻿# TODOS
 
 ## 'til next release
-* Finish Graphics Editor
+* Finish Graphics Editor (hopefully, someday)
 
 ## Feature Ideas
 * Add more Undo/Redo capabilities by capsulating code in Actions
