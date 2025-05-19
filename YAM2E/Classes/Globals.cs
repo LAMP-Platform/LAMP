@@ -120,6 +120,9 @@ internal static class Globals
     //Data chunks
     public static List<DataChunk> DataChunks = new List<DataChunk>();
 
+    //Tweak Data
+    public static List<Tweak> Tweaks = new List<Tweak>();
+
     //Save data
     public static Save InitialSaveGame = new Save();
     public static Save TestROMSave = new Save();

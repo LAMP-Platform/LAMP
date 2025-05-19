@@ -11,6 +11,7 @@ using System.ComponentModel.Design;
 using LAMP.Classes;
 using LAMP.Controls;
 using LAMP.Utilities;
+using LAMP.Controls.Other;
 
 namespace LAMP.FORMS;
 
@@ -19,40 +20,14 @@ public partial class Test_form : Form
     public Test_form()
     {
         InitializeComponent();
-    }
 
-    bool isDragging = false;
-    int clickOffsetX;
-    int clickOffsetY;
-
-    private void grp1_DragLeave(object sender, EventArgs e)
-    {
-
-    }
-
-    private void lbl_MouseDown(object sender, MouseEventArgs e)
-    {
-        isDragging = true;
-        clickOffsetX = e.X;
-        clickOffsetY = e.Y;
-    }
-
-    private void lbl_MouseLeave(object sender, EventArgs e)
-    {
-
-    }
-
-    private void lbl_MouseUp(object sender, MouseEventArgs e)
-    {
-        isDragging = false;
-    }
-
-    private void lbl_MouseMove(object sender, MouseEventArgs e)
-    {
-        if (!isDragging) return;
-        Control c = sender as Control;
-
-        c.Left = e.X + c.Left - clickOffsetX;
-        c.Top = e.Y + c.Top - clickOffsetY;
+        Tweak t = new Tweak()
+        {
+            Description = "Man I love this description \r\n" +
+            "I am adding a bunch of newlines\r\n\r\n\r\n" +
+            "Hopefully this is readable"
+        };
+        TweakDisplay td = new TweakDisplay(t);
+        Controls.Add(td);
     }
 }

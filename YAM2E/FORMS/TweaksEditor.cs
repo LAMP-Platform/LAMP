@@ -1,33 +1,44 @@
 ﻿using System;
 using System.Windows.Forms;
 using LAMP.Classes;
+using LAMP.Controls.Other;
 
 namespace LAMP.FORMS;
 
 public partial class TweaksEditor : Form
 {
-    public static TweaksEditor Current;
-
     public TweaksEditor()
     {
         InitializeComponent();
-        Current = this;
-    }
 
-    private void TweaksEditor_SizeChanged(object sender, EventArgs e)
-    {
-        tbl_tweaks.Width = this.Width - 40;
-        tbl_tweaks.Height = this.Height - 85;
-    }
+        for (int i = 0; i < 10; i++)
+        {
+            Tweak t = new Tweak()
+            {
+                Name = $"Tweak {i}",
+                Description = "Damn, sample description.",
+                Include = i % 2 == 0
+            };
+            Globals.Tweaks.Add(t);
+        }
 
-    private void tbl_tweaks_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
-    {
-    }
+        foreach (Tweak t in Globals.Tweaks)
+        {
+            TweakDisplay td = new TweakDisplay(t)
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 0, 0, 3)
+            };
 
-    private void tbl_tweaks_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-    {
-        if (tbl_tweaks.CurrentCell == null) return;
-        if (tbl_tweaks.CurrentCell.Value == null) return;
-        TestLabel.Text = tbl_tweaks.CurrentCell.Value.ToString();
+            Panel p = new Panel()
+            {
+                Dock = DockStyle.Top,
+                AutoSize = true,
+                Padding = new Padding(0, 0, 0, 3)
+            };
+
+            p.Controls.Add(td);
+            pnl_main.Controls.Add(p);
+        }
     }
 }

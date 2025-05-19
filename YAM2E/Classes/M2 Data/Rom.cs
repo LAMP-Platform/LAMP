@@ -346,7 +346,7 @@ public class Rom
 
     ///CONSTANTS used for Reading
     //Areas
-    public static Pointer[] A_BANKS { get; } = { new Pointer(0x24000), new Pointer(0x28000), new Pointer(0x2C000), new Pointer(0x30000), new Pointer(0x34000), new Pointer(0x38000), new Pointer(0x3C000) };
+    public static Pointer[] A_BANKS { get; } = { 0x24000, 0x28000, 0x2C000, 0x30000, 0x34000, 0x38000, 0x3C000 };
 
     //object data
     public Pointer ObjectPointerTable { get; } = new Pointer(0x3, 0x42E0); //6 Tables of Pointers to object lists

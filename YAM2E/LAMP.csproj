@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\Tweaks\TweakDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Properties\programsettings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
