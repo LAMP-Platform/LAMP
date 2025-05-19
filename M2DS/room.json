@@ -1,0 +1,45 @@
+{
+    "tileset": "Chozo-Ruins",
+    "sprites": "MissileMoto",
+    "music": "cave2",
+    "states": [
+        {
+            "metroids": 20,
+            "tileset": "Chozo-Ruins-lower"
+        }
+    ],
+    "screens": [
+        {
+            "screen": "GT-Entrance",
+            "position": "0, 0"
+        }
+    ],
+    "objects": [
+        {
+            "id": "Moto",
+            "remove": false,
+            "position": "3.4, 20.1"
+        },
+        {
+            "id": "Missile Tank",
+            "remove": true,
+            "position": "8.5, 10"
+        }
+    ],
+    "connections": [
+        {
+            "from": "GT-Entrance",
+            "to": [
+                {
+                    "room": "GT-Outside",
+                    "location": "5, 3"
+                },
+                {
+                    "room": "GT-Tower",
+                    "location": "0, 0"
+                }
+            ]
+        }
+    ]
+    
+}
