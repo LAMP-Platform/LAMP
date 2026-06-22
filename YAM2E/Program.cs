@@ -21,4 +21,6 @@ internal static class Program
          Application.SetCompatibleTextRenderingDefault(false);
          Application.Run(new MainWindow());
     }
+
+//very important change hell yeah
  }
